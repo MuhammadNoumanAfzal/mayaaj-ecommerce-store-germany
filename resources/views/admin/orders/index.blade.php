@@ -5,25 +5,29 @@
 <div class="space-y-6">
 
     <!-- Top Breadcrumb -->
-    <div class="bg-white rounded-xl shadow-xs py-3 px-5 text-xs font-semibold text-slate-600 border border-slate-100 flex items-center justify-between">
-        <div>
-            <span data-i18n-de="MEHAAJ Admin Dashboard" data-i18n-en="MEHAAJ Admin Dashboard">MEHAAJ Admin Dashboard</span> 
-            <span class="mx-1.5 text-slate-400 font-mono">›</span> 
+    <div class="bg-white rounded-xl shadow-xs py-3.5 px-5 text-xs font-semibold text-slate-600 border border-slate-200/80 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <span class="text-slate-400 font-normal" data-i18n-de="MEHAAJ Admin" data-i18n-en="MEHAAJ Admin">MEHAAJ Admin</span> 
+            <span class="text-slate-300 font-mono">›</span> 
             <span class="text-slate-900 font-bold" data-i18n-de="Bestellungen & Vorkasse" data-i18n-en="Orders & Prepayments">Bestellungen & Vorkasse</span>
         </div>
-        <div class="text-[0.68rem] text-slate-400 font-medium">
-            <span data-i18n-de="Gesamt Bestellungen:" data-i18n-en="Total Orders:">Gesamt Bestellungen:</span> <span class="text-[#194AA2] font-bold">{{ count($orders) }}</span>
+        <div class="text-[0.68rem] text-slate-400 font-medium flex items-center gap-1.5">
+            <span data-i18n-de="Gesamt Bestellungen:" data-i18n-en="Total Orders:">Gesamt Bestellungen:</span> 
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">{{ count($orders) }}</span>
         </div>
     </div>
 
     <!-- Main Orders Card -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <div class="exec-card rounded-2xl border border-slate-200/80 bg-white shadow-xs overflow-hidden">
         
         <!-- Clean White Card Header -->
-        <div class="px-6 py-4 bg-white border-b border-slate-100 flex items-center justify-between">
+        <div class="px-6 py-4.5 bg-white border-b border-slate-100 flex items-center justify-between">
             <div>
-                <h2 class="font-extrabold text-lg text-slate-900 tracking-tight" data-i18n-de="Bestellungen & Vorkasse" data-i18n-en="Orders & Prepayments">Bestellungen & Vorkasse</h2>
-                <p class="text-xs text-slate-500 font-medium" data-i18n-de="Verwalten Sie Kundenbestellungen, Vorkasse-Überweisungen und Rechnungen." data-i18n-en="Manage customer orders, bank prepayments and invoices.">Verwalten Sie Kundenbestellungen, Vorkasse-Überweisungen und Rechnungen.</p>
+                <h2 class="font-extrabold text-base text-slate-900 tracking-tight flex items-center gap-2" data-i18n-de="Bestellungen & Vorkasse" data-i18n-en="Orders & Prepayments">
+                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    Bestellungen & Vorkasse
+                </h2>
+                <p class="text-xs text-slate-500 font-normal mt-0.5" data-i18n-de="Verwalten Sie Kundenbestellungen, Vorkasse-Überweisungen und Rechnungen." data-i18n-en="Manage customer orders, bank prepayments and invoices.">Verwalten Sie Kundenbestellungen, Vorkasse-Überweisungen und Rechnungen.</p>
             </div>
         </div>
 
@@ -81,9 +85,9 @@
             </div>
 
             <!-- Table -->
-            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <div class="overflow-x-auto border border-slate-200/80 rounded-xl">
                 <table class="w-full text-left text-xs">
-                    <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs">
+                    <thead class="exec-table-head bg-slate-50/90 text-slate-700 font-bold border-b border-slate-200 text-xs">
                         <tr>
                             <th class="p-3.5" data-i18n-de="Bestell-Nr. & Datum" data-i18n-en="Order # & Date">Bestell-Nr. & Datum</th>
                             <th class="p-3.5" data-i18n-de="Kunde & Lieferadresse" data-i18n-en="Customer & Address">Kunde & Lieferadresse</th>
@@ -96,7 +100,7 @@
                     </thead>
                     <tbody class="divide-y divide-slate-100 font-medium">
                         @forelse($orders as $order)
-                            <tr class="hover:bg-slate-50/80 transition">
+                            <tr class="exec-table-row hover:bg-slate-50/80 transition">
                                 <td class="p-3.5">
                                     <p class="font-bold text-slate-900 text-sm font-mono">{{ $order->order_number }}</p>
                                     <p class="text-[0.68rem] text-slate-400 font-mono">{{ $order->created_at->format('d.m.Y H:i') }} Uhr</p>
@@ -108,26 +112,26 @@
                                 </td>
                                 <td class="p-3.5">
                                     @if($order->payment_method === 'vorkasse')
-                                        <span class="rounded-lg bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-1 text-[0.65rem] font-bold tracking-wide uppercase">
+                                        <span class="badge-soft-amber px-2.5 py-1 text-[0.65rem] font-bold rounded-lg uppercase">
                                             🏦 Vorkasse
                                         </span>
                                     @elseif($order->payment_method === 'credit_card')
-                                        <span class="rounded-lg bg-blue-50 border border-blue-200 text-blue-700 px-2.5 py-1 text-[0.65rem] font-bold tracking-wide uppercase">
+                                        <span class="badge-soft-indigo px-2.5 py-1 text-[0.65rem] font-bold rounded-lg uppercase">
                                             💳 Kreditkarte
                                         </span>
                                     @else
-                                        <span class="rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-700 px-2.5 py-1 text-[0.65rem] font-bold tracking-wide uppercase">
+                                        <span class="badge-soft-indigo px-2.5 py-1 text-[0.65rem] font-bold rounded-lg uppercase">
                                             🅿️ PayPal
                                         </span>
                                     @endif
                                 </td>
                                 <td class="p-3.5">
                                     @if($order->payment_status === 'paid')
-                                        <span class="rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 px-2.5 py-1 text-[0.65rem] font-bold uppercase">Bezahlt ✓</span>
+                                        <span class="badge-soft-emerald px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">Bezahlt ✓</span>
                                     @elseif($order->payment_status === 'pending')
-                                        <span class="rounded-full bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-1 text-[0.65rem] font-bold uppercase">Offen (Warte auf Vorkasse)</span>
+                                        <span class="badge-soft-amber px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">Offen (Vorkasse)</span>
                                     @else
-                                        <span class="rounded-full bg-rose-50 border border-rose-200 text-rose-700 px-2.5 py-1 text-[0.65rem] font-bold uppercase">Erstattet</span>
+                                        <span class="badge-soft-rose px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">Erstattet</span>
                                     @endif
                                 </td>
                                 <td class="p-3.5 font-bold text-slate-900 text-sm">
@@ -135,15 +139,15 @@
                                 </td>
                                 <td class="p-3.5">
                                     @if($order->status === 'delivered')
-                                        <span class="rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[0.65rem] font-bold uppercase">Zugestellt</span>
+                                        <span class="badge-soft-emerald px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">Zugestellt</span>
                                     @elseif($order->status === 'shipped')
-                                        <span class="rounded-full bg-blue-500 text-white px-2.5 py-1 text-[0.65rem] font-bold uppercase">Versendet</span>
+                                        <span class="badge-soft-indigo px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">Versendet</span>
                                     @elseif($order->status === 'processing')
-                                        <span class="rounded-full bg-indigo-500 text-white px-2.5 py-1 text-[0.65rem] font-bold uppercase">In Bearbeitung</span>
+                                        <span class="badge-soft-indigo px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">In Bearbeitung</span>
                                     @elseif($order->status === 'cancelled')
-                                        <span class="rounded-full bg-rose-500 text-white px-2.5 py-1 text-[0.65rem] font-bold uppercase">Storniert</span>
+                                        <span class="badge-soft-rose px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">Storniert</span>
                                     @else
-                                        <span class="rounded-full bg-amber-500 text-white px-2.5 py-1 text-[0.65rem] font-bold uppercase">Offen</span>
+                                        <span class="badge-soft-amber px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase">Offen</span>
                                     @endif
                                 </td>
                                 <td class="p-3.5 text-center">

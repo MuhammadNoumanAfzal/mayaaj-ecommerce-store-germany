@@ -105,6 +105,89 @@
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
         }
 
+        /* Executive Premium Card Design */
+        .exec-card {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 1.25rem !important;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .exec-card:hover {
+            box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03) !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        /* Stat Icon Badges */
+        .stat-badge-indigo {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3) !important;
+        }
+
+        .stat-badge-emerald {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+        }
+
+        .stat-badge-amber {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+        }
+
+        .stat-badge-rose {
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3) !important;
+        }
+
+        /* Executive Table Headers & Rows */
+        .exec-table-head {
+            background-color: #f8fafc !important;
+            color: #475569 !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            font-size: 0.7rem !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+
+        .exec-table-row {
+            transition: background-color 0.15s ease-in-out !important;
+        }
+
+        .exec-table-row:hover {
+            background-color: #f8fafc !important;
+        }
+
+        /* Status Badges */
+        .badge-soft-active {
+            background-color: #ecfdf5 !important;
+            color: #047857 !important;
+            border: 1px solid #a7f3d0 !important;
+        }
+
+        .badge-soft-pending {
+            background-color: #fffbeb !important;
+            color: #b45309 !important;
+            border: 1px solid #fde68a !important;
+        }
+
+        .badge-soft-rose {
+            background-color: #fff1f2 !important;
+            color: #be123c !important;
+            border: 1px solid #fecdd3 !important;
+        }
+
+        .badge-soft-indigo {
+            background-color: #eef2ff !important;
+            color: #4338ca !important;
+            border: 1px solid #c7d2fe !important;
+        }
+
         .admin-table-head {
             background-color: #f8fafc !important;
             color: #64748b !important;

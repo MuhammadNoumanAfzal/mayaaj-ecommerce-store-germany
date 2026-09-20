@@ -4,14 +4,17 @@
 @section('admin-content')
 <div class="space-y-6 max-w-5xl mx-auto">
 
-    <!-- Form Container Card with Solid Dark Navy Header matching reference screenshot 2 -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden">
+    <!-- Form Container Card with Executive Dark Navy Gradient Header -->
+    <div class="exec-card bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
         
-        <!-- Dark Navy Card Header (#0d2352) -->
-        <div class="card-navy-header px-6 py-4 flex items-center justify-between" style="background-color: #0d2352 !important; color: #ffffff !important;">
-            <h2 class="font-bold text-lg text-white tracking-wide" data-i18n-de="Kategorie Hinzufügen" data-i18n-en="Add Category">Kategorie Hinzufügen</h2>
+        <!-- Dark Navy Gradient Header -->
+        <div class="px-6 py-4.5 flex items-center justify-between text-white" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%) !important;">
+            <h2 class="font-extrabold text-base text-white tracking-wide flex items-center gap-2" data-i18n-de="Kategorie Hinzufügen" data-i18n-en="Add Category">
+                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Kategorie Hinzufügen
+            </h2>
             
-            <a href="{{ route('admin.categories') }}" class="rounded-full btn-blue-back border border-white/20 text-white px-4 py-1.5 text-xs font-bold transition flex items-center gap-1.5 shadow-sm" style="background-color: #103375 !important; color: #ffffff !important;">
+            <a href="{{ route('admin.categories') }}" class="rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 <span data-i18n-de="Zurück zu Kategorien" data-i18n-en="Back to Categories">Zurück zu Kategorien</span>
             </a>
@@ -22,7 +25,7 @@
             @csrf
 
             @if ($errors->any())
-                <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 space-y-1">
+                <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1">
                     <p class="font-bold text-sm">Bitte korrigieren Sie die folgenden Fehler:</p>
                     <ul class="list-disc list-inside">
                         @foreach ($errors->all() as $error)
@@ -45,7 +48,7 @@
                         placeholder="z. B. Leder Taschen, Geldbörsen..." 
                         data-i18n-placeholder-de="z. B. Leder Taschen, Geldbörsen..."
                         data-i18n-placeholder-en="e.g. Leather Bags, Wallets..."
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition"
                     >
                 </div>
 
@@ -55,7 +58,7 @@
                     <select 
                         name="status" 
                         required 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition"
                     >
                         <option value="active" {{ old('status') === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv (Öffentlich)" data-i18n-en="Active (Public)">Aktiv (Öffentlich)</option>
                         <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }} data-i18n-de="Entwurf (Versteckt)" data-i18n-en="Draft (Hidden)">Entwurf (Versteckt)</option>
@@ -80,7 +83,7 @@
                         type="number" 
                         name="order_index" 
                         value="{{ old('order_index', 0) }}" 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition"
                     >
                 </div>
 
@@ -95,18 +98,20 @@
                     placeholder="Geben Sie eine ausführliche Beschreibung für diese Kategorie ein..." 
                     data-i18n-placeholder-de="Geben Sie eine ausführliche Beschreibung für diese Kategorie ein..."
                     data-i18n-placeholder-en="Enter detailed description for this category..."
-                    class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                    class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white transition"
                 >{{ old('description') }}</textarea>
             </div>
 
-            <!-- Form Submit Button (Lime Green #84cc16 matching Screenshot 2) -->
-            <div class="pt-4 flex items-center justify-center">
+            <!-- Form Submit Button -->
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-3">
+                <a href="{{ route('admin.categories') }}" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs transition cursor-pointer" data-i18n-de="Abbrechen" data-i18n-en="Cancel">
+                    Abbrechen
+                </a>
                 <button 
                     type="submit" 
-                    class="w-full sm:w-auto px-10 py-3.5 rounded-full btn-lime-save text-white font-extrabold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
-                    style="background-color: #84cc16 !important; color: #ffffff !important;"
+                    class="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 text-xs font-bold transition shadow-xs flex items-center gap-2 cursor-pointer"
                 >
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                     <span data-i18n-de="Kategorie Speichern" data-i18n-en="Save Category">Kategorie Speichern</span>
                 </button>
             </div>

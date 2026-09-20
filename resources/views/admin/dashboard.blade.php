@@ -43,74 +43,74 @@
         </div>
     </div>
 
-    <!-- 4 Stat Metric Cards (Pure White Card, Solid Rounded Icon Blocks & Growth Badges) -->
+    <!-- 4 Stat Metric Cards (Executive Card Design with SVG Gradient Badges) -->
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         
         <!-- Card 1: Contact Messages / Sales -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-slate-500" data-i18n-de="Contact Messages" data-i18n-en="Contact Messages">Contact Messages</span>
-                    <div class="h-12 w-12 rounded-2xl bg-[#3b82f6] text-white flex items-center justify-center text-xl font-bold shadow-sm">
-                        💶
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Kontakt Anfragen" data-i18n-en="Contact Messages">Kontakt Anfragen</span>
+                    <div class="h-11 w-11 rounded-2xl stat-badge-indigo flex items-center justify-center">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
                 </div>
-                <p class="mt-2 text-3xl font-extrabold text-slate-900 tracking-tight">26</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">26</p>
             </div>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="This month: 2" data-i18n-en="This month: 2">This month: 2</span>
-                <span class="rounded-full bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 text-xs">+100%</span>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 2" data-i18n-en="This month: 2">Diesen Monat: 2</span>
+                <span class="rounded-full badge-soft-active font-extrabold px-2.5 py-0.5 text-[0.68rem]">+100%</span>
             </div>
         </div>
 
         <!-- Card 2: Consultations / Orders -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-slate-500" data-i18n-de="Consultations" data-i18n-en="Consultations">Consultations</span>
-                    <div class="h-12 w-12 rounded-2xl bg-[#22c55e] text-white flex items-center justify-center text-xl font-bold shadow-sm">
-                        📦
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Beratungstermine" data-i18n-en="Consultations">Beratungstermine</span>
+                    <div class="h-11 w-11 rounded-2xl stat-badge-emerald flex items-center justify-center">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                     </div>
                 </div>
-                <p class="mt-2 text-3xl font-extrabold text-slate-900 tracking-tight">1</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">1</p>
             </div>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="This month: 0" data-i18n-en="This month: 0">This month: 0</span>
-                <span class="rounded-full bg-blue-100 text-blue-700 font-bold px-2.5 py-0.5 text-xs">+8%</span>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 0" data-i18n-en="This month: 0">Diesen Monat: 0</span>
+                <span class="rounded-full badge-soft-indigo font-extrabold px-2.5 py-0.5 text-[0.68rem]">+8%</span>
             </div>
         </div>
 
         <!-- Card 3: Event Reservations / Products -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-slate-500" data-i18n-de="Event Reservations" data-i18n-en="Event Reservations">Event Reservations</span>
-                    <div class="h-12 w-12 rounded-2xl bg-[#f59e0b] text-white flex items-center justify-center text-xl font-bold shadow-sm">
-                        🛍️
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Event Reservierungen" data-i18n-en="Event Reservations">Event Reservierungen</span>
+                    <div class="h-11 w-11 rounded-2xl stat-badge-amber flex items-center justify-center">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     </div>
                 </div>
-                <p class="mt-2 text-3xl font-extrabold text-slate-900 tracking-tight">2</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">2</p>
             </div>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="This month: 0" data-i18n-en="This month: 0">This month: 0</span>
-                <span class="rounded-full bg-purple-100 text-purple-700 font-bold px-2.5 py-0.5 text-xs">+12%</span>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 0" data-i18n-en="This month: 0">Diesen Monat: 0</span>
+                <span class="rounded-full badge-soft-pending font-extrabold px-2.5 py-0.5 text-[0.68rem]">+12%</span>
             </div>
         </div>
 
         <!-- Card 4: Published Content / VIP Customers -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-slate-500" data-i18n-de="Published Content" data-i18n-en="Published Content">Published Content</span>
-                    <div class="h-12 w-12 rounded-2xl bg-[#f43f5e] text-white flex items-center justify-center text-xl font-bold shadow-sm">
-                        👥
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Aktive Kunden" data-i18n-en="Active Customers">Aktive Kunden</span>
+                    <div class="h-11 w-11 rounded-2xl stat-badge-rose flex items-center justify-center">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     </div>
                 </div>
-                <p class="mt-2 text-3xl font-extrabold text-slate-900 tracking-tight">2</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">2</p>
             </div>
-            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="Posts this month: 0" data-i18n-en="Posts this month: 0">Posts this month: 0</span>
-                <span class="rounded-full bg-rose-100 text-rose-700 font-bold px-2.5 py-0.5 text-xs">+25%</span>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 0" data-i18n-en="This month: 0">Diesen Monat: 0</span>
+                <span class="rounded-full badge-soft-rose font-extrabold px-2.5 py-0.5 text-[0.68rem]">+25%</span>
             </div>
         </div>
 
@@ -120,65 +120,65 @@
     <div class="grid gap-6 lg:grid-cols-12">
         
         <!-- Left Column: Inquiries Trend (8 Cols) -->
-        <div class="lg:col-span-8 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+        <div class="lg:col-span-8 exec-card p-6 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
-                    <h2 class="font-bold text-base text-slate-900" data-i18n-de="Inquiries Trend" data-i18n-en="Inquiries Trend">Inquiries Trend</h2>
-                    <p class="text-xs text-slate-400 mt-0.5" data-i18n-de="Contacts, consultations and reservations over the last 6 months" data-i18n-en="Contacts, consultations and reservations over the last 6 months">Contacts, consultations and reservations over the last 6 months</p>
+                    <h2 class="font-extrabold text-base text-slate-900 tracking-tight" data-i18n-de="Eingehende Bestellungen & Anfragen" data-i18n-en="Recent Inquiries & Orders">Eingehende Bestellungen & Anfragen</h2>
+                    <p class="text-xs text-slate-500 mt-0.5" data-i18n-de="Übersicht aller Kontakte, Bestellungen und Vorkasse-Eingänge" data-i18n-en="Overview of contacts, orders and bank prepayments">Übersicht aller Kontakte, Bestellungen und Vorkasse-Eingänge</p>
                 </div>
-                <a href="{{ route('admin.orders') }}" class="text-xs font-bold text-[#194AA2] hover:underline" data-i18n-de="View All →" data-i18n-en="View All →">View All →</a>
+                <a href="{{ route('admin.orders') }}" class="text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:underline" data-i18n-de="Alle Anzeigen →" data-i18n-en="View All →">Alle Anzeigen →</a>
             </div>
 
             <!-- Orders & Inquiries Table -->
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto border border-slate-100 rounded-xl">
                 <table class="w-full text-left text-xs">
-                    <thead class="bg-slate-50 uppercase text-[0.65rem] font-bold tracking-wider text-slate-500">
+                    <thead class="exec-table-head">
                         <tr>
-                            <th class="p-3">Order Ref</th>
-                            <th class="p-3">Kunde</th>
-                            <th class="p-3">Zahlungsart</th>
-                            <th class="p-3">Betrag</th>
-                            <th class="p-3">Status</th>
-                            <th class="p-3 text-right">Aktion</th>
+                            <th class="p-3.5" data-i18n-de="Bestell-Nr." data-i18n-en="Order Ref">Bestell-Nr.</th>
+                            <th class="p-3.5" data-i18n-de="Kunde" data-i18n-en="Customer">Kunde</th>
+                            <th class="p-3.5" data-i18n-de="Zahlungsart" data-i18n-en="Payment">Zahlungsart</th>
+                            <th class="p-3.5" data-i18n-de="Betrag" data-i18n-en="Amount">Betrag</th>
+                            <th class="p-3.5" data-i18n-de="Status" data-i18n-en="Status">Status</th>
+                            <th class="p-3.5 text-right" data-i18n-de="Aktion" data-i18n-en="Action">Aktion</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 font-medium">
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-mono text-[#194AA2] font-bold">MHJ-2026-8942</td>
-                            <td class="p-3 font-bold text-slate-900">Maximilian Mustermann</td>
-                            <td class="p-3 text-slate-600">🏛️ Banküberweisung (Vorkasse)</td>
-                            <td class="p-3 font-bold text-slate-900">EUR 418,00</td>
-                            <td class="p-3">
-                                <span class="rounded-full bg-amber-100 text-amber-800 px-2.5 py-1 text-[0.62rem] font-bold uppercase">Warte auf Zahlung</span>
+                        <tr class="exec-table-row">
+                            <td class="p-3.5 font-mono text-indigo-600 font-bold">MHJ-2026-8942</td>
+                            <td class="p-3.5 font-bold text-slate-900">Maximilian Mustermann</td>
+                            <td class="p-3.5 text-slate-600">🏛️ Banküberweisung (Vorkasse)</td>
+                            <td class="p-3.5 font-bold text-slate-900">EUR 418,00</td>
+                            <td class="p-3.5">
+                                <span class="rounded-full badge-soft-pending px-2.5 py-1 text-[0.62rem] font-bold uppercase" data-i18n-de="Warte auf Zahlung" data-i18n-en="Awaiting Payment">Warte auf Zahlung</span>
                             </td>
-                            <td class="p-3 text-right">
-                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-8942'})" class="rounded-lg bg-[#194AA2] hover:bg-blue-800 px-3 py-1 text-[0.6rem] font-bold text-white cursor-pointer shadow-xs">Details</button>
-                            </td>
-                        </tr>
-
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-mono text-[#194AA2] font-bold">MHJ-2026-7819</td>
-                            <td class="p-3 font-bold text-slate-900">Victoria von Berg</td>
-                            <td class="p-3 text-slate-600">💳 Kreditkarte (Visa)</td>
-                            <td class="p-3 font-bold text-slate-900">EUR 590,00</td>
-                            <td class="p-3">
-                                <span class="rounded-full bg-emerald-100 text-emerald-800 px-2.5 py-1 text-[0.62rem] font-bold uppercase">Bezahlt & Versendet</span>
-                            </td>
-                            <td class="p-3 text-right">
-                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-7819'})" class="rounded-lg bg-[#194AA2] hover:bg-blue-800 px-3 py-1 text-[0.6rem] font-bold text-white cursor-pointer shadow-xs">Details</button>
+                            <td class="p-3.5 text-right">
+                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-8942'})" class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Details" data-i18n-en="Details">Details</button>
                             </td>
                         </tr>
 
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-mono text-[#194AA2] font-bold">MHJ-2026-6540</td>
-                            <td class="p-3 font-bold text-slate-900">Dr. Florian Hoffmann</td>
-                            <td class="p-3 text-slate-600">🅿️ PayPal Express</td>
-                            <td class="p-3 font-bold text-slate-900">EUR 129,00</td>
-                            <td class="p-3">
-                                <span class="rounded-full bg-emerald-100 text-emerald-800 px-2.5 py-1 text-[0.62rem] font-bold uppercase">Bezahlt</span>
+                        <tr class="exec-table-row">
+                            <td class="p-3.5 font-mono text-indigo-600 font-bold">MHJ-2026-7819</td>
+                            <td class="p-3.5 font-bold text-slate-900">Victoria von Berg</td>
+                            <td class="p-3.5 text-slate-600">💳 Kreditkarte (Visa)</td>
+                            <td class="p-3.5 font-bold text-slate-900">EUR 590,00</td>
+                            <td class="p-3.5">
+                                <span class="rounded-full badge-soft-active px-2.5 py-1 text-[0.62rem] font-bold uppercase" data-i18n-de="Bezahlt & Versendet" data-i18n-en="Paid & Shipped">Bezahlt & Versendet</span>
                             </td>
-                            <td class="p-3 text-right">
-                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-6540'})" class="rounded-lg bg-[#194AA2] hover:bg-blue-800 px-3 py-1 text-[0.6rem] font-bold text-white cursor-pointer shadow-xs">Details</button>
+                            <td class="p-3.5 text-right">
+                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-7819'})" class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Details" data-i18n-en="Details">Details</button>
+                            </td>
+                        </tr>
+
+                        <tr class="exec-table-row">
+                            <td class="p-3.5 font-mono text-indigo-600 font-bold">MHJ-2026-6540</td>
+                            <td class="p-3.5 font-bold text-slate-900">Dr. Florian Hoffmann</td>
+                            <td class="p-3.5 text-slate-600">🅿️ PayPal Express</td>
+                            <td class="p-3.5 font-bold text-slate-900">EUR 129,00</td>
+                            <td class="p-3.5">
+                                <span class="rounded-full badge-soft-active px-2.5 py-1 text-[0.62rem] font-bold uppercase" data-i18n-de="Bezahlt" data-i18n-en="Paid">Bezahlt</span>
+                            </td>
+                            <td class="p-3.5 text-right">
+                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-6540'})" class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Details" data-i18n-en="Details">Details</button>
                             </td>
                         </tr>
                     </tbody>
@@ -188,65 +188,69 @@
             <!-- Bottom Trend Dots Legend -->
             <div class="pt-3 flex items-center justify-center gap-6 text-xs text-slate-600 font-semibold border-t border-slate-100">
                 <div class="flex items-center gap-2">
-                    <span class="h-2.5 w-2.5 rounded-full bg-[#3b82f6]"></span>
-                    <span>Contacts</span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-indigo-500"></span>
+                    <span data-i18n-de="Kontakte" data-i18n-en="Contacts">Kontakte</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="h-2.5 w-2.5 rounded-full bg-[#22c55e]"></span>
-                    <span>Consultations</span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                    <span data-i18n-de="Beratungen" data-i18n-en="Consultations">Beratungen</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="h-2.5 w-2.5 rounded-full bg-[#f59e0b]"></span>
-                    <span>Reservations</span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+                    <span data-i18n-de="Reservierungen" data-i18n-en="Reservations">Reservierungen</span>
                 </div>
             </div>
         </div>
 
         <!-- Right Column: Quality Snapshot (4 Cols) -->
-        <div class="lg:col-span-4 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-6 flex flex-col justify-between">
+        <div class="lg:col-span-4 exec-card p-6 space-y-6 flex flex-col justify-between">
             <div>
-                <h2 class="font-bold text-base text-slate-900" data-i18n-de="Quality Snapshot" data-i18n-en="Quality Snapshot">Quality Snapshot</h2>
-                <p class="text-xs text-slate-400 mt-0.5" data-i18n-de="Operational quality and content health" data-i18n-en="Operational quality and content health">Operational quality and content health</p>
+                <h2 class="font-extrabold text-base text-slate-900 tracking-tight" data-i18n-de="Qualitäts-Übersicht" data-i18n-en="Quality Snapshot">Qualitäts-Übersicht</h2>
+                <p class="text-xs text-slate-500 mt-0.5" data-i18n-de="Operationalität und Systemgesundheit" data-i18n-en="Operational quality and content health">Operationalität und Systemgesundheit</p>
 
                 <div class="mt-6 space-y-5">
                     <!-- Progress Item 1 -->
                     <div>
                         <div class="flex items-center justify-between text-xs font-bold mb-1.5">
-                            <span class="text-slate-700">Order Fulfillment Rate</span>
+                            <span class="text-slate-700" data-i18n-de="Bestellabwicklungs-Quote" data-i18n-en="Order Fulfillment Rate">Bestellabwicklungs-Quote</span>
                             <span class="text-emerald-600">98%</span>
                         </div>
                         <div class="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
-                            <div class="h-full rounded-full bg-[#22c55e] w-[98%] shadow-xs"></div>
+                            <div class="h-full rounded-full bg-emerald-500 w-[98%] shadow-xs"></div>
                         </div>
                     </div>
 
                     <!-- Progress Item 2 -->
                     <div>
                         <div class="flex items-center justify-between text-xs font-bold mb-1.5">
-                            <span class="text-slate-700">Vorkasse Verification Rate</span>
-                            <span class="text-blue-600">95%</span>
+                            <span class="text-slate-700" data-i18n-de="Zahlungs-Freigaben (Vorkasse)" data-i18n-en="Prepayment Approvals">Zahlungs-Freigaben (Vorkasse)</span>
+                            <span class="text-indigo-600">92%</span>
                         </div>
                         <div class="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
-                            <div class="h-full rounded-full bg-[#194AA2] w-[95%] shadow-xs"></div>
+                            <div class="h-full rounded-full bg-indigo-500 w-[92%] shadow-xs"></div>
                         </div>
                     </div>
 
                     <!-- Progress Item 3 -->
                     <div>
                         <div class="flex items-center justify-between text-xs font-bold mb-1.5">
-                            <span class="text-slate-700">System & API Health</span>
-                            <span class="text-emerald-600">100%</span>
+                            <span class="text-slate-700" data-i18n-de="Kunden-Zufriedenheit" data-i18n-en="Customer Satisfaction">Kunden-Zufriedenheit</span>
+                            <span class="text-amber-600">96%</span>
                         </div>
                         <div class="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
-                            <div class="h-full rounded-full bg-[#22c55e] w-[100%] shadow-xs"></div>
+                            <div class="h-full rounded-full bg-amber-500 w-[96%] shadow-xs"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs space-y-1 text-center">
-                <p class="font-bold text-slate-800">MEHAAJ Atelier Engine Active</p>
-                <p class="text-[0.68rem] text-slate-500">Live SSL 256-bit encryption & Deutsche Bank Vorkasse API connected.</p>
+            <!-- Settings Direct Action Card -->
+            <div class="p-4 rounded-xl border border-indigo-100 flex items-center justify-between" style="background-color: #f5f3ff !important;">
+                <div>
+                    <p class="font-extrabold text-xs text-indigo-900" data-i18n-de="System-Einstellungen" data-i18n-en="System Settings">System-Einstellungen</p>
+                    <p class="text-[0.68rem] text-indigo-700 font-medium" data-i18n-de="Zahlungs-IBAN & Shop konfigurieren" data-i18n-en="Configure payment IBAN & store settings">Zahlungs-IBAN & Shop konfigurieren</p>
+                </div>
+                <a href="{{ route('admin.settings') }}" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 text-xs font-bold transition cursor-pointer shadow-xs" data-i18n-de="Öffnen" data-i18n-en="Open">Öffnen</a>
             </div>
         </div>
 

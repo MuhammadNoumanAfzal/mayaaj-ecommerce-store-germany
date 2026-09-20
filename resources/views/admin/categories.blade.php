@@ -17,7 +17,7 @@
     </div>
 
     <!-- Main Categories Card -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <div class="exec-card overflow-hidden">
         
         <!-- Clean White Card Header with Indigo Add Button -->
         <div class="px-6 py-4 bg-white border-b border-slate-100 flex items-center justify-between">
@@ -67,9 +67,9 @@
             </div>
 
             <!-- Table -->
-            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <div class="overflow-x-auto border border-slate-100 rounded-xl">
                 <table class="w-full text-left text-xs">
-                    <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs">
+                    <thead class="exec-table-head">
                         <tr>
                             <th class="p-3.5" data-i18n-de="Name" data-i18n-en="Name">Name</th>
                             <th class="p-3.5" data-i18n-de="Slug" data-i18n-en="Slug">Slug</th>
@@ -81,7 +81,7 @@
                     </thead>
                     <tbody class="divide-y divide-slate-100 font-medium">
                         @forelse($categories as $category)
-                            <tr class="hover:bg-slate-50/80 transition">
+                            <tr class="exec-table-row">
                                 <td class="p-3.5 font-bold text-slate-900 text-sm">
                                     {{ $category->name }}
                                 </td>
@@ -102,9 +102,9 @@
                                 </td>
                                 <td class="p-3.5">
                                     @if($category->status === 'active')
-                                        <span class="rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 px-2.5 py-0.5 text-[0.65rem] font-bold uppercase" data-i18n-de="Aktiv" data-i18n-en="Active">Aktiv</span>
+                                        <span class="rounded-full badge-soft-active px-2.5 py-0.5 text-[0.65rem] font-bold uppercase" data-i18n-de="Aktiv" data-i18n-en="Active">Aktiv</span>
                                     @else
-                                        <span class="rounded-full bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-0.5 text-[0.65rem] font-bold uppercase" data-i18n-de="Entwurf" data-i18n-en="Draft">Entwurf</span>
+                                        <span class="rounded-full badge-soft-pending px-2.5 py-0.5 text-[0.65rem] font-bold uppercase" data-i18n-de="Entwurf" data-i18n-en="Draft">Entwurf</span>
                                     @endif
                                 </td>
                                 <td class="p-3.5 text-center">
@@ -112,7 +112,7 @@
                                         <!-- Edit Soft Pill Button -->
                                         <a 
                                             href="{{ route('admin.categories.edit', $category->id) }}"
-                                            class="rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer inline-flex items-center gap-1 shadow-2xs"
+                                            class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer inline-flex items-center gap-1 shadow-2xs"
                                             data-i18n-de="Bearbeiten"
                                             data-i18n-en="Edit"
                                         >
