@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-espresso font-sans text-charcoal antialiased;
+    }
+
+    ::selection {
+        @apply bg-burgundy text-ivory;
+    }
+}
+
+@layer components {
+    .luxury-container {
+        @apply mx-auto w-full max-w-[1480px] px-4 sm:px-7 lg:px-10 xl:px-12;
+    }
+
+    .icon-button {
+        @apply inline-flex h-10 w-10 cursor-pointer items-center justify-center transition duration-300 hover:text-champagne;
+    }
+
+    .button-primary {
+        @apply inline-flex min-h-11 cursor-pointer items-center justify-center bg-burgundy px-7 py-3 text-[0.72rem] font-medium uppercase tracking-luxury text-ivory transition duration-300 hover:bg-oxblood;
+    }
+
+    .button-secondary {
+        @apply inline-flex min-h-11 cursor-pointer items-center justify-center border border-ivory/60 px-7 py-3 text-[0.72rem] font-medium uppercase tracking-luxury text-ivory transition duration-300 hover:border-ivory hover:bg-ivory hover:text-espresso;
+    }
+
+    .text-link {
+        @apply inline-flex cursor-pointer items-center text-[0.72rem] font-medium uppercase tracking-luxury text-burgundy transition duration-300 hover:text-oxblood;
+    }
+
+    .luxury-panel {
+        @apply border border-champagne/10 bg-[#211511];
+        box-shadow: 0 22px 70px rgb(0 0 0 / 0.28);
+    }
+
+    .fade-section {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .fade-section.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Modern Luxury Animation System */
+    .animate-float-slow {
+        animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+        animation: floatSlow 7s ease-in-out infinite 2s;
+    }
+
+    .animate-pulse-glow {
+        animation: pulseGlow 3s infinite alternate;
+    }
+
+    .animate-shine-sweep {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .animate-shine-sweep::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 40%;
+        height: 200%;
+        background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(216, 180, 90, 0.3) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(25deg);
+        transition: all 0.75s ease;
+    }
+
+    .animate-shine-sweep:hover::after {
+        left: 130%;
+    }
+
+    .animated-border-gradient {
+        background: linear-gradient(60deg, #78000b, #d8b45a, #5a0309, #ffd45a);
+        background-size: 300% 300%;
+        animation: gradientShift 8s ease infinite;
+    }
+}
+
+@keyframes floatSlow {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 15px rgba(216, 180, 90, 0.2), 0 0 30px rgba(120, 0, 11, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(216, 180, 90, 0.5), 0 0 50px rgba(120, 0, 11, 0.6);
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .fade-section {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
