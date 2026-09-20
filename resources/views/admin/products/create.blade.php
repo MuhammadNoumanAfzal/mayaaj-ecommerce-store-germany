@@ -7,14 +7,14 @@
     <!-- Form Container Card with Executive Dark Navy Gradient Header -->
     <div class="exec-card bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
         
-        <!-- Dark Navy Gradient Header -->
-        <div class="px-6 py-4.5 flex items-center justify-between text-white" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%) !important;">
-            <h2 class="font-extrabold text-base text-white tracking-wide flex items-center gap-2" data-i18n-de="Produkt Hinzufügen" data-i18n-en="Add Product">
-                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <!-- Executive Light Header -->
+        <div class="px-6 py-4.5 flex items-center justify-between" style="background-color: #ffffff !important; color: #0f172a !important; border-bottom: 1px solid #e2e8f0 !important;">
+            <h2 class="font-extrabold text-base text-slate-900 tracking-wide flex items-center gap-2" data-i18n-de="Produkt Hinzufügen" data-i18n-en="Add Product">
+                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Produkt Hinzufügen
             </h2>
             
-            <a href="{{ route('admin.products') }}" class="rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer">
+            <a href="{{ route('admin.products') }}" class="rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer" style="background-color: #f1f5f9 !important; color: #334155 !important; border: 1px solid #e2e8f0 !important;">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 <span data-i18n-de="Zurück zu Produkten" data-i18n-en="Back to Products">Zurück zu Produkten</span>
             </a>

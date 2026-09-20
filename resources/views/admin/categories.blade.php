@@ -5,28 +5,28 @@
 <div class="space-y-6">
 
     <!-- Top Breadcrumb -->
-    <div class="bg-white rounded-xl shadow-xs py-3 px-5 text-xs font-semibold text-slate-600 border border-slate-100 flex items-center justify-between">
+    <div class="card-navy-header rounded-xl shadow-xs py-3 px-5 text-xs font-semibold flex items-center justify-between border border-slate-800">
         <div>
-            <span data-i18n-de="MEHAAJ Admin Dashboard" data-i18n-en="MEHAAJ Admin Dashboard">MEHAAJ Admin Dashboard</span> 
-            <span class="mx-1.5 text-slate-400 font-mono">›</span> 
-            <span class="text-slate-900 font-bold" data-i18n-de="Kategorien" data-i18n-en="Categories">Kategorien</span>
+            <span class="text-slate-400" data-i18n-de="MEHAAJ Admin Dashboard" data-i18n-en="MEHAAJ Admin Dashboard">MEHAAJ Admin Dashboard</span> 
+            <span class="mx-1.5 text-slate-500 font-mono">›</span> 
+            <span class="text-white font-bold" data-i18n-de="Kategorien" data-i18n-en="Categories">Kategorien</span>
         </div>
         <div class="text-[0.68rem] text-slate-400 font-medium">
-            <span data-i18n-de="Gesamt:" data-i18n-en="Total:">Gesamt:</span> <span class="text-[#194AA2] font-bold">{{ count($categories) }}</span>
+            <span data-i18n-de="Gesamt:" data-i18n-en="Total:">Gesamt:</span> <span class="text-indigo-400 font-bold">{{ count($categories) }}</span>
         </div>
     </div>
 
     <!-- Main Categories Card -->
     <div class="exec-card overflow-hidden">
         
-        <!-- Clean White Card Header with Indigo Add Button -->
-        <div class="px-6 py-4 bg-white border-b border-slate-100 flex items-center justify-between">
+        <!-- Clean Card Header with Indigo Add Button -->
+        <div class="px-6 py-4 card-navy-header flex items-center justify-between">
             <div>
-                <h2 class="font-extrabold text-lg text-slate-900 tracking-tight" data-i18n-de="Kategorien" data-i18n-en="Categories">Kategorien</h2>
-                <p class="text-xs text-slate-500 font-medium" data-i18n-de="Verwalten Sie Shop-Kategorien und Hierarchien" data-i18n-en="Manage store categories and hierarchies">Verwalten Sie Shop-Kategorien und Hierarchien</p>
+                <h2 class="font-extrabold text-lg text-white tracking-tight" data-i18n-de="Kategorien" data-i18n-en="Categories">Kategorien</h2>
+                <p class="text-xs text-slate-400 font-medium" data-i18n-de="Verwalten Sie Shop-Kategorien und Hierarchien" data-i18n-en="Manage store categories and hierarchies">Verwalten Sie Shop-Kategorien und Hierarchien</p>
             </div>
             
-            <a href="{{ route('admin.categories.create') }}" class="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 text-xs font-bold transition shadow-xs flex items-center gap-1.5 cursor-pointer">
+            <a href="{{ route('admin.categories.create') }}" class="rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 text-xs font-bold transition shadow-xs flex items-center gap-1.5 cursor-pointer">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span data-i18n-de="Kategorie Hinzufügen" data-i18n-en="Add Category">Kategorie Hinzufügen</span>
             </a>
@@ -34,12 +34,12 @@
 
         <!-- Table Filters & Controls -->
         <div class="p-6 space-y-4">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-600">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-400">
                 
                 <!-- Show Entries Selector -->
                 <div class="flex items-center gap-2">
                     <span data-i18n-de="Zeige" data-i18n-en="Show">Zeige</span>
-                    <select class="h-9 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 outline-none focus:border-indigo-500">
+                    <select class="h-9 px-3 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 outline-none focus:border-indigo-500">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
@@ -57,17 +57,17 @@
                         placeholder="Kategorie suchen..."
                         data-i18n-placeholder-de="Kategorie suchen..."
                         data-i18n-placeholder-en="Search category..."
-                        class="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs text-slate-900 outline-none focus:border-indigo-500 w-full sm:w-56 shadow-2xs"
+                        class="h-9 px-3 rounded-lg border border-slate-700 bg-slate-900 text-xs text-white outline-none focus:border-indigo-500 w-full sm:w-56 shadow-2xs placeholder:text-slate-500"
                     >
                     @if(request('search'))
-                        <a href="{{ route('admin.categories') }}" class="text-xs text-rose-500 hover:underline" data-i18n-de="Zurücksetzen" data-i18n-en="Clear">Clear</a>
+                        <a href="{{ route('admin.categories') }}" class="text-xs text-rose-400 hover:underline" data-i18n-de="Zurücksetzen" data-i18n-en="Clear">Clear</a>
                     @endif
                 </form>
 
             </div>
 
             <!-- Table -->
-            <div class="overflow-x-auto border border-slate-100 rounded-xl">
+            <div class="overflow-x-auto border border-slate-800 rounded-xl">
                 <table class="w-full text-left text-xs">
                     <thead class="exec-table-head">
                         <tr>
@@ -79,18 +79,18 @@
                             <th class="p-3.5 text-center" data-i18n-de="Aktionen" data-i18n-en="Actions">Aktionen</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100 font-medium">
+                    <tbody class="divide-y divide-slate-800/60 font-medium">
                         @forelse($categories as $category)
                             <tr class="exec-table-row">
-                                <td class="p-3.5 font-bold text-slate-900 text-sm">
+                                <td class="p-3.5 font-bold text-white text-sm">
                                     {{ $category->name }}
                                 </td>
                                 <td class="p-3.5">
-                                    <span class="rounded-md bg-slate-100 border border-slate-200 text-slate-700 px-2 py-0.5 text-[0.68rem] font-mono font-semibold">
+                                    <span class="rounded-md bg-slate-900 border border-slate-800 text-indigo-300 px-2 py-0.5 text-[0.68rem] font-mono font-semibold">
                                         {{ $category->slug }}
                                     </span>
                                 </td>
-                                <td class="p-3.5 text-slate-600 max-w-xs truncate">
+                                <td class="p-3.5 text-slate-300 max-w-xs truncate">
                                     {{ $category->description ?? '— Keine Beschreibung —' }}
                                 </td>
                                 <td class="p-3.5">
