@@ -17,27 +17,27 @@
     </div>
 
     <!-- Executive Hero Intelligence Welcome Panel -->
-    <div class="rounded-2xl bg-gradient-to-r from-[#194AA2] via-[#1d52d4] to-[#3b82f6] text-white p-7 shadow-md relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div class="rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-7 shadow-md relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 border border-slate-800">
         <!-- Ambient Background Glow Circle -->
-        <div class="pointer-events-none absolute -right-16 -bottom-16 h-64 w-64 rounded-full bg-white/10 blur-2xl"></div>
+        <div class="pointer-events-none absolute -right-16 -bottom-16 h-64 w-64 rounded-full bg-indigo-500/10 blur-2xl"></div>
         
         <div class="relative z-10 space-y-2">
-            <p class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-blue-100" data-i18n-de="MEHAAJ Atelier | Admin Intelligence Panel" data-i18n-en="MEHAAJ Atelier | Admin Intelligence Panel">MEHAAJ Atelier | Admin Intelligence Panel</p>
-            <h1 class="font-bold text-2xl sm:text-3xl tracking-tight text-white">
-                <span data-i18n-de="Welcome back, Admin" data-i18n-en="Welcome back, Admin">Welcome back, Admin</span>
+            <p class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-indigo-300" data-i18n-de="MEHAAJ Atelier | Admin Intelligence Panel" data-i18n-en="MEHAAJ Atelier | Admin Intelligence Panel">MEHAAJ Atelier | Admin Intelligence Panel</p>
+            <h1 class="font-black text-2xl sm:text-3xl tracking-tight text-white">
+                <span data-i18n-de="Willkommen zurück, Admin" data-i18n-en="Welcome back, Admin">Willkommen zurück, Admin</span>
             </h1>
             <div class="pt-1">
-                <span class="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md px-4 py-1.5 text-xs font-medium border border-white/20 text-white shadow-sm">
+                <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/80 backdrop-blur-md px-4 py-1.5 text-xs font-medium border border-slate-700/80 text-slate-200 shadow-sm">
                     <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span data-i18n-de="Your live operations summary is updated now" data-i18n-en="Your live operations summary is updated now">Your live operations summary is updated now</span>
+                    <span data-i18n-de="Ihre Live-Betriebsübersicht ist auf dem neuesten Stand" data-i18n-en="Your live operations summary is updated now">Ihre Live-Betriebsübersicht ist auf dem neuesten Stand</span>
                 </span>
             </div>
         </div>
 
         <!-- Date Pill -->
         <div class="relative z-10">
-            <span class="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md px-4 py-2 text-xs font-semibold border border-white/25 text-white shadow-md">
-                <svg class="h-4 w-4 text-blue-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/80 backdrop-blur-md px-4 py-2 text-xs font-semibold border border-slate-700/80 text-slate-200 shadow-md">
+                <svg class="h-4 w-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 <span>{{ date('D, d M Y') }}</span>
             </span>
         </div>

@@ -16,15 +16,18 @@
         </div>
     </div>
 
-    <!-- Main Subcategories Card matching Screenshot 3 -->
+    <!-- Main Subcategories Card -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         
-        <!-- Dark Navy Card Header (#0d2352) with Lime Green Add Button (#84cc16) -->
-        <div class="card-navy-header px-6 py-4 flex items-center justify-between" style="background-color: #0d2352 !important; color: #ffffff !important;">
-            <h2 class="font-extrabold text-lg text-white tracking-wide" data-i18n-de="Unterkategorien" data-i18n-en="Subcategories">Unterkategorien</h2>
+        <!-- Clean White Card Header with Indigo Add Button -->
+        <div class="px-6 py-4 bg-white border-b border-slate-100 flex items-center justify-between">
+            <div>
+                <h2 class="font-extrabold text-lg text-slate-900 tracking-tight" data-i18n-de="Unterkategorien" data-i18n-en="Subcategories">Unterkategorien</h2>
+                <p class="text-xs text-slate-500 font-medium" data-i18n-de="Verwalten Sie Unterkategorien und deren Zuordnung" data-i18n-en="Manage subcategories and parent assignments">Verwalten Sie Unterkategorien und deren Zuordnung</p>
+            </div>
             
-            <a href="{{ route('admin.subcategories.create') }}" class="rounded-full btn-lime-save text-white px-5 py-2 text-xs font-extrabold transition shadow-md flex items-center gap-1.5 cursor-pointer" style="background-color: #84cc16 !important; color: #ffffff !important;">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <a href="{{ route('admin.subcategories.create') }}" class="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 text-xs font-bold transition shadow-xs flex items-center gap-1.5 cursor-pointer">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span data-i18n-de="Unterkategorie Hinzufügen" data-i18n-en="Add Subcategory">Unterkategorie Hinzufügen</span>
             </a>
         </div>
@@ -36,7 +39,7 @@
                 <!-- Show Entries Selector -->
                 <div class="flex items-center gap-2">
                     <span data-i18n-de="Zeige" data-i18n-en="Show">Zeige</span>
-                    <select class="h-9 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 outline-none focus:border-[#194AA2]">
+                    <select class="h-9 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 outline-none focus:border-indigo-500">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
@@ -46,7 +49,7 @@
 
                 <!-- Category Filter & Search Form -->
                 <form action="{{ route('admin.subcategories') }}" method="GET" class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-                    <select name="category_id" onchange="this.form.submit()" class="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs text-slate-800 outline-none focus:border-[#194AA2]">
+                    <select name="category_id" onchange="this.form.submit()" class="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs text-slate-800 outline-none focus:border-indigo-500">
                         <option value="" data-i18n-de="Alle Hauptkategorien" data-i18n-en="All Categories">Alle Hauptkategorien</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
@@ -58,18 +61,20 @@
                         type="text"
                         name="search"
                         value="{{ request('search') }}"
-                        placeholder=""
-                        class="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs text-slate-900 outline-none focus:border-[#194AA2] w-full sm:w-48 shadow-2xs"
+                        placeholder="Suchen..."
+                        data-i18n-placeholder-de="Suchen..."
+                        data-i18n-placeholder-en="Search..."
+                        class="h-9 px-3 rounded-lg border border-slate-200 bg-white text-xs text-slate-900 outline-none focus:border-indigo-500 w-full sm:w-48 shadow-2xs"
                     >
                     @if(request('search') || request('category_id'))
-                        <a href="{{ route('admin.subcategories') }}" class="text-xs text-red-500 hover:underline">Clear</a>
+                        <a href="{{ route('admin.subcategories') }}" class="text-xs text-rose-500 hover:underline" data-i18n-de="Zurücksetzen" data-i18n-en="Clear">Clear</a>
                     @endif
                 </form>
 
             </div>
 
             <!-- Table -->
-            <div class="overflow-x-auto border border-slate-100 rounded-xl">
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
                 <table class="w-full text-left text-xs">
                     <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-xs">
                         <tr>
@@ -77,7 +82,7 @@
                             <th class="p-3.5" data-i18n-de="Hauptkategorie" data-i18n-en="Parent Category">Hauptkategorie</th>
                             <th class="p-3.5" data-i18n-de="Beschreibung" data-i18n-en="Description">Beschreibung</th>
                             <th class="p-3.5" data-i18n-de="Logo / Bild" data-i18n-en="Image">Logo / Bild</th>
-                            <th class="p-3.5">Status</th>
+                            <th class="p-3.5" data-i18n-de="Status" data-i18n-en="Status">Status</th>
                             <th class="p-3.5 text-center" data-i18n-de="Aktionen" data-i18n-en="Actions">Aktionen</th>
                         </tr>
                     </thead>
@@ -89,7 +94,7 @@
                                     <span class="block text-[0.68rem] text-slate-400 font-mono font-normal">/{{ $sub->slug }}</span>
                                 </td>
                                 <td class="p-3.5">
-                                    <span class="rounded text-white px-2.5 py-1 text-[0.68rem] font-bold" style="background-color: #0d2352 !important;">
+                                    <span class="rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-700 px-2.5 py-1 text-[0.68rem] font-bold">
                                         📁 {{ $sub->category->name ?? 'Keine' }}
                                     </span>
                                 </td>
@@ -98,41 +103,39 @@
                                 </td>
                                 <td class="p-3.5">
                                     @if($sub->image_url)
-                                        <img src="{{ $sub->image_url }}" alt="{{ $sub->name }}" class="h-10 w-10 object-cover rounded-full border border-slate-200 shadow-xs">
+                                        <img src="{{ $sub->image_url }}" alt="{{ $sub->name }}" class="h-9 w-9 object-cover rounded-lg border border-slate-200 shadow-xs">
                                     @else
-                                        <span class="text-slate-400 italic">Kein Bild</span>
+                                        <span class="text-slate-400 italic text-[0.7rem]" data-i18n-de="Kein Bild" data-i18n-en="No Image">Kein Bild</span>
                                     @endif
                                 </td>
                                 <td class="p-3.5">
                                     @if($sub->status === 'active')
-                                        <span class="rounded-full bg-emerald-100 text-emerald-800 px-3 py-1 text-[0.65rem] font-bold uppercase" data-i18n-de="Aktiv" data-i18n-en="Active">Aktiv</span>
+                                        <span class="rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 px-2.5 py-0.5 text-[0.65rem] font-bold uppercase" data-i18n-de="Aktiv" data-i18n-en="Active">Aktiv</span>
                                     @else
-                                        <span class="rounded-full bg-amber-100 text-amber-800 px-3 py-1 text-[0.65rem] font-bold uppercase" data-i18n-de="Entwurf" data-i18n-en="Draft">Entwurf</span>
+                                        <span class="rounded-full bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-0.5 text-[0.65rem] font-bold uppercase" data-i18n-de="Entwurf" data-i18n-en="Draft">Entwurf</span>
                                     @endif
                                 </td>
                                 <td class="p-3.5 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <!-- Edit Pill Button matching Screenshot 3 -->
+                                        <!-- Edit Soft Pill Button -->
                                         <a 
                                             href="{{ route('admin.subcategories.edit', $sub->id) }}"
-                                            class="rounded-full text-white px-4 py-1.5 text-xs font-bold transition shadow-xs cursor-pointer inline-flex items-center gap-1"
-                                            style="background-color: #0d2352 !important; color: #ffffff !important;"
+                                            class="rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer inline-flex items-center gap-1 shadow-2xs"
                                             data-i18n-de="Bearbeiten"
                                             data-i18n-en="Edit"
                                         >
-                                            Edit
+                                            Bearbeiten
                                         </a>
 
-                                        <!-- Delete Pill Button matching Screenshot 3 -->
+                                        <!-- Delete Soft Pill Button -->
                                         <button
                                             type="button"
                                             onclick="confirmDeleteSubcategory({{ $sub->id }}, '{{ addslashes($sub->name) }}')"
-                                            class="rounded-full text-white px-4 py-1.5 text-xs font-bold transition shadow-xs cursor-pointer inline-flex items-center gap-1"
-                                            style="background-color: #dc2626 !important; color: #ffffff !important;"
+                                            class="rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer inline-flex items-center gap-1 shadow-2xs"
                                             data-i18n-de="Löschen"
                                             data-i18n-en="Delete"
                                         >
-                                            Delete
+                                            Löschen
                                         </button>
 
                                         <form id="delete-subcategory-form-{{ $sub->id }}" action="{{ route('admin.subcategories.destroy', $sub->id) }}" method="POST" class="hidden">
