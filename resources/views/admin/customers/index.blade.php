@@ -37,23 +37,12 @@
         </div>
 
         <!-- Table Filters & Controls Toolbar -->
-        <div class="p-5 sm:p-6 bg-slate-50/60 border-b border-slate-100 space-y-4">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-600">
+        <div class="p-5 sm:p-6 bg-slate-50 border-b border-slate-200 space-y-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-700">
                 
-                <!-- Show Entries Selector -->
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <span class="text-slate-500" data-i18n-de="Zeige" data-i18n-en="Show">Zeige</span>
-                    <select class="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-800 font-medium outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-2xs">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    <span class="text-slate-500" data-i18n-de="Einträge" data-i18n-en="entries">Einträge</span>
-                </div>
-
-                <!-- Tier Filter & Search Form -->
-                <form action="{{ route('admin.customers') }}" method="GET" class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-                    <select name="vip_tier" onchange="this.form.submit()" class="h-9 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-2xs">
+                <!-- Left: Tier Filter & Full Width Search Form -->
+                <form action="{{ route('admin.customers') }}" method="GET" class="flex flex-wrap items-center gap-2.5 w-full sm:flex-1 sm:max-w-xl">
+                    <select name="vip_tier" onchange="this.form.submit()" class="h-10 px-3.5 rounded-xl border border-slate-300 bg-white text-xs font-semibold text-slate-800 outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 shadow-2xs" style="background-color: #ffffff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;">
                         <option value="" data-i18n-de="Alle VIP Tiers" data-i18n-en="All VIP Tiers">Alle VIP Tiers</option>
                         <option value="platinum" {{ request('vip_tier') === 'platinum' ? 'selected' : '' }}>Platinum VIP</option>
                         <option value="gold" {{ request('vip_tier') === 'gold' ? 'selected' : '' }}>Gold VIP</option>
@@ -61,23 +50,35 @@
                         <option value="regular" {{ request('vip_tier') === 'regular' ? 'selected' : '' }}>Standard</option>
                     </select>
 
-                    <div class="relative w-full sm:w-48">
+                    <div class="relative flex-1 min-w-[200px]">
                         <input
                             type="text"
                             name="search"
                             value="{{ request('search') }}"
-                            placeholder="Kunde suchen..."
-                            data-i18n-placeholder-de="Kunde suchen..."
-                            data-i18n-placeholder-en="Search customer..."
-                            class="h-9 w-full pl-9 pr-4 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-2xs placeholder:text-slate-400"
+                            placeholder="Kunde nach Name, E-Mail oder Telefon suchen..."
+                            data-i18n-placeholder-de="Kunde nach Name, E-Mail oder Telefon suchen..."
+                            data-i18n-placeholder-en="Search customer by name, email or phone..."
+                            class="h-10 w-full pl-10 pr-4 rounded-xl border border-slate-300 bg-white text-xs font-medium text-slate-900 outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 shadow-2xs placeholder:text-slate-400"
+                            style="background-color: #ffffff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                         >
-                        <svg class="h-4 w-4 absolute left-3 top-2.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <svg class="h-4 w-4 absolute left-3.5 top-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                     </div>
 
                     @if(request('search') || request('vip_tier'))
-                        <a href="{{ route('admin.customers') }}" class="px-3 py-2 rounded-xl bg-slate-200/70 hover:bg-slate-200 text-slate-700 text-xs font-bold transition" data-i18n-de="Zurücksetzen" data-i18n-en="Clear">Clear</a>
+                        <a href="{{ route('admin.customers') }}" class="btn-exec-secondary px-3.5 py-2 rounded-xl text-xs transition font-bold" data-i18n-de="Zurücksetzen" data-i18n-en="Clear">Clear</a>
                     @endif
                 </form>
+
+                <!-- Right: Show Entries Selector -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <span class="text-slate-600 font-bold" data-i18n-de="Zeige" data-i18n-en="Show">Zeige</span>
+                    <select class="h-9 px-3 rounded-xl border border-slate-300 bg-white text-slate-900 font-semibold outline-none focus:border-emerald-600 shadow-2xs">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <span class="text-slate-600 font-bold" data-i18n-de="Einträge" data-i18n-en="entries">Einträge</span>
+                </div>
 
             </div>
         </div>
@@ -86,30 +87,30 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>
-                    <tr class="bg-slate-100/70 text-slate-600 font-extrabold uppercase tracking-wider text-[0.68rem] border-b border-slate-200">
-                        <th class="py-3.5 px-5" data-i18n-de="Kunden Name & E-Mail" data-i18n-en="Customer Name & Email">Kunden Name & E-Mail</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Telefon & Stadt" data-i18n-en="Phone & City">Telefon & Stadt</th>
-                        <th class="py-3.5 px-5" data-i18n-de="VIP Tier Status" data-i18n-en="VIP Tier Status">VIP Tier Status</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Gesamtumsatz (€)" data-i18n-en="Total Spent (€)">Gesamtumsatz (€)</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Bestellungen" data-i18n-en="Orders">Bestellungen</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Status" data-i18n-en="Status">Status</th>
-                        <th class="py-3.5 px-5 text-center" data-i18n-de="Aktionen" data-i18n-en="Actions">Aktionen</th>
+                    <tr class="exec-table-head bg-slate-100 text-slate-800 font-extrabold uppercase tracking-wider text-[0.7rem] border-y border-slate-300" style="background-color: #f1f5f9 !important; color: #1e293b !important; border-bottom: 2px solid #cbd5e1 !important;">
+                        <th class="py-4 px-6 font-black" data-i18n-de="Kunden Name & E-Mail" data-i18n-en="Customer Name & Email">Kunden Name & E-Mail</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Telefon & Stadt" data-i18n-en="Phone & City">Telefon & Stadt</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="VIP Tier Status" data-i18n-en="VIP Tier Status">VIP Tier Status</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Gesamtumsatz (€)" data-i18n-en="Total Spent (€)">Gesamtumsatz (€)</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Bestellungen" data-i18n-en="Orders">Bestellungen</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Status" data-i18n-en="Status">Status</th>
+                        <th class="py-4 px-6 font-black text-center" data-i18n-de="Aktionen" data-i18n-en="Actions">Aktionen</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 font-medium">
+                <tbody class="divide-y divide-slate-200 font-medium">
                     @forelse($customers as $customer)
-                        <tr class="hover:bg-slate-50/80 transition-colors duration-150">
-                            <td class="py-4 px-5">
+                        <tr class="exec-table-row hover:bg-slate-50/90 transition-colors duration-150 border-b border-slate-200/80">
+                            <td class="py-4 px-6">
                                 <span class="font-extrabold text-slate-900 text-sm tracking-tight block">
                                     {{ $customer->name }}
                                 </span>
                                 <span class="block text-[0.68rem] text-slate-500 font-normal mt-0.5">{{ $customer->email }}</span>
                             </td>
-                            <td class="py-4 px-5 text-slate-600 font-medium">
+                            <td class="py-4 px-6 text-slate-600 font-medium">
                                 <p class="text-slate-800 font-semibold">{{ $customer->phone ?? '— Keine Nummer —' }}</p>
                                 <p class="text-[0.68rem] text-slate-400 mt-0.5">{{ $customer->city ?? 'Deutschland' }}</p>
                             </td>
-                            <td class="py-4 px-5">
+                            <td class="py-4 px-6">
                                 @if($customer->vip_tier === 'platinum')
                                     <span class="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 text-amber-300 border border-amber-300/30 px-3 py-1 text-[0.65rem] font-extrabold uppercase shadow-2xs">
                                         💎 Platinum VIP
@@ -128,15 +129,15 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="py-4 px-5 font-extrabold text-emerald-700 text-sm">
+                            <td class="py-4 px-6 font-extrabold text-emerald-700 text-sm">
                                 €{{ number_format($customer->total_spent, 2, ',', '.') }}
                             </td>
-                            <td class="py-4 px-5">
+                            <td class="py-4 px-6">
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80 text-[0.68rem] font-extrabold">
                                     {{ $customer->total_orders }} Käufe
                                 </span>
                             </td>
-                            <td class="py-4 px-5">
+                            <td class="py-4 px-6">
                                 @if($customer->status === 'active')
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[0.65rem] font-extrabold uppercase tracking-wide">
                                         <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -148,16 +149,17 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="py-4 px-5 text-center">
+                            <td class="py-4 px-6 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <!-- Edit Soft Pill Button -->
+                                    <!-- Edit Pill Button -->
                                     <a 
                                         href="{{ route('admin.customers.edit', $customer->id) }}"
-                                        class="rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
+                                        class="btn-exec-secondary rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
+                                        style="background-color: #f1f5f9 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; font-weight: 700 !important;"
                                         data-i18n-de="Bearbeiten"
                                         data-i18n-en="Edit"
                                     >
-                                        <svg class="h-3.5 w-3.5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                        <svg class="h-3.5 w-3.5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                         <span data-i18n-de="Bearbeiten" data-i18n-en="Edit">Bearbeiten</span>
                                     </a>
 
@@ -165,7 +167,8 @@
                                     <button
                                         type="button"
                                         onclick="confirmDeleteCustomer({{ $customer->id }}, '{{ addslashes($customer->name) }}')"
-                                        class="rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/80 px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
+                                        class="btn-exec-danger rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs"
+                                        style="background-color: #fff1f2 !important; color: #be123c !important; border: 1px solid #fecdd3 !important; font-weight: 700 !important;"
                                         data-i18n-de="Löschen"
                                         data-i18n-en="Delete"
                                     >

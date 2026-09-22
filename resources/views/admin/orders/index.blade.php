@@ -32,24 +32,28 @@
         </div>
 
         <!-- Table Filters & Controls Toolbar -->
-        <div class="p-5 sm:p-6 bg-slate-50/60 border-b border-slate-100 space-y-4">
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-600">
+        <div class="p-5 sm:p-6 bg-slate-50 border-b border-slate-200 space-y-4">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-700">
                 
-                <!-- Show Entries Selector -->
-                <div class="flex items-center gap-2 w-full lg:w-auto">
-                    <span class="text-slate-500" data-i18n-de="Zeige" data-i18n-en="Show">Zeige</span>
-                    <select class="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-800 font-medium outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-2xs">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                    <span class="text-slate-500" data-i18n-de="Einträge" data-i18n-en="entries">Einträge</span>
-                </div>
-
                 <!-- Filters & Search Form -->
-                <form action="{{ route('admin.orders') }}" method="GET" class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                <form action="{{ route('admin.orders') }}" method="GET" class="flex flex-wrap items-center gap-2.5 w-full lg:flex-1 lg:max-w-2xl">
+                    <!-- Search Input (Left / Expanded) -->
+                    <div class="relative flex-1 min-w-[220px]">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Bestell-Nr, Kunde oder E-Mail suchen..."
+                            data-i18n-placeholder-de="Bestell-Nr, Kunde oder E-Mail suchen..."
+                            data-i18n-placeholder-en="Search Order #, customer or email..."
+                            class="h-10 w-full pl-10 pr-4 rounded-xl border border-slate-300 bg-white text-xs font-medium text-slate-900 outline-none focus:border-emerald-600 shadow-2xs placeholder:text-slate-400"
+                            style="background-color: #ffffff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
+                        >
+                        <svg class="h-4 w-4 absolute left-3.5 top-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+
                     <!-- Payment Method Filter -->
-                    <select name="payment_method" onchange="this.form.submit()" class="h-9 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-2xs">
+                    <select name="payment_method" onchange="this.form.submit()" class="h-10 px-3.5 rounded-xl border border-slate-300 bg-white text-xs font-semibold text-slate-900 outline-none focus:border-emerald-600 shadow-2xs" style="background-color: #ffffff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;">
                         <option value="" data-i18n-de="Alle Zahlungsarten" data-i18n-en="All Payment Methods">Alle Zahlungsarten</option>
                         <option value="vorkasse" {{ request('payment_method') === 'vorkasse' ? 'selected' : '' }}>Vorkasse (Überweisung)</option>
                         <option value="credit_card" {{ request('payment_method') === 'credit_card' ? 'selected' : '' }}>Kreditkarte</option>
@@ -57,7 +61,7 @@
                     </select>
 
                     <!-- Order Status Filter -->
-                    <select name="status" onchange="this.form.submit()" class="h-9 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-2xs">
+                    <select name="status" onchange="this.form.submit()" class="h-10 px-3.5 rounded-xl border border-slate-300 bg-white text-xs font-semibold text-slate-900 outline-none focus:border-emerald-600 shadow-2xs" style="background-color: #ffffff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;">
                         <option value="" data-i18n-de="Alle Bestellstatus" data-i18n-en="All Order Statuses">Alle Bestellstatus</option>
                         <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Ausstehend (Offen)</option>
                         <option value="processing" {{ request('status') === 'processing' ? 'selected' : '' }}>In Bearbeitung</option>
@@ -66,24 +70,21 @@
                         <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Storniert</option>
                     </select>
 
-                    <!-- Search Input -->
-                    <div class="relative w-full sm:w-48">
-                        <input
-                            type="text"
-                            name="search"
-                            value="{{ request('search') }}"
-                            placeholder="Bestell-Nr, Kunde, E-Mail..."
-                            data-i18n-placeholder-de="Bestell-Nr, Kunde, E-Mail..."
-                            data-i18n-placeholder-en="Order #, customer, email..."
-                            class="h-9 w-full pl-9 pr-4 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-2xs placeholder:text-slate-400"
-                        >
-                        <svg class="h-4 w-4 absolute left-3 top-2.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    </div>
-
                     @if(request('search') || request('payment_method') || request('status'))
-                        <a href="{{ route('admin.orders') }}" class="px-3 py-2 rounded-xl bg-slate-200/70 hover:bg-slate-200 text-slate-700 text-xs font-bold transition" data-i18n-de="Zurücksetzen" data-i18n-en="Clear">Clear</a>
+                        <a href="{{ route('admin.orders') }}" class="btn-exec-secondary px-3.5 py-2 rounded-xl text-xs transition" data-i18n-de="Zurücksetzen" data-i18n-en="Clear">Clear</a>
                     @endif
                 </form>
+
+                <!-- Show Entries Selector -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <span class="text-slate-600 font-bold" data-i18n-de="Zeige" data-i18n-en="Show">Zeige</span>
+                    <select class="h-9 px-3 rounded-xl border border-slate-300 bg-white text-slate-900 font-semibold outline-none focus:border-emerald-600 shadow-2xs">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <span class="text-slate-600 font-bold" data-i18n-de="Einträge" data-i18n-en="entries">Einträge</span>
+                </div>
 
             </div>
         </div>
@@ -92,24 +93,24 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>
-                    <tr class="bg-slate-100/70 text-slate-600 font-extrabold uppercase tracking-wider text-[0.68rem] border-b border-slate-200">
-                        <th class="py-3.5 px-5" data-i18n-de="Bestell-Nr. & Datum" data-i18n-en="Order # & Date">Bestell-Nr. & Datum</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Kunde & Lieferadresse" data-i18n-en="Customer & Address">Kunde & Lieferadresse</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Zahlungsart" data-i18n-en="Payment Method">Zahlungsart</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Zahlungsstatus" data-i18n-en="Payment Status">Zahlungsstatus</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Gesamtsumme (€)" data-i18n-en="Total Amount (€)">Gesamtsumme (€)</th>
-                        <th class="py-3.5 px-5" data-i18n-de="Bestellstatus" data-i18n-en="Order Status">Bestellstatus</th>
-                        <th class="py-3.5 px-5 text-center" data-i18n-de="Aktionen" data-i18n-en="Actions">Aktionen</th>
+                    <tr class="exec-table-head bg-slate-100 text-slate-800 font-extrabold uppercase tracking-wider text-[0.7rem] border-y border-slate-300" style="background-color: #f1f5f9 !important; color: #1e293b !important; border-bottom: 2px solid #cbd5e1 !important;">
+                        <th class="py-4 px-6 font-black" data-i18n-de="Bestell-Nr. & Datum" data-i18n-en="Order # & Date">Bestell-Nr. & Datum</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Kunde & Lieferadresse" data-i18n-en="Customer & Address">Kunde & Lieferadresse</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Zahlungsart" data-i18n-en="Payment Method">Zahlungsart</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Zahlungsstatus" data-i18n-en="Payment Status">Zahlungsstatus</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Gesamtsumme (€)" data-i18n-en="Total Amount (€)">Gesamtsumme (€)</th>
+                        <th class="py-4 px-6 font-black" data-i18n-de="Bestellstatus" data-i18n-en="Order Status">Bestellstatus</th>
+                        <th class="py-4 px-6 font-black text-center" data-i18n-de="Aktionen" data-i18n-en="Actions">Aktionen</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 font-medium">
+                <tbody class="divide-y divide-slate-200 font-medium">
                     @forelse($orders as $order)
-                        <tr class="hover:bg-slate-50/80 transition-colors duration-150">
-                            <td class="py-4 px-5">
+                        <tr class="exec-table-row hover:bg-slate-50/90 transition-colors duration-150 border-b border-slate-200/80">
+                            <td class="py-4 px-6">
                                 <span class="font-extrabold text-slate-900 text-sm font-mono block">
                                     {{ $order->order_number }}
                                 </span>
-                                <span class="block text-[0.68rem] text-slate-400 font-mono mt-0.5">{{ $order->created_at->format('d.m.Y H:i') }} Uhr</span>
+                                <span class="block text-[0.68rem] text-slate-500 font-mono mt-0.5">{{ $order->created_at->format('d.m.Y H:i') }} Uhr</span>
                             </td>
                             <td class="py-4 px-5">
                                 <span class="font-bold text-slate-900 text-xs block">{{ $order->customer_name }}</span>
@@ -178,11 +179,12 @@
                                     <!-- View / Invoice Button -->
                                     <a 
                                         href="{{ route('admin.orders.show', $order->id) }}"
-                                        class="rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
+                                        class="btn-exec-secondary rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
+                                        style="background-color: #f1f5f9 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; font-weight: 700 !important;"
                                         data-i18n-de="Rechnung / Details"
                                         data-i18n-en="Invoice / Details"
                                     >
-                                        <svg class="h-3.5 w-3.5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <svg class="h-3.5 w-3.5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                         <span data-i18n-de="Rechnung" data-i18n-en="Invoice">Rechnung</span>
                                     </a>
 
@@ -190,7 +192,8 @@
                                     <button
                                         type="button"
                                         onclick="confirmDeleteOrder({{ $order->id }}, '{{ addslashes($order->order_number) }}')"
-                                        class="rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/80 px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
+                                        class="btn-exec-danger rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs"
+                                        style="background-color: #fff1f2 !important; color: #be123c !important; border: 1px solid #fecdd3 !important; font-weight: 700 !important;"
                                         data-i18n-de="Löschen"
                                         data-i18n-en="Delete"
                                     >
