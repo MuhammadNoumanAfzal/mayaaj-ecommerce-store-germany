@@ -16,18 +16,18 @@
         </div>
     </div>
 
-    <!-- Executive Hero Intelligence Welcome Panel (White Theme) -->
+    <!-- Executive Hero Intelligence Welcome Panel (White Theme with Emerald Accents) -->
     <div class="rounded-2xl p-7 shadow-xs relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6" style="background-color: #ffffff !important; color: #0f172a !important; border: 1px solid #e2e8f0 !important;">
         <!-- Ambient Background Glow Circle -->
-        <div class="pointer-events-none absolute -right-16 -bottom-16 h-64 w-64 rounded-full blur-2xl" style="background-color: rgba(99, 102, 241, 0.08) !important;"></div>
+        <div class="pointer-events-none absolute -right-16 -bottom-16 h-64 w-64 rounded-full blur-2xl" style="background-color: rgba(16, 185, 129, 0.08) !important;"></div>
         
         <div class="relative z-10 space-y-2">
-            <p class="text-[0.68rem] font-bold uppercase tracking-[0.2em]" style="color: #4f46e5 !important;" data-i18n-de="MEHAAJ Atelier | Admin Intelligence Panel" data-i18n-en="MEHAAJ Atelier | Admin Intelligence Panel">MEHAAJ Atelier | Admin Intelligence Panel</p>
+            <p class="text-[0.68rem] font-bold uppercase tracking-[0.2em]" style="color: #059669 !important;" data-i18n-de="MEHAAJ Atelier | Admin Intelligence Panel" data-i18n-en="MEHAAJ Atelier | Admin Intelligence Panel">MEHAAJ Atelier | Admin Intelligence Panel</p>
             <h1 class="font-black text-2xl sm:text-3xl tracking-tight" style="color: #0f172a !important;">
                 <span data-i18n-de="Willkommen zurück, Admin" data-i18n-en="Welcome back, Admin">Willkommen zurück, Admin</span>
             </h1>
             <div class="pt-1">
-                <span class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium shadow-xs" style="background-color: #eef2ff !important; color: #4338ca !important; border: 1px solid #c7d2fe !important;">
+                <span class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium shadow-2xs" style="background-color: #ecfdf5 !important; color: #047857 !important; border: 1px solid #a7f3d0 !important;">
                     <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span data-i18n-de="Ihre Live-Betriebsübersicht ist auf dem neuesten Stand" data-i18n-en="Your live operations summary is updated now">Ihre Live-Betriebsübersicht ist auf dem neuesten Stand</span>
                 </span>
@@ -36,8 +36,8 @@
 
         <!-- Date Pill -->
         <div class="relative z-10">
-            <span class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold shadow-xs" style="background-color: #f8fafc !important; color: #334155 !important; border: 1px solid #cbd5e1 !important;">
-                <svg class="h-4 w-4" style="color: #4f46e5 !important;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold shadow-2xs" style="background-color: #ffffff !important; color: #334155 !important; border: 1px solid #e2e8f0 !important;">
+                <svg class="h-4 w-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 <span>{{ date('D, d M Y') }}</span>
             </span>
         </div>
