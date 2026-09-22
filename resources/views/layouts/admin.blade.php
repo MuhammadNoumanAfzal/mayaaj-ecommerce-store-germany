@@ -455,9 +455,9 @@
         </aside>
 
         <!-- Main Dynamic Content Area (Soft Slate Neutral #f1f5f9) -->
-        <div class="flex-1 lg:ml-64 min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8 flex flex-col justify-between transition-all duration-300" style="background-color: #f1f5f9 !important;">
+        <div class="flex-1 lg:ml-64 min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8 pb-16 flex flex-col justify-between transition-all duration-300" style="background-color: #f1f5f9 !important;">
             
-            <main class="space-y-6 flex-1">
+            <main class="space-y-6 flex-1 pb-20">
                 @yield('admin-content')
             </main>
 

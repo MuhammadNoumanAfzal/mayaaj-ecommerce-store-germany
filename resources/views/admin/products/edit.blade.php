@@ -171,8 +171,8 @@
             </div>
 
             <!-- Featured Product Option -->
-            <div class="flex items-center gap-2 pt-2">
-                <input type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured', $product->is_featured) ? 'checked' : '' }} class="h-4 w-4 rounded border-slate-300 text-[#194AA2] focus:ring-[#194AA2]">
+            <div class="flex items-center gap-2 pt-2 p-3 bg-indigo-50/40 rounded-xl border border-indigo-100">
+                <input type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured', $product->is_featured) ? 'checked' : '' }} class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
                 <label for="is_featured" class="font-bold text-slate-800 text-xs cursor-pointer" data-i18n-de="Als Highlight / Featured Produkt auf der Startseite markieren" data-i18n-en="Mark as Featured Product on Homepage">Als Highlight / Featured Produkt auf der Startseite markieren</label>
             </div>
 
@@ -182,8 +182,9 @@
                 <textarea 
                     name="description" 
                     rows="4" 
-                    class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                    class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition shadow-2xs"
                 >{{ old('description', $product->description) }}</textarea>
+                <p class="text-[0.68rem] text-slate-400 mt-1 font-medium" data-i18n-de="Ausführliche Produktbeschreibung." data-i18n-en="Detailed product description.">Ausführliche Produktbeschreibung.</p>
             </div>
 
             <!-- Craftsmanship Details (Full Width) -->
@@ -192,18 +193,21 @@
                 <textarea 
                     name="craftsmanship" 
                     rows="3" 
-                    class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                    class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 transition shadow-2xs"
                 >{{ old('craftsmanship', $product->craftsmanship) }}</textarea>
+                <p class="text-[0.68rem] text-slate-400 mt-1 font-medium" data-i18n-de="Material- und Verarbeitungsdetails." data-i18n-en="Material and atelier details.">Material- und Verarbeitungsdetails.</p>
             </div>
 
-            <!-- Form Submit Button (Lime Green #84cc16 matching Screenshot 2) -->
-            <div class="pt-4 flex items-center justify-center">
+            <!-- Bottom Action Button Row with Generous Spacing -->
+            <div class="pt-6 mt-8 border-t border-slate-200/80 flex items-center justify-end gap-3">
+                <a href="{{ route('admin.products') }}" class="px-6 py-2.5 rounded-xl border border-slate-300/80 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all shadow-2xs cursor-pointer hover:shadow-xs" data-i18n-de="Abbrechen" data-i18n-en="Cancel">
+                    Abbrechen
+                </a>
                 <button 
                     type="submit" 
-                    class="w-full sm:w-auto px-10 py-3.5 rounded-full btn-lime-save text-white font-extrabold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
-                    style="background-color: #84cc16 !important; color: #ffffff !important;"
+                    class="rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-6 py-2.5 text-xs font-bold transition-all shadow-md shadow-indigo-500/20 hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2 cursor-pointer"
                 >
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                     <span data-i18n-de="Änderungen Speichern" data-i18n-en="Save Changes">Änderungen Speichern</span>
                 </button>
             </div>
