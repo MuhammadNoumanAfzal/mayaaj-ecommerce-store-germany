@@ -30,8 +30,8 @@
                 <p class="text-xs text-slate-500 font-medium mt-0.5" data-i18n-de="Verwalten Sie Unterkategorien und deren Zuordnung zu Hauptkategorien." data-i18n-en="Manage subcategories and parent category assignments.">Verwalten Sie Unterkategorien und deren Zuordnung zu Hauptkategorien.</p>
             </div>
             
-            <a href="{{ route('admin.subcategories.create') }}" class="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 text-xs font-bold transition shadow-xs flex items-center gap-2 cursor-pointer hover:shadow-md">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <a href="{{ route('admin.subcategories.create') }}" class="btn-exec-primary rounded-xl px-5 py-2.5 text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer" style="background-color: #064e3b !important; color: #ffffff !important; font-weight: 700 !important;">
+                <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span data-i18n-de="Unterkategorie Hinzufügen" data-i18n-en="Add Subcategory">Unterkategorie Hinzufügen</span>
             </a>
         </div>

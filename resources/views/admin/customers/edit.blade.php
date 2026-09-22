@@ -8,13 +8,13 @@
     <div class="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden">
         
         <!-- Executive Light Header -->
-        <div class="px-6 py-4.5 flex items-center justify-between" style="background-color: #ffffff !important; color: #0f172a !important; border-bottom: 1px solid #e2e8f0 !important;">
+        <div class="px-6 py-4 flex items-center justify-between bg-slate-50/50 border-b border-slate-200">
             <h2 class="font-extrabold text-base text-slate-900 tracking-wide flex items-center gap-2" data-i18n-de="VIP Kunde Bearbeiten" data-i18n-en="Edit VIP Customer">
-                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 VIP Kunde Bearbeiten
             </h2>
             
-            <a href="{{ route('admin.customers') }}" class="rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer" style="background-color: #f1f5f9 !important; color: #334155 !important; border: 1px solid #e2e8f0 !important;">
+            <a href="{{ route('admin.customers') }}" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer" style="background-color: #f1f5f9 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; font-weight: 700 !important;">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 <span data-i18n-de="Zurück zu Kunden" data-i18n-en="Back to Customers">Zurück zu Kunden</span>
             </a>
@@ -40,46 +40,50 @@
                 
                 <!-- Customer Name -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Vollständiger Name *" data-i18n-en="Full Name *">Vollständiger Name *</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Vollständiger Name *" data-i18n-en="Full Name *">Vollständiger Name <span class="text-emerald-700 font-bold">*</span></label>
                     <input 
                         type="text" 
                         name="name" 
                         value="{{ old('name', $customer->name) }}" 
                         required 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- Customer Email -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="E-Mail Adresse *" data-i18n-en="Email Address *">E-Mail Adresse *</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="E-Mail Adresse *" data-i18n-en="Email Address *">E-Mail Adresse <span class="text-emerald-700 font-bold">*</span></label>
                     <input 
                         type="email" 
                         name="email" 
                         value="{{ old('email', $customer->email) }}" 
                         required 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- Phone -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Telefonnummer" data-i18n-en="Phone Number">Telefonnummer</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Telefonnummer" data-i18n-en="Phone Number">Telefonnummer</label>
                     <input 
                         type="text" 
                         name="phone" 
                         value="{{ old('phone', $customer->phone) }}" 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- VIP Tier Selection -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="VIP Status *" data-i18n-en="VIP Tier *">VIP Status *</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="VIP Status *" data-i18n-en="VIP Tier *">VIP Status <span class="text-emerald-700 font-bold">*</span></label>
                     <select 
                         name="vip_tier" 
                         required 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                         <option value="platinum" {{ old('vip_tier', $customer->vip_tier) === 'platinum' ? 'selected' : '' }}>💎 Platinum VIP</option>
                         <option value="gold" {{ old('vip_tier', $customer->vip_tier) === 'gold' ? 'selected' : '' }}>🏆 Gold VIP</option>
@@ -90,68 +94,74 @@
 
                 <!-- Total Spent -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Gesamtumsatz (€)" data-i18n-en="Total Spent (€)">Gesamtumsatz (€)</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Gesamtumsatz (€)" data-i18n-en="Total Spent (€)">Gesamtumsatz (€)</label>
                     <input 
                         type="number" 
                         step="0.01" 
                         name="total_spent" 
                         value="{{ old('total_spent', $customer->total_spent) }}" 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- Total Orders -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Anzahl Bestellungen" data-i18n-en="Total Orders Count">Anzahl Bestellungen</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Anzahl Bestellungen" data-i18n-en="Total Orders Count">Anzahl Bestellungen</label>
                     <input 
                         type="number" 
                         name="total_orders" 
                         value="{{ old('total_orders', $customer->total_orders) }}" 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- City -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Stadt" data-i18n-en="City">Stadt</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Stadt" data-i18n-en="City">Stadt</label>
                     <input 
                         type="text" 
                         name="city" 
                         value="{{ old('city', $customer->city) }}" 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- Postal Code -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Postleitzahl" data-i18n-en="Postal Code">Postleitzahl</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Postleitzahl" data-i18n-en="Postal Code">Postleitzahl</label>
                     <input 
                         type="text" 
                         name="postal_code" 
                         value="{{ old('postal_code', $customer->postal_code) }}" 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- Country -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Land *" data-i18n-en="Country *">Land *</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Land *" data-i18n-en="Country *">Land <span class="text-emerald-700 font-bold">*</span></label>
                     <input 
                         type="text" 
                         name="country" 
                         value="{{ old('country', $customer->country) }}" 
                         required 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                 </div>
 
                 <!-- Status -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Konto Status *" data-i18n-en="Account Status *">Konto Status *</label>
+                    <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Konto Status *" data-i18n-en="Account Status *">Konto Status <span class="text-emerald-700 font-bold">*</span></label>
                     <select 
                         name="status" 
                         required 
-                        class="w-full h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                        class="exec-input w-full h-11 rounded-xl px-4 text-slate-900 text-sm outline-none transition shadow-2xs"
+                        style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                     >
                         <option value="active" {{ old('status', $customer->status) === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv" data-i18n-en="Active">Aktiv</option>
                         <option value="inactive" {{ old('status', $customer->status) === 'inactive' ? 'selected' : '' }} data-i18n-de="Inaktiv" data-i18n-en="Inactive">Inaktiv</option>
@@ -162,22 +172,26 @@
 
             <!-- Address (Full Width) -->
             <div>
-                <label class="block font-bold text-slate-700 mb-1.5" data-i18n-de="Liefer- / Rechnungsadresse" data-i18n-en="Billing / Shipping Address">Liefer- / Rechnungsadresse</label>
+                <label class="block font-bold text-slate-900 mb-1.5" data-i18n-de="Liefer- / Rechnungsadresse" data-i18n-en="Billing / Shipping Address">Liefer- / Rechnungsadresse</label>
                 <textarea 
                     name="address" 
                     rows="3" 
-                    class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm outline-none focus:border-[#194AA2] focus:bg-white transition"
+                    class="exec-input w-full p-4 rounded-xl text-slate-900 text-sm outline-none transition shadow-2xs"
+                    style="background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important;"
                 >{{ old('address', $customer->address) }}</textarea>
             </div>
 
-            <!-- Form Submit Button (Lime Green #84cc16 matching Screenshot 2) -->
-            <div class="pt-4 flex items-center justify-center">
+            <!-- Form Submit Button -->
+            <div class="pt-6 mt-6 border-t border-slate-200 flex items-center justify-end gap-3">
+                <a href="{{ route('admin.customers') }}" class="btn-exec-secondary px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-2xs cursor-pointer" style="background-color: #f1f5f9 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; font-weight: 700 !important;" data-i18n-de="Abbrechen" data-i18n-en="Cancel">
+                    Abbrechen
+                </a>
                 <button 
                     type="submit" 
-                    class="w-full sm:w-auto px-10 py-3.5 rounded-full btn-lime-save text-white font-extrabold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
-                    style="background-color: #84cc16 !important; color: #ffffff !important;"
+                    class="btn-exec-primary rounded-xl px-6 py-2.5 text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                    style="background-color: #064e3b !important; color: #ffffff !important; font-weight: 700 !important;"
                 >
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                     <span data-i18n-de="Änderungen Speichern" data-i18n-en="Save Changes">Änderungen Speichern</span>
                 </button>
             </div>

@@ -13,17 +13,21 @@
         </div>
     </div>
 
-    <!-- Form Container Card with Executive Dark Navy Gradient Header -->
-    <div class="exec-card bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+    <!-- Form Container Card (Executive Luxury Light Theme) -->
+    <div class="exec-card bg-white rounded-2xl border border-slate-200/90 shadow-md shadow-emerald-950/5 overflow-hidden border-t-4 border-t-emerald-800">
         
-        <!-- Executive Light Header -->
-        <div class="px-6 py-5 flex items-center justify-between" style="background-color: #ffffff !important; color: #0f172a !important; border-bottom: 1px solid #e2e8f0 !important;">
-            <div>
-                <h2 class="font-extrabold text-base text-slate-900 tracking-wide flex items-center gap-2" data-i18n-de="Store & Atelier Einstellungen" data-i18n-en="Store & Atelier Settings">
-                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Store & Atelier Einstellungen
-                </h2>
-                <p class="text-xs text-slate-500 font-normal mt-0.5" data-i18n-de="Konfigurieren Sie Shop-Stammdaten, Steuersatz, Währung und Vorkasse-Bankverbindung." data-i18n-en="Configure store info, tax rate, currency and prepayment bank details.">Konfigurieren Sie Shop-Stammdaten, Steuersatz, Währung und Vorkasse-Bankverbindung.</p>
+        <!-- Executive Header -->
+        <div class="px-6 py-4 bg-slate-50/50 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-100/80 shadow-2xs">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <div>
+                    <h2 class="font-extrabold text-base text-slate-900 tracking-tight" data-i18n-de="Store & Atelier Einstellungen" data-i18n-en="Store & Atelier Settings">
+                        Store & Atelier Einstellungen
+                    </h2>
+                    <p class="text-[0.7rem] text-slate-500 font-medium" data-i18n-de="Konfigurieren Sie Shop-Stammdaten, Steuersatz, Währung und Vorkasse-Bankverbindung." data-i18n-en="Configure store info, tax rate, currency and prepayment bank details.">Konfigurieren Sie Shop-Stammdaten, Steuersatz, Währung und Vorkasse-Bankverbindung.</p>
+                </div>
             </div>
         </div>
 
@@ -183,12 +187,13 @@
             </div>
 
             <!-- Form Submit Button -->
-            <div class="pt-6 mt-8 border-t border-slate-200/80 flex items-center justify-end gap-3">
+            <div class="pt-6 mt-8 border-t border-slate-200 flex items-center justify-end gap-3">
                 <button 
                     type="submit" 
-                    class="rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-6 py-2.5 text-xs font-bold transition-all shadow-md shadow-indigo-500/20 hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2 cursor-pointer"
+                    class="btn-exec-primary rounded-xl px-6 py-2.5 text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                    style="background-color: #064e3b !important; color: #ffffff !important; font-weight: 700 !important;"
                 >
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                     <span data-i18n-de="Einstellungen Speichern" data-i18n-en="Save Settings">Einstellungen Speichern</span>
                 </button>
             </div>

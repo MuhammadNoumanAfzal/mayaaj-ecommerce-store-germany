@@ -17,6 +17,18 @@
             background-color: #f4f8f5 !important;
             color: #0f172a !important;
             font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Form Labels & Helper Text Global Visual Contrast Boost */
+        label, form label {
+            color: #0f172a !important;
+            font-weight: 700 !important;
+        }
+
+        .exec-helper-text {
+            color: #475569 !important;
+            font-weight: 600 !important;
         }
 
         /* Executive Light Header & Deep Forest Green Sidebar Theme (NEXUS Palette) */
@@ -77,7 +89,7 @@
         }
 
         .admin-input-dark::placeholder {
-            color: #94a3b8 !important;
+            color: #64748b !important;
         }
 
         .card-navy-header {
@@ -87,19 +99,21 @@
         }
 
         .btn-lime-save {
-            background-color: #059669 !important;
+            background-color: #064e3b !important;
             color: #ffffff !important;
+            font-weight: 700 !important;
         }
 
         .btn-blue-back {
             background-color: #f1f5f9 !important;
-            color: #334155 !important;
-            border: 1px solid #e2e8f0 !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            font-weight: 700 !important;
         }
 
         .admin-card {
             background-color: #ffffff !important;
-            border: 1px solid #e2e8f0 !important;
+            border: 1px solid #cbd5e1 !important;
             color: #0f172a !important;
             border-radius: 1rem !important;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
@@ -108,7 +122,7 @@
         /* Executive Premium Light Card Design */
         .exec-card {
             background-color: #ffffff !important;
-            border: 1px solid #e2e8f0 !important;
+            border: 1px solid #cbd5e1 !important;
             border-radius: 1.25rem !important;
             box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02) !important;
             color: #0f172a !important;
@@ -117,7 +131,7 @@
 
         .exec-card:hover {
             box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03) !important;
-            border-color: #cbd5e1 !important;
+            border-color: #94a3b8 !important;
         }
 
         /* Stat Icon Badges - Emerald Theme */
@@ -145,64 +159,134 @@
             box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3) !important;
         }
 
-        /* Executive Table Headers & Rows */
-        .exec-table-head {
-            background-color: #f8fafc !important;
-            color: #475569 !important;
-            font-weight: 700 !important;
+        /* Executive Table Headers & Rows - Sharp Readability */
+        .exec-table-head, table thead tr {
+            background-color: #f1f5f9 !important;
+            color: #1e293b !important;
+            font-weight: 800 !important;
             text-transform: uppercase !important;
             letter-spacing: 0.05em !important;
-            font-size: 0.7rem !important;
-            border-bottom: 1px solid #e2e8f0 !important;
+            font-size: 0.725rem !important;
+            border-bottom: 2px solid #cbd5e1 !important;
         }
 
-        .exec-table-row {
+        .exec-table-head th, table thead th {
+            color: #1e293b !important;
+            font-weight: 800 !important;
+            padding-top: 0.85rem !important;
+            padding-bottom: 0.85rem !important;
+        }
+
+        .exec-table-row, table tbody tr {
             transition: background-color 0.15s ease-in-out !important;
-            border-bottom: 1px solid #f1f5f9 !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            color: #0f172a !important;
         }
 
-        .exec-table-row:hover {
+        .exec-table-row:hover, table tbody tr:hover {
             background-color: #f8fafc !important;
+        }
+
+        table tbody td {
+            color: #0f172a !important;
         }
 
         /* Soft High-Contrast Status Badges */
-        .badge-soft-active {
+        .badge-soft-active, .badge-active {
             background-color: #ecfdf5 !important;
             color: #047857 !important;
-            border: 1px solid #a7f3d0 !important;
+            border: 1px solid #6ee7b7 !important;
+            font-weight: 700 !important;
         }
 
-        .badge-soft-pending {
-            background-color: #f1f5f9 !important;
-            color: #64748b !important;
-            border: 1px solid #cbd5e1 !important;
+        .badge-soft-pending, .badge-pending {
+            background-color: #fffbeb !important;
+            color: #b45309 !important;
+            border: 1px solid #fde68a !important;
+            font-weight: 700 !important;
         }
 
-        .badge-soft-rose {
+        .badge-soft-rose, .badge-rose, .badge-draft {
             background-color: #fff1f2 !important;
             color: #be123c !important;
             border: 1px solid #fecdd3 !important;
+            font-weight: 700 !important;
         }
 
         .badge-soft-indigo {
             background-color: #ecfdf5 !important;
             color: #047857 !important;
             border: 1px solid #a7f3d0 !important;
+            font-weight: 700 !important;
         }
 
         .badge-soft-amber {
             background-color: #fffbeb !important;
             color: #b45309 !important;
             border: 1px solid #fde68a !important;
+            font-weight: 700 !important;
         }
 
         .admin-table-head {
-            background-color: #f8fafc !important;
-            color: #64748b !important;
+            background-color: #f1f5f9 !important;
+            color: #1e293b !important;
+            font-weight: 800 !important;
         }
 
         .admin-table-row:hover {
             background-color: #f8fafc !important;
+        }
+
+        /* High-Contrast Button & Input Global Classes */
+        .btn-exec-primary {
+            background-color: #064e3b !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            border: none !important;
+            box-shadow: 0 2px 8px rgba(6, 78, 59, 0.3) !important;
+        }
+
+        .btn-exec-primary:hover {
+            background-color: #043e2f !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.4) !important;
+        }
+
+        .btn-exec-secondary {
+            background-color: #f1f5f9 !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            font-weight: 700 !important;
+        }
+
+        .btn-exec-secondary:hover {
+            background-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+
+        .btn-exec-danger {
+            background-color: #fff1f2 !important;
+            color: #be123c !important;
+            border: 1px solid #fecdd3 !important;
+            font-weight: 700 !important;
+        }
+
+        .btn-exec-danger:hover {
+            background-color: #ffe4e6 !important;
+            color: #9f1239 !important;
+        }
+
+        .exec-input, form input[type="text"], form input[type="number"], form input[type="email"], form input[type="password"], form select, form textarea {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            font-weight: 500 !important;
+        }
+
+        .exec-input:focus, form input:focus, form select:focus, form textarea:focus {
+            background-color: #ffffff !important;
+            border-color: #059669 !important;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2) !important;
         }
     </style>
 
