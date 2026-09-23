@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Middleware\AdminAuthMiddleware;
 
+use App\Http\Controllers\ShopController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,9 +32,10 @@ Route::get('/about', function () {
     return view('pages.about');
 });
 
-Route::get('/kontakt', function () {
-    return view('pages.contact');
-});
+use App\Http\Controllers\ContactController;
+
+Route::get('/kontakt', [ContactController::class, 'show'])->name('contact');
+Route::post('/kontakt', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::get('/versand', function () {
     return view('pages.shipping');
@@ -60,27 +63,22 @@ Route::get('/agb', function () {
 });
 
 // Shop Catalog & Collection Pages
-Route::get('/shop', function () {
-    return view('pages.shop');
-});
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/kollektion', [ShopController::class, 'index'])->name('kollektion');
 
-Route::get('/kollektion', function () {
-    return view('pages.shop');
-});
+// Single Product Detail Pages (Dynamic Slug)
+Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 
-// Single Product Detail Pages
-Route::get('/shop/maison-leather-tote', function () {
-    return view('pages.product-detail');
-});
+// Dynamic Cart & Customer Checkout Routes
+use App\Http\Controllers\CartController;
 
-// Cart Pages
-Route::get('/warenkorb', function () {
-    return view('pages.cart');
-});
-
-Route::get('/cart', function () {
-    return view('pages.cart');
-});
+Route::get('/warenkorb', [CartController::class, 'index'])->name('cart.index');
+Route::get('/cart', [CartController::class, 'index']);
+Route::get('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 /*
 |--------------------------------------------------------------------------
@@ -141,5 +139,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Store Settings Routes
         Route::get('/settings', [SettingController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+        // Customer Contact Inquiries / Messages Routes
+        Route::get('/messages', [\App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('messages');
+        Route::get('/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'show'])->name('messages.show');
+        Route::put('/messages/{message}/status', [\App\Http\Controllers\Admin\ContactMessageController::class, 'updateStatus'])->name('messages.update-status');
+        Route::delete('/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])->name('messages.destroy');
     });
 });

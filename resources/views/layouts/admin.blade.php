@@ -505,6 +505,20 @@
                         </div>
                     </div>
 
+                    <!-- Customer Contact Inquiries / Messages -->
+                    <a href="{{ route('admin.messages') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.messages*') ? 'admin-nav-item-active' : 'admin-nav-item' }}" style="{{ request()->routeIs('admin.messages*') ? 'background-color: rgba(255, 255, 255, 0.18) !important; color: #ffffff !important; border-left: 4px solid #34d399 !important;' : 'color: #d1fae5 !important;' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4" style="color: #34d399 !important;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 10 13 2 6"/></svg>
+                            <span data-i18n-de="Kundenanfragen" data-i18n-en="Contact Messages">Kundenanfragen</span>
+                        </div>
+                        @php
+                            $unreadMsgCount = \App\Models\ContactMessage::where('status', 'unread')->count();
+                        @endphp
+                        @if($unreadMsgCount > 0)
+                            <span class="rounded-full bg-rose-500 px-2 py-0.5 text-[0.62rem] font-bold text-white shadow-xs">{{ $unreadMsgCount }}</span>
+                        @endif
+                    </a>
+
                     <!-- Store Settings -->
                     <a href="{{ route('admin.settings') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.settings') ? 'admin-nav-item-active' : 'admin-nav-item' }}" style="{{ request()->routeIs('admin.settings') ? 'background-color: rgba(255, 255, 255, 0.18) !important; color: #ffffff !important; border-left: 4px solid #34d399 !important;' : 'color: #d1fae5 !important;' }}">
                         <div class="flex items-center gap-3">

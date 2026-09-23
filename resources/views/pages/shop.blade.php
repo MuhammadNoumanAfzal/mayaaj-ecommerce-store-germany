@@ -123,26 +123,37 @@
                             <button type="button" onclick="resetFilters()" class="text-[0.65rem] font-bold uppercase tracking-wider text-[#78000b] hover:underline cursor-pointer" data-i18n-de="ZURÜCKSETZEN" data-i18n-en="RESET">ZURÜCKSETZEN</button>
                         </div>
 
-                        <!-- Category Filter -->
+                        <!-- Category & Subcategory Filter from Database -->
                         <div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-[#1c1210] mb-3" data-i18n-de="Kategorie" data-i18n-en="Category">Kategorie</h3>
-                            <div class="space-y-2 text-xs text-[#5c4f46]">
-                                <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                    <input type="checkbox" value="bags" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                    <span data-i18n-de="Leder Taschen" data-i18n-en="Leather Bags">Leder Taschen</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                    <input type="checkbox" value="wallets" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                    <span data-i18n-de="Geldbörsen & Etuis" data-i18n-en="Wallets & Cardholders">Geldbörsen & Etuis</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                    <input type="checkbox" value="accessories" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                    <span data-i18n-de="Luxus Accessoires" data-i18n-en="Luxury Accessories">Luxus Accessoires</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                    <input type="checkbox" value="golf" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                    <span data-i18n-de="Golf & Lifestyle" data-i18n-en="Golf & Lifestyle">Golf & Lifestyle</span>
-                                </label>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-[#1c1210] mb-3" data-i18n-de="Kategorie & Unterkategorie" data-i18n-en="Category & Subcategory">Kategorie & Unterkategorie</h3>
+                            <div class="space-y-3 text-xs text-[#5c4f46]">
+                                @forelse($globalCategories ?? [] as $category)
+                                    <div class="space-y-1.5 border-b border-[#f2ebdc] pb-2 last:border-none">
+                                        <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] font-bold text-[#1c1210] transition">
+                                            <input type="checkbox" value="{{ $category->slug }}" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
+                                            <span>{{ $category->name }}</span>
+                                        </label>
+                                        @if($category->activeSubcategories && $category->activeSubcategories->count() > 0)
+                                            <div class="ml-4 space-y-1 border-l-2 border-[#d8b45a]/30 pl-2.5 pt-0.5">
+                                                @foreach($category->activeSubcategories as $subcat)
+                                                    <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] text-[0.72rem] text-[#685c54] transition">
+                                                        <input type="checkbox" value="{{ $subcat->slug }}" onchange="applyFilters()" class="subcategory-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
+                                                        <span>{{ $subcat->name }}</span>
+                                                    </label>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                                @empty
+                                    <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
+                                        <input type="checkbox" value="bags" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
+                                        <span data-i18n-de="Leder Taschen" data-i18n-en="Leather Bags">Leder Taschen</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
+                                        <input type="checkbox" value="wallets" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
+                                        <span data-i18n-de="Geldbörsen & Etuis" data-i18n-en="Wallets & Cardholders">Geldbörsen & Etuis</span>
+                                    </label>
+                                @endforelse
                             </div>
                         </div>
 
@@ -190,343 +201,6 @@
                 <!-- Product Grid Catalog (9 cols) -->
                 <main class="lg:col-span-9">
                     <div id="product-container" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                        <!-- Product Item 1 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="bags"
-                            data-leather="full-grain"
-                            data-price="289"
-                            data-name="Maison Grand Leather Tote"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/productbag.png" alt="Maison Grand Leather Tote" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">BESTSELLER</span>
-                                </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Leder Taschen" data-i18n-en="Leather Bags">Leder Taschen</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Maison Leder Handtasche" data-i18n-en="Maison Grand Leather Tote">
-                                        Maison Leder Handtasche
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Handgefertigt aus italienischem Vollleder mit 24k vergoldeten Beschlägen." data-i18n-en="Handcrafted in Italian full grain leather with 24k gold hardware.">Handgefertigt aus italienischem Vollleder mit 24k vergoldeten Beschlägen.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 289</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 340</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button onclick="quickAddToCart('Maison Leder Handtasche', 'EUR 289')" type="button" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="WARENKORB" data-i18n-en="ADD">WARENKORB</button>
-                                        <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded border border-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#78000b] transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 2 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="wallets"
-                            data-leather="full-grain"
-                            data-price="129"
-                            data-name="Bespoke Zip Leather Wallet"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/productwallet.png" alt="Bespoke Zip Leather Wallet" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">NEU</span>
-                                </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Geldbörsen & Etuis" data-i18n-en="Wallets & Cases">Geldbörsen & Etuis</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Leder Geldbörse Premium" data-i18n-en="Bespoke Zip Leather Wallet">
-                                        Leder Geldbörse Premium
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Kompaktes Geldbörsenetui mit RFID-Schutz und 8 Kartenfächern." data-i18n-en="Compact wallet with RFID protection and 8 card slots.">Kompaktes Geldbörsenetui mit RFID-Schutz und 8 Kartenfächern.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 129</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 149</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button onclick="quickAddToCart('Leder Geldbörse Premium', 'EUR 129')" type="button" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="WARENKORB" data-i18n-en="ADD">WARENKORB</button>
-                                        <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded border border-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#78000b] transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 3 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="full-grain"
-                            data-price="59"
-                            data-name="Executive Leather Key Ring"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/productKeychain.png" alt="Executive Leather Key Ring" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">LIMITED</span>
-                                </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Luxus Accessoires" data-i18n-en="Luxury Accessories">Luxus Accessoires</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Executive Schlüsselanhänger" data-i18n-en="Executive Leather Key Ring">
-                                        Executive Schlüsselanhänger
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Edler Schlüsselanhänger aus feinstem Vollleder mit Messingring." data-i18n-en="Refined key ring crafted in full grain leather with brass ring.">Edler Schlüsselanhänger aus feinstem Vollleder mit Messingring.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 59</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button onclick="quickAddToCart('Executive Schlüsselanhänger', 'EUR 59')" type="button" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="WARENKORB" data-i18n-en="ADD">WARENKORB</button>
-                                        <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded border border-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#78000b] transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 4 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="golf"
-                            data-leather="full-grain"
-                            data-price="450"
-                            data-name="Royal Executive Golf Carry"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/productgolf.png" alt="Royal Executive Golf Carry" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">LUXURY</span>
-                                </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Golf & Lifestyle" data-i18n-en="Golf & Lifestyle">Golf & Lifestyle</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Royal Golf Executive Carry" data-i18n-en="Royal Executive Golf Carry">
-                                        Royal Golf Executive Carry
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Exklusiver Golf-Reisebegleiter aus wetterfestem Vollleder." data-i18n-en="Exclusive golf carry bag in weather-resistant full grain leather.">Exklusiver Golf-Reisebegleiter aus wetterfestem Vollleder.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 450</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 490</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button onclick="quickAddToCart('Royal Golf Executive Carry', 'EUR 450')" type="button" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="WARENKORB" data-i18n-en="ADD">WARENKORB</button>
-                                        <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded border border-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#78000b] transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 5 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="nappa"
-                            data-price="249"
-                            data-name="Aurelia Satin Evening Dress"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/product_dress.png" alt="Aurelia Satin Evening Dress" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">NEU</span>
-                                </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Damen Eleganz" data-i18n-en="Women Elegance">Damen Eleganz</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Aurelia Satin Abendkleid" data-i18n-en="Aurelia Satin Evening Dress">
-                                        Aurelia Satin Abendkleid
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Seidiges Abendkleid mit elegantem Rückenausschnitt." data-i18n-en="Silky evening dress with an elegant back cutout.">Seidiges Abendkleid mit elegantem Rückenausschnitt.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 249</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 299</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button onclick="quickAddToCart('Aurelia Satin Abendkleid', 'EUR 249')" type="button" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="WARENKORB" data-i18n-en="ADD">WARENKORB</button>
-                                        <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded border border-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#78000b] transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 6 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="full-grain"
-                            data-price="480"
-                            data-name="Noir Tailored Coat"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/product_coat.png" alt="Noir Tailored Coat" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">BESTSELLER</span>
-                                </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Herren Garderobe" data-i18n-en="Men Outerwear">Herren Garderobe</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Noir Maßmantel" data-i18n-en="Noir Tailored Coat">
-                                        Noir Maßmantel
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Klassischer Wollmantel mit dezenten Lederelementen am Kragen." data-i18n-en="Classic wool coat with subtle leather collar trims.">Klassischer Wollmantel mit dezenten Lederelementen am Kragen.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 480</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 550</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button onclick="quickAddToCart('Noir Maßmantel', 'EUR 480')" type="button" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="WARENKORB" data-i18n-en="ADD">WARENKORB</button>
-                                        <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded border border-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#78000b] transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 7 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="bags"
-                            data-leather="saffiano"
-                            data-price="340"
-                            data-name="Champagne Leather Bag"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/product_bag_red.png" alt="Champagne Leather Bag" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">LIMITED</span>
-                                </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Leder Taschen" data-i18n-en="Leather Bags">Leder Taschen</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Champagner Lederhandtasche" data-i18n-en="Champagne Leather Bag">
-                                        Champagner Lederhandtasche
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Elegante Handtasche in burgunderrotem Saffiano-Leder." data-i18n-en="Elegant handbag in burgundy Saffiano textured leather.">Elegante Handtasche in burgunderrotem Saffiano-Leder.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 340</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 390</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button onclick="quickAddToCart('Champagner Lederhandtasche', 'EUR 340')" type="button" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="WARENKORB" data-i18n-en="ADD">WARENKORB</button>
-                                        <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded border border-[#78000b] px-3 py-2 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#78000b] transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 8 -->
                         <article
                             class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
                             data-category="accessories"

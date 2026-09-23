@@ -72,9 +72,24 @@
             </p>
         </div>
 
-        <!-- Light Product Cards Grid -->
+        <!-- Dynamic Light Product Cards Grid -->
         <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            @foreach ($products as $product)
+            @php
+                $displayProducts = (isset($globalFeaturedProducts) && $globalFeaturedProducts->count() > 0)
+                    ? $globalFeaturedProducts
+                    : collect($products);
+            @endphp
+
+            @foreach ($displayProducts as $prod)
+                @php
+                    $pName = is_object($prod) ? $prod->name : $prod['name_de'];
+                    $pSlug = is_object($prod) ? $prod->slug : 'maison-leather-tote';
+                    $pCat = is_object($prod) ? ($prod->category->name ?? 'Exklusiv') : $prod['category_de'];
+                    $pImg = is_object($prod) ? $prod->image_url : $prod['image'];
+                    $pPrice = is_object($prod) ? 'EUR ' . number_format($prod->price, 2, ',', '.') : $prod['price'];
+                    $pSalePrice = is_object($prod) && $prod->sale_price ? 'EUR ' . number_format($prod->sale_price, 2, ',', '.') : (is_array($prod) ? ($prod['original_price'] ?? null) : null);
+                    $pBadge = is_object($prod) ? ($prod->is_featured ? 'EXKLUSIV' : '') : ($prod['badge'] ?? '');
+                @endphp
                 <article class="animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-[0_6px_25px_rgba(0,0,0,0.05)] transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] outline-none focus:outline-none focus:ring-0 cursor-pointer">
                     
                     <!-- Top Gold Line Shimmer -->
@@ -82,19 +97,20 @@
 
                     <!-- Image Container -->
                     <div class="relative h-60 overflow-hidden bg-[#f7f4ee] sm:h-64">
-                        <img
-                            src="{{ $product['image'] }}"
-                            alt="{{ $product['name_de'] }}"
-                            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-                            style="object-position: {{ $product['position'] }};"
-                            loading="lazy"
-                        >
+                        <a href="/shop/{{ $pSlug }}" class="block h-full w-full">
+                            <img
+                                src="{{ $pImg }}"
+                                alt="{{ $pName }}"
+                                class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                                loading="lazy"
+                            >
+                        </a>
 
                         <!-- Top Left Badge -->
-                        @if(!empty($product['badge']))
-                            <div class="absolute left-3 top-3 z-10">
+                        @if(!empty($pBadge))
+                            <div class="absolute left-3 top-3 z-10 pointer-events-none">
                                 <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">
-                                    {{ $product['badge'] }}
+                                    {{ $pBadge }}
                                 </span>
                             </div>
                         @endif
@@ -106,12 +122,12 @@
                                     <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
                                 </svg>
                             </button>
-                            <button onclick="quickAddToCart('{{ $product['name_de'] }}', '{{ $product['price'] }}')" class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/90 text-[#1c1210] shadow-md transition hover:bg-[#d8b45a] hover:text-[#1c1210] cursor-pointer" type="button" aria-label="Quick view">
+                            <a href="/shop/{{ $pSlug }}" class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/90 text-[#1c1210] shadow-md transition hover:bg-[#d8b45a] hover:text-[#1c1210] cursor-pointer" aria-label="View Product">
                                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                     <circle cx="11" cy="11" r="6.5" />
                                     <path d="m16 16 4 4" stroke-linecap="round" />
                                 </svg>
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -119,8 +135,8 @@
                     <div class="p-5 flex flex-col justify-between flex-1 bg-white">
                         <div>
                             <div class="flex items-center justify-between gap-2">
-                                <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="{{ $product['category_de'] }}" data-i18n-en="{{ $product['category_en'] }}">
-                                    {{ $product['category_de'] }}
+                                <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]">
+                                    {{ $pCat }}
                                 </p>
                                 <!-- Star Rating -->
                                 <div class="flex items-center text-[#d8b45a] text-[0.65rem] tracking-wider" aria-label="5 stars">
@@ -128,21 +144,26 @@
                                 </div>
                             </div>
 
-                            <h3 class="mt-2.5 min-h-[2.8rem] font-display text-lg font-medium leading-[1.3] text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="{{ $product['name_de'] }}" data-i18n-en="{{ $product['name_en'] }}">
-                                {{ $product['name_de'] }}
-                            </h3>
+                            <a href="/shop/{{ $pSlug }}" class="block">
+                                <h3 class="mt-2.5 min-h-[2.8rem] font-display text-lg font-medium leading-[1.3] text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]">
+                                    {{ $pName }}
+                                </h3>
+                            </a>
                         </div>
 
                         <!-- Price & Add to Cart -->
                         <div class="mt-4 flex items-center justify-between gap-2 border-t border-[#f2ebdc] pt-4">
                             <div class="flex flex-col">
-                                <span class="text-base font-bold text-[#1c1210]">{{ $product['price'] }}</span>
-                                @if(!empty($product['original_price']))
-                                    <span class="text-[0.65rem] text-[#8a7c74] line-through">{{ $product['original_price'] }}</span>
+                                <span class="text-base font-bold text-[#1c1210]">{{ $pPrice }}</span>
+                                @if(!empty($pSalePrice))
+                                    <span class="text-[0.65rem] text-[#8a7c74] line-through">{{ $pSalePrice }}</span>
                                 @endif
                             </div>
 
-                            <button onclick="quickAddToCart('{{ $product['name_de'] }}', '{{ $product['price'] }}')" class="group/btn inline-flex items-center justify-center gap-1.5 rounded-sm bg-[#d8b45a] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[#120807] shadow-sm transition-all duration-300 hover:bg-[#ffd45a] hover:shadow-[0_4px_20px_rgba(216,180,90,0.4)] active:scale-95 cursor-pointer" type="button">
+                            @php
+                                $pId = is_object($prod) ? $prod->id : 1;
+                            @endphp
+                            <button onclick="quickAddToCart({{ $pId }}, 1)" class="group/btn inline-flex items-center justify-center gap-1.5 rounded-sm bg-[#d8b45a] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[#120807] shadow-sm transition-all duration-300 hover:bg-[#ffd45a] hover:shadow-[0_4px_20px_rgba(216,180,90,0.4)] active:scale-95 cursor-pointer" type="button">
                                 <span data-i18n-de="IN WARENKORB" data-i18n-en="ADD TO CART">IN WARENKORB</span>
                                 <svg class="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M6.5 8.5h11l1 11h-13l1-11Z" stroke-linejoin="round" />

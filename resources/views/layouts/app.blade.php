@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="MEHAAJ - Premium German e-commerce store.">
 
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title', 'MEHAAJ - Premium E-Commerce')</title>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -130,17 +131,42 @@
                 });
             }
 
-            function quickAddToCart(title, price) {
+            function quickAddToCart(productId, qty = 1) {
                 const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
-                LuxuryToast.fire({
-                    icon: 'success',
-                    title: isEn 
-                        ? title + ' (' + price + ') added to cart! 🛍️' 
-                        : title + ' (' + price + ') in den Warenkorb gelegt! 🛍️'
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token || '',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ product_id: productId, quantity: qty })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        LuxuryToast.fire({
+                            icon: 'success',
+                            title: (data.added_product || 'Produkt') + ' ' + (isEn ? 'added to cart! 🛍️' : 'in den Warenkorb gelegt! 🛍️')
+                        });
+                        if (typeof fetchAndUpdateCartDrawer === 'function') {
+                            fetchAndUpdateCartDrawer();
+                        }
+                        if (typeof openCartDrawer === 'function') {
+                            openCartDrawer();
+                        }
+                    } else {
+                        LuxuryToast.fire({
+                            icon: 'error',
+                            title: data.message || 'Fehler'
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.error('Add to cart error:', err);
                 });
-                if (typeof openCartDrawer === 'function') {
-                    openCartDrawer();
-                }
             }
         </script>
     </body>

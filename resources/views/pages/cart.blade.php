@@ -50,7 +50,9 @@
                             <h2 class="font-display text-xl font-medium text-[#1c1210]" data-i18n-de="1. Gewählte Luxus-Artikel" data-i18n-en="1. Selected Luxury Items">
                                 1. Gewählte Luxus-Artikel
                             </h2>
-                            <span class="text-xs text-[#78000b] font-bold" id="page-item-count" data-i18n-de="2 Artikel" data-i18n-en="2 Items">2 Artikel</span>
+                            <span class="text-xs text-[#78000b] font-bold" id="page-item-count">
+                                {{ $count ?? count($cart ?? []) }} {{ ($count ?? count($cart ?? [])) === 1 ? 'Artikel' : 'Artikel' }}
+                            </span>
                         </div>
                         
                         <!-- Table Header -->
@@ -60,60 +62,49 @@
                             <span class="col-span-3 text-right" data-i18n-de="Gesamt" data-i18n-en="Total">Gesamt</span>
                         </div>
 
-                        <!-- Item Row 1 -->
-                        <div class="cart-page-item sm:grid sm:grid-cols-12 items-center gap-4 py-4 border-b border-[#f2ebdc] last:border-b-0 space-y-3 sm:space-y-0">
-                            <div class="sm:col-span-6 flex items-center gap-4">
-                                <img src="/productbag.png" alt="Maison Grand Leather Tote" class="h-20 w-20 rounded border border-[#e6decb] object-cover bg-[#f7f4ee]">
-                                <div>
-                                    <h3 class="font-display text-base font-medium text-[#1c1210]">Maison Grand Leather Tote</h3>
-                                    <p class="text-xs text-[#685c54]">Farbe: Cognac Braun</p>
-                                    <p class="text-xs text-[#78000b] font-bold mt-1">EUR 289,00</p>
+                        <!-- Dynamic Items Container -->
+                        <div id="page-cart-items-wrapper">
+                            @forelse($cart ?? [] as $item)
+                                <div class="cart-page-item sm:grid sm:grid-cols-12 items-center gap-4 py-4 border-b border-[#f2ebdc] last:border-b-0 space-y-3 sm:space-y-0" data-product-id="{{ $item['id'] }}">
+                                    <div class="sm:col-span-6 flex items-center gap-4">
+                                        <img src="{{ $item['image_url'] ?? '/productbag.png' }}" alt="{{ $item['name'] }}" class="h-20 w-20 rounded border border-[#e6decb] object-cover bg-[#f7f4ee]">
+                                        <div>
+                                            <h3 class="font-display text-base font-medium text-[#1c1210]">{{ $item['name'] }}</h3>
+                                            <p class="text-xs text-[#685c54]">SKU: {{ $item['sku'] ?? 'MHJ-MANUFAKTUR' }}</p>
+                                            <p class="text-xs text-[#78000b] font-bold mt-1">EUR {{ number_format($item['price'], 2, ',', '.') }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="sm:col-span-3 flex items-center justify-between sm:justify-center">
+                                        <div class="flex h-8 items-center rounded border border-[#e6decb] bg-[#faf7f2] px-2 w-24 justify-between text-xs">
+                                            <button type="button" onclick="updatePageQty({{ $item['id'] }}, {{ $item['qty'] - 1 }})" class="w-6 text-center font-bold hover:text-[#78000b] cursor-pointer">-</button>
+                                            <span class="qty-page font-bold text-[#1c1210]">{{ $item['qty'] }}</span>
+                                            <button type="button" onclick="updatePageQty({{ $item['id'] }}, {{ $item['qty'] + 1 }})" class="w-6 text-center font-bold hover:text-[#78000b] cursor-pointer">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="sm:col-span-3 flex items-center justify-between sm:justify-end gap-3">
+                                        <span class="font-bold text-base text-[#1c1210] item-total">EUR {{ number_format($item['price'] * $item['qty'], 2, ',', '.') }}</span>
+                                        <button type="button" onclick="removePageItem({{ $item['id'] }})" class="text-[#8a7c74] hover:text-[#78000b] transition cursor-pointer" title="Remove item">
+                                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="sm:col-span-3 flex items-center justify-between sm:justify-center">
-                                <div class="flex h-8 items-center rounded border border-[#e6decb] bg-[#faf7f2] px-2 w-24 justify-between text-xs">
-                                    <button type="button" onclick="updatePageQty(this, -1, 289)" class="w-6 text-center font-bold hover:text-[#78000b] cursor-pointer">-</button>
-                                    <span class="qty-page font-bold text-[#1c1210]">1</span>
-                                    <button type="button" onclick="updatePageQty(this, 1, 289)" class="w-6 text-center font-bold hover:text-[#78000b] cursor-pointer">+</button>
+                            @empty
+                                <div class="py-12 text-center space-y-4">
+                                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#faf7f2] border border-[#e6decb]">
+                                        <svg class="h-8 w-8 text-[#8a7c74]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <path d="M6.5 8.5h11l1 11h-13l1-11Z" stroke-linejoin="round"/>
+                                            <path d="M9 8.5a3 3 0 0 1 6 0" stroke-linecap="round"/>
+                                        </svg>
+                                    </div>
+                                    <p class="font-display text-lg font-medium text-[#1c1210]">Ihr Warenkorb ist derzeit leer.</p>
+                                    <a href="/shop" class="inline-flex items-center justify-center rounded bg-[#78000b] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5a0309] transition shadow-md">
+                                        Kollektion Entdecken & Einkaufen
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="sm:col-span-3 flex items-center justify-between sm:justify-end gap-3">
-                                <span class="font-bold text-base text-[#1c1210] item-total">EUR 289,00</span>
-                                <button type="button" onclick="removePageItem(this)" class="text-[#8a7c74] hover:text-[#78000b] transition cursor-pointer" title="Remove item">
-                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <polyline points="3 6 5 6 21 6"/>
-                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Item Row 2 -->
-                        <div class="cart-page-item sm:grid sm:grid-cols-12 items-center gap-4 py-4 border-b border-[#f2ebdc] last:border-b-0 space-y-3 sm:space-y-0">
-                            <div class="sm:col-span-6 flex items-center gap-4">
-                                <img src="/productwallet.png" alt="Bespoke Zip Leather Wallet" class="h-20 w-20 rounded border border-[#e6decb] object-cover bg-[#f7f4ee]">
-                                <div>
-                                    <h3 class="font-display text-base font-medium text-[#1c1210]">Bespoke Zip Leather Wallet</h3>
-                                    <p class="text-xs text-[#685c54]">Farbe: Nachtschwarz</p>
-                                    <p class="text-xs text-[#78000b] font-bold mt-1">EUR 129,00</p>
-                                </div>
-                            </div>
-                            <div class="sm:col-span-3 flex items-center justify-between sm:justify-center">
-                                <div class="flex h-8 items-center rounded border border-[#e6decb] bg-[#faf7f2] px-2 w-24 justify-between text-xs">
-                                    <button type="button" onclick="updatePageQty(this, -1, 129)" class="w-6 text-center font-bold hover:text-[#78000b] cursor-pointer">-</button>
-                                    <span class="qty-page font-bold text-[#1c1210]">1</span>
-                                    <button type="button" onclick="updatePageQty(this, 1, 129)" class="w-6 text-center font-bold hover:text-[#78000b] cursor-pointer">+</button>
-                                </div>
-                            </div>
-                            <div class="sm:col-span-3 flex items-center justify-between sm:justify-end gap-3">
-                                <span class="font-bold text-base text-[#1c1210] item-total">EUR 129,00</span>
-                                <button type="button" onclick="removePageItem(this)" class="text-[#8a7c74] hover:text-[#78000b] transition cursor-pointer" title="Remove item">
-                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <polyline points="3 6 5 6 21 6"/>
-                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                    </svg>
-                                </button>
-                            </div>
+                            @endforelse
                         </div>
 
                     </div>
@@ -373,7 +364,7 @@
 
                                     <div>
                                         <p class="text-[0.68rem] text-[#78000b] font-semibold uppercase tracking-wider" data-i18n-de="Verwendungszweck (Order ID)" data-i18n-en="Payment Reference (Order ID)">Verwendungszweck (Order ID)</p>
-                                        <p id="bank-order-ref" class="font-mono font-bold text-[#78000b] mt-0.5">MHJ-2026-8942</p>
+                                        <p id="bank-order-ref" class="font-mono font-bold text-[#78000b] mt-0.5">Wird beim Auschecken generiert</p>
                                     </div>
                                 </div>
                             </div>
@@ -487,11 +478,11 @@
                         <div class="space-y-2 text-xs text-[#5c4f46] border-t border-[#f2ebdc] pt-4">
                             <div class="flex justify-between">
                                 <span data-i18n-de="Zwischensumme" data-i18n-en="Subtotal">Zwischensumme</span>
-                                <span id="page-subtotal" class="font-bold text-[#1c1210]">EUR 418,00</span>
+                                <span id="page-subtotal" class="font-bold text-[#1c1210]">EUR {{ number_format($subtotal ?? 0, 2, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between text-[0.7rem] text-[#685c54]">
                                 <span data-i18n-de="inkl. 19% MwSt." data-i18n-en="incl. 19% VAT">inkl. 19% MwSt.</span>
-                                <span id="page-vat">EUR 66,74</span>
+                                <span id="page-vat">EUR {{ number_format($vat ?? 0, 2, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span data-i18n-de="Versand (DHL Express)" data-i18n-en="Shipping (DHL Express)">Versand (DHL Express)</span>
@@ -499,7 +490,7 @@
                             </div>
                             <div class="flex justify-between text-lg font-bold text-[#1c1210] border-t border-[#e6decb] pt-3">
                                 <span data-i18n-de="Gesamtsumme" data-i18n-en="Total">Gesamtsumme</span>
-                                <span id="page-total" class="text-[#78000b]">EUR 418,00</span>
+                                <span id="page-total" class="text-[#78000b]">EUR {{ number_format($total ?? 0, 2, ',', '.') }}</span>
                             </div>
                         </div>
 
@@ -537,19 +528,13 @@
         </div>
     </section>
 
-    <!-- Page Specific Cart JS with Full Form Validation & Bank Transfer Modal -->
+    <!-- Page Specific Cart JS with Full AJAX Form Validation & Order Creation -->
     <script>
-        let pageCartTotal = 418.00;
-        let selectedPaymentTab = 'bank';
-        let currentOrderRef = 'MHJ-2026-' + Math.floor(1000 + Math.random() * 9000);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const refEl = document.getElementById('bank-order-ref');
-            if (refEl) refEl.innerText = currentOrderRef;
-        });
+        let selectedPaymentTab = 'vorkasse';
 
         function switchPaymentTab(tab) {
-            selectedPaymentTab = tab;
+            selectedPaymentTab = tab === 'bank' ? 'vorkasse' : tab;
+
             const bankBtn = document.getElementById('tab-btn-bank');
             const cardBtn = document.getElementById('tab-btn-card');
             const paypalBtn = document.getElementById('tab-btn-paypal');
@@ -569,7 +554,7 @@
             cardContent.classList.add('hidden');
             paypalContent.classList.add('hidden');
 
-            if (tab === 'bank') {
+            if (tab === 'bank' || tab === 'vorkasse') {
                 bankBtn.className = 'flex items-center justify-center gap-2 rounded border-2 border-[#78000b] bg-[#78000b] px-3 py-2.5 text-xs font-bold text-white shadow-sm cursor-pointer transition';
                 bankContent.classList.remove('hidden');
                 displayEl.innerText = isEn ? '🏛️ Bank Transfer / Prepayment' : '🏛️ Vorkasse / Banküberweisung';
@@ -594,18 +579,27 @@
             });
         }
 
-        function updatePageQty(btn, change, price) {
-            const item = btn.closest('.cart-page-item');
-            const qtyEl = item.querySelector('.qty-page');
-            let qty = parseInt(qtyEl.innerText) + change;
-            if (qty < 1) qty = 1;
-            qtyEl.innerText = qty;
-            item.querySelector('.item-total').innerText = 'EUR ' + (qty * price).toFixed(2).replace('.', ',');
+        function updatePageQty(productId, newQty) {
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-            recalcPageCart();
+            fetch('/cart/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token || '',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ product_id: productId, quantity: newQty })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            });
         }
 
-        function removePageItem(btn) {
+        function removePageItem(productId) {
             const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
             LuxurySwal.fire({
                 title: isEn ? 'Remove Item?' : 'Artikel entfernen?',
@@ -616,34 +610,25 @@
                 cancelButtonText: isEn ? 'Cancel' : 'Abbrechen'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    btn.closest('.cart-page-item').remove();
-                    recalcPageCart();
-                    LuxuryToast.fire({
-                        icon: 'success',
-                        title: isEn ? 'Item removed' : 'Artikel entfernt'
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+                    fetch('/cart/remove', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token || '',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ product_id: productId })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload();
+                        }
                     });
                 }
             });
-        }
-
-        function recalcPageCart() {
-            let total = 0;
-            let itemsCount = document.querySelectorAll('.cart-page-item').length;
-            
-            document.querySelectorAll('.cart-page-item').forEach(item => {
-                const priceText = item.querySelector('.item-total').innerText.replace('EUR ', '').replace(',', '.');
-                total += parseFloat(priceText) || 0;
-            });
-
-            pageCartTotal = total;
-            const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
-
-            const countEl = document.getElementById('page-item-count');
-            if (countEl) countEl.innerText = itemsCount + (isEn ? ' Items' : ' Artikel');
-
-            document.getElementById('page-subtotal').innerText = 'EUR ' + total.toFixed(2).replace('.', ',');
-            document.getElementById('page-vat').innerText = 'EUR ' + (total * 0.19).toFixed(2).replace('.', ',');
-            document.getElementById('page-total').innerText = 'EUR ' + total.toFixed(2).replace('.', ',');
         }
 
         function applyPageVoucher() {
@@ -652,8 +637,6 @@
             const msg = document.getElementById('page-voucher-success');
 
             if (input.toUpperCase() === 'MEHAAJ10') {
-                pageCartTotal = pageCartTotal * 0.9;
-                document.getElementById('page-total').innerText = 'EUR ' + pageCartTotal.toFixed(2).replace('.', ',');
                 msg.classList.remove('hidden');
                 LuxurySwal.fire({
                     icon: 'success',
@@ -674,7 +657,7 @@
         function triggerPageCheckout() {
             const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
 
-            // Shipping Form Validation
+            // Shipping Form Fields
             const firstName = document.getElementById('ship-first-name').value.trim();
             const lastName = document.getElementById('ship-last-name').value.trim();
             const email = document.getElementById('ship-email').value.trim();
@@ -683,6 +666,9 @@
             const plz = document.getElementById('ship-plz').value.trim();
             const city = document.getElementById('ship-city').value.trim();
             const country = document.getElementById('ship-country').value;
+            const payerName = document.getElementById('payer-name')?.value.trim();
+            const payerIban = document.getElementById('payer-iban')?.value.trim();
+            const voucherCode = document.getElementById('page-voucher-input')?.value.trim();
 
             if (!firstName || !lastName || !email || !phone || !street || !plz || !city) {
                 LuxurySwal.fire({
@@ -696,62 +682,116 @@
                 return;
             }
 
-            // Bank Transfer Order Modal
-            if (selectedPaymentTab === 'bank') {
-                LuxurySwal.fire({
-                    icon: 'success',
-                    title: isEn ? 'Order Received! 🎉' : 'Bestellung Erfolgreich! 🎉',
-                    html: `
-                        <div class="text-left space-y-3 mt-3 text-xs">
-                            <p class="text-neutral-700 font-medium">
-                                ${isEn 
-                                    ? `Thank you <b>${firstName} ${lastName}</b>! Your order has been registered.` 
-                                    : `Vielen Dank <b>${firstName} ${lastName}</b>! Ihre Bestellung wurde verbindlich entgegengenommen.`}
-                            </p>
-                            
-                            <div class="rounded border border-[#d8b45a] bg-white p-3 space-y-1.5">
-                                <p class="text-[0.65rem] font-bold text-[#78000b] uppercase tracking-wider">${isEn ? 'Payment Instructions (Bank Transfer)' : 'Zahlungsanweisung (Banküberweisung)'}</p>
-                                <p><b>${isEn ? 'Order Reference:' : 'Verwendungszweck:'}</b> <span class="font-mono text-[#78000b] font-bold">${currentOrderRef}</span></p>
-                                <p><b>${isEn ? 'Payee:' : 'Empfänger:'}</b> MEHAAJ Luxury Leather GmbH</p>
-                                <p><b>IBAN:</b> <span class="font-mono font-bold">DE89 3704 0044 0532 0130 00</span></p>
-                                <p><b>BIC:</b> <span class="font-mono">DABA DE FF XXX</span></p>
-                                <p><b>${isEn ? 'Total Amount:' : 'Gesamtbetrag:'}</b> <span class="font-bold text-[#78000b]">EUR ${pageCartTotal.toFixed(2).replace('.', ',')}</span></p>
-                            </div>
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-                            <p class="text-[0.68rem] text-neutral-500">
-                                ${isEn 
-                                    ? `Confirmation details sent to <b>${email}</b>. Delivery to: ${street}, ${plz} ${city} (${country}).` 
-                                    : `Bestellbestätigung wurde an <b>${email}</b> gesendet. Lieferung an: ${street}, ${plz} ${city} (${country}).`}
-                            </p>
-                        </div>
-                    `,
-                    confirmButtonText: isEn ? '📋 Copy IBAN & Finish' : '📋 IBAN Kopieren & Abschließen',
-                    showCancelButton: true,
-                    cancelButtonText: isEn ? 'Close' : 'Schließen'
-                }).then((res) => {
-                    if (res.isConfirmed) {
-                        navigator.clipboard.writeText('DE89 3704 0044 0532 0130 00');
-                        LuxuryToast.fire({
-                            icon: 'success',
-                            title: isEn ? 'IBAN copied! Order confirmed.' : 'IBAN kopiert! Bestellung bestätigt.'
-                        });
+            LuxurySwal.fire({
+                title: isEn ? 'Processing Order...' : 'Bestellung wird verarbeitet...',
+                text: isEn ? 'Please wait while your order is securely saved.' : 'Bitte warten Sie, während Ihre Bestellung gespeichert wird.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            fetch('/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token || '',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    phone: phone,
+                    street: street,
+                    postal_code: plz,
+                    city: city,
+                    country: country,
+                    payment_method: selectedPaymentTab,
+                    payer_name: payerName,
+                    payer_iban: payerIban,
+                    voucher_code: voucherCode
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) {
+                    LuxurySwal.fire({
+                        icon: 'error',
+                        title: isEn ? 'Order Error' : 'Bestellfehler',
+                        text: data.message || 'Fehler beim Erstellen der Bestellung.',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                // Order Saved Successfully in Database!
+                if (data.payment_method === 'vorkasse' || selectedPaymentTab === 'vorkasse') {
+                    LuxurySwal.fire({
+                        icon: 'success',
+                        title: isEn ? 'Order Placed! 🎉' : 'Bestellung Erfolgreich! 🎉',
+                        html: `
+                            <div class="text-left space-y-3 mt-3 text-xs">
+                                <p class="text-neutral-700 font-medium">
+                                    ${isEn 
+                                        ? `Thank you <b>${data.customer_name}</b>! Your order <b>${data.order_number}</b> has been received and saved.` 
+                                        : `Vielen Dank <b>${data.customer_name}</b>! Ihre Bestellung <b>${data.order_number}</b> wurde erfolgreich im System registriert.`}
+                                </p>
+                                
+                                <div class="rounded border border-[#d8b45a] bg-white p-3 space-y-1.5">
+                                    <p class="text-[0.65rem] font-bold text-[#78000b] uppercase tracking-wider">${isEn ? 'Payment Instructions (Bank Transfer / Vorkasse)' : 'Zahlungsanweisung (Banküberweisung / Vorkasse)'}</p>
+                                    <p><b>${isEn ? 'Order Reference:' : 'Verwendungszweck:'}</b> <span class="font-mono text-[#78000b] font-bold">${data.order_number}</span></p>
+                                    <p><b>${isEn ? 'Payee:' : 'Empfänger:'}</b> ${data.bank_name || 'MEHAAJ Luxury Leather GmbH'}</p>
+                                    <p><b>IBAN:</b> <span class="font-mono font-bold">${data.iban}</span></p>
+                                    <p><b>BIC:</b> <span class="font-mono">${data.bic}</span></p>
+                                    <p><b>${isEn ? 'Total Amount:' : 'Gesamtbetrag:'}</b> <span class="font-bold text-[#78000b]">${data.formatted_total}</span></p>
+                                </div>
+
+                                <p class="text-[0.68rem] text-neutral-500">
+                                    ${isEn 
+                                        ? `Confirmation details sent to <b>${data.customer_email}</b>. Delivery to: ${street}, ${plz} ${city} (${country}).` 
+                                        : `Bestellbestätigung wurde an <b>${data.customer_email}</b> gesendet. Lieferung an: ${street}, ${plz} ${city} (${country}).`}
+                                </p>
+                            </div>
+                        `,
+                        confirmButtonText: isEn ? '📋 Copy IBAN & Finish' : '📋 IBAN Kopieren & Abschließen',
+                        showCancelButton: true,
+                        cancelButtonText: isEn ? 'Close' : 'Schließen'
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            navigator.clipboard.writeText(data.iban);
+                            LuxuryToast.fire({
+                                icon: 'success',
+                                title: isEn ? 'IBAN copied! Order confirmed.' : 'IBAN kopiert! Bestellung bestätigt.'
+                            });
+                        }
                         setTimeout(() => {
                             window.location.href = '/';
-                        }, 1200);
-                    }
-                });
-            } else {
+                        }, 1000);
+                    });
+                } else {
+                    LuxurySwal.fire({
+                        icon: 'success',
+                        title: isEn ? 'Order Completed! 🎉' : 'Bestellung Erfolgreich! 🎉',
+                        text: isEn 
+                            ? 'Thank you for your order at MEHAAJ. Your order number is ' + data.order_number 
+                            : 'Vielen Dank für Ihren Einkauf bei MEHAAJ. Ihre Bestellnummer lautet ' + data.order_number + '.',
+                        confirmButtonText: isEn ? 'Return Home' : 'Zur Startseite'
+                    }).then(() => {
+                        window.location.href = '/';
+                    });
+                }
+            })
+            .catch(err => {
+                console.error('Checkout error:', err);
                 LuxurySwal.fire({
-                    icon: 'success',
-                    title: isEn ? 'Order Completed! 🎉' : 'Bestellung Erfolgreich! 🎉',
-                    text: isEn 
-                        ? 'Thank you for your order at MEHAAJ. Your confirmation has been sent to ' + email 
-                        : 'Vielen Dank für Ihren Einkauf bei MEHAAJ. Ihre Bestellbestätigung wurde an ' + email + ' gesendet.',
-                    confirmButtonText: isEn ? 'Return Home' : 'Zur Startseite'
-                }).then(() => {
-                    window.location.href = '/';
+                    icon: 'error',
+                    title: isEn ? 'Error' : 'Fehler',
+                    text: 'Netzwerkfehler beim Verarbeiten der Bestellung.'
                 });
-            }
+            });
         }
     </script>
 
