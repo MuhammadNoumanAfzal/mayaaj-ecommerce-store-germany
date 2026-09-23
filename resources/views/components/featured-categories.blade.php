@@ -65,67 +65,67 @@
         </div>
 
         <!-- Dynamic Cards Grid from Database Categories -->
-        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            @php
-                $displayCats = (isset($globalCategories) && $globalCategories->count() > 0) 
-                    ? $globalCategories 
-                    : collect($categories);
-            @endphp
+        @if(isset($globalCategories) && $globalCategories->count() > 0)
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                @foreach ($globalCategories as $index => $cat)
+                    @php
+                        $catName = $cat->name;
+                        $catDesc = $cat->description ?? '';
+                        $catImg = $cat->image_url;
+                        $catSlug = $cat->slug;
+                        $catCode = '0' . ($index + 1);
+                    @endphp
+                    <a href="/shop?category={{ $catSlug }}" class="animate-shine-sweep group relative flex min-h-[220px] sm:min-h-[240px] lg:min-h-[250px] flex-col justify-between overflow-hidden rounded-md border border-[#e5dec9] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] outline-none focus:outline-none focus:ring-0 cursor-pointer" aria-label="{{ $catName }} entdecken">
+                        
+                        <!-- Background Image with Zoom -->
+                        <img
+                            src="{{ $catImg }}"
+                            alt="{{ $catName }} Kollektion"
+                            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                            loading="lazy"
+                        >
 
-            @foreach ($displayCats as $index => $cat)
-                @php
-                    $catName = is_object($cat) ? $cat->name : $cat['title_de'];
-                    $catDesc = is_object($cat) ? ($cat->description ?? '') : $cat['text_de'];
-                    $catImg = is_object($cat) ? $cat->image_url : $cat['image'];
-                    $catSlug = is_object($cat) ? $cat->slug : 'shop';
-                    $catCode = '0' . ($index + 1);
-                @endphp
-                <a href="/shop?category={{ $catSlug }}" class="animate-shine-sweep group relative flex min-h-[220px] sm:min-h-[240px] lg:min-h-[250px] flex-col justify-between overflow-hidden rounded-md border border-[#e5dec9] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] outline-none focus:outline-none focus:ring-0 cursor-pointer" aria-label="{{ $catName }} entdecken">
-                    
-                    <!-- Background Image with Zoom -->
-                    <img
-                        src="{{ $catImg }}"
-                        alt="{{ $catName }} Kollektion"
-                        class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-                        loading="lazy"
-                    >
+                        <!-- Gradient Overlays for Light Theme Readability -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#140b0a]/90 via-[#140b0a]/40 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-[#140b0a]/50 via-transparent to-transparent"></div>
 
-                    <!-- Gradient Overlays for Light Theme Readability -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#140b0a]/90 via-[#140b0a]/40 to-transparent"></div>
-                    <div class="absolute inset-0 bg-gradient-to-b from-[#140b0a]/50 via-transparent to-transparent"></div>
-
-                    <!-- Top Glass Badge -->
-                    <div class="relative z-10 p-3.5 sm:p-4 flex items-center justify-between">
-                        <span class="inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/85 px-2.5 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b] backdrop-blur-md transition duration-300 group-hover:bg-[#78000b] group-hover:text-white group-hover:border-[#78000b]">
-                            <span>{{ $catCode }}</span>
-                            <span class="opacity-40">/</span>
-                            <span>{{ $catName }}</span>
-                        </span>
-                        <div class="h-6 w-6 rounded-full bg-white/85 border border-white/50 backdrop-blur-md flex items-center justify-center text-[#78000b] transition duration-300 group-hover:bg-[#d8b45a] group-hover:text-[#120807]">
-                            <svg class="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                        <!-- Top Glass Badge -->
+                        <div class="relative z-10 p-3.5 sm:p-4 flex items-center justify-between">
+                            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/85 px-2.5 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b] backdrop-blur-md transition duration-300 group-hover:bg-[#78000b] group-hover:text-white group-hover:border-[#78000b]">
+                                <span>{{ $catCode }}</span>
+                                <span class="opacity-40">/</span>
+                                <span>{{ $catName }}</span>
+                            </span>
+                            <div class="h-6 w-6 rounded-full bg-white/85 border border-white/50 backdrop-blur-md flex items-center justify-center text-[#78000b] transition duration-300 group-hover:bg-[#d8b45a] group-hover:text-[#120807]">
+                                <svg class="h-3 w-3 transition-transform duration-300 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Bottom Content -->
-                    <div class="relative z-10 p-4 sm:p-5">
-                        <div class="mb-1.5 h-[2px] w-6 bg-[#d8b45a] transition-all duration-300 group-hover:w-12 group-hover:bg-[#f2cf75]"></div>
-                        <h3 class="font-display text-2xl font-medium text-white drop-shadow-sm transition-colors duration-300 group-hover:text-[#f2cf75] sm:text-3xl">
-                            {{ $catName }}
-                        </h3>
-                        <p class="mt-1 line-clamp-1 text-xs text-white/85 transition-colors duration-300 group-hover:text-white">
-                            {{ $catDesc }}
-                        </p>
-                        <div class="mt-3 flex items-center text-[0.62rem] font-bold uppercase tracking-luxury text-[#f2cf75] transition-colors duration-300 group-hover:text-white">
-                            <span data-i18n-de="ENTDECKEN" data-i18n-en="DISCOVER">ENTDECKEN</span>
-                            <svg class="ml-1.5 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                        <!-- Bottom Content -->
+                        <div class="relative z-10 p-4 sm:p-5">
+                            <div class="mb-1.5 h-[2px] w-6 bg-[#d8b45a] transition-all duration-300 group-hover:w-12 group-hover:bg-[#f2cf75]"></div>
+                            <h3 class="font-display text-2xl font-medium text-white drop-shadow-sm transition-colors duration-300 group-hover:text-[#f2cf75] sm:text-3xl">
+                                {{ $catName }}
+                            </h3>
+                            <p class="mt-1 line-clamp-1 text-xs text-white/85 transition-colors duration-300 group-hover:text-white">
+                                {{ $catDesc }}
+                            </p>
+                            <div class="mt-3 flex items-center text-[0.62rem] font-bold uppercase tracking-luxury text-[#f2cf75] transition-colors duration-300 group-hover:text-white">
+                                <span data-i18n-de="ENTDECKEN" data-i18n-en="DISCOVER">ENTDECKEN</span>
+                                <svg class="ml-1.5 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            @endforeach
-        </div>
+                    </a>
+                @endforeach
+            </div>
+        @else
+            <div class="mt-6 p-8 text-center bg-white rounded-md border border-[#e5dec9]">
+                <p class="text-sm font-medium text-[#685c54]" data-i18n-de="Aktuell sind keine Kategorien im Katalog vorhanden." data-i18n-en="No categories currently available in the catalog.">Aktuell sind keine Kategorien im Katalog vorhanden.</p>
+            </div>
+        @endif
     </div>
 </section>

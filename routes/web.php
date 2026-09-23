@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\ProductController;
@@ -64,6 +65,7 @@ Route::get('/agb', function () {
 
 // Shop Catalog & Collection Pages
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/shop-catalog', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/kollektion', [ShopController::class, 'index'])->name('kollektion');
 
 // Single Product Detail Pages (Dynamic Slug)
@@ -94,9 +96,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware([AdminAuthMiddleware::class])->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Categories CRUD Routes
         Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
@@ -142,6 +142,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Customer Contact Inquiries / Messages Routes
         Route::get('/messages', [\App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('messages');
+        Route::get('/messages-index', [\App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('messages.index');
         Route::get('/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'show'])->name('messages.show');
         Route::put('/messages/{message}/status', [\App\Http\Controllers\Admin\ContactMessageController::class, 'updateStatus'])->name('messages.update-status');
         Route::delete('/messages/{message}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])->name('messages.destroy');

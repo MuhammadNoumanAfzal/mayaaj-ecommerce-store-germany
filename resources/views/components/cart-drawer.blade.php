@@ -25,15 +25,23 @@
         </div>
 
         <!-- Free German Shipping Progress Bar -->
+        @php
+            $cartItems = session('cart', []);
+            $subtotalCalc = 0;
+            foreach ($cartItems as $ci) {
+                $subtotalCalc += (($ci['price'] ?? 0) * ($ci['qty'] ?? 1));
+            }
+            $initialPct = $subtotalCalc > 0 ? min(100, (int) round(($subtotalCalc / 150) * 100)) : 0;
+        @endphp
         <div class="mt-4 rounded border border-[#e6decb] bg-white p-3.5 shadow-xs">
             <div class="flex items-center justify-between text-xs mb-1.5">
-                <span class="font-bold text-[#1c1210]" id="shipping-progress-text" data-i18n-de="Gratis Versand freigeschaltet! 🎉" data-i18n-en="Free Shipping Unlocked! 🎉">
-                    Gratis Versand freigeschaltet! 🎉
+                <span class="font-bold text-[#1c1210]" id="shipping-progress-text" data-i18n-de="{{ $subtotalCalc >= 150 ? 'Gratis Versand freigeschaltet! 🎉' : ($subtotalCalc > 0 ? 'Noch EUR ' . number_format(150 - $subtotalCalc, 2, ',', '.') . ' bis zum Gratis Versand!' : 'Fügen Sie Artikel hinzu für Gratis Versand!') }}" data-i18n-en="{{ $subtotalCalc >= 150 ? 'Free Shipping Unlocked! 🎉' : ($subtotalCalc > 0 ? 'Add EUR ' . number_format(150 - $subtotalCalc, 2, ',', '.') . ' for Free Shipping!' : 'Add items to unlock Free Shipping!') }}">
+                    {{ $subtotalCalc >= 150 ? 'Gratis Versand freigeschaltet! 🎉' : ($subtotalCalc > 0 ? 'Noch EUR ' . number_format(150 - $subtotalCalc, 2, ',', '.') . ' bis zum Gratis Versand!' : 'Fügen Sie Artikel hinzu für Gratis Versand!') }}
                 </span>
-                <span id="shipping-progress-pct" class="text-[0.68rem] text-[#78000b] font-bold animate-pulse">100%</span>
+                <span id="shipping-progress-pct" class="text-[0.68rem] text-[#78000b] font-bold animate-pulse">{{ $initialPct }}%</span>
             </div>
             <div class="h-2 w-full overflow-hidden rounded-full bg-[#f2ebdc]">
-                <div id="shipping-progress-bar" class="h-full bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b] transition-all duration-500" style="width: 100%;"></div>
+                <div id="shipping-progress-bar" class="h-full bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b] transition-all duration-500" style="width: {{ $initialPct }}%;"></div>
             </div>
             <p class="mt-1 text-[0.65rem] text-[#685c54]" data-i18n-de="Kostenloser DHL Express Versand innerhalb Deutschlands ab 150 €" data-i18n-en="Free DHL Express shipping within Germany over €150">
                 Kostenloser DHL Express Versand innerhalb Deutschlands ab 150 €
@@ -235,8 +243,8 @@
         let finalTotal = isVoucherApplied ? rawCartTotal * 0.9 : rawCartTotal;
         document.getElementById('drawer-total').innerText = 'EUR ' + finalTotal.toFixed(2).replace('.', ',');
 
-        // Shipping progress
-        const shippingPct = data.free_shipping_progress || 100;
+        // Dynamic Shipping progress
+        const shippingPct = (data.subtotal && data.subtotal > 0) ? (data.free_shipping_progress || 0) : 0;
         const progressBar = document.getElementById('shipping-progress-bar');
         const progressPct = document.getElementById('shipping-progress-pct');
         const progressText = document.getElementById('shipping-progress-text');
@@ -244,7 +252,9 @@
         if (progressBar) progressBar.style.width = shippingPct + '%';
         if (progressPct) progressPct.innerText = shippingPct + '%';
         if (progressText) {
-            if (shippingPct >= 100) {
+            if (!data.subtotal || data.subtotal <= 0) {
+                progressText.innerText = isEn ? 'Add items to unlock Free Shipping!' : 'Fügen Sie Artikel hinzu für Gratis Versand!';
+            } else if (shippingPct >= 100) {
                 progressText.innerText = isEn ? 'Free Shipping Unlocked! 🎉' : 'Gratis Versand freigeschaltet! 🎉';
             } else {
                 const diff = (150 - data.subtotal).toFixed(2).replace('.', ',');
@@ -319,6 +329,17 @@
         const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
         const input = document.getElementById('drawer-voucher-input').value.trim();
         const msg = document.getElementById('voucher-message');
+
+        if (rawCartTotal <= 0) {
+            LuxurySwal.fire({
+                icon: 'warning',
+                title: isEn ? 'Cart is Empty' : 'Warenkorb ist leer',
+                text: isEn ? 'Please add items to your cart before applying a voucher code.' : 'Bitte fügen Sie zuerst Artikel zum Warenkorb hinzu, bevor Sie einen Gutscheincode einlösen.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
         if (input.toUpperCase() === 'MEHAAJ10') {
             isVoucherApplied = true;
             msg.classList.remove('hidden');
@@ -334,7 +355,7 @@
             LuxurySwal.fire({
                 icon: 'error',
                 title: isEn ? 'Invalid Code' : 'Ungültiger Code',
-                text: isEn ? 'The voucher code entered is not valid. Please try: MEHAAJ10' : 'Der eingegebene Gutscheincode ist nicht gültig. Bitte versuchen Sie: MEHAAJ10',
+                text: isEn ? 'The voucher code entered is not valid. Try: MEHAAJ10' : 'Der eingegebene Gutscheincode ist nicht gültig. Versuchen Sie: MEHAAJ10',
                 confirmButtonText: isEn ? 'Try Again' : 'Erneut versuchen'
             });
         }
@@ -342,6 +363,20 @@
 
     function triggerExpressPayment(provider) {
         const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
+        if (rawCartTotal <= 0) {
+            LuxurySwal.fire({
+                icon: 'warning',
+                title: isEn ? 'Cart is Empty' : 'Warenkorb ist leer',
+                text: isEn ? 'Please add products to your cart before proceeding to express checkout.' : 'Bitte fügen Sie Produkte zu Ihrem Warenkorb hinzu, bevor Sie den Express-Checkout nutzen.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        let paymentParam = 'paypal';
+        if (provider.toLowerCase().includes('klarna')) paymentParam = 'vorkasse';
+        if (provider.toLowerCase().includes('apple') || provider.toLowerCase().includes('pay')) paymentParam = 'credit_card';
+
         LuxurySwal.fire({
             icon: 'info',
             title: provider,
@@ -349,8 +384,10 @@
                 ? 'Connecting to ' + provider + '. Redirecting to secure express checkout...' 
                 : 'Verbindung zu ' + provider + ' wird hergestellt. Sie werden zur sicheren Express-Zahlung weitergeleitet...',
             showConfirmButton: false,
-            timer: 2500,
+            timer: 1800,
             timerProgressBar: true
+        }).then(() => {
+            window.location.href = '/warenkorb?express=' + paymentParam;
         });
     }
 </script>

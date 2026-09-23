@@ -1,6 +1,6 @@
 <header class="fixed inset-x-0 top-0 z-50 bg-transparent text-white transition-all duration-500" data-site-header>
     <nav class="flex h-16 w-full items-center gap-5 px-5 sm:px-7 lg:h-[4.8rem] lg:px-8" aria-label="Main navigation">
-        <button class="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm border border-[#d8b45a]/55 bg-[#d8b45a]/10 text-white transition hover:border-[#d8b45a] hover:bg-[#78000b] hover:text-white shadow-sm" type="button" data-mobile-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+        <button class="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm border border-[#d8b45a]/55 bg-[#d8b45a]/10 text-white transition hover:border-[#d8b45a] hover:bg-[#78000b] hover:text-white shadow-sm" type="button" onclick="toggleMobileMenu()" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
             <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
                 <path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17" stroke-linecap="round" />
             </svg>
@@ -36,9 +36,7 @@
                     @endif
                 </div>
             @empty
-                <a class="transition hover:text-[#d8b45a]" href="/shop" data-i18n-de="Taschen & Etuis" data-i18n-en="Bags & Wallets">Taschen & Etuis</a>
-                <a class="transition hover:text-[#d8b45a]" href="/shop" data-i18n-de="Gürtel & Accessoires" data-i18n-en="Belts & Accessories">Gürtel & Accessoires</a>
-                <a class="transition hover:text-[#d8b45a]" href="/shop" data-i18n-de="Schmuck & Uhren" data-i18n-en="Jewelry & Watches">Schmuck & Uhren</a>
+                <a class="transition hover:text-[#d8b45a]" href="/shop" data-i18n-de="Kollektion & Shop" data-i18n-en="Collection & Shop">Kollektion & Shop</a>
             @endforelse
             <a class="transition hover:text-[#d8b45a]" href="/ueber-uns" data-i18n-de="Manufaktur" data-i18n-en="Atelier">Manufaktur</a>
         </div>
@@ -98,12 +96,12 @@
     </nav>
 
     <!-- Mobile Menu Dark Backdrop -->
-    <div id="mobile-menu-backdrop" class="fixed inset-0 z-[55] hidden bg-black/75 backdrop-blur-sm transition-opacity duration-500" data-mobile-menu-toggle aria-hidden="true"></div>
+    <div id="mobile-menu-backdrop" class="fixed inset-0 z-[55] hidden bg-black/75 backdrop-blur-sm transition-opacity duration-500 cursor-pointer" onclick="toggleMobileMenu()" aria-hidden="true"></div>
 
     <!-- Luxury Mobile Menu Drawer -->
-    <div id="mobile-menu" class="fixed inset-y-0 left-0 z-[60] hidden w-full max-w-[420px] flex-col justify-between overflow-y-auto no-scrollbar bg-[#0d0605] border-r border-[#d8b45a]/30 px-6 py-6 text-[#fbf4e8] shadow-[24px_0_80px_rgba(0,0,0,0.85)]" data-mobile-menu>
+    <div id="mobile-menu" class="fixed inset-y-0 left-0 z-[60] hidden w-full max-w-[420px] justify-between overflow-y-auto no-scrollbar bg-[#0d0605] border-r border-[#d8b45a]/30 px-6 py-6 text-[#fbf4e8] shadow-[24px_0_80px_rgba(0,0,0,0.85)]">
         <!-- Header Controls -->
-        <div>
+        <div class="w-full">
             <div class="flex items-center justify-between pb-6 border-b border-[#d8b45a]/20">
                 <a href="/" class="flex items-center" aria-label="MEHAAJ home">
                     <img src="/logo.png" alt="MEHAAJ" class="h-10 w-auto max-w-[140px] object-contain">
@@ -114,7 +112,7 @@
                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5" /><path d="M5.5 20c1.1-3.4 3.3-5.1 6.5-5.1s5.4 1.7 6.5 5.1" stroke-linecap="round" /></svg>
                     </button>
 
-                    <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-[#d8b45a]/40 bg-[#78000b]/20 text-[#ffd45a] transition hover:bg-[#78000b] hover:text-white" type="button" data-mobile-menu-toggle aria-controls="mobile-menu" aria-expanded="true" aria-label="Close menu">
+                    <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-[#d8b45a]/40 bg-[#78000b]/20 text-[#ffd45a] transition hover:bg-[#78000b] hover:text-white" type="button" onclick="toggleMobileMenu()" aria-controls="mobile-menu" aria-expanded="true" aria-label="Close menu">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -155,7 +153,7 @@
                     <a class="group flex items-center justify-between py-3.5 transition-all duration-300 hover:translate-x-1.5 hover:text-[#d8b45a]" href="/shop">
                         <div class="flex items-center gap-3">
                             <span class="text-[0.65rem] font-bold text-[#d8b45a]/60">01</span>
-                            <span class="font-display text-lg font-medium" data-i18n-de="Lederhandtaschen" data-i18n-en="Leather Handbags">Lederhandtaschen</span>
+                            <span class="font-display text-lg font-medium" data-i18n-de="Kollektion & Shop" data-i18n-en="Collection & Shop">Kollektion & Shop</span>
                         </div>
                         <svg class="h-4 w-4 text-[#d8b45a]/50 transition-transform group-hover:translate-x-1 group-hover:text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
@@ -172,3 +170,25 @@
         </div>
     </div>
 </header>
+
+<script>
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileBackdrop = document.getElementById('mobile-menu-backdrop');
+        if (!mobileMenu) return;
+
+        const isHidden = mobileMenu.classList.contains('hidden');
+        if (isHidden) {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex', 'flex-col');
+            if (mobileBackdrop) mobileBackdrop.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex', 'flex-col');
+            if (mobileBackdrop) mobileBackdrop.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+</script>
+

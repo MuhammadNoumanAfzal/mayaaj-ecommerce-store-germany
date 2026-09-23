@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer(['components.navbar', 'components.featured-categories', 'components.featured-products', 'pages.shop', 'home', 'layouts.app'], function ($view) {
+        View::composer(['components.navbar', 'components.featured-categories', 'components.featured-products', 'components.jewelry-section', 'pages.shop', 'home', 'layouts.app'], function ($view) {
             try {
                 $categories = Category::where('status', 'active')
                     ->with(['activeSubcategories'])
@@ -45,9 +45,18 @@ class AppServiceProvider extends ServiceProvider
 
                 $view->with('globalFeaturedProducts', $featuredProducts);
 
+                $jewelryProducts = Product::where('status', 'active')
+                    ->with(['category', 'subcategory'])
+                    ->latest()
+                    ->take(3)
+                    ->get();
+
+                $view->with('jewelryProducts', $jewelryProducts);
+
             } catch (\Exception $e) {
                 $view->with('globalCategories', collect());
                 $view->with('globalFeaturedProducts', collect());
+                $view->with('jewelryProducts', collect());
             }
         });
     }

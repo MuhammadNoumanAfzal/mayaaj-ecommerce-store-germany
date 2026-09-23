@@ -59,7 +59,7 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
-            'free_shipping_progress' => min(100, round(($totals['subtotal'] / 150) * 100)),
+            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -127,6 +127,7 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -166,6 +167,7 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -199,6 +201,7 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -341,12 +344,14 @@ class CartController extends Controller
 
         $vat = round($subtotal * 0.19, 2);
         $total = round($subtotal, 2);
+        $progress = $subtotal > 0 ? min(100, (int) round(($subtotal / 150) * 100)) : 0;
 
         return [
             'count' => $count,
             'subtotal' => round($subtotal, 2),
             'vat' => $vat,
             'total' => $total,
+            'free_shipping_progress' => $progress,
         ];
     }
 }

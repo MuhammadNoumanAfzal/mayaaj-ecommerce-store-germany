@@ -54,7 +54,7 @@
                     </button>
 
                     <p class="text-xs text-[#685c54]">
-                        <span id="product-count" class="font-bold text-[#1c1210]">8</span> 
+                        <span id="product-count" class="font-bold text-[#1c1210]">{{ $products->total() ?? $products->count() }}</span> 
                         <span data-i18n-de="Meisterwerke gefunden" data-i18n-en="Masterpieces found">Meisterwerke gefunden</span>
                     </p>
                 </div>
@@ -117,10 +117,17 @@
 
                 <!-- Sidebar Filters Column (3 cols) -->
                 <aside id="filter-sidebar" class="lg:col-span-3 hidden lg:block space-y-6">
-                    <div class="rounded-md border border-[#e6decb] bg-white p-5 shadow-xs space-y-6">
+                    <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="rounded-md border border-[#e6decb] bg-white p-5 shadow-xs space-y-6">
+                        @if(request('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                        @if(request('sort'))
+                            <input type="hidden" name="sort" value="{{ request('sort') }}">
+                        @endif
+
                         <div class="flex items-center justify-between border-b border-[#f2ebdc] pb-3">
                             <h2 class="font-display text-lg font-medium text-[#1c1210]" data-i18n-de="Filter" data-i18n-en="Filters">Filter</h2>
-                            <button type="button" onclick="resetFilters()" class="text-[0.65rem] font-bold uppercase tracking-wider text-[#78000b] hover:underline cursor-pointer" data-i18n-de="ZURÜCKSETZEN" data-i18n-en="RESET">ZURÜCKSETZEN</button>
+                            <a href="{{ route('shop') }}" class="text-[0.65rem] font-bold uppercase tracking-wider text-[#78000b] hover:underline cursor-pointer" data-i18n-de="ZURÜCKSETZEN" data-i18n-en="RESET">ZURÜCKSETZEN</a>
                         </div>
 
                         <!-- Category & Subcategory Filter from Database -->
@@ -130,14 +137,28 @@
                                 @forelse($globalCategories ?? [] as $category)
                                     <div class="space-y-1.5 border-b border-[#f2ebdc] pb-2 last:border-none">
                                         <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] font-bold text-[#1c1210] transition">
-                                            <input type="checkbox" value="{{ $category->slug }}" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
+                                            <input
+                                                type="checkbox"
+                                                name="category[]"
+                                                value="{{ $category->slug }}"
+                                                {{ in_array($category->slug, (array) request('category')) ? 'checked' : '' }}
+                                                onchange="document.getElementById('shop-filter-form').submit()"
+                                                class="rounded border-[#e6decb] text-[#78000b] focus:ring-0"
+                                            >
                                             <span>{{ $category->name }}</span>
                                         </label>
                                         @if($category->activeSubcategories && $category->activeSubcategories->count() > 0)
                                             <div class="ml-4 space-y-1 border-l-2 border-[#d8b45a]/30 pl-2.5 pt-0.5">
                                                 @foreach($category->activeSubcategories as $subcat)
                                                     <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] text-[0.72rem] text-[#685c54] transition">
-                                                        <input type="checkbox" value="{{ $subcat->slug }}" onchange="applyFilters()" class="subcategory-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
+                                                        <input
+                                                            type="checkbox"
+                                                            name="subcategory[]"
+                                                            value="{{ $subcat->slug }}"
+                                                            {{ in_array($subcat->slug, (array) request('subcategory')) ? 'checked' : '' }}
+                                                            onchange="document.getElementById('shop-filter-form').submit()"
+                                                            class="rounded border-[#e6decb] text-[#78000b] focus:ring-0"
+                                                        >
                                                         <span>{{ $subcat->name }}</span>
                                                     </label>
                                                 @endforeach
@@ -145,34 +166,8 @@
                                         @endif
                                     </div>
                                 @empty
-                                    <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                        <input type="checkbox" value="bags" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                        <span data-i18n-de="Leder Taschen" data-i18n-en="Leather Bags">Leder Taschen</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                        <input type="checkbox" value="wallets" onchange="applyFilters()" class="category-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                        <span data-i18n-de="Geldbörsen & Etuis" data-i18n-en="Wallets & Cardholders">Geldbörsen & Etuis</span>
-                                    </label>
+                                    <p class="text-xs text-[#8a7c74]" data-i18n-de="Keine Kategorien im Katalog vorhanden." data-i18n-en="No categories available.">Keine Kategorien im Katalog vorhanden.</p>
                                 @endforelse
-                            </div>
-                        </div>
-
-                        <!-- Leather Type Filter -->
-                        <div class="border-t border-[#f2ebdc] pt-5">
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-[#1c1210] mb-3" data-i18n-de="Lederqualität" data-i18n-en="Leather Type">Lederqualität</h3>
-                            <div class="space-y-2 text-xs text-[#5c4f46]">
-                                <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                    <input type="checkbox" value="full-grain" onchange="applyFilters()" class="leather-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                    <span data-i18n-de="Italienisches Vollleder" data-i18n-en="Italian Full Grain">Italienisches Vollleder</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                    <input type="checkbox" value="saffiano" onchange="applyFilters()" class="leather-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                    <span data-i18n-de="Saffiano Struktur" data-i18n-en="Saffiano Texture">Saffiano Struktur</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] transition">
-                                    <input type="checkbox" value="nappa" onchange="applyFilters()" class="leather-filter rounded border-[#e6decb] text-[#78000b] focus:ring-0">
-                                    <span data-i18n-de="Weiches Nappa Leder" data-i18n-en="Soft Nappa Leather">Weiches Nappa Leder</span>
-                                </label>
                             </div>
                         </div>
 
@@ -181,300 +176,95 @@
                             <h3 class="text-xs font-bold uppercase tracking-wider text-[#1c1210] mb-3" data-i18n-de="Maximaler Preis" data-i18n-en="Max Price">Maximaler Preis</h3>
                             <input
                                 type="range"
+                                name="max_price"
                                 id="price-range"
-                                min="50"
-                                max="700"
+                                min="{{ $dbMinPrice ?? 0 }}"
+                                max="{{ $dbMaxPrice ?? 1000 }}"
                                 step="10"
-                                value="700"
-                                oninput="updatePriceLabel(this.value); applyFilters();"
+                                value="{{ request('max_price', $dbMaxPrice ?? 1000) }}"
+                                oninput="updatePriceLabel(this.value);"
+                                onchange="document.getElementById('shop-filter-form').submit()"
                                 class="w-full accent-[#78000b] cursor-pointer"
                             >
                             <div class="mt-2 flex items-center justify-between text-xs text-[#685c54]">
-                                <span>EUR 50</span>
-                                <span id="price-max-display" class="font-bold text-[#1c1210]">EUR 700</span>
+                                <span>EUR {{ $dbMinPrice ?? 0 }}</span>
+                                <span id="price-max-display" class="font-bold text-[#1c1210]">EUR {{ request('max_price', $dbMaxPrice ?? 1000) }}</span>
                             </div>
                         </div>
 
-                    </div>
+                    </form>
                 </aside>
 
                 <!-- Product Grid Catalog (9 cols) -->
                 <main class="lg:col-span-9">
                     <div id="product-container" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="full-grain"
-                            data-price="590"
-                            data-name="Maison Chronograph Watch"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
+                        @forelse($products as $product)
+                            <article
+                                class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
+                                data-category="{{ $product->category->slug ?? '' }}"
+                                data-price="{{ $product->price }}"
+                                data-name="{{ $product->name }}"
+                            >
+                                <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
 
-                            <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
-                                <img src="/product_watch.png" alt="Maison Chronograph Watch" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md animate-pulse">LUXURY</span>
+                                <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
+                                    <a href="{{ route('shop.show', $product->slug) }}" class="block h-full w-full">
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
+                                    </a>
+                                    @if($product->is_featured)
+                                        <div class="absolute left-3 top-3 z-10">
+                                            <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md">EXKLUSIV</span>
+                                        </div>
+                                    @endif
+                                    <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                                        <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
+                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                                <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                    <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
+
+                                <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-2">
+                                            <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]">
+                                                {{ $product->category->name ?? 'Kategorie' }}
+                                            </p>
+                                            <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
+                                        </div>
+                                        <a href="{{ route('shop.show', $product->slug) }}" class="block">
+                                            <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300">
+                                                {{ $product->name }}
+                                            </h3>
+                                        </a>
+                                        @if($product->description)
+                                            <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed line-clamp-2">{{ $product->description }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
+                                        <div class="flex flex-col">
+                                            <span class="text-base font-bold text-[#1c1210]">EUR {{ number_format($product->price, 2, ',', '.') }}</span>
+                                            @if($product->sale_price)
+                                                <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR {{ number_format($product->sale_price, 2, ',', '.') }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button onclick="quickAddToCart({{ $product->id }}, 1)" class="inline-flex items-center gap-1 rounded bg-[#d8b45a] px-3 py-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[#120807] shadow-sm transition-all duration-300 hover:bg-[#ffd45a] cursor-pointer" type="button" title="In Warenkorb">
+                                                + Cart
+                                            </button>
+                                            <a href="{{ route('shop.show', $product->slug) }}" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
+                                        </div>
+                                    </div>
                                 </div>
+                            </article>
+                        @empty
+                            <div class="col-span-full py-16 px-6 text-center bg-white rounded-md border border-[#e6decb] space-y-3">
+                                <svg class="mx-auto h-12 w-12 text-[#78000b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                <h3 class="font-display text-xl text-[#1c1210]" data-i18n-de="Keine Produkte im Katalog gefunden" data-i18n-en="No products found in catalog">Keine Produkte im Katalog gefunden</h3>
+                                <p class="text-xs text-[#685c54] max-w-md mx-auto" data-i18n-de="Es wurden bisher noch keine aktiven Produkte im Shop angelegt oder die ausgewählten Filter ergaben keine Treffer." data-i18n-en="No active products have been added to the store yet, or your filter criteria returned no results.">Es wurden bisher noch keine aktiven Produkte im Shop angelegt oder die ausgewählten Filter ergaben keine Treffer.</p>
                             </div>
-
-                            <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Uhren & Lifestyle" data-i18n-en="Watches & Lifestyle">Uhren & Lifestyle</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Maison Chronograph Uhr" data-i18n-en="Maison Chronograph Watch">
-                                        Maison Chronograph Uhr
-                                    </h3>
-                                    <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed hidden card-desc" data-i18n-de="Schweizer Automatik-Chronograph mit Saphirglas & Lederband." data-i18n-en="Swiss automatic chronograph with sapphire glass & leather strap.">Schweizer Automatik-Chronograph mit Saphirglas & Lederband.</p>
-                                </div>
-                                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 590</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 650</span>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Leder Geldbörse Premium" data-i18n-en="Bespoke Zip Leather Wallet">
-                                        Leder Geldbörse Premium
-                                    </h3>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 129</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 149</span>
-                                    </div>
-                                    <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 3 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="full-grain"
-                            data-price="59"
-                            data-name="Executive Leather Key Ring"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="relative h-60 overflow-hidden bg-[#f7f4ee]">
-                                <img src="/productKeychain.png" alt="Executive Leather Key Ring" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-sm">LIMITED</span>
-                                </div>
-                            </div>
-
-                            <div class="p-5 flex flex-col justify-between flex-1">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Luxus Accessoires" data-i18n-en="Luxury Accessories">Luxus Accessoires</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Executive Schlüsselanhänger" data-i18n-en="Executive Leather Key Ring">
-                                        Executive Schlüsselanhänger
-                                    </h3>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 59</span>
-                                    </div>
-                                    <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 4 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="golf"
-                            data-leather="full-grain"
-                            data-price="450"
-                            data-name="Royal Executive Golf Carry"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="relative h-60 overflow-hidden bg-[#f7f4ee]">
-                                <img src="/productgolf.png" alt="Royal Executive Golf Carry" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-sm">LUXURY</span>
-                                </div>
-                            </div>
-
-                            <div class="p-5 flex flex-col justify-between flex-1">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Golf & Lifestyle" data-i18n-en="Golf & Lifestyle">Golf & Lifestyle</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Royal Golf Executive Carry" data-i18n-en="Royal Executive Golf Carry">
-                                        Royal Golf Executive Carry
-                                    </h3>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 450</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 490</span>
-                                    </div>
-                                    <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 5 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="nappa"
-                            data-price="249"
-                            data-name="Aurelia Satin Evening Dress"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="relative h-60 overflow-hidden bg-[#f7f4ee]">
-                                <img src="/product_dress.png" alt="Aurelia Satin Evening Dress" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-sm">NEU</span>
-                                </div>
-                            </div>
-
-                            <div class="p-5 flex flex-col justify-between flex-1">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Damen Eleganz" data-i18n-en="Women Elegance">Damen Eleganz</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Aurelia Satin Abendkleid" data-i18n-en="Aurelia Satin Evening Dress">
-                                        Aurelia Satin Abendkleid
-                                    </h3>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 249</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 299</span>
-                                    </div>
-                                    <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 6 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="full-grain"
-                            data-price="480"
-                            data-name="Noir Tailored Coat"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="relative h-60 overflow-hidden bg-[#f7f4ee]">
-                                <img src="/product_coat.png" alt="Noir Tailored Coat" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-sm">BESTSELLER</span>
-                                </div>
-                            </div>
-
-                            <div class="p-5 flex flex-col justify-between flex-1">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Herren Garderobe" data-i18n-en="Men Outerwear">Herren Garderobe</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Noir Maßmantel" data-i18n-en="Noir Tailored Coat">
-                                        Noir Maßmantel
-                                    </h3>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 480</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 550</span>
-                                    </div>
-                                    <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 7 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="bags"
-                            data-leather="saffiano"
-                            data-price="340"
-                            data-name="Champagne Leather Bag"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="relative h-60 overflow-hidden bg-[#f7f4ee]">
-                                <img src="/product_bag_red.png" alt="Champagne Leather Bag" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-sm">LIMITED</span>
-                                </div>
-                            </div>
-
-                            <div class="p-5 flex flex-col justify-between flex-1">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Leder Taschen" data-i18n-en="Leather Bags">Leder Taschen</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Champagner Lederhandtasche" data-i18n-en="Champagne Leather Bag">
-                                        Champagner Lederhandtasche
-                                    </h3>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 340</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 390</span>
-                                    </div>
-                                    <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product Item 8 -->
-                        <article
-                            class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
-                            data-category="accessories"
-                            data-leather="full-grain"
-                            data-price="590"
-                            data-name="Maison Chronograph Watch"
-                        >
-                            <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
-
-                            <div class="relative h-60 overflow-hidden bg-[#f7f4ee]">
-                                <img src="/product_watch.png" alt="Maison Chronograph Watch" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
-                                <div class="absolute left-3 top-3 z-10">
-                                    <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-sm">LUXURY</span>
-                                </div>
-                            </div>
-
-                            <div class="p-5 flex flex-col justify-between flex-1">
-                                <div>
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-de="Uhren & Lifestyle" data-i18n-en="Watches & Lifestyle">Uhren & Lifestyle</p>
-                                        <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                    </div>
-                                    <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300" data-i18n-de="Maison Chronograph Uhr" data-i18n-en="Maison Chronograph Watch">
-                                        Maison Chronograph Uhr
-                                    </h3>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                    <div class="flex flex-col">
-                                        <span class="text-base font-bold text-[#1c1210]">EUR 590</span>
-                                        <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR 650</span>
-                                    </div>
-                                    <a href="/shop/maison-leather-tote" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3.5 py-2.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                </div>
-                            </div>
-                        </article>
-
+                        @endforelse
                     </div>
                 </main>
 

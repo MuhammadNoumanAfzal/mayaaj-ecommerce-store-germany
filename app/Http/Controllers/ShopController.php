@@ -26,19 +26,19 @@ class ShopController extends Controller
             });
         }
 
-        // Category Filter
+        // Category Filter (supports single slug or array of slugs)
         if ($request->filled('category')) {
-            $catSlug = $request->input('category');
-            $query->whereHas('category', function ($q) use ($catSlug) {
-                $q->where('slug', $catSlug);
+            $catInput = (array) $request->input('category');
+            $query->whereHas('category', function ($q) use ($catInput) {
+                $q->whereIn('slug', $catInput);
             });
         }
 
-        // Subcategory Filter
+        // Subcategory Filter (supports single slug or array of slugs)
         if ($request->filled('subcategory')) {
-            $subSlug = $request->input('subcategory');
-            $query->whereHas('subcategory', function ($q) use ($subSlug) {
-                $q->where('slug', $subSlug);
+            $subInput = (array) $request->input('subcategory');
+            $query->whereHas('subcategory', function ($q) use ($subInput) {
+                $q->whereIn('slug', $subInput);
             });
         }
 
@@ -67,7 +67,13 @@ class ShopController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
 
-        return view('pages.shop', compact('products'));
+        $dbMinPrice = (int) floor(Product::where('status', 'active')->min('price') ?? 0);
+        $dbMaxPrice = (int) ceil(Product::where('status', 'active')->max('price') ?? 1000);
+        if ($dbMaxPrice <= 0) {
+            $dbMaxPrice = 1000;
+        }
+
+        return view('pages.shop', compact('products', 'dbMinPrice', 'dbMaxPrice'));
     }
 
     /**

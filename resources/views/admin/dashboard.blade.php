@@ -46,7 +46,7 @@
     <!-- 4 Stat Metric Cards (Executive Card Design with SVG Gradient Badges) -->
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         
-        <!-- Card 1: Contact Messages / Sales -->
+        <!-- Card 1: Contact Messages -->
         <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
@@ -55,49 +55,49 @@
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
                 </div>
-                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">26</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">{{ $contactMessagesCount }}</p>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 2" data-i18n-en="This month: 2">Diesen Monat: 2</span>
-                <span class="rounded-full badge-soft-active font-extrabold px-2.5 py-0.5 text-[0.68rem]">+100%</span>
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: {{ $contactMessagesThisMonth }}" data-i18n-en="This month: {{ $contactMessagesThisMonth }}">Diesen Monat: {{ $contactMessagesThisMonth }}</span>
+                <span class="rounded-full badge-soft-active font-extrabold px-2.5 py-0.5 text-[0.68rem]">Live DB</span>
             </div>
         </div>
 
-        <!-- Card 2: Consultations / Orders -->
+        <!-- Card 2: Orders & Prepayments -->
         <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Beratungstermine" data-i18n-en="Consultations">Beratungstermine</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Bestellungen & Vorkasse" data-i18n-en="Orders & Prepayments">Bestellungen & Vorkasse</span>
                     <div class="h-11 w-11 rounded-2xl stat-badge-emerald flex items-center justify-center">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                     </div>
                 </div>
-                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">1</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">{{ $ordersCount }}</p>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 0" data-i18n-en="This month: 0">Diesen Monat: 0</span>
-                <span class="rounded-full badge-soft-indigo font-extrabold px-2.5 py-0.5 text-[0.68rem]">+8%</span>
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: {{ $ordersThisMonth }}" data-i18n-en="This month: {{ $ordersThisMonth }}">Diesen Monat: {{ $ordersThisMonth }}</span>
+                <span class="rounded-full badge-soft-indigo font-extrabold px-2.5 py-0.5 text-[0.68rem]">Live DB</span>
             </div>
         </div>
 
-        <!-- Card 3: Event Reservations / Products -->
+        <!-- Card 3: Products Catalog -->
         <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Event Reservierungen" data-i18n-en="Event Reservations">Event Reservierungen</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n-de="Katalog Produkte" data-i18n-en="Catalog Products">Katalog Produkte</span>
                     <div class="h-11 w-11 rounded-2xl stat-badge-amber flex items-center justify-center">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     </div>
                 </div>
-                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">2</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">{{ $productsCount }}</p>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 0" data-i18n-en="This month: 0">Diesen Monat: 0</span>
-                <span class="rounded-full badge-soft-pending font-extrabold px-2.5 py-0.5 text-[0.68rem]">+12%</span>
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: {{ $productsThisMonth }}" data-i18n-en="This month: {{ $productsThisMonth }}">Diesen Monat: {{ $productsThisMonth }}</span>
+                <span class="rounded-full badge-soft-pending font-extrabold px-2.5 py-0.5 text-[0.68rem]">Live DB</span>
             </div>
         </div>
 
-        <!-- Card 4: Published Content / VIP Customers -->
+        <!-- Card 4: Customers -->
         <div class="exec-card p-6 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between">
@@ -106,11 +106,11 @@
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     </div>
                 </div>
-                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">2</p>
+                <p class="mt-3 text-3xl font-black text-slate-900 tracking-tight">{{ $customersCount }}</p>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: 0" data-i18n-en="This month: 0">Diesen Monat: 0</span>
-                <span class="rounded-full badge-soft-rose font-extrabold px-2.5 py-0.5 text-[0.68rem]">+25%</span>
+                <span class="text-slate-400 font-medium" data-i18n-de="Diesen Monat: {{ $customersThisMonth }}" data-i18n-en="This month: {{ $customersThisMonth }}">Diesen Monat: {{ $customersThisMonth }}</span>
+                <span class="rounded-full badge-soft-rose font-extrabold px-2.5 py-0.5 text-[0.68rem]">Live DB</span>
             </div>
         </div>
 
@@ -129,7 +129,7 @@
                 <a href="{{ route('admin.orders') }}" class="text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:underline" data-i18n-de="Alle Anzeigen →" data-i18n-en="View All →">Alle Anzeigen →</a>
             </div>
 
-            <!-- Orders & Inquiries Table -->
+            <!-- Orders Table -->
             <div class="overflow-x-auto border border-slate-100 rounded-xl">
                 <table class="w-full text-left text-xs">
                     <thead class="exec-table-head">
@@ -143,46 +143,86 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 font-medium">
+                        @forelse($recentOrders as $order)
                         <tr class="exec-table-row">
-                            <td class="p-3.5 font-mono text-indigo-600 font-bold">MHJ-2026-8942</td>
-                            <td class="p-3.5 font-bold text-slate-900">Maximilian Mustermann</td>
-                            <td class="p-3.5 text-slate-600">🏛️ Banküberweisung (Vorkasse)</td>
-                            <td class="p-3.5 font-bold text-slate-900">EUR 418,00</td>
+                            <td class="p-3.5 font-mono text-indigo-600 font-bold">{{ $order->order_number }}</td>
+                            <td class="p-3.5 font-bold text-slate-900">{{ $order->customer_name }}</td>
+                            <td class="p-3.5 text-slate-600">
+                                @if($order->payment_method === 'vorkasse')
+                                    🏛️ Banküberweisung (Vorkasse)
+                                @elseif($order->payment_method === 'paypal')
+                                    🅿️ PayPal Express
+                                @else
+                                    💳 Kreditkarte
+                                @endif
+                            </td>
+                            <td class="p-3.5 font-bold text-slate-900">EUR {{ number_format($order->total_amount, 2, ',', '.') }}</td>
                             <td class="p-3.5">
-                                <span class="rounded-full badge-soft-pending px-2.5 py-1 text-[0.62rem] font-bold uppercase" data-i18n-de="Warte auf Zahlung" data-i18n-en="Awaiting Payment">Warte auf Zahlung</span>
+                                @if($order->status === 'pending')
+                                    <span class="rounded-full badge-soft-pending px-2.5 py-1 text-[0.62rem] font-bold uppercase" data-i18n-de="Warte auf Zahlung" data-i18n-en="Awaiting Payment">Warte auf Zahlung</span>
+                                @elseif($order->status === 'delivered' || $order->payment_status === 'paid')
+                                    <span class="rounded-full badge-soft-active px-2.5 py-1 text-[0.62rem] font-bold uppercase">{{ $order->status }}</span>
+                                @else
+                                    <span class="rounded-full badge-soft-indigo px-2.5 py-1 text-[0.62rem] font-bold uppercase">{{ $order->status }}</span>
+                                @endif
                             </td>
                             <td class="p-3.5 text-right">
-                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-8942'})" class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Details" data-i18n-en="Details">Details</button>
+                                <a href="{{ route('admin.orders') }}" class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Details" data-i18n-en="Details">Details</a>
                             </td>
                         </tr>
-
-                        <tr class="exec-table-row">
-                            <td class="p-3.5 font-mono text-indigo-600 font-bold">MHJ-2026-7819</td>
-                            <td class="p-3.5 font-bold text-slate-900">Victoria von Berg</td>
-                            <td class="p-3.5 text-slate-600">💳 Kreditkarte (Visa)</td>
-                            <td class="p-3.5 font-bold text-slate-900">EUR 590,00</td>
-                            <td class="p-3.5">
-                                <span class="rounded-full badge-soft-active px-2.5 py-1 text-[0.62rem] font-bold uppercase" data-i18n-de="Bezahlt & Versendet" data-i18n-en="Paid & Shipped">Bezahlt & Versendet</span>
-                            </td>
-                            <td class="p-3.5 text-right">
-                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-7819'})" class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Details" data-i18n-en="Details">Details</button>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="p-8 text-center text-slate-400 font-medium">
+                                <div class="flex flex-col items-center justify-center space-y-1 py-3">
+                                    <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                    <p class="text-xs text-slate-500 font-semibold" data-i18n-de="Noch keine Bestellungen im System" data-i18n-en="No orders in the system yet">Noch keine Bestellungen im System</p>
+                                    <p class="text-[0.7rem] text-slate-400" data-i18n-de="Neue Kundenbestellungen werden hier automatisch in Echtzeit angezeigt." data-i18n-en="New customer orders will automatically appear here in real-time.">Neue Kundenbestellungen werden hier automatisch in Echtzeit angezeigt.</p>
+                                </div>
                             </td>
                         </tr>
-
-                        <tr class="exec-table-row">
-                            <td class="p-3.5 font-mono text-indigo-600 font-bold">MHJ-2026-6540</td>
-                            <td class="p-3.5 font-bold text-slate-900">Dr. Florian Hoffmann</td>
-                            <td class="p-3.5 text-slate-600">🅿️ PayPal Express</td>
-                            <td class="p-3.5 font-bold text-slate-900">EUR 129,00</td>
-                            <td class="p-3.5">
-                                <span class="rounded-full badge-soft-active px-2.5 py-1 text-[0.62rem] font-bold uppercase" data-i18n-de="Bezahlt" data-i18n-en="Paid">Bezahlt</span>
-                            </td>
-                            <td class="p-3.5 text-right">
-                                <button type="button" onclick="LuxuryToast.fire({icon: 'info', title: 'Bestelldetails MHJ-2026-6540'})" class="rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1 text-[0.72rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Details" data-i18n-en="Details">Details</button>
-                            </td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Recent Contact Messages Section -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-xs text-slate-800 tracking-tight uppercase" data-i18n-de="Neueste Kontaktanfragen" data-i18n-en="Recent Contact Inquiries">Neueste Kontaktanfragen</h3>
+                    <a href="{{ route('admin.messages') }}" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline" data-i18n-de="Alle Nachrichten →" data-i18n-en="All Messages →">Alle Nachrichten →</a>
+                </div>
+                <div class="overflow-x-auto border border-slate-100 rounded-xl">
+                    <table class="w-full text-left text-xs">
+                        <thead class="exec-table-head">
+                            <tr>
+                                <th class="p-3" data-i18n-de="Ticket-ID" data-i18n-en="Ticket ID">Ticket-ID</th>
+                                <th class="p-3" data-i18n-de="Absender" data-i18n-en="Sender">Absender</th>
+                                <th class="p-3" data-i18n-de="Betreff" data-i18n-en="Subject">Betreff</th>
+                                <th class="p-3" data-i18n-de="Datum" data-i18n-en="Date">Datum</th>
+                                <th class="p-3 text-right" data-i18n-de="Aktion" data-i18n-en="Action">Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-medium">
+                            @forelse($recentMessages as $msg)
+                            <tr class="exec-table-row">
+                                <td class="p-3 font-mono text-emerald-600 font-bold">MSG-{{ str_pad($msg->id, 5, '0', STR_PAD_LEFT) }}</td>
+                                <td class="p-3 font-bold text-slate-900">{{ $msg->name }} <span class="text-slate-400 font-normal">({{ $msg->email }})</span></td>
+                                <td class="p-3 text-slate-700 truncate max-w-[200px]">{{ $msg->subject }}</td>
+                                <td class="p-3 text-slate-500">{{ $msg->created_at->format('d.m.Y H:i') }}</td>
+                                <td class="p-3 text-right">
+                                    <a href="{{ route('admin.messages.show', $msg->id) }}" class="rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 px-2.5 py-1 text-[0.7rem] font-semibold transition cursor-pointer shadow-2xs" data-i18n-de="Ansehen" data-i18n-en="View">Ansehen</a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="p-6 text-center text-slate-400 font-medium">
+                                    <p class="text-xs text-slate-500" data-i18n-de="Keine Kontaktanfragen vorhanden." data-i18n-en="No contact inquiries yet.">Keine Kontaktanfragen vorhanden.</p>
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Bottom Trend Dots Legend -->
