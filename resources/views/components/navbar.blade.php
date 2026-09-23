@@ -63,11 +63,6 @@
         </form>
 
         <div class="hidden items-center gap-5 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-white lg:flex xl:gap-6">
-            <div class="flex items-center rounded-full border border-[#d8b45a]/35 bg-[#d8b45a]/8 p-0.5" aria-label="Language selector">
-                <button class="cursor-pointer rounded-full px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] transition" type="button" data-language-option="de">DE</button>
-                <button class="cursor-pointer rounded-full px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] transition" type="button" data-language-option="en">EN</button>
-            </div>
-
             <button class="inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openAccountModal()" aria-label="My account">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <circle cx="12" cy="8" r="3.5" />
@@ -174,20 +169,6 @@
                     <svg class="h-4 w-4 text-[#d8b45a]/50 transition-transform group-hover:translate-x-1 group-hover:text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </nav>
-        </div>  </div>
-
-        <!-- Drawer Footer: Language & Brand Tagline -->
-        <div class="mt-8 border-t border-[#d8b45a]/20 pt-5">
-            <div class="flex items-center justify-between">
-                <span class="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#d8b45a]">Sprache / Language</span>
-                <div class="flex items-center rounded-full border border-[#d8b45a]/35 bg-[#d8b45a]/8 p-0.5">
-                    <button class="cursor-pointer rounded-full px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] transition" type="button" data-language-option="de">DE</button>
-                    <button class="cursor-pointer rounded-full px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] transition" type="button" data-language-option="en">EN</button>
-                </div>
-            </div>
-            <p class="mt-4 text-[0.62rem] uppercase tracking-[0.18em] text-[#e4d9cc]/40 text-center">
-                MEHAAJ — Quiet Luxury & German Precision
-            </p>
         </div>
     </div>
 </header>
