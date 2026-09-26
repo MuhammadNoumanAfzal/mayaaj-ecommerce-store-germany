@@ -120,7 +120,11 @@
                             <td class="py-4 px-6">
                                 <span class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-1 text-[0.68rem] font-bold shadow-2xs">
                                     <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
-                                    {{ $product->category->name ?? 'Unkategorisiert' }}
+                                    @if($product->category)
+                                        {{ $product->category->name }}
+                                    @else
+                                        <span data-i18n-de="Unkategorisiert" data-i18n-en="Uncategorized">Unkategorisiert</span>
+                                    @endif
                                 </span>
                                 @if($product->subcategory)
                                     <span class="block text-[0.68rem] text-slate-600 mt-1 font-semibold">↳ {{ $product->subcategory->name }}</span>
@@ -217,13 +221,15 @@
 
 <script>
     function confirmDeleteProduct(id, name) {
+        const isEn = (window.__mehaaj_lang || localStorage.getItem('mehaaj_admin_lang')) === 'en';
         LuxurySwal.fire({
-            title: 'Produkt löschen?',
-            text: `Möchten Sie "${name}" wirklich unwiderruflich löschen?`,
+            title: isEn ? 'Delete Product?' : 'Produkt löschen?',
+            text: isEn ? `Are you sure you want to permanently delete "${name}"?` : `Möchten Sie "${name}" wirklich unwiderruflich löschen?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Ja, Produkt löschen',
-            cancelButtonText: 'Abbrechen'
+            confirmButtonColor: '#be123c',
+            confirmButtonText: isEn ? 'Yes, Delete Product' : 'Ja, Produkt löschen',
+            cancelButtonText: isEn ? 'Cancel' : 'Abbrechen'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('delete-product-form-' + id).submit();

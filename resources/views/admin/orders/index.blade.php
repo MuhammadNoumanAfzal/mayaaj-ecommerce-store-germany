@@ -226,13 +226,15 @@
 
 <script>
     function confirmDeleteOrder(id, orderNumber) {
+        const isEn = (window.__mehaaj_lang || localStorage.getItem('mehaaj_admin_lang')) === 'en';
         LuxurySwal.fire({
-            title: 'Bestellung löschen?',
-            text: `Möchten Sie die Bestellung "${orderNumber}" wirklich unwiderruflich löschen?`,
+            title: isEn ? 'Delete Order?' : 'Bestellung löschen?',
+            text: isEn ? `Are you sure you want to delete order "${orderNumber}"?` : `Möchten Sie die Bestellung "${orderNumber}" wirklich unwiderruflich löschen?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Ja, Bestellung löschen',
-            cancelButtonText: 'Abbrechen'
+            confirmButtonColor: '#be123c',
+            confirmButtonText: isEn ? 'Yes, Delete Order' : 'Ja, Bestellung löschen',
+            cancelButtonText: isEn ? 'Cancel' : 'Abbrechen'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('delete-order-form-' + id).submit();

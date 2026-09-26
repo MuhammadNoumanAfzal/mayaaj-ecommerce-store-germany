@@ -12,6 +12,61 @@
         <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600|inter:400,500,600&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Google Translate Custom Styling & Script -->
+    <style>
+        .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0px !important;
+        }
+        .goog-te-gadget .goog-te-combo {
+            background-color: rgba(255, 255, 255, 0.12) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(216, 180, 90, 0.5) !important;
+            border-radius: 0.375rem !important;
+            padding: 4px 8px !important;
+            font-size: 0.7rem !important;
+            font-weight: 700 !important;
+            outline: none !important;
+            cursor: pointer !important;
+            max-width: 140px !important;
+        }
+        .goog-te-gadget .goog-te-combo option {
+            background-color: #0d0605 !important;
+            color: #ffffff !important;
+        }
+        .goog-logo-link, .goog-te-gadget span, .goog-te-gadget-simple {
+            display: none !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            if (document.getElementById('google_translate_element')) {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'de',
+                    includedLanguages: 'de,en,fr,es,it,ar,nl,tr,ru,zh-CN,ja',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                }, 'google_translate_element');
+            }
+            if (document.getElementById('google_translate_element_mobile')) {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'de',
+                    includedLanguages: 'de,en,fr,es,it,ar,nl,tr,ru,zh-CN,ja',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                }, 'google_translate_element_mobile');
+            }
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     </head>
     <body>
         <x-navbar />

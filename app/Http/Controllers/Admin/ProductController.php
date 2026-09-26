@@ -75,8 +75,8 @@ class ProductController extends Controller
             'craftsmanship' => 'nullable|string',
             'status' => 'required|in:active,draft',
             'is_featured' => 'nullable|boolean',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
+            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']) . '-' . Str::random(5);
@@ -129,8 +129,8 @@ class ProductController extends Controller
             'craftsmanship' => 'nullable|string',
             'status' => 'required|in:active,draft',
             'is_featured' => 'nullable|boolean',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:3072',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
+            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']) . '-' . $product->id;

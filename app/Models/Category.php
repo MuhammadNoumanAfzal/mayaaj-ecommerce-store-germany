@@ -48,12 +48,15 @@ class Category extends Model
 
     public function getImageUrlAttribute()
     {
-        if ($this->image && file_exists(public_path('storage/' . $this->image))) {
+        if (empty($this->image)) {
+            return null;
+        }
+        if (file_exists(public_path('storage/' . $this->image))) {
             return asset('storage/' . $this->image);
         }
-        if ($this->image && file_exists(public_path($this->image))) {
+        if (file_exists(public_path($this->image))) {
             return asset($this->image);
         }
-        return asset('productbag.png');
+        return null;
     }
 }

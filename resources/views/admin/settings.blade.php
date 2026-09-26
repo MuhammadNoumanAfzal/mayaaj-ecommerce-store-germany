@@ -37,7 +37,7 @@
 
             @if ($errors->any())
                 <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1">
-                    <p class="font-bold text-sm">Bitte korrigieren Sie die folgenden Fehler:</p>
+                    <p class="font-bold text-sm" data-i18n-de="Bitte korrigieren Sie die folgenden Fehler:" data-i18n-en="Please correct the following errors:">Bitte korrigieren Sie die folgenden Fehler:</p>
                     <ul class="list-disc list-inside">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>

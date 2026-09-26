@@ -23,9 +23,9 @@
         <!-- Clean White Card Header with Indigo Add Button -->
         <div class="px-6 py-5 bg-white border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-                <h2 class="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-2.5" data-i18n-de="Kategorien" data-i18n-en="Categories">
+                <h2 class="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-2.5">
                     <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    Kategorien Übersichtsleiste
+                    <span data-i18n-de="Kategorien Übersichtsleiste" data-i18n-en="Categories Overview Bar">Kategorien Übersichtsleiste</span>
                 </h2>
                 <p class="text-xs text-slate-500 font-medium mt-0.5" data-i18n-de="Verwalten Sie Shop-Kategorien und Produkt-Hierarchien." data-i18n-en="Manage store categories and product hierarchies.">Verwalten Sie Shop-Kategorien und Produkt-Hierarchien.</p>
             </div>
@@ -96,7 +96,11 @@
                                 </span>
                             </td>
                             <td class="py-4 px-6 text-slate-700 font-medium max-w-sm">
-                                {{ $category->description ?? '— Keine Beschreibung —' }}
+                                @if($category->description)
+                                    {{ $category->description }}
+                                @else
+                                    <span class="text-slate-400 italic text-xs" data-i18n-de="— Keine Beschreibung —" data-i18n-en="— No Description —">— Keine Beschreibung —</span>
+                                @endif
                             </td>
                             <td class="py-4 px-6">
                                 @if($category->image_url)
@@ -124,8 +128,6 @@
                                         href="{{ route('admin.categories.edit', $category->id) }}"
                                         class="btn-exec-secondary rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
                                         style="background-color: #f1f5f9 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; font-weight: 700 !important;"
-                                        data-i18n-de="Bearbeiten"
-                                        data-i18n-en="Edit"
                                     >
                                         <svg class="h-3.5 w-3.5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                         <span data-i18n-de="Bearbeiten" data-i18n-en="Edit">Bearbeiten</span>
@@ -137,8 +139,6 @@
                                         onclick="confirmDeleteCategory({{ $category->id }}, '{{ addslashes($category->name) }}')"
                                         class="btn-exec-danger rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs"
                                         style="background-color: #fff1f2 !important; color: #be123c !important; border: 1px solid #fecdd3 !important; font-weight: 700 !important;"
-                                        data-i18n-de="Löschen"
-                                        data-i18n-en="Delete"
                                     >
                                         <svg class="h-3.5 w-3.5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                         <span data-i18n-de="Löschen" data-i18n-en="Delete">Löschen</span>
@@ -169,13 +169,17 @@
 
 <script>
     function confirmDeleteCategory(id, name) {
+        const isEn = (window.__mehaaj_lang || localStorage.getItem('mehaaj_admin_lang')) === 'en';
         LuxurySwal.fire({
-            title: 'Kategorie löschen?',
-            text: `Möchten Sie "${name}" wirklich löschen? Alle zugewiesenen Unterkategorien werden ebenfalls gelöscht.`,
+            title: isEn ? 'Delete Category?' : 'Kategorie löschen?',
+            text: isEn 
+                ? `Are you sure you want to delete "${name}"? All assigned subcategories will also be deleted.` 
+                : `Möchten Sie "${name}" wirklich löschen? Alle zugewiesenen Unterkategorien werden ebenfalls gelöscht.`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Ja, Kategorie löschen',
-            cancelButtonText: 'Abbrechen'
+            confirmButtonColor: '#be123c',
+            confirmButtonText: isEn ? 'Yes, Delete Category' : 'Ja, Kategorie löschen',
+            cancelButtonText: isEn ? 'Cancel' : 'Abbrechen'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('delete-category-form-' + id).submit();

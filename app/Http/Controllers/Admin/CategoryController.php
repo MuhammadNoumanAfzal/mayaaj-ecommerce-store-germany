@@ -49,7 +49,7 @@ class CategoryController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|in:active,draft',
             'order_index' => 'nullable|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -83,7 +83,7 @@ class CategoryController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|in:active,draft',
             'order_index' => 'nullable|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);

@@ -110,7 +110,11 @@
                                 </span>
                             </td>
                             <td class="py-4 px-6 text-slate-700 font-medium max-w-xs">
-                                {{ $sub->description ?? '— Keine Beschreibung —' }}
+                                @if($sub->description)
+                                    {{ $sub->description }}
+                                @else
+                                    <span class="text-slate-400 italic text-xs" data-i18n-de="— Keine Beschreibung —" data-i18n-en="— No Description —">— Keine Beschreibung —</span>
+                                @endif
                             </td>
                             <td class="py-4 px-6">
                                 @if($sub->image_url)
@@ -183,13 +187,15 @@
 
 <script>
     function confirmDeleteSubcategory(id, name) {
+        const isEn = (window.__mehaaj_lang || localStorage.getItem('mehaaj_admin_lang')) === 'en';
         LuxurySwal.fire({
-            title: 'Unterkategorie löschen?',
-            text: `Möchten Sie "${name}" wirklich löschen?`,
+            title: isEn ? 'Delete Subcategory?' : 'Unterkategorie löschen?',
+            text: isEn ? `Are you sure you want to delete "${name}"?` : `Möchten Sie "${name}" wirklich löschen?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Ja, Unterkategorie löschen',
-            cancelButtonText: 'Abbrechen'
+            confirmButtonColor: '#be123c',
+            confirmButtonText: isEn ? 'Yes, Delete Subcategory' : 'Ja, Unterkategorie löschen',
+            cancelButtonText: isEn ? 'Cancel' : 'Abbrechen'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('delete-subcategory-form-' + id).submit();

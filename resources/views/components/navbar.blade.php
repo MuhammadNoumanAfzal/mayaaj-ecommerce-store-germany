@@ -61,6 +61,9 @@
         </form>
 
         <div class="hidden items-center gap-5 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-white lg:flex xl:gap-6">
+            <!-- Google Translate Dropdown Widget -->
+            <div id="google_translate_element" class="inline-block"></div>
+
             <button class="inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openAccountModal()" aria-label="My account">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <circle cx="12" cy="8" r="3.5" />
@@ -118,6 +121,12 @@
                         </svg>
                     </button>
                 </div>
+            </div>
+
+            <!-- Mobile Google Translate Widget -->
+            <div class="mt-4 flex items-center justify-between rounded-lg border border-[#d8b45a]/30 bg-[#170b09] p-2.5">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#d8b45a]">Sprache / Language:</span>
+                <div id="google_translate_element_mobile"></div>
             </div>
 
             <!-- Mobile Search Bar -->

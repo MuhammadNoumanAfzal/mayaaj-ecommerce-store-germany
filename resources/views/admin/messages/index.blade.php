@@ -166,12 +166,13 @@
                                     <span data-i18n-de="Ansehen" data-i18n-en="View">Ansehen</span>
                                 </a>
 
-                                <form action="{{ route('admin.messages.destroy', $msg->id) }}" method="POST" class="inline" onsubmit="return confirm('Möchten Sie diese Nachricht wirklich löschen?')">
+                                <button type="button" onclick="confirmDeleteMessage({{ $msg->id }})" class="btn-exec-danger px-2.5 py-1.5 rounded-lg text-xs cursor-pointer" title="Löschen">
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                </button>
+
+                                <form id="delete-message-form-{{ $msg->id }}" action="{{ route('admin.messages.destroy', $msg->id) }}" method="POST" class="hidden">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-exec-danger px-2.5 py-1.5 rounded-lg text-xs cursor-pointer" title="Löschen">
-                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -192,4 +193,23 @@
     </div>
 
 </div>
+
+<script>
+    function confirmDeleteMessage(id) {
+        const isEn = (window.__mehaaj_lang || localStorage.getItem('mehaaj_admin_lang')) === 'en';
+        LuxurySwal.fire({
+            title: isEn ? 'Delete Contact Message?' : 'Nachricht löschen?',
+            text: isEn ? 'Are you sure you want to delete this customer inquiry?' : 'Möchten Sie diese Anfrage wirklich löschen?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#be123c',
+            confirmButtonText: isEn ? 'Yes, Delete Message' : 'Ja, Nachricht löschen',
+            cancelButtonText: isEn ? 'Cancel' : 'Abbrechen'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-message-form-' + id).submit();
+            }
+        });
+    }
+</script>
 @endsection

@@ -201,13 +201,15 @@
 
 <script>
     function confirmDeleteCustomer(id, name) {
+        const isEn = (window.__mehaaj_lang || localStorage.getItem('mehaaj_admin_lang')) === 'en';
         LuxurySwal.fire({
-            title: 'Kundenkonto löschen?',
-            text: `Möchten Sie das Kundenkonto von "${name}" wirklich löschen?`,
+            title: isEn ? 'Delete Customer Account?' : 'Kundenkonto löschen?',
+            text: isEn ? `Are you sure you want to delete customer account "${name}"?` : `Möchten Sie das Kundenkonto von "${name}" wirklich löschen?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Ja, Konto löschen',
-            cancelButtonText: 'Abbrechen'
+            confirmButtonColor: '#be123c',
+            confirmButtonText: isEn ? 'Yes, Delete Account' : 'Ja, Konto löschen',
+            cancelButtonText: isEn ? 'Cancel' : 'Abbrechen'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('delete-customer-form-' + id).submit();

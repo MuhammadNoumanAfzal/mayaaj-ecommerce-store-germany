@@ -15,10 +15,10 @@
     <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
         <div>
             <div class="inline-flex items-center gap-2 rounded-full border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/60 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#2563eb] dark:text-[#60a5fa]">
-                <span>MEHAAJ VIP KUNDEN</span>
+                <span data-i18n-de="MEHAAJ VIP KUNDEN" data-i18n-en="MEHAAJ VIP CUSTOMERS">MEHAAJ VIP KUNDEN</span>
             </div>
-            <h1 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Kundenstamm & VIP Portal</h1>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Übersicht aller registrierten Kunden, VIP-Mitglieder und Newsletter-Abonnenten.</p>
+            <h1 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white" data-i18n-de="Kundenstamm & VIP Portal" data-i18n-en="Customer Database & VIP Portal">Kundenstamm & VIP Portal</h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1" data-i18n-de="Übersicht aller registrierten Kunden, VIP-Mitglieder und Newsletter-Abonnenten." data-i18n-en="Overview of all registered customers, VIP members, and newsletter subscribers.">Übersicht aller registrierten Kunden, VIP-Mitglieder und Newsletter-Abonnenten.</p>
         </div>
     </div>
 
@@ -27,8 +27,8 @@
         <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-[#2563eb] dark:text-blue-400 text-2xl mx-auto border border-blue-200 dark:border-blue-800 animate-pulse">
             👥
         </div>
-        <h2 class="font-bold text-xl text-slate-900 dark:text-white">Kundenverwaltung Modul — In Entwicklung</h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 max-w-lg mx-auto leading-relaxed">
+        <h2 class="font-bold text-xl text-slate-900 dark:text-white" data-i18n-de="Kundenverwaltung Modul — In Entwicklung" data-i18n-en="Customer Management Module — In Development">Kundenverwaltung Modul — In Entwicklung</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 max-w-lg mx-auto leading-relaxed" data-i18n-de="Verwalten Sie VIP-Kundenstufen, Kaufhistorien, Einladungen zu Manufaktur-Führungen und Newsletter-Verteiler." data-i18n-en="Manage VIP customer levels, purchase history, factory tour invitations, and newsletter subscribers.">
             Verwalten Sie VIP-Kundenstufen, Kaufhistorien, Einladungen zu Manufaktur-Führungen und Newsletter-Verteiler.
         </p>
     </div>

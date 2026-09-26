@@ -12,6 +12,64 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- SweetAlert2 Library & Executive Theme Mixins for Admin Panel -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.LuxurySwal = Swal.mixin({
+            background: '#ffffff',
+            color: '#0f172a',
+            confirmButtonColor: '#064e3b',
+            cancelButtonColor: '#64748b',
+            customClass: {
+                popup: 'border border-slate-200 shadow-2xl rounded-2xl font-sans',
+                title: 'font-bold text-lg text-slate-900',
+                confirmButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md cursor-pointer',
+                cancelButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer'
+            }
+        });
+
+        window.LuxuryToast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            background: '#064e3b',
+            color: '#ffffff',
+            customClass: {
+                popup: 'border border-emerald-500 rounded-xl shadow-xl text-xs font-sans font-bold'
+            },
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    </script>
+
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                LuxuryToast.fire({
+                    icon: 'success',
+                    title: @json(session('success'))
+                });
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const isEn = (window.__mehaaj_lang || localStorage.getItem('mehaaj_admin_lang')) === 'en';
+                LuxurySwal.fire({
+                    icon: 'error',
+                    title: isEn ? 'Error' : 'Fehler',
+                    text: @json(session('error'))
+                });
+            });
+        </script>
+    @endif
+
     <style>
         body {
             background-color: #f4f8f5 !important;
@@ -285,10 +343,51 @@
 
         .exec-input:focus, form input:focus, form select:focus, form textarea:focus {
             background-color: #ffffff !important;
-            border-color: #059669 !important;
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2) !important;
+        /* Google Translate Admin Custom Styling */
+        .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0px !important;
+        }
+        .goog-te-gadget .goog-te-combo {
+            background-color: rgba(0, 0, 0, 0.22) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(52, 211, 153, 0.4) !important;
+            border-radius: 0.75rem !important;
+            padding: 4px 8px !important;
+            font-size: 0.7rem !important;
+            font-weight: 700 !important;
+            outline: none !important;
+            cursor: pointer !important;
+            max-width: 130px !important;
+        }
+        .goog-te-gadget .goog-te-combo option {
+            background-color: #064e3b !important;
+            color: #ffffff !important;
+        }
+        .goog-logo-link, .goog-te-gadget span, .goog-te-gadget-simple {
+            display: none !important;
         }
     </style>
+
+    <script type="text/javascript">
+        function googleTranslateElementInitAdmin() {
+            if (document.getElementById('google_translate_element_admin')) {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'de',
+                    includedLanguages: 'de,en,fr,es,it,ar,nl,tr,ru,zh-CN,ja',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                }, 'google_translate_element_admin');
+            }
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInitAdmin"></script>
 
     <!-- Global Early Language Hydration Script (Zero Flash) -->
     <script>
@@ -349,6 +448,9 @@
         <!-- Header Right Actions: View Website, Language & Avatar -->
         <div class="flex items-center gap-2 sm:gap-3 text-xs">
             
+            <!-- Google Translate Admin Widget -->
+            <div id="google_translate_element_admin" class="inline-block"></div>
+
             <!-- View Live Website Pill Button -->
             <a href="/" target="_blank" class="hidden sm:flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition cursor-pointer shadow-2xs hover:bg-emerald-800/80" style="background-color: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: none !important;">
                 <svg class="h-3.5 w-3.5" style="color: #34d399 !important;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -627,11 +729,35 @@
                 }
             });
 
-            // Translate all elements with data-i18n-de and data-i18n-en
+            // Translate all elements with data-i18n-de and data-i18n-en safely
             document.querySelectorAll('[data-i18n-' + lang + ']').forEach(el => {
                 const text = el.getAttribute('data-i18n-' + lang);
-                if (text !== null) {
+                if (text === null) return;
+
+                // If element has children with their own data-i18n, let children process themselves
+                const childWithI18n = el.querySelector('[data-i18n-' + lang + ']');
+                if (childWithI18n) return;
+
+                // Find text node inside element to avoid wiping out SVG icons
+                let textNode = null;
+                for (let child of el.childNodes) {
+                    if (child.nodeType === Node.TEXT_NODE && child.textContent.trim().length > 0) {
+                        textNode = child;
+                        break;
+                    }
+                }
+
+                if (textNode && el.children.length > 0) {
+                    textNode.textContent = text;
+                } else if (el.children.length === 0) {
                     el.innerText = text;
+                } else {
+                    const spanTarget = el.querySelector('span');
+                    if (spanTarget) {
+                        spanTarget.innerText = text;
+                    } else {
+                        el.innerText = text;
+                    }
                 }
             });
 
@@ -642,6 +768,23 @@
                     el.placeholder = ph;
                 }
             });
+
+            // Translate tooltips and titles
+            document.querySelectorAll('[data-i18n-title-' + lang + ']').forEach(el => {
+                const title = el.getAttribute('data-i18n-title-' + lang);
+                if (title !== null) {
+                    el.title = title;
+                }
+            });
+
+            // Synchronize Google Translate Widget if active
+            try {
+                const gtSelect = document.querySelector('.goog-te-combo');
+                if (gtSelect && gtSelect.value !== lang) {
+                    gtSelect.value = lang;
+                    gtSelect.dispatchEvent(new Event('change'));
+                }
+            } catch(e) {}
         }
 
         // Cross-tab real-time persistence sync!

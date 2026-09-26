@@ -45,7 +45,7 @@
                 <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
                     <p class="font-bold text-sm flex items-center gap-2">
                         <svg class="w-4 h-4 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Bitte korrigieren Sie die folgenden Fehler:
+                        <span data-i18n-de="Bitte korrigieren Sie die folgenden Fehler:" data-i18n-en="Please correct the following errors:">Bitte korrigieren Sie die folgenden Fehler:</span>
                     </p>
                     <ul class="list-disc list-inside text-xs pl-6">
                         @foreach ($errors->all() as $error)
@@ -95,7 +95,7 @@
                         accept="image/*" 
                         class="w-full border border-slate-300 rounded-xl p-2 text-slate-700 bg-slate-50 text-xs focus:outline-none focus:border-emerald-600 transition"
                     >
-                    <p class="text-[0.65rem] text-slate-500 mt-1 font-semibold" data-i18n-de="Empfohlen: PNG, WebP oder JPG bis 2MB." data-i18n-en="Recommended: PNG, WebP or JPG up to 2MB.">Empfohlen: PNG, WebP oder JPG bis 2MB.</p>
+                    <p class="text-[0.65rem] text-slate-500 mt-1 font-semibold" data-i18n-de="Empfohlen: PNG, WebP oder JPG bis 30MB." data-i18n-en="Recommended: PNG, WebP or JPG up to 30MB.">Empfohlen: PNG, WebP oder JPG bis 30MB.</p>
                     @if($category->image_url)
                         <div class="mt-2.5 flex items-center gap-3 bg-emerald-50/60 p-2 rounded-xl border border-emerald-100 shadow-2xs">
                             <img src="{{ $category->image_url }}" alt="Aktuelles Bild" class="h-9 w-9 object-cover rounded-lg border border-emerald-200 shadow-2xs">
