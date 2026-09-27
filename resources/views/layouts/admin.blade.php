@@ -102,6 +102,19 @@
             border-right: 1px solid #047857 !important;
         }
 
+        /* Hide Default Native Scrollbar on Sidebar for Clean Seamless UI */
+        .admin-executive-sidebar,
+        .admin-executive-sidebar * {
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+        }
+        .admin-executive-sidebar::-webkit-scrollbar,
+        .admin-executive-sidebar *::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
         .admin-nav-item {
             color: #d1fae5 !important;
             transition: all 0.2s ease-in-out;
@@ -343,51 +356,8 @@
 
         .exec-input:focus, form input:focus, form select:focus, form textarea:focus {
             background-color: #ffffff !important;
-        /* Google Translate Admin Custom Styling */
-        .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame {
-            display: none !important;
-        }
-        body {
-            top: 0px !important;
-        }
-        .goog-te-gadget {
-            color: transparent !important;
-            font-size: 0px !important;
-        }
-        .goog-te-gadget .goog-te-combo {
-            background-color: rgba(0, 0, 0, 0.22) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(52, 211, 153, 0.4) !important;
-            border-radius: 0.75rem !important;
-            padding: 4px 8px !important;
-            font-size: 0.7rem !important;
-            font-weight: 700 !important;
-            outline: none !important;
-            cursor: pointer !important;
-            max-width: 130px !important;
-        }
-        .goog-te-gadget .goog-te-combo option {
-            background-color: #064e3b !important;
-            color: #ffffff !important;
-        }
-        .goog-logo-link, .goog-te-gadget span, .goog-te-gadget-simple {
-            display: none !important;
         }
     </style>
-
-    <script type="text/javascript">
-        function googleTranslateElementInitAdmin() {
-            if (document.getElementById('google_translate_element_admin')) {
-                new google.translate.TranslateElement({
-                    pageLanguage: 'de',
-                    includedLanguages: 'de,en,fr,es,it,ar,nl,tr,ru,zh-CN,ja',
-                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                    autoDisplay: false
-                }, 'google_translate_element_admin');
-            }
-        }
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInitAdmin"></script>
 
     <!-- Global Early Language Hydration Script (Zero Flash) -->
     <script>
@@ -448,8 +418,6 @@
         <!-- Header Right Actions: View Website, Language & Avatar -->
         <div class="flex items-center gap-2 sm:gap-3 text-xs">
             
-            <!-- Google Translate Admin Widget -->
-            <div id="google_translate_element_admin" class="inline-block"></div>
 
             <!-- View Live Website Pill Button -->
             <a href="/" target="_blank" class="hidden sm:flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition cursor-pointer shadow-2xs hover:bg-emerald-800/80" style="background-color: rgba(255, 255, 255, 0.12) !important; color: #ffffff !important; border: none !important;">
@@ -479,7 +447,7 @@
 
         <!-- Left Executive Light Sidebar (#064e3b Forest Green Theme) -->
         <aside id="admin-sidebar" class="admin-executive-sidebar fixed top-16 bottom-0 left-0 z-40 w-64 flex flex-col justify-between transition-transform duration-300 -translate-x-full lg:translate-x-0" style="background-color: #064e3b !important; color: #ecfdf5 !important; border: none !important;">
-            <div class="p-3.5 space-y-3 overflow-y-auto flex-1">
+            <div class="p-3.5 space-y-3 overflow-y-auto no-scrollbar flex-1">
                 
                 <!-- Section Header Box -->
                 <div class="px-3.5 py-2 rounded-xl text-[0.65rem] font-bold uppercase tracking-wider" style="background-color: rgba(255, 255, 255, 0.08) !important; border: none !important; color: #a7f3d0 !important;">
