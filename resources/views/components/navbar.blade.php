@@ -1,14 +1,13 @@
 <header class="sticky top-0 z-50 w-full bg-[#17100e]/95 border-b border-[#e6decb]/15 shadow-[0_4px_25px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300" data-site-header>
     <!-- Solid Maison Warm Atelier Navigation Bar (Soft on the eyes) -->
     <nav class="flex h-16 w-full max-w-full items-center gap-3 sm:gap-4 lg:gap-4 xl:gap-6 px-3 sm:px-5 lg:h-[4.6rem] lg:px-6 xl:px-8 bg-transparent text-[#f4ede4]" aria-label="Main navigation">
-        <!-- Luxury Soft Pink Salt & Gold Categories Button -->
-        <button class="inline-flex h-10 items-center gap-2 rounded-sm border border-[#d8b45a]/40 bg-[#261412] px-3 py-1 text-[#f5ebd9] shadow-sm transition-all duration-300 hover:border-[#ffd45a] hover:bg-[#78000b] hover:shadow-[0_0_16px_rgba(216,180,90,0.25)] cursor-pointer group shrink-0" type="button" onclick="toggleMobileMenu()" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open categories menu">
-            <div class="flex flex-col gap-1">
-                <span class="h-0.5 w-4 bg-[#ffd45a] rounded-full transition-all duration-300 group-hover:w-5"></span>
-                <span class="h-0.5 w-3 bg-[#ffd45a] rounded-full transition-all duration-300 group-hover:w-5"></span>
-                <span class="h-0.5 w-4 bg-[#ffd45a] rounded-full transition-all duration-300 group-hover:w-5"></span>
-            </div>
-            <span class="hidden sm:inline font-bold text-[0.68rem] uppercase tracking-[0.16em] text-[#ffd45a]" data-i18n-en="CATEGORIES" data-i18n-de="KATEGORIEN">CATEGORIES</span>
+        <!-- Mobile-Only Hamburger Toggle -->
+        <button class="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-sm text-[#ffd45a] hover:text-white cursor-pointer shrink-0" type="button" onclick="toggleMobileMenu()" aria-label="Open mobile menu">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="6" x2="20" y2="6"/>
+                <line x1="4" y1="12" x2="20" y2="12"/>
+                <line x1="4" y1="18" x2="20" y2="18"/>
+            </svg>
         </button>
 
         <!-- Brand Logo -->
@@ -25,21 +24,21 @@
                     <svg class="h-3.5 w-3.5 text-[#d8b45a] group-hover:rotate-180 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
 
-                <!-- Elegant Mega Dropdown Menu for Collections -->
-                <div class="absolute left-0 top-full hidden group-hover:grid grid-cols-2 gap-4 w-[420px] max-w-[calc(100vw-2rem)] rounded-md border border-[#d8b45a]/40 bg-[#0d0605]/98 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur-xl z-50 transition-all duration-300">
-                    <div class="col-span-2 flex items-center justify-between border-b border-[#d8b45a]/20 pb-2">
-                        <span class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[#d8b45a]" data-i18n-en="MAISON ATELIER CATEGORIES" data-i18n-de="MAISON ATELIER KATEGORIEN">MAISON ATELIER CATEGORIES</span>
-                        <a href="/shop" class="text-[0.62rem] text-[#e4d9cc]/70 hover:text-[#d8b45a] transition" data-i18n-en="View All ({{ count($globalCategories ?? []) }}) →" data-i18n-de="Alle anzeigen ({{ count($globalCategories ?? []) }}) →">View All ({{ count($globalCategories ?? []) }}) →</a>
+                <!-- Elegant Mega Dropdown Menu for Collections (100% Solid Opaque Luxury Maison Finish) -->
+                <div class="absolute left-0 top-full hidden group-hover:grid grid-cols-2 gap-3 w-[500px] max-w-[calc(100vw-2rem)] rounded-md border border-[#d8b45a]/60 bg-[#17100e] p-5 shadow-[0_28px_80px_rgba(0,0,0,0.95)] z-[100] transition-all duration-300" style="background-color: #17100e !important;">
+                    <div class="col-span-2 flex items-center justify-between border-b border-[#d8b45a]/30 pb-2.5 mb-1">
+                        <span class="text-[0.62rem] font-bold uppercase tracking-[0.22em] text-[#d8b45a]" data-i18n-en="MAISON ATELIER CATEGORIES" data-i18n-de="MAISON ATELIER KATEGORIEN">MAISON ATELIER CATEGORIES</span>
+                        <a href="/shop" class="text-[0.65rem] font-semibold text-[#f5ebd9]/80 hover:text-[#ffd45a] transition" data-i18n-en="View All ({{ count($globalCategories ?? []) }}) →" data-i18n-de="Alle anzeigen ({{ count($globalCategories ?? []) }}) →">View All ({{ count($globalCategories ?? []) }}) →</a>
                     </div>
                     @foreach($globalCategories ?? [] as $category)
-                        <div class="space-y-1">
-                            <a href="/shop?category={{ $category->slug }}" class="font-display text-sm font-medium text-[#fffaf0] hover:text-[#d8b45a] transition block">
+                        <div class="group/cat rounded-sm p-2 transition-colors duration-200 hover:bg-[#251512] border border-transparent hover:border-[#d8b45a]/25">
+                            <a href="/shop?category={{ $category->slug }}" class="font-display text-sm font-semibold tracking-wide text-[#fffaf0] group-hover/cat:text-[#ffd45a] transition block">
                                 {{ $category->name }}
                             </a>
                             @if($category->activeSubcategories && $category->activeSubcategories->count() > 0)
-                                <div class="space-y-0.5 pl-2 border-l border-[#d8b45a]/30">
+                                <div class="mt-1 space-y-0.5 pl-2 border-l border-[#d8b45a]/35">
                                     @foreach($category->activeSubcategories->take(2) as $subcat)
-                                        <a href="/shop?category={{ $category->slug }}&subcategory={{ $subcat->slug }}" class="block text-[0.65rem] text-[#e4d9cc]/60 hover:text-[#d8b45a] transition">
+                                        <a href="/shop?category={{ $category->slug }}&subcategory={{ $subcat->slug }}" class="block text-[0.66rem] font-normal text-[#e4d9cc]/75 hover:text-white transition">
                                             • {{ $subcat->name }}
                                         </a>
                                     @endforeach
