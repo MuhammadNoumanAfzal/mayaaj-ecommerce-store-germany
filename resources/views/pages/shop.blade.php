@@ -10,20 +10,7 @@
     <div class="border-b border-[#e6decb] bg-white py-2.5 sm:py-3 shadow-xs">
         <div class="luxury-container flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex items-center gap-2.5">
-                <nav class="flex items-center gap-1.5 text-[0.7rem] text-[#8a7c74]" aria-label="Breadcrumb">
-                    <a href="/" class="hover:text-[#78000b] transition cursor-pointer" data-i18n-de="Startseite" data-i18n-en="Home">Startseite</a>
-                    <span class="text-[#c7baa7]">/</span>
-                    <span class="text-[#1c1210] font-medium" data-i18n-de="Kollektion" data-i18n-en="Collection">Kollektion</span>
-                    @if(request('category'))
-                        <span class="text-[#c7baa7]">/</span>
-                        @php
-                            $activeCat = ($globalCategories ?? collect())->firstWhere('slug', is_array(request('category')) ? request('category')[0] : request('category'));
-                        @endphp
-                        <span class="text-[#78000b] font-semibold">{{ $activeCat->name ?? (is_array(request('category')) ? implode(', ', request('category')) : request('category')) }}</span>
-                    @endif
-                </nav>
-                <span class="text-[#d8b45a] hidden sm:inline">•</span>
-                <h1 class="font-display text-base sm:text-lg font-medium text-[#1c1210] hidden sm:inline" data-i18n-de="Meisterkollektion" data-i18n-en="Master Collection">
+                <h1 class="font-display text-base sm:text-lg font-medium text-[#1c1210]" data-i18n-de="Meisterkollektion" data-i18n-en="Master Collection">
                     Meisterkollektion
                 </h1>
             </div>

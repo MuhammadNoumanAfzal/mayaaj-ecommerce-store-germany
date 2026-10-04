@@ -97,12 +97,14 @@ class ShopController extends Controller
                     $q->where('category_id', $product->category_id);
                 }
             })
+            ->with(['category'])
             ->take(4)
             ->get();
 
         if ($relatedProducts->isEmpty()) {
             $relatedProducts = Product::where('status', 'active')
                 ->where('id', '!=', $product->id)
+                ->with(['category'])
                 ->take(4)
                 ->get();
         }
