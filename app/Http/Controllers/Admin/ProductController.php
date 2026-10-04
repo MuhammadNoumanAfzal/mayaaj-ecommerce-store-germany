@@ -73,6 +73,10 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'craftsmanship' => 'nullable|string',
+            'variations' => 'nullable',
+            'variations_json' => 'nullable|string',
+            'accordion_tabs' => 'nullable',
+            'accordion_tabs_json' => 'nullable|string',
             'status' => 'required|in:active,draft',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
@@ -82,6 +86,8 @@ class ProductController extends Controller
         $validated['slug'] = Str::slug($validated['name']) . '-' . Str::random(5);
         $validated['sku'] = $validated['sku'] ?? 'MHJ-' . strtoupper(Str::random(6));
         $validated['is_featured'] = $request->has('is_featured');
+        $validated['variations'] = $this->processVariations($request);
+        $validated['accordion_tabs'] = $this->processAccordionTabs($request);
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
@@ -127,6 +133,10 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'craftsmanship' => 'nullable|string',
+            'variations' => 'nullable',
+            'variations_json' => 'nullable|string',
+            'accordion_tabs' => 'nullable',
+            'accordion_tabs_json' => 'nullable|string',
             'status' => 'required|in:active,draft',
             'is_featured' => 'nullable|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
@@ -135,6 +145,8 @@ class ProductController extends Controller
 
         $validated['slug'] = Str::slug($validated['name']) . '-' . $product->id;
         $validated['is_featured'] = $request->has('is_featured');
+        $validated['variations'] = $this->processVariations($request);
+        $validated['accordion_tabs'] = $this->processAccordionTabs($request);
 
         if ($request->hasFile('image')) {
             if ($product->image && Storage::disk('public')->exists($product->image)) {
@@ -163,6 +175,104 @@ class ProductController extends Controller
         $product->update($validated);
 
         return redirect()->route('admin.products')->with('success', __('admin.product_updated'));
+    }
+
+    /**
+     * Process product variations from request (JSON or array).
+     */
+    protected function processVariations(Request $request): ?array
+    {
+        if ($request->filled('variations_json')) {
+            $decoded = json_decode($request->input('variations_json'), true);
+            if (is_array($decoded)) {
+                $clean = [];
+                foreach ($decoded as $v) {
+                    if (!empty($v['name'])) {
+                        $clean[] = [
+                            'name' => trim($v['name']),
+                            'color' => $v['color'] ?? '#1c1210',
+                            'price' => (!empty($v['price']) && is_numeric($v['price'])) ? (float)$v['price'] : null,
+                            'sku' => !empty($v['sku']) ? trim($v['sku']) : null,
+                        ];
+                    }
+                }
+                return count($clean) > 0 ? $clean : null;
+            }
+        }
+
+        if ($request->has('variations') && is_array($request->input('variations'))) {
+            $clean = [];
+            foreach ($request->input('variations') as $v) {
+                if (!empty($v['name'])) {
+                    $clean[] = [
+                        'name' => trim($v['name']),
+                        'color' => $v['color'] ?? '#1c1210',
+                        'price' => (!empty($v['price']) && is_numeric($v['price'])) ? (float)$v['price'] : null,
+                        'sku' => !empty($v['sku']) ? trim($v['sku']) : null,
+                    ];
+                }
+            }
+            return count($clean) > 0 ? $clean : null;
+        }
+
+        return null;
+    }
+
+    /**
+     * Process accordion / FAQ tabs from request (JSON or array).
+     */
+    protected function processAccordionTabs(Request $request): ?array
+    {
+        if ($request->filled('accordion_tabs_json')) {
+            $decoded = json_decode($request->input('accordion_tabs_json'), true);
+            if (is_array($decoded)) {
+                $clean = [];
+                foreach ($decoded as $tab) {
+                    if (!empty($tab['title'])) {
+                        $features = [];
+                        if (!empty($tab['features'])) {
+                            if (is_array($tab['features'])) {
+                                $features = array_values(array_filter(array_map('trim', $tab['features'])));
+                            } else {
+                                $features = array_values(array_filter(array_map('trim', explode("\n", $tab['features']))));
+                            }
+                        }
+                        $clean[] = [
+                            'title' => trim($tab['title']),
+                            'dot_color' => $tab['dot_color'] ?? '#78000b',
+                            'content' => $tab['content'] ?? '',
+                            'features' => $features,
+                        ];
+                    }
+                }
+                return count($clean) > 0 ? $clean : null;
+            }
+        }
+
+        if ($request->has('accordion_tabs') && is_array($request->input('accordion_tabs'))) {
+            $clean = [];
+            foreach ($request->input('accordion_tabs') as $tab) {
+                if (!empty($tab['title'])) {
+                    $features = [];
+                    if (!empty($tab['features'])) {
+                        if (is_array($tab['features'])) {
+                            $features = array_values(array_filter(array_map('trim', $tab['features'])));
+                        } else {
+                            $features = array_values(array_filter(array_map('trim', explode("\n", $tab['features']))));
+                        }
+                    }
+                    $clean[] = [
+                        'title' => trim($tab['title']),
+                        'dot_color' => $tab['dot_color'] ?? '#78000b',
+                        'content' => $tab['content'] ?? '',
+                        'features' => $features,
+                    ];
+                }
+            }
+            return count($clean) > 0 ? $clean : null;
+        }
+
+        return null;
     }
 
     /**

@@ -233,28 +233,48 @@
                         </div>
 
                         <!-- Product Description Copy -->
-                        <div class="mt-5 text-xs sm:text-sm text-[#5c4f46] leading-relaxed">
-                            <p>{{ $product->description }}</p>
+                        <div class="mt-5 text-xs sm:text-sm text-[#5c4f46] leading-relaxed prose prose-sm max-w-none">
+                            {!! $product->description !!}
                         </div>
 
                         <!-- Atelier Leather Finishing Selectors (Tactile Connoisseur Experience) -->
+                        @php
+                            $variationsList = !empty($product->variations) && is_array($product->variations) && count($product->variations) > 0
+                                ? $product->variations
+                                : [
+                                    ['name' => 'Burnished Mahogany', 'color' => '#5a2e1e', 'sku' => '', 'price' => null],
+                                    ['name' => 'Noir Profond', 'color' => '#1c1210', 'sku' => '', 'price' => null],
+                                    ['name' => 'Cognac Vintage', 'color' => '#8c5836', 'sku' => '', 'price' => null],
+                                ];
+                            $firstVarName = $variationsList[0]['name'] ?? 'Standard';
+                        @endphp
                         <div class="mt-5 border-t border-[#f2ebdc] pt-4">
-                            <label class="block text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#1c1210] mb-2" data-i18n-de="AUSGEWÄHLTE LEDERAUSFÜHRUNG" data-i18n-en="SELECTED LEATHER FINISH">
-                                AUSGEWÄHLTE LEDERAUSFÜHRUNG
+                            <label class="block text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#1c1210] mb-2">
+                                <span data-i18n-de="AUSGEWÄHLTE LEDERAUSFÜHRUNG" data-i18n-en="SELECTED LEATHER FINISH">AUSGEWÄHLTE LEDERAUSFÜHRUNG</span>:
+                                <span id="active-variation-name" class="font-bold text-[#78000b] ml-1">{{ $firstVarName }}</span>
                             </label>
-                            <div class="flex items-center gap-3">
-                                <button type="button" class="group relative flex items-center gap-2 rounded-full border-2 border-[#78000b] bg-white px-3 py-1 shadow-xs cursor-pointer">
-                                    <span class="h-3 w-3 rounded-full bg-[#5a2e1e] ring-1 ring-black/20"></span>
-                                    <span class="text-xs font-semibold text-[#1c1210]">Burnished Mahogany</span>
-                                </button>
-                                <button type="button" class="group relative flex items-center gap-2 rounded-full border border-[#e6decb] bg-white px-3 py-1 opacity-70 hover:opacity-100 transition cursor-pointer">
-                                    <span class="h-3 w-3 rounded-full bg-[#1c1210] ring-1 ring-black/20"></span>
-                                    <span class="text-xs font-medium text-[#685c54]">Noir Profond</span>
-                                </button>
-                                <button type="button" class="group relative flex items-center gap-2 rounded-full border border-[#e6decb] bg-white px-3 py-1 opacity-70 hover:opacity-100 transition cursor-pointer">
-                                    <span class="h-3 w-3 rounded-full bg-[#8c5836] ring-1 ring-black/20"></span>
-                                    <span class="text-xs font-medium text-[#685c54]">Cognac Vintage</span>
-                                </button>
+                            <div class="flex flex-wrap items-center gap-2.5" id="variation-options-container">
+                                @foreach($variationsList as $vIdx => $vItem)
+                                    @php
+                                        $vName = $vItem['name'] ?? 'Standard';
+                                        $vColor = $vItem['color'] ?? '#5a2e1e';
+                                        $vPrice = !empty($vItem['price']) ? (float)$vItem['price'] : null;
+                                        $isFirst = ($vIdx === 0);
+                                    @endphp
+                                    <button
+                                        type="button"
+                                        onclick="selectVariation('{{ addslashes($vName) }}', this, {{ $vPrice ? $vPrice : 'null' }})"
+                                        data-name="{{ $vName }}"
+                                        data-price="{{ $vPrice ?? '' }}"
+                                        class="variation-pill group relative flex items-center gap-2 rounded-full border px-3 py-1.5 shadow-xs transition-all duration-300 cursor-pointer {{ $isFirst ? 'border-2 border-[#78000b] bg-[#faf7f2] ring-2 ring-[#78000b]/20 active-var font-semibold' : 'border-[#e6decb] bg-white opacity-85 hover:opacity-100 hover:border-[#78000b]' }}"
+                                    >
+                                        <span class="h-3.5 w-3.5 rounded-full ring-1 ring-black/20 shrink-0 shadow-xs" style="background-color: {{ $vColor }};"></span>
+                                        <span class="text-xs text-[#1c1210] font-medium">{{ $vName }}</span>
+                                        @if($vPrice && $vPrice != $effectivePrice)
+                                            <span class="text-[0.65rem] text-[#8a7c74] font-mono">(EUR {{ number_format($vPrice, 2, ',', '.') }})</span>
+                                        @endif
+                                    </button>
+                                @endforeach
                             </div>
                         </div>
 
@@ -344,90 +364,73 @@
                 <div class="mx-auto mt-2 h-0.5 w-12 bg-[#d8b45a]"></div>
             </div>
 
-            <div class="divide-y divide-[#e6decb] rounded-md border border-[#e6decb] bg-white shadow-sm overflow-hidden">
+            @php
+                $defaultAccordionTabs = [
+                    [
+                        'title' => 'Master Craftsmanship & Saddlery Finishing',
+                        'dot_color' => '#78000b',
+                        'content' => $product->craftsmanship ?: 'Bench-made in Flanders using turned-shoe assembly for supernatural flexibility from the very first stride. Die Schnittkanten werden traditionell mehrfach von Hand mit Bienenwachs geschliffen und kantenversiegelt.',
+                        'features' => [
+                            'Double saddle stitching with waxed linen thread',
+                            'Hand-burnished solid brass hardware'
+                        ]
+                    ],
+                    [
+                        'title' => 'Materials & Tuscan Vegetable Tanning',
+                        'dot_color' => '#d8b45a',
+                        'content' => 'Für dieses Meisterstück verwenden wir ausschließlich europäisches Vollrind- und Kalbsleder der höchsten Selektionsstufe A+. Die Gerbung erfolgt in der Toskana rein pflanzlich mittels Rinden- und Kastanienextrakten – völlig frei von toxischem Chrom.',
+                        'features' => []
+                    ],
+                    [
+                        'title' => 'Care Instructions & Patina Development',
+                        'dot_color' => '#2e683a',
+                        'content' => 'Pflanzlich gegerbtes Leder reift mit den Jahren und entwickelt eine unverwechselbare, edle Patina. Wir empfehlen, das Leder ein- bis zweimal jährlich sanft mit unserem organischen MEHAAJ Bienenwachsbalsam und einem Baumwolltuch zu nähren.',
+                        'features' => []
+                    ],
+                    [
+                        'title' => 'Shipping, Gift Packaging & Free Returns',
+                        'dot_color' => '#78000b',
+                        'content' => 'Jedes Produkt verlässt unser Atelier in einer nummerierten MEHAAJ Luxus-Magnetbox, geschützt durch einen atmungsaktiven Staubbeutel aus Bio-Baumwolle. Der Versand erfolgt versichert via DHL Express mit Live-Tracking. 30 Tage Rückgaberecht mit beiliegendem Retourenetikett.',
+                        'features' => []
+                    ],
+                ];
 
-                <!-- Accordion Item 1: Handwerkskunst & Verarbeitung -->
-                <div class="group border-b border-[#e6decb]">
-                    <button type="button" onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-display text-base sm:text-lg font-medium text-[#1c1210] hover:text-[#78000b] transition cursor-pointer">
-                        <span class="flex items-center gap-2.5">
-                            <span class="h-2 w-2 rounded-full bg-[#78000b]"></span>
-                            <span data-i18n-de="Handwerkskunst & Feinsattler-Verarbeitung" data-i18n-en="Master Craftsmanship & Saddlery Finishing">Handwerkskunst & Feinsattler-Verarbeitung</span>
-                        </span>
-                        <svg class="h-5 w-5 text-[#78000b] transition-transform duration-300 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </button>
-                    <div class="accordion-content px-5 pb-6 text-xs sm:text-sm text-[#5c4f46] space-y-3 leading-relaxed">
-                        <p>
-                            {{ $product->craftsmanship ?? 'Jedes Stück wird in aufwendiger Einzelanfertigung von unseren erfahrenen Feinsattlern vollendet. Die Schnittkanten werden traditionell mehrfach von Hand mit Bienenwachs geschliffen und kantenversiegelt, wodurch eine unvergleichliche Beständigkeit und seidig-glatte Haptik entsteht.' }}
-                        </p>
-                        <div class="grid sm:grid-cols-2 gap-3 pt-2 text-xs">
-                            <div class="flex items-center gap-2 rounded bg-[#faf7f2] p-2.5 border border-[#e6decb]/60">
-                                <span class="font-bold text-[#78000b]">✓</span>
-                                <span data-i18n-de="Doppelte Sattlernaht mit gewachstem Garn" data-i18n-en="Double saddle stitching with waxed linen thread">Doppelte Sattlernaht mit gewachstem Garn</span>
+                $productTabs = !empty($product->accordion_tabs) && is_array($product->accordion_tabs) && count($product->accordion_tabs) > 0
+                    ? $product->accordion_tabs
+                    : $defaultAccordionTabs;
+            @endphp
+
+            <div class="divide-y divide-[#e6decb] rounded-md border border-[#e6decb] bg-white shadow-sm overflow-hidden">
+                @foreach($productTabs as $tIdx => $tab)
+                    <div class="group border-b border-[#e6decb] last:border-b-0">
+                        <button type="button" onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-display text-base sm:text-lg font-medium text-[#1c1210] hover:text-[#78000b] transition cursor-pointer">
+                            <span class="flex items-center gap-2.5">
+                                <span class="h-2.5 w-2.5 rounded-full shrink-0 shadow-2xs" style="background-color: {{ $tab['dot_color'] ?? '#78000b' }};"></span>
+                                <span>{{ $tab['title'] ?? 'Details & Spezifikation' }}</span>
+                            </span>
+                            <svg class="h-5 w-5 text-[#78000b] transition-transform duration-300 {{ $tIdx === 0 ? 'rotate-180' : '' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content {{ $tIdx === 0 ? '' : 'hidden' }} px-5 pb-6 text-xs sm:text-sm text-[#5c4f46] space-y-3 leading-relaxed">
+                            <div class="prose prose-sm max-w-none text-[#5c4f46] leading-relaxed">
+                                {!! $tab['content'] ?? '' !!}
                             </div>
-                            <div class="flex items-center gap-2 rounded bg-[#faf7f2] p-2.5 border border-[#e6decb]/60">
-                                <span class="font-bold text-[#78000b]">✓</span>
-                                <span data-i18n-de="Handpolierte massive Messingbeschläge" data-i18n-en="Hand-burnished solid brass hardware">Handpolierte massive Messingbeschläge</span>
-                            </div>
+                            @if(!empty($tab['features']) && is_array($tab['features']))
+                                <div class="grid sm:grid-cols-2 gap-3 pt-2 text-xs">
+                                    @foreach($tab['features'] as $feat)
+                                        @if(trim($feat))
+                                            <div class="flex items-center gap-2 rounded bg-[#faf7f2] p-2.5 border border-[#e6decb]/60">
+                                                <span class="font-bold text-[#78000b]">✓</span>
+                                                <span>{{ $feat }}</span>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     </div>
-                </div>
-
-                <!-- Accordion Item 2: Materialien & Nachhaltige Herkunft -->
-                <div class="group border-b border-[#e6decb]">
-                    <button type="button" onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-display text-base sm:text-lg font-medium text-[#1c1210] hover:text-[#78000b] transition cursor-pointer">
-                        <span class="flex items-center gap-2.5">
-                            <span class="h-2 w-2 rounded-full bg-[#d8b45a]"></span>
-                            <span data-i18n-de="Materialien & Toskanische Pflanzengerbung" data-i18n-en="Materials & Tuscan Vegetable Tanning">Materialien & Toskanische Pflanzengerbung</span>
-                        </span>
-                        <svg class="h-5 w-5 text-[#78000b] transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </button>
-                    <div class="accordion-content hidden px-5 pb-6 text-xs sm:text-sm text-[#5c4f46] space-y-3 leading-relaxed">
-                        <p data-i18n-de="Für dieses Meisterstück verwenden wir ausschließlich europäisches Vollrind- und Kalbsleder der höchsten Selektionsstufe A+. Die Gerbung erfolgt in der Toskana rein pflanzlich mittels Rinden- und Kastanienextrakten – völlig frei von toxischem Chrom." data-i18n-en="For this masterpiece, we select only Grade A+ European full-grain hides. Tanning takes place in Tuscany using 100% natural tree barks and chestnut extracts – completely free of toxic chromium.">
-                            Für dieses Meisterstück verwenden wir ausschließlich europäisches Vollrind- und Kalbsleder der höchsten Selektionsstufe A+. Die Gerbung erfolgt in der Toskana rein pflanzlich mittels Rinden- und Kastanienextrakten – völlig frei von toxischem Chrom.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Accordion Item 3: Pflegehinweise & Lebenslange Patina -->
-                <div class="group border-b border-[#e6decb]">
-                    <button type="button" onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-display text-base sm:text-lg font-medium text-[#1c1210] hover:text-[#78000b] transition cursor-pointer">
-                        <span class="flex items-center gap-2.5">
-                            <span class="h-2 w-2 rounded-full bg-[#2e683a]"></span>
-                            <span data-i18n-de="Pflegehinweise & Patina-Entwicklung" data-i18n-en="Care Instructions & Patina Development">Pflegehinweise & Patina-Entwicklung</span>
-                        </span>
-                        <svg class="h-5 w-5 text-[#78000b] transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </button>
-                    <div class="accordion-content hidden px-5 pb-6 text-xs sm:text-sm text-[#5c4f46] space-y-3 leading-relaxed">
-                        <p data-i18n-de="Pflanzlich gegerbtes Leder reift mit den Jahren und entwickelt eine unverwechselbare, edle Patina. Wir empfehlen, das Leder ein- bis zweimal jährlich sanft mit unserem organischen MEHAAJ Bienenwachsbalsam und einem Baumwolltuch zu nähren." data-i18n-en="Vegetable-tanned leather matures beautifully over decades, acquiring a rich characterful patina. We recommend treating the surface once or twice yearly with organic beeswax balm and a soft cotton cloth.">
-                            Pflanzlich gegerbtes Leder reift mit den Jahren und entwickelt eine unverwechselbare, edle Patina. Wir empfehlen, das Leder ein- bis zweimal jährlich sanft mit unserem organischen MEHAAJ Bienenwachsbalsam und einem Baumwolltuch zu nähren.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Accordion Item 4: DHL Express & Diskrete Luxus-Verpackung -->
-                <div class="group">
-                    <button type="button" onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-display text-base sm:text-lg font-medium text-[#1c1210] hover:text-[#78000b] transition cursor-pointer">
-                        <span class="flex items-center gap-2.5">
-                            <span class="h-2 w-2 rounded-full bg-[#78000b]"></span>
-                            <span data-i18n-de="Versand, Geschenkverpackung & Kostenlose Retoure" data-i18n-en="Shipping, Gift Packaging & Free Returns">Versand, Geschenkverpackung & Kostenlose Retoure</span>
-                        </span>
-                        <svg class="h-5 w-5 text-[#78000b] transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </button>
-                    <div class="accordion-content hidden px-5 pb-6 text-xs sm:text-sm text-[#5c4f46] space-y-3 leading-relaxed">
-                        <p data-i18n-de="Jedes Produkt verlässt unser Atelier in einer nummerierten MEHAAJ Luxus-Magnetbox, geschützt durch einen atmungsaktiven Staubbeutel aus Bio-Baumwolle. Der Versand erfolgt versichert via DHL Express mit Live-Tracking. 30 Tage Rückgaberecht mit beiliegendem Retourenetikett." data-i18n-en="Every piece departs our atelier inside a numbered MEHAAJ luxury magnetic box with an organic cotton dust bag. Insured delivery via DHL Express with tracking. 30 days hassle-free return window with prepaid return label included.">
-                            Jedes Produkt verlässt unser Atelier in einer nummerierten MEHAAJ Luxus-Magnetbox, geschützt durch einen atmungsaktiven Staubbeutel aus Bio-Baumwolle. Der Versand erfolgt versichert via DHL Express mit Live-Tracking. 30 Tage Rückgaberecht mit beiliegendem Retourenetikett.
-                        </p>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
         </div>
     </section>
@@ -726,13 +729,33 @@
         }
     }
 
-    // 5. Add to Cart with Dynamic Feedback
+    // Variation Selector State
+    window.selectedVariationName = '{{ addslashes($firstVarName) }}';
+
+    function selectVariation(name, btnElement, price = null) {
+        window.selectedVariationName = name;
+        const label = document.getElementById('active-variation-name');
+        if (label) label.textContent = name;
+
+        document.querySelectorAll('.variation-pill').forEach(pill => {
+            pill.classList.remove('border-2', 'border-[#78000b]', 'bg-[#faf7f2]', 'ring-2', 'ring-[#78000b]/20', 'active-var', 'font-semibold');
+            pill.classList.add('border-[#e6decb]', 'bg-white', 'opacity-85');
+        });
+
+        if (btnElement) {
+            btnElement.classList.remove('border-[#e6decb]', 'bg-white', 'opacity-85');
+            btnElement.classList.add('border-2', 'border-[#78000b]', 'bg-[#faf7f2]', 'ring-2', 'ring-[#78000b]/20', 'active-var', 'font-semibold');
+        }
+    }
+
+    // 5. Add to Cart with Dynamic Feedback & Selected Variation
     function handleAddToCart(productId) {
         const countEl = document.getElementById('qty-count');
         const qty = countEl ? parseInt(countEl.innerText) : 1;
         const btn = document.getElementById('add-to-cart-btn');
         const label = document.getElementById('add-cart-label');
         const originalText = label ? label.textContent : 'IN DEN WARENKORB';
+        const selectedVar = window.selectedVariationName || null;
 
         if (btn) {
             btn.classList.add('opacity-80', 'pointer-events-none');
@@ -740,7 +763,7 @@
         }
 
         if (typeof quickAddToCart === 'function') {
-            quickAddToCart(productId, qty);
+            quickAddToCart(productId, qty, selectedVar);
         }
 
         setTimeout(() => {

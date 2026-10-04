@@ -96,19 +96,39 @@ class CartController extends Controller
         }
 
         $cart = session()->get('cart', []);
-        $productId = $product->id;
+        $variation = $request->input('variation');
+        $effectivePrice = ($product->sale_price && $product->sale_price < $product->price) ? (float)$product->sale_price : (float)$product->price;
+        $sku = $product->sku ?? ('MHJ-' . $product->id);
 
-        if (isset($cart[$productId])) {
-            $cart[$productId]['qty'] += $quantity;
+        if ($variation && is_array($product->variations)) {
+            foreach ($product->variations as $var) {
+                if (isset($var['name']) && $var['name'] === $variation) {
+                    if (!empty($var['price'])) {
+                        $effectivePrice = (float) $var['price'];
+                    }
+                    if (!empty($var['sku'])) {
+                        $sku = $var['sku'];
+                    }
+                    break;
+                }
+            }
+        }
+
+        $itemKey = $product->id . ($variation ? '_' . \Illuminate\Support\Str::slug($variation) : '');
+
+        if (isset($cart[$itemKey])) {
+            $cart[$itemKey]['qty'] += $quantity;
         } else {
-            $cart[$productId] = [
+            $cart[$itemKey] = [
+                'item_key' => $itemKey,
                 'id' => $product->id,
                 'name' => $product->name,
-                'price' => (float) $product->price,
+                'variation' => $variation,
+                'price' => $effectivePrice,
                 'image_url' => $product->primary_image_url,
                 'slug' => $product->slug,
                 'qty' => $quantity,
-                'sku' => $product->sku ?? 'MHJ-' . $product->id,
+                'sku' => $sku,
             ];
         }
 
@@ -116,10 +136,11 @@ class CartController extends Controller
         $totals = $this->calculateTotals($cart);
 
         $isEn = app()->getLocale() === 'en';
+        $itemDisplay = $product->name . ($variation ? " ({$variation})" : "");
         return response()->json([
             'success' => true,
-            'message' => $product->name . ($isEn ? ' has been added to your shopping cart.' : ' wurde zum Warenkorb hinzugefügt.'),
-            'added_product' => $product->name,
+            'message' => $itemDisplay . ($isEn ? ' has been added to your shopping cart.' : ' wurde zum Warenkorb hinzugefügt.'),
+            'added_product' => $itemDisplay,
             'cart' => array_values($cart),
             'count' => $totals['count'],
             'subtotal' => $totals['subtotal'],
@@ -138,20 +159,28 @@ class CartController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|integer',
+            'product_id' => 'nullable',
+            'item_key' => 'nullable|string',
             'quantity' => 'required|integer',
         ]);
 
-        $productId = $request->product_id;
-        $quantity = $request->quantity;
+        $itemKey = $request->input('item_key') ?? (string) $request->input('product_id');
+        $quantity = (int) $request->quantity;
 
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$productId])) {
+        if (isset($cart[$itemKey])) {
             if ($quantity <= 0) {
-                unset($cart[$productId]);
+                unset($cart[$itemKey]);
             } else {
-                $cart[$productId]['qty'] = $quantity;
+                $cart[$itemKey]['qty'] = $quantity;
+            }
+            session()->put('cart', $cart);
+        } elseif ($request->filled('product_id') && isset($cart[$request->input('product_id')])) {
+            if ($quantity <= 0) {
+                unset($cart[$request->input('product_id')]);
+            } else {
+                $cart[$request->input('product_id')]['qty'] = $quantity;
             }
             session()->put('cart', $cart);
         }
@@ -178,14 +207,18 @@ class CartController extends Controller
     public function remove(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|integer',
+            'product_id' => 'nullable',
+            'item_key' => 'nullable|string',
         ]);
 
-        $productId = $request->product_id;
+        $itemKey = $request->input('item_key') ?? (string) $request->input('product_id');
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$productId])) {
-            unset($cart[$productId]);
+        if (isset($cart[$itemKey])) {
+            unset($cart[$itemKey]);
+            session()->put('cart', $cart);
+        } elseif ($request->filled('product_id') && isset($cart[$request->input('product_id')])) {
+            unset($cart[$request->input('product_id')]);
             session()->put('cart', $cart);
         }
 
@@ -280,10 +313,15 @@ class CartController extends Controller
 
         // Create Order Items
         foreach ($cart as $item) {
+            $productName = $item['name'] ?? 'Produkt';
+            if (!empty($item['variation'])) {
+                $productName .= ' (' . $item['variation'] . ')';
+            }
+
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item['id'] ?? null,
-                'product_name' => $item['name'],
+                'product_name' => $productName,
                 'unit_price' => $item['price'],
                 'quantity' => $item['qty'],
                 'subtotal' => round($item['price'] * $item['qty'], 2),

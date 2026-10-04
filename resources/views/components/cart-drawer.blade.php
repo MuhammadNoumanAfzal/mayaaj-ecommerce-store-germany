@@ -230,6 +230,8 @@
             data.cart.forEach(item => {
                 const itemTotal = (item.price * item.qty).toFixed(2).replace('.', ',');
                 const imgSrc = item.image_url || '/productbag.png';
+                const key = item.item_key || item.id;
+                const variationBadge = item.variation ? `<div class="mt-0.5"><span class="inline-flex items-center gap-1 text-[0.62rem] text-[#78000b] font-semibold bg-[#faf7f2] px-2 py-0.5 rounded border border-[#e6decb]"><span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span> ${item.variation}</span></div>` : '';
 
                 html += `
                     <div class="cart-drawer-item pt-4 first:pt-0 flex gap-4 items-center group/item transition-all duration-300 p-2 rounded hover:bg-[#faf7f2]/80">
@@ -237,20 +239,21 @@
                         <div class="flex-1 min-w-0">
                             <div class="flex items-start justify-between gap-2">
                                 <h3 class="font-display text-sm font-medium text-[#1c1210] truncate group-hover/item:text-[#78000b] transition">${item.name}</h3>
-                                <button type="button" onclick="removeDrawerItem(${item.id})" class="text-[#8a7c74] hover:text-[#78000b] transition-transform hover:scale-110 cursor-pointer" title="Remove item">
+                                <button type="button" onclick="removeDrawerItem('${key}')" class="text-[#8a7c74] hover:text-[#78000b] transition-transform hover:scale-110 cursor-pointer" title="Remove item">
                                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                         <polyline points="3 6 5 6 21 6"/>
                                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
                                     </svg>
                                 </button>
                             </div>
+                            ${variationBadge}
                             <p class="text-[0.68rem] text-[#685c54] mt-0.5">SKU: ${item.sku || 'MHJ-MANUFAKTUR'}</p>
                             
                             <div class="mt-2 flex items-center justify-between">
                                 <div class="flex h-7 items-center rounded border border-[#e6decb] bg-white px-1 w-20 justify-between text-xs shadow-xs">
-                                    <button type="button" onclick="updateDrawerQty(${item.id}, ${item.qty - 1})" class="w-5 text-center font-bold hover:text-[#78000b] transition active:scale-90 cursor-pointer">-</button>
+                                    <button type="button" onclick="updateDrawerQty('${key}', ${item.qty - 1})" class="w-5 text-center font-bold hover:text-[#78000b] transition active:scale-90 cursor-pointer">-</button>
                                     <span class="qty-num font-bold text-[#1c1210]">${item.qty}</span>
-                                    <button type="button" onclick="updateDrawerQty(${item.id}, ${item.qty + 1})" class="w-5 text-center font-bold hover:text-[#78000b] transition active:scale-90 cursor-pointer">+</button>
+                                    <button type="button" onclick="updateDrawerQty('${key}', ${item.qty + 1})" class="w-5 text-center font-bold hover:text-[#78000b] transition active:scale-90 cursor-pointer">+</button>
                                 </div>
                                 <span class="font-bold text-sm text-[#1c1210]">EUR ${itemTotal}</span>
                             </div>
@@ -289,7 +292,7 @@
         }
     }
 
-    function updateDrawerQty(productId, newQty) {
+    function updateDrawerQty(itemKey, newQty) {
         const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
         fetch('/cart/update', {
@@ -299,7 +302,7 @@
                 'X-CSRF-TOKEN': token || '',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({ product_id: productId, quantity: newQty })
+            body: JSON.stringify({ item_key: itemKey, product_id: itemKey, quantity: newQty })
         })
         .then(res => res.json())
         .then(data => {
@@ -312,7 +315,7 @@
         });
     }
 
-    function removeDrawerItem(productId) {
+    function removeDrawerItem(itemKey) {
         const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
         LuxurySwal.fire({
             title: isEn ? 'Remove Item?' : 'Artikel entfernen?',
@@ -332,7 +335,7 @@
                         'X-CSRF-TOKEN': token || '',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({ product_id: productId })
+                    body: JSON.stringify({ item_key: itemKey, product_id: itemKey })
                 })
                 .then(res => res.json())
                 .then(data => {

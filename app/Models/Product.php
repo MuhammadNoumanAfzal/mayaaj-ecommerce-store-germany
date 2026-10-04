@@ -18,8 +18,10 @@ class Product extends Model
         'price',
         'sale_price',
         'stock',
+        'variations',
         'description',
         'craftsmanship',
+        'accordion_tabs',
         'image',
         'gallery_images',
         'is_featured',
@@ -32,6 +34,8 @@ class Product extends Model
         'stock' => 'integer',
         'is_featured' => 'boolean',
         'gallery_images' => 'array',
+        'variations' => 'array',
+        'accordion_tabs' => 'array',
     ];
 
     protected $appends = ['image_url'];
