@@ -16,8 +16,9 @@ class SetAdminLocale
     {
         $locale = $request->get('lang')
             ?? session('locale')
-            ?? $request->cookie('mehaaj_admin_lang')
+            ?? $request->cookie('mehaaj_lang')
             ?? $request->cookie('locale')
+            ?? $request->cookie('mehaaj_admin_lang')
             ?? 'en';
 
         if (!in_array($locale, ['en', 'de'])) {

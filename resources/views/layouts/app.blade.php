@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -225,22 +225,64 @@
             });
 
             // ==========================================
-            // 1. CLIENT-SIDE BILINGUAL LANGUAGE ENGINE (EN Default)
+            // 1. CLIENT-SIDE & SERVER-SYNC BILINGUAL LANGUAGE ENGINE
             // ==========================================
             window.getCurrentLang = function() {
-                return localStorage.getItem('mehaaj_lang') || 'en';
+                const matchLocale = document.cookie.match(/(?:^|;\s*)locale=([^;]+)/);
+                const matchMehaaj = document.cookie.match(/(?:^|;\s*)mehaaj_lang=([^;]+)/);
+                const cookieLocale = (matchLocale ? matchLocale[1] : null) || (matchMehaaj ? matchMehaaj[1] : null);
+                return localStorage.getItem('mehaaj_lang') || cookieLocale || '{{ app()->getLocale() ?: "en" }}';
             };
 
-            function setSiteLanguage(lang) {
+            function setSiteLanguage(lang, syncServer = true) {
                 if (lang !== 'en' && lang !== 'de') lang = 'en';
                 localStorage.setItem('mehaaj_lang', lang);
+                document.cookie = 'locale=' + lang + ';path=/;max-age=31536000;SameSite=Lax';
+                document.cookie = 'mehaaj_lang=' + lang + ';path=/;max-age=31536000;SameSite=Lax';
+                document.cookie = 'mehaaj_admin_lang=' + lang + ';path=/;max-age=31536000;SameSite=Lax';
                 document.documentElement.setAttribute('lang', lang);
+
+                // Asynchronously sync with Laravel backend session
+                if (syncServer) {
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    fetch('/lang/' + lang, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token || '',
+                            'Accept': 'application/json'
+                        }
+                    }).catch(() => {});
+                }
 
                 // Update all elements with data-i18n attributes
                 document.querySelectorAll('[data-i18n-en], [data-i18n-de]').forEach(el => {
                     const translation = el.getAttribute('data-i18n-' + lang);
-                    if (translation) {
-                        el.textContent = translation;
+                    if (translation !== null && translation !== '') {
+                        if (el.getAttribute('data-i18n-html') === 'true' || translation.includes('<')) {
+                            el.innerHTML = translation;
+                        } else if (el.children.length === 0) {
+                            el.textContent = translation;
+                        } else {
+                            // Find direct text node if present
+                            let textNode = null;
+                            for (let node of el.childNodes) {
+                                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0) {
+                                    textNode = node;
+                                    break;
+                                }
+                            }
+                            if (textNode) {
+                                textNode.textContent = translation;
+                            } else {
+                                const targetSpan = el.querySelector('span:not([class*="badge"]):not([class*="count"]):not([class*="icon"])');
+                                if (targetSpan && !targetSpan.hasAttribute('data-i18n-en')) {
+                                    targetSpan.textContent = translation;
+                                } else {
+                                    el.textContent = translation;
+                                }
+                            }
+                        }
                     }
                 });
 
@@ -252,6 +294,17 @@
                     }
                 });
 
+                // Update titles and aria-labels
+                document.querySelectorAll('[data-i18n-title-en], [data-i18n-title-de]').forEach(el => {
+                    const t = el.getAttribute('data-i18n-title-' + lang);
+                    if (t) el.title = t;
+                });
+
+                document.querySelectorAll('[data-i18n-aria-en], [data-i18n-aria-de]').forEach(el => {
+                    const a = el.getAttribute('data-i18n-aria-' + lang);
+                    if (a) el.setAttribute('aria-label', a);
+                });
+
                 // Update Navbar Buttons Active State
                 ['en', 'de'].forEach(l => {
                     const btn = document.getElementById('lang-btn-' + l);
@@ -260,12 +313,12 @@
 
                     if (btn) {
                         btn.className = isActive 
-                            ? 'px-2.5 py-0.5 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a] font-bold'
-                            : 'px-2.5 py-0.5 rounded-full transition cursor-pointer text-white/80 hover:text-white font-medium';
+                            ? 'px-2 py-0.5 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a] font-bold shadow-xs'
+                            : 'px-2 py-0.5 rounded-full transition cursor-pointer text-white/80 hover:text-white font-medium';
                     }
                     if (btnMob) {
                         btnMob.className = isActive
-                            ? 'px-3 py-1 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a] font-bold'
+                            ? 'px-3 py-1 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a] font-bold shadow-xs'
                             : 'px-3 py-1 rounded-full transition cursor-pointer text-white/80 hover:text-white font-medium';
                     }
                 });

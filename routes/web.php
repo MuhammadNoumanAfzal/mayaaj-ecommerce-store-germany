@@ -36,13 +36,21 @@ Route::get('/about', function () {
 use App\Http\Controllers\ContactController;
 
 Route::get('/kontakt', [ContactController::class, 'show'])->name('contact');
+Route::get('/contact', [ContactController::class, 'show']);
 Route::post('/kontakt', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit']);
 
 Route::get('/versand', function () {
     return view('pages.shipping');
 });
+Route::get('/shipping', function () {
+    return view('pages.shipping');
+});
 
 Route::get('/rueckgabe', function () {
+    return view('pages.returns');
+});
+Route::get('/returns', function () {
     return view('pages.returns');
 });
 
@@ -50,16 +58,25 @@ Route::get('/faq', function () {
     return view('pages.faq');
 });
 
-// Mandatory German Legal Pages
+// Mandatory German & Global Legal Pages
 Route::get('/impressum', function () {
+    return view('pages.impressum');
+});
+Route::get('/imprint', function () {
     return view('pages.impressum');
 });
 
 Route::get('/datenschutz', function () {
     return view('pages.privacy');
 });
+Route::get('/privacy', function () {
+    return view('pages.privacy');
+});
 
 Route::get('/agb', function () {
+    return view('pages.agb');
+});
+Route::get('/terms', function () {
     return view('pages.agb');
 });
 
@@ -67,9 +84,11 @@ Route::get('/agb', function () {
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/shop-catalog', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/kollektion', [ShopController::class, 'index'])->name('kollektion');
+Route::get('/collection', [ShopController::class, 'index'])->name('collection');
 
 // Single Product Detail Pages (Dynamic Slug)
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
+Route::get('/product/{slug}', [ShopController::class, 'show']);
 
 // Dynamic Cart & Customer Checkout Routes
 use App\Http\Controllers\CartController;
@@ -88,6 +107,22 @@ use App\Http\Controllers\ReviewController;
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::get('/bewertungen', [ReviewController::class, 'index'])->name('reviews.de');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+// Global Frontend & System Language Switcher Route
+Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\Http\Request $request) {
+    if (!in_array($locale, ['en', 'de'])) {
+        $locale = 'en';
+    }
+    session(['locale' => $locale]);
+    cookie()->queue(cookie()->make('locale', $locale, 60 * 24 * 365));
+    cookie()->queue(cookie()->make('mehaaj_lang', $locale, 60 * 24 * 365));
+    cookie()->queue(cookie()->make('mehaaj_admin_lang', $locale, 60 * 24 * 365));
+    app()->setLocale($locale);
+    if ($request->wantsJson() || $request->ajax()) {
+        return response()->json(['success' => true, 'locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('site.lang');
 
 /*
 |--------------------------------------------------------------------------

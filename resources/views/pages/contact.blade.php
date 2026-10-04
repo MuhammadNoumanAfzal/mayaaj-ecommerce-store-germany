@@ -502,7 +502,7 @@
                 LuxurySwal.fire({
                     icon: 'error',
                     title: isEn ? 'Error' : 'Fehler',
-                    text: data.message || 'Fehler beim Senden der Nachricht.'
+                    text: data.message || (isEn ? 'Failed to send message.' : 'Fehler beim Senden der Nachricht.')
                 });
             }
         })
@@ -514,7 +514,7 @@
             LuxurySwal.fire({
                 icon: 'error',
                 title: isEn ? 'Error' : 'Fehler',
-                text: 'Netzwerkfehler beim Senden der Nachricht.'
+                text: isEn ? 'Network error while sending message.' : 'Netzwerkfehler beim Senden der Nachricht.'
             });
         });
     }

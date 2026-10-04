@@ -115,9 +115,10 @@ class CartController extends Controller
         session()->put('cart', $cart);
         $totals = $this->calculateTotals($cart);
 
+        $isEn = app()->getLocale() === 'en';
         return response()->json([
             'success' => true,
-            'message' => $product->name . ' wurde zum Warenkorb hinzugefügt.',
+            'message' => $product->name . ($isEn ? ' has been added to your shopping cart.' : ' wurde zum Warenkorb hinzugefügt.'),
             'added_product' => $product->name,
             'cart' => array_values($cart),
             'count' => $totals['count'],
@@ -190,9 +191,10 @@ class CartController extends Controller
 
         $totals = $this->calculateTotals($cart);
 
+        $isEn = app()->getLocale() === 'en';
         return response()->json([
             'success' => true,
-            'message' => 'Artikel aus dem Warenkorb entfernt.',
+            'message' => $isEn ? 'Item removed from shopping cart.' : 'Artikel aus dem Warenkorb entfernt.',
             'cart' => array_values($cart),
             'count' => $totals['count'],
             'subtotal' => $totals['subtotal'],
@@ -228,9 +230,10 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         if (empty($cart)) {
+            $isEn = app()->getLocale() === 'en';
             return response()->json([
                 'success' => false,
-                'message' => 'Ihr Warenkorb ist leer. Bitte fügen Sie Produkte hinzu, bevor Sie auschecken.',
+                'message' => $isEn ? 'Your shopping cart is empty. Please add items before checking out.' : 'Ihr Warenkorb ist leer. Bitte fügen Sie Produkte hinzu, bevor Sie auschecken.',
             ], 422);
         }
 
@@ -312,9 +315,10 @@ class CartController extends Controller
         // Clear Session Cart
         session()->forget('cart');
 
+        $isEn = app()->getLocale() === 'en';
         return response()->json([
             'success' => true,
-            'message' => 'Bestellung erfolgreich aufgegeben! Vielen Dank.',
+            'message' => $isEn ? 'Order placed successfully! Thank you.' : 'Bestellung erfolgreich aufgegeben! Vielen Dank.',
             'order_number' => $order->order_number,
             'total_amount' => $order->total_amount,
             'formatted_total' => 'EUR ' . number_format($order->total_amount, 2, ',', '.'),

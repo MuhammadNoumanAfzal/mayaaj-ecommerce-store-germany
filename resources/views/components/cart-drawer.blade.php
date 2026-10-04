@@ -53,7 +53,7 @@
     <div id="drawer-items-container" class="flex-1 overflow-y-auto p-5 divide-y divide-[#f2ebdc] space-y-4">
         <!-- Rendered dynamically via JavaScript fetchAndUpdateCartDrawer() -->
         <div class="py-12 text-center text-xs text-[#8a7c74]">
-            <p class="animate-pulse">Warenkorb wird geladen...</p>
+            <p class="animate-pulse" data-i18n-de="Warenkorb wird geladen..." data-i18n-en="Loading cart...">Loading cart...</p>
         </div>
     </div>
 
@@ -65,7 +65,9 @@
             <input
                 type="text"
                 id="drawer-voucher-input"
-                placeholder="Gutscheincode (z.B. MEHAAJ10)"
+                placeholder="Voucher code (e.g. MEHAAJ10)"
+                data-i18n-placeholder-de="Gutscheincode (z.B. MEHAAJ10)"
+                data-i18n-placeholder-en="Voucher code (e.g. MEHAAJ10)"
                 class="flex-1 rounded border border-[#e6decb] bg-white px-3 py-1.5 text-xs text-[#1c1210] placeholder-[#8a7c74] focus:border-[#78000b] focus:outline-none shadow-xs"
             >
             <button
@@ -75,10 +77,10 @@
                 data-i18n-de="EINLÖSEN"
                 data-i18n-en="APPLY"
             >
-                EINLÖSEN
+                APPLY
             </button>
         </div>
-        <p id="voucher-message" class="hidden text-[0.65rem] font-bold text-[#2e683a] animate-pulse">Gutscheincode MEHAAJ10 angewendet (-10%) ✓</p>
+        <p id="voucher-message" class="hidden text-[0.65rem] font-bold text-[#2e683a] animate-pulse" data-i18n-de="Gutscheincode MEHAAJ10 angewendet (-10%) ✓" data-i18n-en="Voucher MEHAAJ10 applied (-10%) ✓">Voucher MEHAAJ10 applied (-10%) ✓</p>
 
         <!-- Summary Cost Breakdown -->
         <div class="space-y-1.5 text-xs text-[#5c4f46]">

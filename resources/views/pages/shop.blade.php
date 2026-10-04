@@ -133,7 +133,7 @@
 
                     @if(request('search'))
                         <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-2.5 py-0.5 text-xs text-[#78000b]">
-                            <span>Suche: "{{ request('search') }}"</span>
+                            <span><span data-i18n-de="Suche:" data-i18n-en="Search:">Suche:</span> "{{ request('search') }}"</span>
                             <a href="{{ route('shop', array_merge(request()->except(['search', 'page']))) }}" class="font-bold hover:text-black cursor-pointer">×</a>
                         </span>
                     @endif
@@ -152,7 +152,7 @@
 
                     @if(request('max_price') && request('max_price') < $dbMaxPrice)
                         <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
-                            <span>bis EUR {{ request('max_price') }}</span>
+                            <span><span data-i18n-de="bis" data-i18n-en="up to">bis</span> EUR {{ request('max_price') }}</span>
                             <a href="{{ route('shop', array_merge(request()->except(['max_price', 'page']))) }}" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
                         </span>
                     @endif
@@ -244,8 +244,8 @@
 
                         <!-- Atelier Guarantee Seal -->
                         <div class="rounded border border-[#e6decb] bg-[#faf7f2] p-2.5 text-center">
-                            <p class="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b]">100% ECHTHEITSGARANTIE</p>
-                            <p class="mt-0.5 text-[0.62rem] text-[#685c54]">Zertifiziertes Vollleder & Schweizer Präzision</p>
+                            <p class="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b]" data-i18n-de="100% ECHTHEITSGARANTIE" data-i18n-en="100% AUTHENTICITY GUARANTEE">100% ECHTHEITSGARANTIE</p>
+                            <p class="mt-0.5 text-[0.62rem] text-[#685c54]" data-i18n-de="Zertifiziertes Vollleder & Schweizer Präzision" data-i18n-en="Certified Full Grain Leather & Swiss Precision">Zertifiziertes Vollleder & Schweizer Präzision</p>
                         </div>
 
                     </form>
@@ -367,7 +367,7 @@
                     @if($products->hasPages())
                         <div class="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#e6decb] pt-4 sm:flex-row">
                             <p class="text-xs text-[#685c54]">
-                                Zeige <span class="font-bold text-[#1c1210]">{{ $products->firstItem() }}</span> bis <span class="font-bold text-[#1c1210]">{{ $products->lastItem() }}</span> von <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span>
+                                <span data-i18n-de="Zeige" data-i18n-en="Showing">Zeige</span> <span class="font-bold text-[#1c1210]">{{ $products->firstItem() }}</span> <span data-i18n-de="bis" data-i18n-en="to">bis</span> <span class="font-bold text-[#1c1210]">{{ $products->lastItem() }}</span> <span data-i18n-de="von" data-i18n-en="of">von</span> <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span>
                             </p>
 
                             <div class="flex items-center gap-1.5">

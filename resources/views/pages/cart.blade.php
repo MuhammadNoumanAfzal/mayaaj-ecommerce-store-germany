@@ -1018,7 +1018,7 @@
                     LuxurySwal.fire({
                         icon: 'error',
                         title: isEn ? 'Order Error' : 'Bestellfehler',
-                        text: data.message || 'Fehler beim Erstellen der Bestellung.',
+                        text: data.message || (isEn ? 'Error creating your order.' : 'Fehler beim Erstellen der Bestellung.'),
                         confirmButtonText: 'OK'
                     });
                     return;
@@ -1086,7 +1086,7 @@
                 LuxurySwal.fire({
                     icon: 'error',
                     title: isEn ? 'Error' : 'Fehler',
-                    text: 'Netzwerkfehler beim Verarbeiten der Bestellung.'
+                    text: isEn ? 'Network error while processing your order.' : 'Netzwerkfehler beim Verarbeiten der Bestellung.'
                 });
             });
         }

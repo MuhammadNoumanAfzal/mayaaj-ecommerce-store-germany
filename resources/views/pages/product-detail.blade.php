@@ -207,8 +207,8 @@
                                     <span class="text-base text-[#8a7c74] line-through font-mono">
                                         EUR {{ number_format($product->price, 2, ',', '.') }}
                                     </span>
-                                    <span class="rounded bg-[#78000b] px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white shadow-2xs">
-                                        ANGEBOT
+                                    <span class="rounded bg-[#78000b] px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white shadow-2xs" data-i18n-de="ANGEBOT" data-i18n-en="SALE">
+                                        SALE
                                     </span>
                                 @endif
                             </div>
@@ -504,16 +504,16 @@
                     <div>
                         <div class="flex items-center justify-between text-xs text-[#8a7c74]">
                             <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                            <span class="font-mono text-[0.7rem]">Vor 2 Wochen</span>
+                            <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 2 Wochen" data-i18n-en="2 weeks ago">2 weeks ago</span>
                         </div>
-                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]">„Unübertroffene Haptik und Lederqualität“</h3>
-                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed">
-                            Ich besitze Taschen von renommierten Pariser Häusern, doch die Lederqualität und Nahtpräzision von MEHAAJ übertrifft alles. Die natürliche Narbung und der Duft sind unvergleichlich.
+                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Unübertroffene Haptik und Lederqualität“" data-i18n-en="“Unrivaled leather touch and finish”">“Unrivaled leather touch and finish”</h3>
+                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Ich besitze Taschen von renommierten Pariser Häusern, doch die Lederqualität und Nahtpräzision von MEHAAJ übertrifft alles. Die natürliche Narbung und der Duft sind unvergleichlich." data-i18n-en="I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.">
+                            I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.
                         </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
                         <span class="font-bold text-[#1c1210]">Dr. Maximilian v. B.</span>
-                        <span class="text-[#2e683a] font-semibold">✓ Verifizierter Käufer (München)</span>
+                        <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (München)" data-i18n-en="✓ Verified Buyer (Munich)">✓ Verified Buyer (Munich)</span>
                     </div>
                 </div>
 
@@ -522,16 +522,16 @@
                     <div>
                         <div class="flex items-center justify-between text-xs text-[#8a7c74]">
                             <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                            <span class="font-mono text-[0.7rem]">Vor 1 Monat</span>
+                            <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 1 Monat" data-i18n-en="1 month ago">1 month ago</span>
                         </div>
-                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]">„Ein architektonisches Kunstwerk“</h3>
-                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed">
-                            Die Kantenversiegelung ist makellos. Schneller Expressversand in einer traumhaften Box. Man spürt die deutsche Detailverliebtheit in jedem Millimeter.
+                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Ein architektonisches Kunstwerk“" data-i18n-en="“An architectural work of art”">“An architectural work of art”</h3>
+                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Kantenversiegelung ist makellos. Schneller Expressversand in einer traumhaften Box. Man spürt die deutsche Detailverliebtheit in jedem Millimeter." data-i18n-en="The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.">
+                            The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.
                         </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
                         <span class="font-bold text-[#1c1210]">Sophie Laurent</span>
-                        <span class="text-[#2e683a] font-semibold">✓ Verifizierte Käuferin (Zürich)</span>
+                        <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierte Käuferin (Zürich)" data-i18n-en="✓ Verified Buyer (Zurich)">✓ Verified Buyer (Zurich)</span>
                     </div>
                 </div>
 
@@ -540,16 +540,16 @@
                     <div>
                         <div class="flex items-center justify-between text-xs text-[#8a7c74]">
                             <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                            <span class="font-mono text-[0.7rem]">Vor 6 Wochen</span>
+                            <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 6 Wochen" data-i18n-en="6 weeks ago">6 weeks ago</span>
                         </div>
-                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]">„Jeden Euro absolut wert“</h3>
-                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed">
-                            Die Beschläge haben ein substanzielles Gewicht und der Reißverschluss gleitet wie Butter. Die Patina nach den ersten Wochen des täglichen Gebrauchs ist sagenhaft schön.
+                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Jeden Euro absolut wert“" data-i18n-en="“Worth every single euro”">“Worth every single euro”</h3>
+                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Beschläge haben ein substanzielles Gewicht und der Reißverschluss gleitet wie Butter. Die Patina nach den ersten Wochen des täglichen Gebrauchs ist sagenhaft schön." data-i18n-en="Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.">
+                            Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.
                         </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
                         <span class="font-bold text-[#1c1210]">Alexander K.</span>
-                        <span class="text-[#2e683a] font-semibold">✓ Verifizierter Käufer (Düsseldorf)</span>
+                        <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (Düsseldorf)" data-i18n-en="✓ Verified Buyer (Dusseldorf)">✓ Verified Buyer (Dusseldorf)</span>
                     </div>
                 </div>
             </div>
@@ -586,7 +586,7 @@
                                     <img src="{{ $rel->image_url }}" alt="{{ $rel->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108" loading="lazy">
                                 </a>
                                 @if($rel->is_featured)
-                                    <span class="absolute top-2 left-2 z-10 rounded-sm bg-[#78000b] px-2 py-0.5 text-[0.55rem] font-bold uppercase tracking-wider text-white shadow-xs">
+                                    <span class="absolute top-2 left-2 z-10 rounded-sm bg-[#78000b] px-2 py-0.5 text-[0.55rem] font-bold uppercase tracking-wider text-white shadow-xs" data-i18n-de="BESTSELLER" data-i18n-en="BESTSELLER">
                                         BESTSELLER
                                     </span>
                                 @endif
