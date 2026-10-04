@@ -62,7 +62,7 @@ class CategoryController extends Controller
 
         Category::create($validated);
 
-        return redirect()->route('admin.categories')->with('success', 'Kategorie erfolgreich hinzugefügt! ✓');
+        return redirect()->route('admin.categories')->with('success', __('admin.category_created'));
     }
 
     /**
@@ -99,7 +99,7 @@ class CategoryController extends Controller
 
         $category->update($validated);
 
-        return redirect()->route('admin.categories')->with('success', 'Kategorie erfolgreich aktualisiert! ✓');
+        return redirect()->route('admin.categories')->with('success', __('admin.category_updated'));
     }
 
     /**
@@ -113,6 +113,6 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('admin.categories')->with('success', 'Kategorie erfolgreich gelöscht! ✓');
+        return redirect()->route('admin.categories')->with('success', __('admin.category_deleted'));
     }
 }

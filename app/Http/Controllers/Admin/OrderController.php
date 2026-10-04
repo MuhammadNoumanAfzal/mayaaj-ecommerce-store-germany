@@ -64,7 +64,7 @@ class OrderController extends Controller
 
         $order->update($validated);
 
-        return redirect()->back()->with('success', 'Bestellstatus & Zahlungsstatus erfolgreich aktualisiert! ✓');
+        return redirect()->back()->with('success', __('admin.order_status_updated'));
     }
 
     /**
@@ -74,6 +74,6 @@ class OrderController extends Controller
     {
         $order->delete();
 
-        return redirect()->route('admin.orders')->with('success', 'Bestellung erfolgreich gelöscht! ✓');
+        return redirect()->route('admin.orders')->with('success', __('admin.order_deleted'));
     }
 }

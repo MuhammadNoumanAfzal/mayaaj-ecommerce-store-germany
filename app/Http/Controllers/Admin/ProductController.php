@@ -98,7 +98,7 @@ class ProductController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('admin.products')->with('success', 'Produkt erfolgreich hinzugefügt! ✓');
+        return redirect()->route('admin.products')->with('success', __('admin.product_created'));
     }
 
     /**
@@ -162,7 +162,7 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('admin.products')->with('success', 'Produkt erfolgreich aktualisiert! ✓');
+        return redirect()->route('admin.products')->with('success', __('admin.product_updated'));
     }
 
     /**
@@ -184,6 +184,6 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('admin.products')->with('success', 'Produkt erfolgreich gelöscht! ✓');
+        return redirect()->route('admin.products')->with('success', __('admin.product_deleted'));
     }
 }

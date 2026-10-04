@@ -70,7 +70,7 @@ class CustomerController extends Controller
 
         Customer::create($validated);
 
-        return redirect()->route('admin.customers')->with('success', 'VIP Kunde erfolgreich angelegt! ✓');
+        return redirect()->route('admin.customers')->with('success', __('admin.customer_created'));
     }
 
     /**
@@ -102,7 +102,7 @@ class CustomerController extends Controller
 
         $customer->update($validated);
 
-        return redirect()->route('admin.customers')->with('success', 'Kundendaten erfolgreich aktualisiert! ✓');
+        return redirect()->route('admin.customers')->with('success', __('admin.customer_updated'));
     }
 
     /**
@@ -112,6 +112,6 @@ class CustomerController extends Controller
     {
         $customer->delete();
 
-        return redirect()->route('admin.customers')->with('success', 'Kundenkonto erfolgreich gelöscht! ✓');
+        return redirect()->route('admin.customers')->with('success', __('admin.customer_deleted'));
     }
 }

@@ -1,88 +1,90 @@
 @extends('layouts.admin')
-@section('title', 'Bestellung ' . $order->order_number . ' - MEHAAJ Admin')
+@section('title', 'Order ' . $order->order_number . ' - MEHAAJ Admin')
 
 @section('admin-content')
 <div class="space-y-6 max-w-5xl mx-auto">
 
-    <!-- Top Card Header matching Screenshot 2 design -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden">
+    <!-- Top Card Header -->
+    <div class="bg-white rounded-2xl border border-stone-200 shadow-md overflow-hidden border-t-4 border-t-saltora-terracotta">
         
-        <!-- Executive Light Header -->
-        <div class="px-6 py-4.5 flex items-center justify-between" style="background-color: #ffffff !important; color: #0f172a !important; border-bottom: 1px solid #e2e8f0 !important;">
+        <!-- Header -->
+        <div class="px-6 py-4.5 flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 bg-white">
             <div>
-                <h2 class="font-extrabold text-base text-slate-900 tracking-wide flex items-center gap-2">
-                    <span data-i18n-de="Bestellung & Rechnung" data-i18n-en="Order & Invoice">Bestellung & Rechnung</span>
-                    <span class="font-mono text-indigo-600 font-black">#{{ $order->order_number }}</span>
+                <h2 class="font-extrabold text-base text-stone-900 tracking-wide flex items-center gap-2">
+                    <span data-i18n-de="Bestellung & Rechnung" data-i18n-en="Order & Invoice">Order & Invoice</span>
+                    <span class="font-mono text-saltora-terracotta font-black">#{{ $order->order_number }}</span>
                 </h2>
-                <p class="text-xs text-slate-500 font-medium" data-i18n-de="Detaillierte Übersicht, Status-Workflow und druckbare Rechnung." data-i18n-en="Detailed overview, status workflow and printable invoice.">Detaillierte Übersicht, Status-Workflow und druckbare Rechnung.</p>
+                <p class="text-xs text-stone-500 font-medium" data-i18n-de="Detaillierte Übersicht, Status-Workflow und druckbare Rechnung." data-i18n-en="Detailed overview, status workflow and printable invoice.">Detailed overview, status workflow and printable invoice.</p>
             </div>
             
             <div class="flex items-center gap-2">
-                <button type="button" onclick="window.print()" class="rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer" style="background-color: #f1f5f9 !important; color: #334155 !important; border: 1px solid #e2e8f0 !important;">
-                    <svg class="h-3.5 w-3.5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                    <span data-i18n-de="Rechnung Drucken" data-i18n-en="Print Invoice">Rechnung Drucken</span>
+                <button type="button" onclick="window.print()" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
+                    <svg class="h-3.5 w-3.5 text-saltora-terracotta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    <span data-i18n-de="Rechnung Drucken" data-i18n-en="Print Invoice">Print Invoice</span>
                 </button>
 
-                <a href="{{ route('admin.orders') }}" class="rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer" style="background-color: #f1f5f9 !important; color: #334155 !important; border: 1px solid #e2e8f0 !important;">
+                <a href="{{ route('admin.orders') }}" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    <span data-i18n-de="Zurück zu Bestellungen" data-i18n-en="Back to Orders">Zurück zu Bestellungen</span>
+                    <span data-i18n-de="Zurück zu Bestellungen" data-i18n-en="Back to Orders">Back to Orders</span>
                 </a>
             </div>
         </div>
 
         <!-- Status Workflow Control Form -->
-        <div class="p-6 bg-slate-50 border-b border-slate-200">
-            <h3 class="font-bold text-slate-900 text-sm mb-3" data-i18n-de="Bestellstatus & Zahlungs-Workflow" data-i18n-en="Order & Payment Status Workflow">Bestellstatus & Zahlungs-Workflow</h3>
+        <div class="p-6 bg-stone-50/60 border-b border-stone-200">
+            <h3 class="font-bold text-stone-900 text-sm mb-3" data-i18n-de="Bestellstatus & Zahlungs-Workflow" data-i18n-en="Order & Payment Status Workflow">Order & Payment Status Workflow</h3>
             
             <form action="{{ route('admin.orders.update-status', $order->id) }}" method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                 @csrf
                 @method('PUT')
 
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1" data-i18n-de="Bestellstatus" data-i18n-en="Order Status">Bestellstatus</label>
-                    <select name="status" class="w-full h-10 rounded-xl border border-slate-200 bg-white px-3 text-slate-900 font-semibold outline-none focus:border-[#194AA2]">
-                        <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Offen / Ausstehend</option>
-                        <option value="processing" {{ $order->status === 'processing' ? 'selected' : '' }}>In Bearbeitung</option>
-                        <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }}>Versendet</option>
-                        <option value="delivered" {{ $order->status === 'delivered' ? 'selected' : '' }}>Zugestellt</option>
-                        <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }}>Storniert</option>
+                    <label class="block font-bold text-stone-700 mb-1" data-i18n-de="Bestellstatus" data-i18n-en="Order Status">Order Status</label>
+                    <select name="status" class="w-full h-10 rounded-xl border border-stone-200 bg-white px-3 text-stone-900 font-semibold outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs">
+                        <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }} data-i18n-de="Offen / Ausstehend" data-i18n-en="Pending">Pending</option>
+                        <option value="processing" {{ $order->status === 'processing' ? 'selected' : '' }} data-i18n-de="In Bearbeitung" data-i18n-en="Processing">Processing</option>
+                        <option value="shipped" {{ $order->status === 'shipped' ? 'selected' : '' }} data-i18n-de="Versendet" data-i18n-en="Shipped">Shipped</option>
+                        <option value="delivered" {{ $order->status === 'delivered' ? 'selected' : '' }} data-i18n-de="Zugestellt" data-i18n-en="Delivered">Delivered</option>
+                        <option value="cancelled" {{ $order->status === 'cancelled' ? 'selected' : '' }} data-i18n-de="Storniert" data-i18n-en="Cancelled">Cancelled</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1" data-i18n-de="Zahlungsstatus" data-i18n-en="Payment Status">Zahlungsstatus</label>
-                    <select name="payment_status" class="w-full h-10 rounded-xl border border-slate-200 bg-white px-3 text-slate-900 font-semibold outline-none focus:border-[#194AA2]">
-                        <option value="pending" {{ $order->payment_status === 'pending' ? 'selected' : '' }}>Offen (Warte auf Vorkasse)</option>
-                        <option value="paid" {{ $order->payment_status === 'paid' ? 'selected' : '' }}>Bezahlt (Zahlungseingang bestätigt)</option>
-                        <option value="refunded" {{ $order->payment_status === 'refunded' ? 'selected' : '' }}>Storniert / Erstattet</option>
+                    <label class="block font-bold text-stone-700 mb-1" data-i18n-de="Zahlungsstatus" data-i18n-en="Payment Status">Payment Status</label>
+                    <select name="payment_status" class="w-full h-10 rounded-xl border border-stone-200 bg-white px-3 text-stone-900 font-semibold outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs">
+                        <option value="pending" {{ $order->payment_status === 'pending' ? 'selected' : '' }} data-i18n-de="Offen (Warte auf Vorkasse)" data-i18n-en="Unpaid (Awaiting payment)">Unpaid (Awaiting payment)</option>
+                        <option value="paid" {{ $order->payment_status === 'paid' ? 'selected' : '' }} data-i18n-de="Bezahlt (Zahlung bestätigt)" data-i18n-en="Paid (Payment verified)">Paid (Payment verified)</option>
+                        <option value="refunded" {{ $order->payment_status === 'refunded' ? 'selected' : '' }} data-i18n-de="Storniert / Erstattet" data-i18n-en="Refunded">Refunded</option>
                     </select>
                 </div>
 
                 <div class="flex items-end">
-                    <button type="submit" class="w-full h-10 rounded-xl btn-lime-save text-white font-bold text-xs uppercase tracking-wider shadow-sm transition cursor-pointer flex items-center justify-center gap-1.5" style="background-color: #84cc16 !important; color: #ffffff !important;">
+                    <button type="submit" class="w-full h-10 rounded-xl btn-exec-primary text-white font-bold text-xs uppercase tracking-wider shadow-md transition cursor-pointer flex items-center justify-center gap-1.5">
                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span data-i18n-de="Status Aktualisieren" data-i18n-en="Update Status">Status Aktualisieren</span>
+                        <span data-i18n-de="Status Aktualisieren" data-i18n-en="Update Status">Update Status</span>
                     </button>
                 </div>
             </form>
         </div>
 
-        <!-- Printable German Legal Invoice Area -->
-        <div id="printable-invoice" class="p-8 sm:p-10 space-y-8 bg-white text-slate-800">
+        <!-- Printable Invoice Area -->
+        <div id="printable-invoice" class="p-8 sm:p-10 space-y-8 bg-white text-stone-800">
             
             <!-- Invoice Header: MEHAAJ Logo & Company Info -->
-            <div class="flex flex-col sm:flex-row justify-between items-start border-b border-slate-200 pb-6 gap-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start border-b border-stone-200 pb-6 gap-6">
                 <div>
                     <div class="flex items-center gap-3">
-                        <div class="h-10 w-10 rounded-xl bg-[#194AA2] text-white flex items-center justify-center font-extrabold text-xl shadow-sm">
-                            M
+                        <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-saltora-terracotta to-amber-600 p-0.5 shadow-md shadow-saltora-terracotta/20">
+                            <div class="w-full h-full bg-white rounded-[9px] flex items-center justify-center font-bold text-xs text-saltora-terracotta">
+                                <img src="/logo.png" alt="MEHAAJ Logo" class="w-6 h-6 object-contain" onerror="this.remove();">
+                            </div>
                         </div>
                         <div>
-                            <h1 class="font-extrabold text-slate-900 text-xl tracking-tight uppercase">MEHAAJ LUXURY ATELIER</h1>
-                            <p class="text-[0.65rem] text-slate-400 font-bold uppercase tracking-wider">MANUFAKTUR & ATELIER E-COMMERCE</p>
+                            <h1 class="font-serif font-bold text-stone-900 text-xl tracking-wider uppercase">MEHAAJ LUXURY ATELIER</h1>
+                            <p class="text-[0.65rem] text-saltora-terracotta font-bold uppercase tracking-wider">MANUFAKTUR & ATELIER E-COMMERCE</p>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-3 font-medium">
+                    <p class="text-xs text-stone-500 mt-3 font-medium">
                         MEHAAJ E-Commerce GmbH<br>
                         Kurfürstendamm 182, D-10707 Berlin<br>
                         USt-IdNr.: DE 391 048 291 | HRB 88201 B
@@ -90,97 +92,97 @@
                 </div>
 
                 <!-- Invoice Meta Box -->
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-right text-xs space-y-1 w-full sm:w-auto">
-                    <p class="font-bold text-slate-900 text-sm" data-i18n-de="RECHNUNG / INVOICE" data-i18n-en="INVOICE">RECHNUNG</p>
-                    <p><span class="text-slate-500">Rechnungs-Nr.:</span> <strong class="font-mono text-slate-900">{{ $order->order_number }}</strong></p>
-                    <p><span class="text-slate-500">Datum:</span> <strong>{{ $order->created_at->format('d.m.Y') }}</strong></p>
-                    <p><span class="text-slate-500">Zahlungsart:</span> <strong class="uppercase text-[#194AA2]">{{ $order->payment_method }}</strong></p>
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 text-right text-xs space-y-1 w-full sm:w-auto shadow-2xs">
+                    <p class="font-bold text-stone-900 text-sm" data-i18n-de="RECHNUNG" data-i18n-en="INVOICE">INVOICE</p>
+                    <p><span class="text-stone-500" data-i18n-de="Rechnungs-Nr.:" data-i18n-en="Invoice Ref:">Invoice Ref:</span> <strong class="font-mono text-saltora-terracotta">{{ $order->order_number }}</strong></p>
+                    <p><span class="text-stone-500" data-i18n-de="Datum:" data-i18n-en="Date:">Date:</span> <strong>{{ $order->created_at->format('d.m.Y') }}</strong></p>
+                    <p><span class="text-stone-500" data-i18n-de="Zahlungsart:" data-i18n-en="Payment Method:">Payment Method:</span> <strong class="uppercase text-saltora-terracotta">{{ $order->payment_method }}</strong></p>
                 </div>
             </div>
 
             <!-- Customer & Shipping Info -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
-                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-200 space-y-1">
-                    <p class="font-bold text-slate-900 uppercase text-[0.68rem] tracking-wider text-slate-400 mb-1" data-i18n-de="Rechnungsempfänger & Lieferadresse" data-i18n-en="Bill To & Shipping Address">Rechnungsempfänger & Lieferadresse</p>
-                    <p class="font-bold text-slate-900 text-sm">{{ $order->customer_name }}</p>
-                    <p class="text-slate-700">{{ $order->shipping_address }}</p>
-                    <p class="text-slate-700">{{ $order->postal_code }} {{ $order->city }}, {{ $order->country }}</p>
-                    <p class="text-slate-500 pt-1">E-Mail: {{ $order->customer_email }}</p>
+                <div class="bg-stone-50/70 p-4 rounded-xl border border-stone-200 space-y-1">
+                    <p class="font-bold text-stone-400 uppercase text-[0.68rem] tracking-wider mb-1" data-i18n-de="Rechnungsempfänger & Lieferadresse" data-i18n-en="Bill To & Shipping Address">Bill To & Shipping Address</p>
+                    <p class="font-bold text-stone-900 text-sm">{{ $order->customer_name }}</p>
+                    <p class="text-stone-700">{{ $order->shipping_address }}</p>
+                    <p class="text-stone-700">{{ $order->postal_code }} {{ $order->city }}, {{ $order->country }}</p>
+                    <p class="text-stone-500 pt-1">E-Mail: {{ $order->customer_email }}</p>
                     @if($order->customer_phone)
-                        <p class="text-slate-500">Tel: {{ $order->customer_phone }}</p>
+                        <p class="text-stone-500">Tel: {{ $order->customer_phone }}</p>
                     @endif
                 </div>
 
                 <!-- Bank Prepayment Information (Vorkasse) -->
-                <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-200 text-xs space-y-1">
-                    <p class="font-bold text-[#194AA2] uppercase text-[0.68rem] tracking-wider mb-1" data-i18n-de="Vorkasse Bankverbindung (MEHAAJ Atelier)" data-i18n-en="Prepayment Bank Details (MEHAAJ Atelier)">Vorkasse Bankverbindung (MEHAAJ Atelier)</p>
-                    <p><span class="text-slate-600">Empfänger:</span> <strong>MEHAAJ E-Commerce GmbH</strong></p>
-                    <p><span class="text-slate-600">Bank:</span> <strong>Commerzbank Berlin</strong></p>
-                    <p><span class="text-slate-600">IBAN:</span> <strong class="font-mono text-[#194AA2]">DE89 3704 0044 0532 0130 00</strong></p>
-                    <p><span class="text-slate-600">BIC:</span> <strong class="font-mono">COBADEFFXXX</strong></p>
-                    <p><span class="text-slate-600">Verwendungszweck:</span> <strong class="font-mono bg-amber-200 px-1 py-0.5 rounded text-slate-900">{{ $order->order_number }}</strong></p>
+                <div class="bg-saltora-blush-light p-4 rounded-xl border border-saltora-terracotta/20 text-xs space-y-1">
+                    <p class="font-bold text-saltora-terracotta uppercase text-[0.68rem] tracking-wider mb-1" data-i18n-de="Vorkasse Bankverbindung (MEHAAJ Atelier)" data-i18n-en="Bank Transfer Details (MEHAAJ Atelier)">Bank Transfer Details (MEHAAJ Atelier)</p>
+                    <p><span class="text-stone-600" data-i18n-de="Empfänger:" data-i18n-en="Beneficiary:">Beneficiary:</span> <strong>MEHAAJ E-Commerce GmbH</strong></p>
+                    <p><span class="text-stone-600" data-i18n-de="Bank:" data-i18n-en="Bank:">Bank:</span> <strong>Commerzbank Berlin</strong></p>
+                    <p><span class="text-stone-600">IBAN:</span> <strong class="font-mono text-saltora-terracotta">DE89 3704 0044 0532 0130 00</strong></p>
+                    <p><span class="text-stone-600">BIC:</span> <strong class="font-mono">COBADEFFXXX</strong></p>
+                    <p><span class="text-stone-600" data-i18n-de="Verwendungszweck:" data-i18n-en="Reference:">Reference:</span> <strong class="font-mono bg-amber-100 text-amber-900 px-1 py-0.5 rounded">{{ $order->order_number }}</strong></p>
                 </div>
             </div>
 
             <!-- Items Table -->
-            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <div class="overflow-x-auto border border-stone-200 rounded-xl">
                 <table class="w-full text-left text-xs">
-                    <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                    <thead class="bg-stone-50 text-stone-700 font-bold border-b border-stone-200">
                         <tr>
-                            <th class="p-3">Position / Artikel</th>
-                            <th class="p-3 text-right">Einzelpreis (€)</th>
-                            <th class="p-3 text-center">Menge</th>
-                            <th class="p-3 text-right">Gesamt (€)</th>
+                            <th class="p-3" data-i18n-de="Position / Artikel" data-i18n-en="Item / Product">Item / Product</th>
+                            <th class="p-3 text-right" data-i18n-de="Einzelpreis (€)" data-i18n-en="Unit Price (€)">Unit Price (€)</th>
+                            <th class="p-3 text-center" data-i18n-de="Menge" data-i18n-en="Qty">Qty</th>
+                            <th class="p-3 text-right" data-i18n-de="Gesamt (€)" data-i18n-en="Subtotal (€)">Subtotal (€)</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-stone-100">
                         @foreach($order->items as $item)
                             <tr>
                                 <td class="p-3">
-                                    <p class="font-bold text-slate-900">{{ $item->product_name }}</p>
+                                    <p class="font-bold text-stone-900">{{ $item->product_name }}</p>
                                     @if($item->product && $item->product->sku)
-                                        <p class="text-[0.68rem] text-slate-400 font-mono">SKU: {{ $item->product->sku }}</p>
+                                        <p class="text-[0.68rem] text-stone-400 font-mono">SKU: {{ $item->product->sku }}</p>
                                     @endif
                                 </td>
-                                <td class="p-3 text-right font-medium">€{{ number_format($item->unit_price, 2, ',', '.') }}</td>
+                                <td class="p-3 text-right font-medium">€{{ number_format($item->unit_price, 2) }}</td>
                                 <td class="p-3 text-center font-bold">{{ $item->quantity }}</td>
-                                <td class="p-3 text-right font-bold text-slate-900">€{{ number_format($item->subtotal, 2, ',', '.') }}</td>
+                                <td class="p-3 text-right font-bold text-stone-900">€{{ number_format($item->subtotal, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
 
-            <!-- Invoice Totals Calculation (German 19% MwSt.) -->
+            <!-- Invoice Totals Calculation -->
             @php
                 $netAmount = $order->total_amount / 1.19;
                 $vatAmount = $order->total_amount - $netAmount;
             @endphp
             <div class="flex justify-end pt-2">
-                <div class="w-full sm:w-72 bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-xs">
-                    <div class="flex justify-between text-slate-600">
-                        <span data-i18n-de="Nettobetrag:" data-i18n-en="Net Amount:">Nettobetrag:</span>
-                        <span>€{{ number_format($netAmount, 2, ',', '.') }}</span>
+                <div class="w-full sm:w-72 bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-2 text-xs">
+                    <div class="flex justify-between text-stone-600">
+                        <span data-i18n-de="Nettobetrag:" data-i18n-en="Net Amount:">Net Amount:</span>
+                        <span>€{{ number_format($netAmount, 2) }}</span>
                     </div>
-                    <div class="flex justify-between text-slate-600">
-                        <span data-i18n-de="Inkl. 19% MwSt.:" data-i18n-en="Incl. 19% VAT:">Inkl. 19% MwSt.:</span>
-                        <span>€{{ number_format($vatAmount, 2, ',', '.') }}</span>
+                    <div class="flex justify-between text-stone-600">
+                        <span data-i18n-de="Inkl. 19% MwSt.:" data-i18n-en="Incl. 19% VAT:">Incl. 19% VAT:</span>
+                        <span>€{{ number_format($vatAmount, 2) }}</span>
                     </div>
-                    <div class="flex justify-between text-slate-600">
-                        <span data-i18n-de="Versandkosten:" data-i18n-en="Shipping Cost:">Versandkosten:</span>
-                        <span class="text-emerald-700 font-bold" data-i18n-de="Kostenfrei" data-i18n-en="Free">Kostenfrei</span>
+                    <div class="flex justify-between text-stone-600">
+                        <span data-i18n-de="Versandkosten:" data-i18n-en="Shipping Cost:">Shipping Cost:</span>
+                        <span class="text-emerald-700 font-bold" data-i18n-de="Kostenfrei" data-i18n-en="Free">Free</span>
                     </div>
-                    <div class="border-t border-slate-300 pt-2 flex justify-between text-sm font-extrabold text-slate-900">
-                        <span data-i18n-de="Gesamtbetrag (€):" data-i18n-en="Total Amount (€):">Gesamtbetrag (€):</span>
-                        <span class="text-[#194AA2]">€{{ number_format($order->total_amount, 2, ',', '.') }}</span>
+                    <div class="border-t border-stone-300 pt-2 flex justify-between text-sm font-extrabold text-stone-900">
+                        <span data-i18n-de="Gesamtbetrag (€):" data-i18n-en="Total Amount (€):">Total Amount (€):</span>
+                        <span class="text-saltora-terracotta">€{{ number_format($order->total_amount, 2) }}</span>
                     </div>
                 </div>
             </div>
 
-            <!-- German Legal Footer -->
-            <div class="border-t border-slate-200 pt-6 text-[0.68rem] text-slate-500 leading-relaxed text-center sm:text-left space-y-1">
-                <p>Vielen Dank für Ihren Einkauf bei MEHAAJ Luxury Atelier. Bei Fragen wenden Sie sich gerne an service@mehaaj.de.</p>
-                <p>Es gelten unsere Allgemeinen Geschäftsbedingungen (AGB). Erfüllungsort und Gerichtsstand ist Berlin.</p>
+            <!-- Footer -->
+            <div class="border-t border-stone-200 pt-6 text-[0.68rem] text-stone-500 leading-relaxed text-center sm:text-left space-y-1">
+                <p data-i18n-de="Vielen Dank für Ihren Einkauf bei MEHAAJ Luxury Atelier. Bei Fragen wenden Sie sich gerne an service@mehaaj.de." data-i18n-en="Thank you for shopping at MEHAAJ Luxury Atelier. For questions contact service@mehaaj.de.">Thank you for shopping at MEHAAJ Luxury Atelier. For questions contact service@mehaaj.de.</p>
+                <p data-i18n-de="Es gelten unsere Allgemeinen Geschäftsbedingungen (AGB). Erfüllungsort und Gerichtsstand ist Berlin." data-i18n-en="Our Terms and Conditions apply. Place of performance and jurisdiction is Berlin.">Our Terms and Conditions apply. Place of performance and jurisdiction is Berlin.</p>
             </div>
 
         </div>
@@ -193,7 +195,7 @@
 <style>
     @media print {
         body { background-color: #ffffff !important; }
-        header, aside, footer, .card-navy-header button, .card-navy-header a, .p-6.bg-slate-50 { display: none !important; }
+        header, aside, footer, button, a, .border-b.border-stone-200.bg-stone-50\/60 { display: none !important; }
         .flex-1 { margin-left: 0 !important; padding: 0 !important; }
         #printable-invoice { padding: 0 !important; border: none !important; }
     }

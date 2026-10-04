@@ -60,7 +60,7 @@ class ContactMessageController extends Controller
 
         $message->update($validated);
 
-        return redirect()->back()->with('success', 'Nachrichtenstatus erfolgreich aktualisiert! ✓');
+        return redirect()->back()->with('success', __('admin.message_status_updated'));
     }
 
     /**
@@ -70,6 +70,6 @@ class ContactMessageController extends Controller
     {
         $message->delete();
 
-        return redirect()->route('admin.messages')->with('success', 'Nachricht erfolgreich gelöscht! ✓');
+        return redirect()->route('admin.messages')->with('success', __('admin.message_deleted'));
     }
 }

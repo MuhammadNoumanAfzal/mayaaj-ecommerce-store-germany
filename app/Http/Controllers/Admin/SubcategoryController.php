@@ -67,7 +67,7 @@ class SubcategoryController extends Controller
 
         Subcategory::create($validated);
 
-        return redirect()->route('admin.subcategories')->with('success', 'Unterkategorie erfolgreich erstellt!');
+        return redirect()->route('admin.subcategories')->with('success', __('admin.subcategory_created'));
     }
 
     /**
@@ -105,7 +105,7 @@ class SubcategoryController extends Controller
 
         $subcategory->update($validated);
 
-        return redirect()->route('admin.subcategories')->with('success', 'Unterkategorie erfolgreich aktualisiert!');
+        return redirect()->route('admin.subcategories')->with('success', __('admin.subcategory_updated'));
     }
 
     /**
@@ -119,6 +119,6 @@ class SubcategoryController extends Controller
 
         $subcategory->delete();
 
-        return redirect()->route('admin.subcategories')->with('success', 'Unterkategorie erfolgreich gelöscht!');
+        return redirect()->route('admin.subcategories')->with('success', __('admin.subcategory_deleted'));
     }
 }

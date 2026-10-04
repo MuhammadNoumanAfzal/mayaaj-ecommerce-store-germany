@@ -88,6 +88,20 @@ Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checko
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->name('admin.')->group(function () {
+    // Language Switcher Route
+    Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\Http\Request $request) {
+        if (!in_array($locale, ['en', 'de'])) {
+            $locale = 'en';
+        }
+        session(['locale' => $locale]);
+        cookie()->queue(cookie()->make('mehaaj_admin_lang', $locale, 60 * 24 * 365));
+        cookie()->queue(cookie()->make('locale', $locale, 60 * 24 * 365));
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json(['success' => true, 'locale' => $locale]);
+        }
+        return redirect()->back();
+    })->name('lang');
+
     // Guest Admin Auth Routes
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');

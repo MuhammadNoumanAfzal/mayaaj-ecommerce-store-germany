@@ -39,11 +39,26 @@ class AdminAuthController extends Controller
                 'admin_name' => 'MEHAAJ Admin',
             ]);
 
-            return redirect()->route('admin.dashboard')->with('success', 'Willkommen im MEHAAJ VIP Admin Portal 👑');
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => __('admin.welcome_back'),
+                    'redirect' => route('admin.dashboard')
+                ]);
+            }
+
+            return redirect()->route('admin.dashboard')->with('success', __('admin.welcome_back'));
+        }
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'message' => __('admin.invalid_credentials')
+            ], 422);
         }
 
         return back()->withInput($request->only('email'))->withErrors([
-            'email' => 'Ungültige Anmeldedaten. Bitte überprüfen Sie E-Mail und Passwort.',
+            'email' => __('admin.invalid_credentials'),
         ]);
     }
 
@@ -55,6 +70,14 @@ class AdminAuthController extends Controller
         $request->session()->forget(['admin_logged_in', 'admin_email', 'admin_name']);
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.login')->with('info', 'Sie wurden erfolgreich abgemeldet.');
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => __('admin.logged_out_msg'),
+                'redirect' => route('admin.login')
+            ]);
+        }
+
+        return redirect()->route('admin.login')->with('info', __('admin.logged_out_msg'));
     }
 }

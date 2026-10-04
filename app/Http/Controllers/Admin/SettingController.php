@@ -53,6 +53,6 @@ class SettingController extends Controller
             StoreSetting::setByKey($key, $value);
         }
 
-        return redirect()->route('admin.settings')->with('success', 'Store Einstellungen erfolgreich gespeichert! ✓');
+        return redirect()->route('admin.settings')->with('success', __('admin.settings_updated'));
     }
 }
