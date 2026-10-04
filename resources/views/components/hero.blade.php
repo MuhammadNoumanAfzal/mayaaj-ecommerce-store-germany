@@ -43,15 +43,16 @@
 
     @foreach ($slides as $index => $slide)
         <article
-            class="{{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }} absolute inset-0 h-full w-full transition-opacity duration-700 ease-out"
+            class="{{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }} absolute inset-0 h-full w-full transition-opacity duration-1000 ease-out"
             data-hero-slide
             aria-hidden="{{ $index === 0 ? 'false' : 'true' }}"
         >
             <img
                 src="{{ $slide['image'] }}"
                 alt="{{ $slide['alt'] }}"
-                class="absolute inset-0 h-full w-full object-cover"
+                class="hero-slide-img absolute inset-0 h-full w-full object-cover transition-transform duration-[7000ms] ease-out scale-100"
                 style="object-position: {{ $slide['position'] }};"
+                {{ $index === 0 ? 'fetchpriority=high' : 'loading=lazy' }}
             >
             <!-- Soft atelier atmosphere overlay: readable typography while keeping ambient atelier light -->
             <div class="absolute inset-0 bg-gradient-to-r from-[#140b09]/85 via-[#140b09]/45 to-transparent"></div>
@@ -59,14 +60,14 @@
 
             <div class="luxury-container relative flex h-full w-full items-center py-16 sm:py-20 lg:py-24 min-h-[calc(100vh-80px)]">
                 <div class="max-w-3xl">
-                    <p class="mb-4 text-[0.68rem] font-bold uppercase tracking-luxury text-[#f2cf75]" data-i18n-de="{{ $slide['eyebrow_de'] }}" data-i18n-en="{{ $slide['eyebrow_en'] }}">{{ $slide['eyebrow_en'] }}</p>
-                    <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium leading-[0.95] text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.85)]" data-i18n-de="{{ $slide['title_de'] }}" data-i18n-en="{{ $slide['title_en'] }}">
+                    <p class="hero-anim hero-anim-eyebrow mb-4 text-[0.68rem] font-bold uppercase tracking-luxury text-[#f2cf75]" data-i18n-de="{{ $slide['eyebrow_de'] }}" data-i18n-en="{{ $slide['eyebrow_en'] }}">{{ $slide['eyebrow_en'] }}</p>
+                    <h1 class="hero-anim hero-anim-title font-display text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium leading-[0.95] text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.85)]" data-i18n-de="{{ $slide['title_de'] }}" data-i18n-en="{{ $slide['title_en'] }}">
                         {{ $slide['title_en'] }}
                     </h1>
-                    <p class="mt-5 max-w-2xl text-sm sm:text-base lg:text-lg font-bold leading-relaxed text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]" data-i18n-de="{{ $slide['text_de'] }}" data-i18n-en="{{ $slide['text_en'] }}">
+                    <p class="hero-anim hero-anim-desc mt-5 max-w-2xl text-sm sm:text-base lg:text-lg font-bold leading-relaxed text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]" data-i18n-de="{{ $slide['text_de'] }}" data-i18n-en="{{ $slide['text_en'] }}">
                         {{ $slide['text_en'] }}
                     </p>
-                    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <div class="hero-anim hero-anim-cta mt-8 flex flex-col gap-3 sm:flex-row">
                         <a href="/shop" class="button-primary cursor-pointer shadow-[0_16px_36px_rgba(120,0,11,0.36)]" data-i18n-de="Jetzt einkaufen" data-i18n-en="Shop now">Shop now</a>
                         <a href="/ueber-uns" class="button-secondary cursor-pointer border-white/80 bg-[#120605]/28 text-white hover:border-[#d8b45a] hover:bg-[#d8b45a] hover:text-[#120807]" data-i18n-de="Manufaktur ansehen" data-i18n-en="View Atelier">View Atelier</a>
                     </div>

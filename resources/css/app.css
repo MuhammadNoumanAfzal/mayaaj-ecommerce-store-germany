@@ -20,6 +20,11 @@
         position: relative;
     }
 
+    /* Universal Cursor Pointer for all interactive elements */
+    button, [role="button"], a, input[type="submit"], input[type="button"], label[for], select, summary, .cursor-pointer {
+        cursor: pointer;
+    }
+
     ::selection {
         @apply bg-burgundy text-ivory;
     }
@@ -28,6 +33,69 @@
 @layer components {
     .luxury-container {
         @apply mx-auto w-full max-w-[1480px] px-4 sm:px-7 lg:px-10 xl:px-12;
+    }
+
+    /* Ultra-Smooth Luxury Scroll Reveal Animation (Slow & Majestic) */
+    .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    .reveal-on-scroll.is-revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .reveal-delay-100 { transition-delay: 150ms; }
+    .reveal-delay-200 { transition-delay: 300ms; }
+    .reveal-delay-300 { transition-delay: 450ms; }
+    .reveal-delay-400 { transition-delay: 600ms; }
+    .reveal-delay-500 { transition-delay: 750ms; }
+
+    /* Hero Text Slow & Smooth Cinematic Animations */
+    @keyframes heroTextGlideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(34px);
+            filter: blur(4px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+
+    [data-hero-slide].opacity-100 .hero-anim-eyebrow {
+        animation: heroTextGlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    [data-hero-slide].opacity-100 .hero-anim-title {
+        animation: heroTextGlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+    }
+
+    [data-hero-slide].opacity-100 .hero-anim-desc {
+        animation: heroTextGlideUp 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+    }
+
+    [data-hero-slide].opacity-100 .hero-anim-cta {
+        animation: heroTextGlideUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
+    }
+
+    [data-hero-slide].opacity-100 .hero-slide-img {
+        transform: scale(1.05);
+    }
+
+    /* Luxury Interactive Card Hover */
+    .luxury-card-interactive {
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+        will-change: transform, box-shadow;
+    }
+    .luxury-card-interactive:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 45px -10px rgba(120, 0, 11, 0.16), 0 0 25px rgba(216, 180, 90, 0.12);
     }
 
     .icon-button {

@@ -31,7 +31,7 @@
 
     <div class="luxury-container relative z-10">
         <!-- Compact Light Section Header -->
-        <div class="flex flex-col gap-3 border-b border-[#e5dec9] pb-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-3 border-b border-[#e5dec9] pb-4 sm:flex-row sm:items-end sm:justify-between reveal-on-scroll">
             <div>
                 <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3 py-0.5 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
                     <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
@@ -48,7 +48,7 @@
 
         @if($categoriesList->count() > 0)
             <!-- Carousel Wrapper with Flanking Left & Right Nav Buttons -->
-            <div class="relative mt-6 flex items-center gap-2 sm:gap-3">
+            <div class="relative mt-6 flex items-center gap-2 sm:gap-3 reveal-on-scroll reveal-delay-200">
                 
                 @if($hasSlider)
                     <!-- Left Arrow Button (Left side of start of category slider) -->

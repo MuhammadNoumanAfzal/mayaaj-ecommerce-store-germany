@@ -57,7 +57,7 @@
 
     <div class="luxury-container relative z-10">
         <!-- Light Section Header -->
-        <div class="flex flex-col gap-4 border-b border-[#e6decb] pb-6 md:flex-row md:items-end md:justify-between">
+        <div class="flex flex-col gap-4 border-b border-[#e6decb] pb-6 md:flex-row md:items-end md:justify-between reveal-on-scroll">
             <div>
                 <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
                     <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
@@ -74,7 +74,7 @@
 
         <!-- Dynamic Light Product Cards Grid -->
         @if(isset($globalFeaturedProducts) && $globalFeaturedProducts->count() > 0)
-            <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 reveal-on-scroll reveal-delay-200">
                 @foreach ($globalFeaturedProducts as $prod)
                     @php
                         $pName = $prod->name;

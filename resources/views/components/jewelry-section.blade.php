@@ -5,7 +5,7 @@
 
     <div class="luxury-container relative z-10">
         <!-- Header -->
-        <div class="flex flex-col gap-4 border-b border-[#d8b45a]/20 pb-6 md:flex-row md:items-end md:justify-between">
+        <div class="flex flex-col gap-4 border-b border-[#d8b45a]/20 pb-6 md:flex-row md:items-end md:justify-between reveal-on-scroll">
             <div>
                 <div class="inline-flex items-center gap-2 rounded-full border border-[#d8b45a]/40 bg-black/50 px-3.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-[#d8b45a] backdrop-blur-md">
                     <span class="h-1.5 w-1.5 rounded-full bg-[#d8b45a] animate-pulse"></span>
@@ -22,7 +22,7 @@
 
         <!-- Jewelry & Watch Cards Grid -->
         @if(isset($jewelryProducts) && $jewelryProducts->count() > 0)
-            <div class="mt-10 grid gap-8 md:grid-cols-3">
+            <div class="mt-10 grid gap-8 md:grid-cols-3 reveal-on-scroll reveal-delay-200">
                 @foreach($jewelryProducts as $prod)
                     @php
                         $prodPayload = htmlspecialchars(json_encode([

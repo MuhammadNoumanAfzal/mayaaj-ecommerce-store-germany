@@ -133,13 +133,24 @@
 <script>
     let rawCartTotal = 0;
     let isVoucherApplied = false;
+    let isFetchingCart = false;
+    let lastCartFetchTime = 0;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        fetchAndUpdateCartDrawer();
-    });
+    // Lazy non-blocking sync on idle, without delaying page load
+    if (typeof window !== 'undefined') {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(() => {
+                fetchAndUpdateCartDrawer(false);
+            }, { timeout: 3000 });
+        } else {
+            setTimeout(() => {
+                fetchAndUpdateCartDrawer(false);
+            }, 1500);
+        }
+    }
 
     function openCartDrawer() {
-        fetchAndUpdateCartDrawer();
+        fetchAndUpdateCartDrawer(true);
         const backdrop = document.getElementById('cart-drawer-backdrop');
         const panel = document.getElementById('cart-drawer-panel');
         backdrop.classList.remove('pointer-events-none', 'opacity-0');
@@ -155,18 +166,31 @@
         panel.classList.add('translate-x-full', 'invisible', 'pointer-events-none');
     }
 
-    function fetchAndUpdateCartDrawer() {
+    function fetchAndUpdateCartDrawer(force = false) {
+        const now = Date.now();
+        // Prevent duplicate simultaneous requests or spamming within 800ms unless forced
+        if (isFetchingCart || (!force && (now - lastCartFetchTime < 800))) {
+            return;
+        }
+
+        isFetchingCart = true;
         fetch('/cart/data', {
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         })
         .then(res => res.json())
         .then(data => {
+            isFetchingCart = false;
+            lastCartFetchTime = Date.now();
             if (!data.success) return;
             renderCartDrawerContent(data);
         })
-        .catch(err => console.error('Cart drawer fetch error:', err));
+        .catch(err => {
+            isFetchingCart = false;
+            console.error('Cart drawer fetch error:', err);
+        });
     }
 
     function renderCartDrawerContent(data) {

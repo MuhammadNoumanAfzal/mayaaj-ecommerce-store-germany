@@ -6,7 +6,7 @@
         <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
             
             <!-- Left Column: Overlapping Dual Image Composition -->
-            <div class="lg:col-span-6 relative">
+            <div class="lg:col-span-6 relative reveal-on-scroll">
                 <div class="group relative overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-700 hover:shadow-[0_24px_60px_rgba(120,0,11,0.15)]">
                     <div class="relative h-[380px] sm:h-[460px] overflow-hidden bg-[#1c1210]">
                         <img
@@ -47,7 +47,7 @@
             </div>
 
             <!-- Right Column: Storytelling & Value Pillars -->
-            <div class="lg:col-span-6 lg:pl-6">
+            <div class="lg:col-span-6 lg:pl-6 reveal-on-scroll reveal-delay-200">
                 <!-- Eyebrow -->
                 <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
                     <span class="h-1.5 w-1.5 rounded-full bg-[#78000b] animate-pulse"></span>

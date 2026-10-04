@@ -40,7 +40,7 @@
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(216,180,90,0.08),transparent_70%)]"></div>
 
     <div class="luxury-container relative z-10">
-        <div class="mx-auto max-w-2xl text-center">
+        <div class="mx-auto max-w-2xl text-center reveal-on-scroll">
             <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
                 <span class="h-1.5 w-1.5 rounded-full bg-[#78000b] animate-pulse"></span>
                 <span data-i18n-de="SERVICE VERSPRECHEN" data-i18n-en="SERVICE PROMISE">SERVICE PROMISE</span>
@@ -54,7 +54,7 @@
         </div>
 
         <!-- 4 Trust Feature Cards Grid -->
-        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 reveal-on-scroll reveal-delay-200">
             @foreach ($benefits as $benefit)
                 <article class="group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[#78000b]/40 hover:shadow-[0_16px_45px_rgba(120,0,11,0.12)]">
                     

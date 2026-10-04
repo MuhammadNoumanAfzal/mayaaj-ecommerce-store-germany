@@ -3,10 +3,75 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="MEHAAJ - Timeless Luxury & Haute Craftsmanship.">
-
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>@yield('title', 'MEHAAJ - Luxury & Haute Horlogerie')</title>
+
+        <!-- Primary SEO Meta Tags -->
+        <title>@yield('title', 'MEHAAJ® Official Maison | Luxury Fashion, Leather Craft & Haute Horlogerie')</title>
+        <meta name="description" content="@yield('meta_description', 'MEHAAJ® Official Maison - Timeless Luxury, Master-Crafted Leather Goods & Fine Timepieces. Handcrafted in Europe with premium materials.')">
+        <meta name="keywords" content="@yield('meta_keywords', 'luxury fashion, leather bags, handcrafted jewelry, swiss chronographs, designer accessories, Mehaaj maison, european luxury')">
+        <meta name="author" content="MEHAAJ Official Maison">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <link rel="canonical" href="@yield('canonical', url()->current())">
+
+        <!-- Open Graph / Facebook / WhatsApp -->
+        <meta property="og:type" content="@yield('og_type', 'website')">
+        <meta property="og:site_name" content="MEHAAJ® Official Maison">
+        <meta property="og:title" content="@yield('title', 'MEHAAJ® Official Maison | Luxury Fashion, Leather Craft & Haute Horlogerie')">
+        <meta property="og:description" content="@yield('meta_description', 'Discover MEHAAJ: Haute Maroquinerie, genuine Italian leather bags, Swiss-inspired precision chronographs, and curated European fashion.')">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:image" content="@yield('og_image', asset('hero_luxury.png'))">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:locale:alternate" content="de_DE">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="@yield('title', 'MEHAAJ® Official Maison | Luxury Fashion, Leather Craft & Haute Horlogerie')">
+        <meta name="twitter:description" content="@yield('meta_description', 'Discover MEHAAJ: Haute Maroquinerie, genuine Italian leather bags, Swiss-inspired precision chronographs, and curated European fashion.')">
+        <meta name="twitter:image" content="@yield('og_image', asset('hero_luxury.png'))">
+
+        <!-- JSON-LD Structured Data (Schema.org) -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Organization",
+                    "@id": "{{ url('/') }}#organization",
+                    "name": "MEHAAJ",
+                    "url": "{{ url('/') }}",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "{{ asset('logo.png') }}"
+                    }
+                },
+                {
+                    "@type": "WebSite",
+                    "@id": "{{ url('/') }}#website",
+                    "url": "{{ url('/') }}",
+                    "name": "MEHAAJ Official Maison",
+                    "publisher": {
+                        "@id": "{{ url('/') }}#organization"
+                    },
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "{{ url('/shop') }}?search={search_term_string}",
+                        "query-input": "required name=search_term_string"
+                    }
+                },
+                {
+                    "@type": "WebPage",
+                    "@id": "{{ url()->current() }}#webpage",
+                    "url": "{{ url()->current() }}",
+                    "name": "@yield('title', 'MEHAAJ® Official Maison | Luxury Fashion, Leather Craft & Haute Horlogerie')",
+                    "isPartOf": {
+                        "@id": "{{ url('/') }}#website"
+                    },
+                    "description": "@yield('meta_description', 'Discover MEHAAJ: Haute Maroquinerie, genuine Italian leather bags, Swiss-inspired precision chronographs, and curated European fashion.')",
+                    "inLanguage": "en"
+                }
+            ]
+        }
+        </script>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600|inter:400,500,600&display=swap" rel="stylesheet" />

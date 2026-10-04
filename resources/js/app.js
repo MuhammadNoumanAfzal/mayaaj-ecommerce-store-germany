@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.setLanguage(window.getCurrentLang());
 });
 
-// Hero Slider
+// Hero Slider with Smooth Editorial Text Animations
 const slider = document.querySelector('[data-hero-slider]');
 
 if (slider) {
@@ -78,6 +78,16 @@ if (slider) {
     const next = slider.querySelector('[data-hero-next]');
     let activeIndex = 0;
     let timer;
+
+    const triggerHeroTextAnimations = (slide) => {
+        const animElements = slide.querySelectorAll('.hero-anim');
+        animElements.forEach((el) => {
+            el.style.animation = 'none';
+            // Force browser reflow to restart CSS keyframe animation smoothly
+            void el.offsetHeight;
+            el.style.animation = '';
+        });
+    };
 
     const showSlide = (index) => {
         activeIndex = (index + slides.length) % slides.length;
@@ -88,12 +98,16 @@ if (slider) {
             slide.classList.toggle('opacity-0', !isActive);
             slide.classList.toggle('pointer-events-none', !isActive);
             slide.setAttribute('aria-hidden', String(!isActive));
+
+            if (isActive) {
+                triggerHeroTextAnimations(slide);
+            }
         });
     };
 
     const startTimer = () => {
         clearInterval(timer);
-        timer = setInterval(() => showSlide(activeIndex + 1), 5200);
+        timer = setInterval(() => showSlide(activeIndex + 1), 6000);
     };
 
     previous?.addEventListener('click', () => {
@@ -106,18 +120,46 @@ if (slider) {
         startTimer();
     });
 
+    // Trigger animation immediately on first slide
+    if (slides[0]) {
+        triggerHeroTextAnimations(slides[0]);
+    }
+
     startTimer();
 }
 
-// Scrolled Navbar Shadow Enhancer (Navbar remains solid Maison Noir)
+// Scrolled Navbar Shadow Enhancer
 const siteHeader = document.querySelector('[data-site-header]');
 if (siteHeader) {
     const handleScroll = () => {
         if (window.scrollY > 20) {
-            siteHeader.classList.add('shadow-[0_12px_40px_rgba(0,0,0,0.85)]');
+            siteHeader.classList.add('shadow-[0_4px_25px_rgba(0,0,0,0.22)]');
         } else {
-            siteHeader.classList.remove('shadow-[0_12px_40px_rgba(0,0,0,0.85)]');
+            siteHeader.classList.remove('shadow-[0_4px_25px_rgba(0,0,0,0.22)]');
         }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 }
+
+// Slow & Smooth Luxury Scroll-Reveal Animation Engine
+document.addEventListener('DOMContentLoaded', () => {
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    if ('IntersectionObserver' in window && revealElements.length > 0) {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                // Triggers gracefully when user scrolls over the section
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -60px 0px'
+        });
+
+        revealElements.forEach((el) => observer.observe(el));
+    } else {
+        revealElements.forEach((el) => el.classList.add('is-revealed'));
+    }
+});

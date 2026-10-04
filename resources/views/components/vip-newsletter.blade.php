@@ -10,7 +10,7 @@
 
             <div class="relative z-10 grid gap-10 lg:grid-cols-12 lg:items-center">
                 <!-- Text Content -->
-                <div class="lg:col-span-7">
+                <div class="lg:col-span-7 reveal-on-scroll">
                     <div class="inline-flex items-center gap-2 rounded-full border border-[#d8b45a]/35 bg-[#d8b45a]/10 px-3.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.22em] text-[#d8b45a] backdrop-blur-md">
                         <span class="text-[#d8b45a]">◆</span>
                         <span data-i18n-de="MEHAAJ VIP CLUB" data-i18n-en="MEHAAJ VIP CLUB">MEHAAJ VIP CLUB</span>
@@ -33,7 +33,7 @@
                 </div>
 
                 <!-- Glass Subscribe Form -->
-                <div class="lg:col-span-5">
+                <div class="lg:col-span-5 reveal-on-scroll reveal-delay-200">
                     <form class="relative rounded-md border border-[#d8b45a]/25 bg-black/40 p-5 shadow-2xl backdrop-blur-md" action="#" method="post" onsubmit="handleVipNewsletterSubmit(event)">
                         <p class="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#d8b45a]" data-i18n-en="BECOME A MEMBER NOW" data-i18n-de="JETZT MITGLIED WERDEN">BECOME A MEMBER NOW</p>
                         
