@@ -67,11 +67,15 @@ class ShopController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
 
-        $dbMinPrice = (int) floor(Product::where('status', 'active')->min('price') ?? 0);
-        $dbMaxPrice = (int) ceil(Product::where('status', 'active')->max('price') ?? 1000);
-        if ($dbMaxPrice <= 0) {
-            $dbMaxPrice = 1000;
-        }
+        [$dbMinPrice, $dbMaxPrice] = \Illuminate\Support\Facades\Cache::remember('mehaaj_shop_price_bounds', 300, function () {
+            $bounds = Product::where('status', 'active')
+                ->selectRaw('MIN(price) as min_p, MAX(price) as max_p')
+                ->first();
+
+            $min = (int) floor($bounds->min_p ?? 0);
+            $max = (int) ceil($bounds->max_p ?? 1000);
+            return [$min, $max > 0 ? $max : 1000];
+        });
 
         return view('pages.shop', compact('products', 'dbMinPrice', 'dbMaxPrice'));
     }

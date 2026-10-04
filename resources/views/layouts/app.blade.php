@@ -78,18 +78,20 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <style>
-            html, body {
-                overflow-x: hidden !important;
-                max-width: 100vw !important;
-                width: 100% !important;
+            html {
+                overflow-x: clip;
+            }
+            body {
+                overflow-x: clip;
+                width: 100%;
                 position: relative;
             }
         </style>
     </head>
-    <body class="overflow-x-hidden w-full max-w-[100vw] bg-[#faf7f2] text-[#1c1210] antialiased selection:bg-[#78000b] selection:text-white">
+    <body class="w-full bg-[#faf7f2] text-[#1c1210] antialiased selection:bg-[#78000b] selection:text-white">
         <x-navbar />
 
-        <main class="overflow-x-hidden w-full max-w-[100vw]">
+        <main class="w-full">
             @yield('content')
         </main>
 

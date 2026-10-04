@@ -1,92 +1,117 @@
 @extends('layouts.app')
-@section('title', 'Kollektion & Shop - MEHAAJ Luxury Leather')
+@section('title', 'Kollektion & Shop | MEHAAJ® Official Luxury Atelier')
+@section('meta_description', 'Entdecken Sie die vollständige MEHAAJ Meisterkollektion: Handgefertigte Luxus-Ledertaschen, italienisches Vollleder, Schweizer Chronographen und exklusive Accessoires.')
+@section('canonical', route('shop'))
 
 @section('content')
-<div class="pt-20 bg-[#faf7f2] min-h-screen">
+<div class="bg-[#faf7f2] min-h-screen text-[#1c1210]">
 
-    <!-- Breadcrumb Navigation -->
-    <nav class="bg-[#faf7f2] border-b border-[#e6decb] py-3 text-xs text-[#685c54]">
-        <div class="luxury-container flex items-center gap-2 overflow-x-auto whitespace-nowrap">
-            <a href="/" class="hover:text-[#78000b] transition" data-i18n-de="Startseite" data-i18n-en="Home">Startseite</a>
-            <span>/</span>
-            <span class="text-[#1c1210] font-medium" data-i18n-de="Kollektion" data-i18n-en="Collection">Kollektion</span>
-        </div>
-    </nav>
+    <!-- Sleek Unified Top Header Bar (No dead vertical space) -->
+    <div class="border-b border-[#e6decb] bg-white py-2.5 sm:py-3 shadow-xs">
+        <div class="luxury-container flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex items-center gap-2.5">
+                <nav class="flex items-center gap-1.5 text-[0.7rem] text-[#8a7c74]" aria-label="Breadcrumb">
+                    <a href="/" class="hover:text-[#78000b] transition cursor-pointer" data-i18n-de="Startseite" data-i18n-en="Home">Startseite</a>
+                    <span class="text-[#c7baa7]">/</span>
+                    <span class="text-[#1c1210] font-medium" data-i18n-de="Kollektion" data-i18n-en="Collection">Kollektion</span>
+                    @if(request('category'))
+                        <span class="text-[#c7baa7]">/</span>
+                        @php
+                            $activeCat = ($globalCategories ?? collect())->firstWhere('slug', is_array(request('category')) ? request('category')[0] : request('category'));
+                        @endphp
+                        <span class="text-[#78000b] font-semibold">{{ $activeCat->name ?? (is_array(request('category')) ? implode(', ', request('category')) : request('category')) }}</span>
+                    @endif
+                </nav>
+                <span class="text-[#d8b45a] hidden sm:inline">•</span>
+                <h1 class="font-display text-base sm:text-lg font-medium text-[#1c1210] hidden sm:inline" data-i18n-de="Meisterkollektion" data-i18n-en="Master Collection">
+                    Meisterkollektion
+                </h1>
+            </div>
 
-    <!-- Header Collection Banner -->
-    <section class="relative overflow-hidden bg-white py-10 lg:py-14 border-b border-[#e6decb]">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(216,180,90,0.08),transparent_70%)]"></div>
-        <div class="luxury-container relative z-10">
-            <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                <div>
-                    <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
-                        <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
-                        <span data-i18n-de="DIE MESTERKOLLEKTION" data-i18n-en="THE MASTER COLLECTION">DIE MEISTERKOLLEKTION</span>
-                    </div>
-                    <h1 class="mt-3 font-display text-3xl font-medium leading-tight text-[#1c1210] sm:text-4xl lg:text-5xl" data-i18n-de="Alle Produkte" data-i18n-en="All Products">
-                        Alle Produkte
-                    </h1>
-                </div>
-                <p class="max-w-md text-xs leading-relaxed text-[#685c54] sm:text-sm" data-i18n-de="Entdecken Sie unsere vollständige Selektion aus edelsten Vollleder-Kreationen, deutsches Design und zeitlose Meisterwerke." data-i18n-en="Discover our complete selection of finest full-grain leather creations, German design, and timeless masterpieces.">
-                    Entdecken Sie unsere vollständige Selektion aus edelsten Vollleder-Kreationen, deutsches Design und zeitlose Meisterwerke.
-                </p>
+            <!-- Category Pills: Clean horizontal scrolling with NO scrollbar, compact size -->
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 max-w-full">
+                <a
+                    href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']))) }}"
+                    class="shrink-0 rounded-full px-3 py-1 text-[0.68rem] font-semibold tracking-wide transition cursor-pointer {{ !request('category') ? 'bg-[#78000b] text-white shadow-xs' : 'bg-[#faf7f2] text-[#685c54] border border-[#e6decb] hover:border-[#78000b] hover:text-[#78000b]' }}"
+                >
+                    <span data-i18n-de="Alle" data-i18n-en="All">Alle</span>
+                </a>
+                @foreach($globalCategories ?? [] as $quickCat)
+                    @php
+                        $isActive = in_array($quickCat->slug, (array) request('category'));
+                    @endphp
+                    <a
+                        href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']), ['category' => $quickCat->slug])) }}"
+                        class="shrink-0 rounded-full px-3 py-1 text-[0.68rem] font-semibold tracking-wide transition cursor-pointer {{ $isActive ? 'bg-[#78000b] text-white shadow-xs' : 'bg-[#faf7f2] text-[#685c54] border border-[#e6decb] hover:border-[#d8b45a] hover:text-[#1c1210]' }}"
+                    >
+                        {{ $quickCat->name }}
+                    </a>
+                @endforeach
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Main Catalog & Filtering Layout -->
-    <section class="py-8 lg:py-12">
+    <!-- Main Catalog & Filtering Layout (Tightened spacing) -->
+    <section class="py-3 sm:py-4">
         <div class="luxury-container">
 
             <!-- Control Bar (Filter Toggle, Items Count, Sort, Grid/List Switch) -->
-            <div class="mb-8 flex flex-col gap-4 border-b border-[#e6decb] pb-5 md:flex-row md:items-center md:justify-between">
+            <div class="mb-4 flex flex-col gap-3 border-b border-[#e6decb] pb-3 md:flex-row md:items-center md:justify-between">
                 <div class="flex items-center gap-4">
                     <!-- Mobile Filter Toggle Button -->
                     <button
                         type="button"
                         onclick="toggleMobileFilter()"
-                        class="inline-flex items-center gap-2 rounded border border-[#e6decb] bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#1c1210] shadow-xs transition hover:border-[#78000b] hover:text-[#78000b] lg:hidden cursor-pointer"
+                        class="inline-flex items-center gap-2 rounded-md border border-[#e6decb] bg-white px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#1c1210] shadow-xs transition hover:border-[#78000b] hover:text-[#78000b] lg:hidden cursor-pointer"
+                        aria-label="Toggle filters"
                     >
-                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
                         </svg>
-                        <span data-i18n-de="FILTER" data-i18n-en="FILTER">FILTER</span>
+                        <span data-i18n-de="FILTER" data-i18n-en="FILTERS">FILTER</span>
+                        @if(request('category') || request('subcategory') || request('search') || request('max_price'))
+                            <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
+                        @endif
                     </button>
 
                     <p class="text-xs text-[#685c54]">
-                        <span id="product-count" class="font-bold text-[#1c1210]">{{ $products->total() ?? $products->count() }}</span> 
+                        <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span> 
                         <span data-i18n-de="Meisterwerke gefunden" data-i18n-en="Masterpieces found">Meisterwerke gefunden</span>
+                        @if($products->lastPage() > 1)
+                            <span class="text-[#8a7c74]">({{ $products->firstItem() }}–{{ $products->lastItem() }})</span>
+                        @endif
                     </p>
                 </div>
 
-                <div class="flex items-center justify-between gap-4 md:justify-end">
-                    <!-- Sort Dropdown -->
+                <div class="flex items-center justify-between gap-3 md:justify-end">
+                    <!-- Server-Side Sort Dropdown -->
                     <div class="flex items-center gap-2">
-                        <label for="sort-select" class="text-xs font-bold uppercase tracking-wider text-[#685c54] whitespace-nowrap" data-i18n-de="Sortieren:" data-i18n-en="Sort by:">
+                        <label for="sort-select" class="text-[0.7rem] font-bold uppercase tracking-wider text-[#685c54] whitespace-nowrap cursor-pointer" data-i18n-de="Sortieren:" data-i18n-en="Sort by:">
                             Sortieren:
                         </label>
                         <select
                             id="sort-select"
-                            onchange="sortProducts()"
-                            class="rounded border border-[#e6decb] bg-white px-3 py-2 text-xs font-medium text-[#1c1210] shadow-xs transition focus:border-[#78000b] focus:outline-none cursor-pointer"
+                            onchange="handleSortChange(this.value)"
+                            class="rounded border border-[#e6decb] bg-white px-2.5 py-1.5 text-xs font-medium text-[#1c1210] shadow-xs transition hover:border-[#d8b45a] focus:border-[#78000b] focus:outline-none cursor-pointer"
                         >
-                            <option value="featured" data-i18n-de="Beliebtheit" data-i18n-en="Featured">Beliebtheit</option>
-                            <option value="price-low" data-i18n-de="Preis: Aufsteigend" data-i18n-en="Price: Low to High">Preis: Aufsteigend</option>
-                            <option value="price-high" data-i18n-de="Preis: Absteigend" data-i18n-en="Price: High to Low">Preis: Absteigend</option>
-                            <option value="newest" data-i18n-de="Neuheiten" data-i18n-en="Newest Arrivals">Neuheiten</option>
+                            <option value="featured" {{ request('sort') == 'featured' ? 'selected' : '' }} data-i18n-de="Beliebtheit" data-i18n-en="Featured">Beliebtheit</option>
+                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }} data-i18n-de="Neuheiten" data-i18n-en="Newest Arrivals">Neuheiten</option>
+                            <option value="price-low" {{ request('sort') == 'price-low' ? 'selected' : '' }} data-i18n-de="Preis: Aufsteigend" data-i18n-en="Price: Low to High">Preis: Aufsteigend</option>
+                            <option value="price-high" {{ request('sort') == 'price-high' ? 'selected' : '' }} data-i18n-de="Preis: Absteigend" data-i18n-en="Price: High to Low">Preis: Absteigend</option>
                         </select>
                     </div>
 
                     <!-- Grid vs List View Switcher -->
-                    <div class="hidden sm:flex items-center rounded border border-[#e6decb] bg-white p-1 shadow-xs">
+                    <div class="hidden sm:flex items-center rounded border border-[#e6decb] bg-white p-0.5 shadow-xs">
                         <button
                             type="button"
                             id="grid-view-btn"
                             onclick="setViewMode('grid')"
-                            class="active-view p-1.5 rounded text-[#78000b] bg-[#78000b]/10 transition cursor-pointer"
+                            class="p-1.5 rounded text-[#78000b] bg-[#78000b]/10 transition cursor-pointer"
                             title="Grid View"
+                            aria-label="Grid View"
                         >
-                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="3" y="3" width="7" height="7"/>
                                 <rect x="14" y="3" width="7" height="7"/>
                                 <rect x="14" y="14" width="7" height="7"/>
@@ -99,8 +124,9 @@
                             onclick="setViewMode('list')"
                             class="p-1.5 rounded text-[#685c54] hover:text-[#78000b] transition cursor-pointer"
                             title="List View"
+                            aria-label="List View"
                         >
-                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <line x1="8" y1="6" x2="21" y2="6"/>
                                 <line x1="8" y1="12" x2="21" y2="12"/>
                                 <line x1="8" y1="18" x2="21" y2="18"/>
@@ -113,11 +139,48 @@
                 </div>
             </div>
 
-            <div class="grid gap-8 lg:grid-cols-12">
+            <!-- Active Filters Bar (if any filters applied) -->
+            @if(request('category') || request('subcategory') || request('search') || (request('max_price') && request('max_price') < $dbMaxPrice))
+                <div class="mb-4 flex flex-wrap items-center gap-2 rounded-md border border-[#e6decb] bg-white p-2.5 shadow-xs">
+                    <span class="text-[0.7rem] font-bold uppercase tracking-wider text-[#685c54]" data-i18n-de="Aktive Filter:" data-i18n-en="Active Filters:">Aktive Filter:</span>
+
+                    @if(request('search'))
+                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-2.5 py-0.5 text-xs text-[#78000b]">
+                            <span>Suche: "{{ request('search') }}"</span>
+                            <a href="{{ route('shop', array_merge(request()->except(['search', 'page']))) }}" class="font-bold hover:text-black cursor-pointer">×</a>
+                        </span>
+                    @endif
+
+                    @if(request('category'))
+                        @foreach((array) request('category') as $catSlug)
+                            @php
+                                $catObj = ($globalCategories ?? collect())->firstWhere('slug', $catSlug);
+                            @endphp
+                            <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
+                                <span>{{ $catObj->name ?? $catSlug }}</span>
+                                <a href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']))) }}" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
+                            </span>
+                        @endforeach
+                    @endif
+
+                    @if(request('max_price') && request('max_price') < $dbMaxPrice)
+                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
+                            <span>bis EUR {{ request('max_price') }}</span>
+                            <a href="{{ route('shop', array_merge(request()->except(['max_price', 'page']))) }}" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
+                        </span>
+                    @endif
+
+                    <a href="{{ route('shop') }}" class="ml-auto text-xs font-bold uppercase tracking-wider text-[#78000b] hover:underline cursor-pointer" data-i18n-de="ALLE LÖSCHEN" data-i18n-en="CLEAR ALL">
+                        ALLE LÖSCHEN
+                    </a>
+                </div>
+            @endif
+
+            <div class="grid gap-6 lg:grid-cols-12">
 
                 <!-- Sidebar Filters Column (3 cols) -->
-                <aside id="filter-sidebar" class="lg:col-span-3 hidden lg:block space-y-6">
-                    <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="rounded-md border border-[#e6decb] bg-white p-5 shadow-xs space-y-6">
+                <aside id="filter-sidebar" class="lg:col-span-3 hidden lg:block space-y-4">
+                    <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="sticky top-24 rounded-md border border-[#e6decb] bg-white p-4 shadow-xs space-y-5">
                         @if(request('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">
                         @endif
@@ -125,39 +188,39 @@
                             <input type="hidden" name="sort" value="{{ request('sort') }}">
                         @endif
 
-                        <div class="flex items-center justify-between border-b border-[#f2ebdc] pb-3">
-                            <h2 class="font-display text-lg font-medium text-[#1c1210]" data-i18n-de="Filter" data-i18n-en="Filters">Filter</h2>
-                            <a href="{{ route('shop') }}" class="text-[0.65rem] font-bold uppercase tracking-wider text-[#78000b] hover:underline cursor-pointer" data-i18n-de="ZURÜCKSETZEN" data-i18n-en="RESET">ZURÜCKSETZEN</a>
+                        <div class="flex items-center justify-between border-b border-[#f2ebdc] pb-2.5">
+                            <h2 class="font-display text-base font-medium text-[#1c1210]" data-i18n-de="Filter" data-i18n-en="Filters">Filter</h2>
+                            <a href="{{ route('shop') }}" class="text-[0.62rem] font-bold uppercase tracking-wider text-[#78000b] hover:underline cursor-pointer" data-i18n-de="ZURÜCKSETZEN" data-i18n-en="RESET">ZURÜCKSETZEN</a>
                         </div>
 
                         <!-- Category & Subcategory Filter from Database -->
                         <div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-[#1c1210] mb-3" data-i18n-de="Kategorie & Unterkategorie" data-i18n-en="Category & Subcategory">Kategorie & Unterkategorie</h3>
-                            <div class="space-y-3 text-xs text-[#5c4f46]">
+                            <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-2.5" data-i18n-de="Kategorie & Unterkategorie" data-i18n-en="Category & Subcategory">Kategorie & Unterkategorie</h3>
+                            <div class="space-y-2 text-xs text-[#5c4f46]">
                                 @forelse($globalCategories ?? [] as $category)
-                                    <div class="space-y-1.5 border-b border-[#f2ebdc] pb-2 last:border-none">
-                                        <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] font-bold text-[#1c1210] transition">
+                                    <div class="space-y-1 border-b border-[#f2ebdc] pb-1.5 last:border-none">
+                                        <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] font-medium text-[#1c1210] transition">
                                             <input
                                                 type="checkbox"
                                                 name="category[]"
                                                 value="{{ $category->slug }}"
                                                 {{ in_array($category->slug, (array) request('category')) ? 'checked' : '' }}
                                                 onchange="document.getElementById('shop-filter-form').submit()"
-                                                class="rounded border-[#e6decb] text-[#78000b] focus:ring-0"
+                                                class="rounded border-[#e6decb] text-[#78000b] focus:ring-0 cursor-pointer"
                                             >
                                             <span>{{ $category->name }}</span>
                                         </label>
                                         @if($category->activeSubcategories && $category->activeSubcategories->count() > 0)
                                             <div class="ml-4 space-y-1 border-l-2 border-[#d8b45a]/30 pl-2.5 pt-0.5">
                                                 @foreach($category->activeSubcategories as $subcat)
-                                                    <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] text-[0.72rem] text-[#685c54] transition">
+                                                    <label class="flex items-center gap-2 cursor-pointer hover:text-[#78000b] text-[0.7rem] text-[#685c54] transition">
                                                         <input
                                                             type="checkbox"
                                                             name="subcategory[]"
                                                             value="{{ $subcat->slug }}"
                                                             {{ in_array($subcat->slug, (array) request('subcategory')) ? 'checked' : '' }}
                                                             onchange="document.getElementById('shop-filter-form').submit()"
-                                                            class="rounded border-[#e6decb] text-[#78000b] focus:ring-0"
+                                                            class="rounded border-[#e6decb] text-[#78000b] focus:ring-0 cursor-pointer"
                                                         >
                                                         <span>{{ $subcat->name }}</span>
                                                     </label>
@@ -166,14 +229,14 @@
                                         @endif
                                     </div>
                                 @empty
-                                    <p class="text-xs text-[#8a7c74]" data-i18n-de="Keine Kategorien im Katalog vorhanden." data-i18n-en="No categories available.">Keine Kategorien im Katalog vorhanden.</p>
+                                    <p class="text-xs text-[#8a7c74]" data-i18n-de="Keine Kategorien vorhanden." data-i18n-en="No categories available.">Keine Kategorien vorhanden.</p>
                                 @endforelse
                             </div>
                         </div>
 
                         <!-- Price Range Filter -->
-                        <div class="border-t border-[#f2ebdc] pt-5">
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-[#1c1210] mb-3" data-i18n-de="Maximaler Preis" data-i18n-en="Max Price">Maximaler Preis</h3>
+                        <div class="border-t border-[#f2ebdc] pt-3.5">
+                            <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-2" data-i18n-de="Maximaler Preis" data-i18n-en="Max Price">Maximaler Preis</h3>
                             <input
                                 type="range"
                                 name="max_price"
@@ -186,10 +249,16 @@
                                 onchange="document.getElementById('shop-filter-form').submit()"
                                 class="w-full accent-[#78000b] cursor-pointer"
                             >
-                            <div class="mt-2 flex items-center justify-between text-xs text-[#685c54]">
+                            <div class="mt-1 flex items-center justify-between text-[0.7rem] text-[#685c54]">
                                 <span>EUR {{ $dbMinPrice ?? 0 }}</span>
                                 <span id="price-max-display" class="font-bold text-[#1c1210]">EUR {{ request('max_price', $dbMaxPrice ?? 1000) }}</span>
                             </div>
+                        </div>
+
+                        <!-- Atelier Guarantee Seal -->
+                        <div class="rounded border border-[#e6decb] bg-[#faf7f2] p-2.5 text-center">
+                            <p class="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b]">100% ECHTHEITSGARANTIE</p>
+                            <p class="mt-0.5 text-[0.62rem] text-[#685c54]">Zertifiziertes Vollleder & Schweizer Präzision</p>
                         </div>
 
                     </form>
@@ -197,181 +266,229 @@
 
                 <!-- Product Grid Catalog (9 cols) -->
                 <main class="lg:col-span-9">
-                    <div id="product-container" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        @forelse($products as $product)
+                    <div id="product-container" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        @forelse($products as $index => $product)
+                            @php
+                                $prodPayload = htmlspecialchars(json_encode([
+                                    'id' => $product->id,
+                                    'name' => $product->name,
+                                    'price' => 'EUR ' . number_format($product->price, 2, ',', '.'),
+                                    'sale_price' => ($product->sale_price && $product->sale_price < $product->price) ? 'EUR ' . number_format($product->sale_price, 2, ',', '.') : null,
+                                    'image' => $product->image_url,
+                                    'category' => $product->category->name ?? 'Exklusiv',
+                                    'slug' => $product->slug,
+                                    'description' => $product->description,
+                                ]), ENT_QUOTES, 'UTF-8');
+                                $delayClass = 'reveal-delay-' . ((($index % 3) + 1) * 100);
+                            @endphp
+                            <!-- Uncluttered Luxury Product Card -->
                             <article
-                                class="product-card animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] cursor-pointer"
+                                class="product-card luxury-card-interactive animate-shine-sweep reveal-on-scroll {{ $delayClass }} group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-1.5 hover:border-[#d8b45a] hover:shadow-[0_12px_30px_rgba(216,180,90,0.18)] cursor-pointer"
                                 data-category="{{ $product->category->slug ?? '' }}"
                                 data-price="{{ $product->price }}"
                                 data-name="{{ $product->name }}"
                             >
-                                <div class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
+                                <!-- Gold Top Border Shimmer -->
+                                <div class="absolute inset-x-0 top-0 z-20 h-0.5 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
 
-                                <div class="card-img-wrap relative h-60 w-full overflow-hidden bg-[#f7f4ee] transition-all duration-300">
+                                <!-- Image Container -->
+                                <div class="card-img-wrap relative aspect-[4/3] sm:aspect-square w-full overflow-hidden bg-[#f7f4ee]">
                                     <a href="{{ route('shop.show', $product->slug) }}" class="block h-full w-full">
-                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108">
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy">
                                     </a>
+
                                     @if($product->is_featured)
-                                        <div class="absolute left-3 top-3 z-10">
-                                            <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md">EXKLUSIV</span>
+                                        <div class="absolute left-2.5 top-2.5 z-10 pointer-events-none">
+                                            <span class="rounded-xs bg-[#78000b] px-2 py-0.5 text-[0.55rem] font-bold uppercase tracking-luxury text-white shadow-sm">EXKLUSIV</span>
                                         </div>
                                     @endif
-                                    @php
-                                        $prodPayload = htmlspecialchars(json_encode([
-                                            'id' => $product->id,
-                                            'name' => $product->name,
-                                            'price' => 'EUR ' . number_format($product->price, 2, ',', '.'),
-                                            'sale_price' => $product->sale_price ? 'EUR ' . number_format($product->sale_price, 2, ',', '.') : null,
-                                            'image' => $product->image_url,
-                                            'category' => $product->category->name ?? 'Exklusiv',
-                                            'slug' => $product->slug,
-                                            'description' => $product->description,
-                                        ]), ENT_QUOTES, 'UTF-8');
-                                    @endphp
-                                    <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+
+                                    <!-- Floating Wishlist Heart -->
+                                    <div class="absolute right-2.5 top-2.5 z-10 opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                                         <button
                                             type="button"
                                             data-wishlist-btn-id="{{ $product->id }}"
                                             onclick="toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
                                             data-product="{{ $prodPayload }}"
-                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-neutral-700 shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer"
+                                            class="flex h-7 w-7 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-neutral-700 shadow-sm transition hover:bg-[#78000b] hover:text-white cursor-pointer"
                                             aria-label="Add to wishlist"
                                             title="Wishlist"
                                         >
-                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
-                                            </svg>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onclick="openQuickViewModal(JSON.parse(this.dataset.product))"
-                                            data-product="{{ $prodPayload }}"
-                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-[#1c1210] shadow-md transition hover:bg-[#d8b45a] hover:text-[#1c1210] cursor-pointer"
-                                            aria-label="Quick View"
-                                            title="Quick View"
-                                        >
-                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <circle cx="11" cy="11" r="6.5" />
-                                                <path d="m16 16 4 4" stroke-linecap="round" />
                                             </svg>
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="card-body-wrap p-5 flex flex-col justify-between flex-1 bg-white">
+                                <!-- Minimal Luxury Card Details -->
+                                <div class="card-body-wrap p-3.5 flex flex-col justify-between flex-1 bg-white">
                                     <div>
-                                        <div class="flex items-center justify-between gap-2">
-                                            <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#78000b]">
-                                                {{ $product->category->name ?? 'Kategorie' }}
-                                            </p>
-                                            <div class="flex text-[#d8b45a] text-[0.65rem] tracking-wider">★ ★ ★ ★ ★</div>
-                                        </div>
+                                        <p class="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#8a7c74] truncate">
+                                            {{ $product->category->name ?? 'Maison Mehaaj' }}
+                                        </p>
                                         <a href="{{ route('shop.show', $product->slug) }}" class="block">
-                                            <h3 class="mt-2 font-display text-lg font-medium leading-[1.3] text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300">
+                                            <h3 class="mt-1 font-display text-base font-medium text-[#1c1210] group-hover:text-[#78000b] transition-colors duration-300 truncate">
                                                 {{ $product->name }}
                                             </h3>
                                         </a>
-                                        @if($product->description)
-                                            <p class="mt-2 text-xs text-[#685c54] font-light leading-relaxed line-clamp-2">{{ $product->description }}</p>
-                                        @endif
                                     </div>
-                                    <div class="mt-4 flex items-center justify-between border-t border-[#f2ebdc] pt-4">
-                                        <div class="flex flex-col">
-                                            <span class="text-base font-bold text-[#1c1210]">EUR {{ number_format($product->price, 2, ',', '.') }}</span>
-                                            @if($product->sale_price)
-                                                <span class="text-[0.65rem] text-[#8a7c74] line-through">EUR {{ number_format($product->sale_price, 2, ',', '.') }}</span>
+
+                                    <!-- Single Clean Action & Price -->
+                                    <div class="mt-3 flex items-center justify-between border-t border-[#f5efe4] pt-2.5">
+                                        <div class="flex items-baseline gap-1.5">
+                                            <span class="text-sm font-bold text-[#1c1210]">
+                                                EUR {{ number_format($product->price, 2, ',', '.') }}
+                                            </span>
+                                            @if($product->sale_price && $product->sale_price < $product->price)
+                                                <span class="text-[0.68rem] text-[#8a7c74] line-through">
+                                                    EUR {{ number_format($product->sale_price, 2, ',', '.') }}
+                                                </span>
                                             @endif
                                         </div>
-                                        <div class="flex items-center gap-2">
-                                            <button onclick="quickAddToCart({{ $product->id }}, 1)" class="inline-flex items-center gap-1 rounded bg-[#d8b45a] px-3 py-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[#120807] shadow-sm transition-all duration-300 hover:bg-[#ffd45a] cursor-pointer" type="button" title="In Warenkorb">
-                                                + Cart
-                                            </button>
-                                            <a href="{{ route('shop.show', $product->slug) }}" class="inline-flex items-center gap-1 rounded bg-[#78000b] px-3 py-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-300 hover:bg-[#5a0309] cursor-pointer" data-i18n-de="ANSEHEN" data-i18n-en="VIEW">ANSEHEN</a>
-                                        </div>
+
+                                        <button 
+                                            onclick="quickAddToCart({{ $product->id }}, 1)" 
+                                            class="inline-flex items-center gap-1.5 rounded-sm bg-[#78000b] px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-white shadow-xs transition-all duration-300 hover:bg-[#5a0309] active:scale-95 cursor-pointer" 
+                                            type="button" 
+                                            title="In den Warenkorb"
+                                        >
+                                            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M6.5 8.5h11l1 11h-13l1-11Z" stroke-linejoin="round"/>
+                                                <path d="M9 8.5a3 3 0 0 1 6 0" stroke-linecap="round"/>
+                                            </svg>
+                                            <span data-i18n-de="In den Warenkorb" data-i18n-en="Add to Cart">In den Warenkorb</span>
+                                        </button>
                                     </div>
                                 </div>
                             </article>
                         @empty
-                            <div class="col-span-full py-16 px-6 text-center bg-white rounded-md border border-[#e6decb] space-y-3">
-                                <svg class="mx-auto h-12 w-12 text-[#78000b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                                <h3 class="font-display text-xl text-[#1c1210]" data-i18n-de="Keine Produkte im Katalog gefunden" data-i18n-en="No products found in catalog">Keine Produkte im Katalog gefunden</h3>
-                                <p class="text-xs text-[#685c54] max-w-md mx-auto" data-i18n-de="Es wurden bisher noch keine aktiven Produkte im Shop angelegt oder die ausgewählten Filter ergaben keine Treffer." data-i18n-en="No active products have been added to the store yet, or your filter criteria returned no results.">Es wurden bisher noch keine aktiven Produkte im Shop angelegt oder die ausgewählten Filter ergaben keine Treffer.</p>
+                            <div class="col-span-full py-12 px-6 text-center bg-white rounded-md border border-[#e6decb] space-y-2">
+                                <svg class="mx-auto h-10 w-10 text-[#78000b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                <h3 class="font-display text-lg text-[#1c1210]" data-i18n-de="Keine Produkte im Katalog gefunden" data-i18n-en="No products found in catalog">Keine Produkte im Katalog gefunden</h3>
+                                <p class="text-xs text-[#685c54] max-w-md mx-auto" data-i18n-de="Die ausgewählten Filterkriterien ergaben leider keine Treffer." data-i18n-en="Your filter criteria returned no results.">Die ausgewählten Filterkriterien ergaben leider keine Treffer.</p>
+                                <div class="pt-1">
+                                    <a href="{{ route('shop') }}" class="inline-flex items-center justify-center rounded-sm bg-[#78000b] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-[#5a0309] cursor-pointer" data-i18n-de="Alle Filter zurücksetzen" data-i18n-en="Reset All Filters">
+                                        Alle Filter zurücksetzen
+                                    </a>
+                                </div>
                             </div>
                         @endforelse
                     </div>
+
+                    <!-- Luxury Pagination -->
+                    @if($products->hasPages())
+                        <div class="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#e6decb] pt-4 sm:flex-row">
+                            <p class="text-xs text-[#685c54]">
+                                Zeige <span class="font-bold text-[#1c1210]">{{ $products->firstItem() }}</span> bis <span class="font-bold text-[#1c1210]">{{ $products->lastItem() }}</span> von <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span>
+                            </p>
+
+                            <div class="flex items-center gap-1.5">
+                                {{-- Previous Page Link --}}
+                                @if ($products->onFirstPage())
+                                    <span class="inline-flex h-8 w-8 items-center justify-center rounded border border-[#e6decb] bg-white/50 text-[#c7baa7] cursor-not-allowed">
+                                        ‹
+                                    </span>
+                                @else
+                                    <a href="{{ $products->previousPageUrl() }}" class="inline-flex h-8 w-8 items-center justify-center rounded border border-[#e6decb] bg-white text-[#1c1210] shadow-xs transition hover:border-[#78000b] hover:text-[#78000b] cursor-pointer" rel="prev">
+                                        ‹
+                                    </a>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                    @if ($page == $products->currentPage())
+                                        <span class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-[#78000b] bg-[#78000b] px-2.5 text-xs font-bold text-white shadow-xs">
+                                            {{ $page }}
+                                        </span>
+                                    @elseif ($page == 1 || $page == $products->lastPage() || abs($page - $products->currentPage()) <= 1)
+                                        <a href="{{ $url }}" class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-[#e6decb] bg-white px-2.5 text-xs font-medium text-[#1c1210] shadow-xs transition hover:border-[#d8b45a] hover:text-[#78000b] cursor-pointer">
+                                            {{ $page }}
+                                        </a>
+                                    @elseif (abs($page - $products->currentPage()) == 2)
+                                        <span class="inline-flex h-8 w-5 items-center justify-center text-xs text-[#8a7c74]">...</span>
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($products->hasMorePages())
+                                    <a href="{{ $products->nextPageUrl() }}" class="inline-flex h-8 w-8 items-center justify-center rounded border border-[#e6decb] bg-white text-[#1c1210] shadow-xs transition hover:border-[#78000b] hover:text-[#78000b] cursor-pointer" rel="next">
+                                        ›
+                                    </a>
+                                @else
+                                    <span class="inline-flex h-8 w-8 items-center justify-center rounded border border-[#e6decb] bg-white/50 text-[#c7baa7] cursor-not-allowed">
+                                        ›
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
                 </main>
 
             </div>
         </div>
     </section>
 
+    <!-- Schema.org ItemList JSON-LD for Products -->
+    @if(isset($products) && $products->count() > 0)
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+                @foreach($products as $i => $item)
+                {
+                    "@type": "ListItem",
+                    "position": {{ $i + 1 }},
+                    "item": {
+                        "@type": "Product",
+                        "name": "{{ addslashes($item->name) }}",
+                        "image": "{{ $item->image_url }}",
+                        "url": "{{ route('shop.show', $item->slug) }}",
+                        "offers": {
+                            "@type": "Offer",
+                            "priceCurrency": "EUR",
+                            "price": "{{ $item->price }}",
+                            "availability": "https://schema.org/InStock"
+                        }
+                    }
+                }{{ $loop->last ? '' : ',' }}
+                @endforeach
+            ]
+        }
+        </script>
+    @endif
+
     <!-- Client side script for Filtering, Sorting & View toggle -->
     <script>
-        function applyFilters() {
-            const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked')).map(el => el.value);
-            const selectedLeathers = Array.from(document.querySelectorAll('.leather-filter:checked')).map(el => el.value);
-            const maxPrice = parseFloat(document.getElementById('price-range').value);
-
-            const cards = document.querySelectorAll('.product-card');
-            let visibleCount = 0;
-
-            cards.forEach(card => {
-                const category = card.getAttribute('data-category');
-                const leather = card.getAttribute('data-leather');
-                const price = parseFloat(card.getAttribute('data-price'));
-
-                const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(category);
-                const matchLeather = selectedLeathers.length === 0 || selectedLeathers.includes(leather);
-                const matchPrice = price <= maxPrice;
-
-                if (matchCategory && matchLeather && matchPrice) {
-                    card.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-
-            document.getElementById('product-count').innerText = visibleCount;
-        }
-
         function updatePriceLabel(val) {
             document.getElementById('price-max-display').innerText = 'EUR ' + val;
         }
 
-        function resetFilters() {
-            document.querySelectorAll('.category-filter').forEach(el => el.checked = false);
-            document.querySelectorAll('.leather-filter').forEach(el => el.checked = false);
-            document.getElementById('price-range').value = 700;
-            updatePriceLabel(700);
-            applyFilters();
-        }
-
-        function sortProducts() {
-            const val = document.getElementById('sort-select').value;
-            const container = document.getElementById('product-container');
-            const cards = Array.from(container.children);
-
-            cards.sort((a, b) => {
-                const priceA = parseFloat(a.getAttribute('data-price'));
-                const priceB = parseFloat(b.getAttribute('data-price'));
-
-                if (val === 'price-low') return priceA - priceB;
-                if (val === 'price-high') return priceB - priceA;
-                return 0;
-            });
-
-            cards.forEach(card => container.appendChild(card));
+        function handleSortChange(sortVal) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('sort', sortVal);
+            url.searchParams.delete('page');
+            window.location.href = url.toString();
         }
 
         function setViewMode(mode) {
             const container = document.getElementById('product-container');
             const gridBtn = document.getElementById('grid-view-btn');
             const listBtn = document.getElementById('list-view-btn');
+            const cards = container.querySelectorAll('.product-card');
 
             if (mode === 'list') {
                 container.classList.remove('sm:grid-cols-2', 'lg:grid-cols-3');
                 container.classList.add('grid-cols-1');
+                cards.forEach(card => {
+                    card.classList.add('md:flex-row');
+                    const imgWrap = card.querySelector('.card-img-wrap');
+                    if (imgWrap) {
+                        imgWrap.classList.remove('w-full', 'aspect-square', 'aspect-[4/3]');
+                        imgWrap.classList.add('md:w-60', 'md:h-auto', 'shrink-0');
+                    }
+                });
                 gridBtn.classList.remove('text-[#78000b]', 'bg-[#78000b]/10');
                 gridBtn.classList.add('text-[#685c54]');
                 listBtn.classList.add('text-[#78000b]', 'bg-[#78000b]/10');
@@ -379,6 +496,14 @@
             } else {
                 container.classList.remove('grid-cols-1');
                 container.classList.add('sm:grid-cols-2', 'lg:grid-cols-3');
+                cards.forEach(card => {
+                    card.classList.remove('md:flex-row');
+                    const imgWrap = card.querySelector('.card-img-wrap');
+                    if (imgWrap) {
+                        imgWrap.classList.add('w-full', 'aspect-square');
+                        imgWrap.classList.remove('md:w-60', 'md:h-auto', 'shrink-0');
+                    }
+                });
                 gridBtn.classList.add('text-[#78000b]', 'bg-[#78000b]/10');
                 gridBtn.classList.remove('text-[#685c54]');
                 listBtn.classList.remove('text-[#78000b]', 'bg-[#78000b]/10');
