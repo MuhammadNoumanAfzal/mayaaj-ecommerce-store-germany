@@ -52,16 +52,16 @@
 
             <div class="luxury-container relative flex min-h-screen items-end pb-20 pt-28 sm:pb-24 lg:items-center lg:pb-0">
                 <div class="max-w-3xl">
-                    <p class="mb-4 text-[0.68rem] font-bold uppercase tracking-luxury text-[#f2cf75]" data-i18n-de="{{ $slide['eyebrow_de'] }}" data-i18n-en="{{ $slide['eyebrow_en'] }}">{{ $slide['eyebrow_de'] }}</p>
+                    <p class="mb-4 text-[0.68rem] font-bold uppercase tracking-luxury text-[#f2cf75]" data-i18n-de="{{ $slide['eyebrow_de'] }}" data-i18n-en="{{ $slide['eyebrow_en'] }}">{{ $slide['eyebrow_en'] }}</p>
                     <h1 class="font-display text-5xl font-medium leading-[0.95] text-white drop-shadow-[0_8px_18px_rgba(0,0,0,0.85)] sm:text-6xl lg:text-8xl" data-i18n-de="{{ $slide['title_de'] }}" data-i18n-en="{{ $slide['title_en'] }}">
-                        {{ $slide['title_de'] }}
+                        {{ $slide['title_en'] }}
                     </h1>
                     <p class="mt-6 max-w-2xl text-base font-bold leading-8 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)] sm:text-lg" data-i18n-de="{{ $slide['text_de'] }}" data-i18n-en="{{ $slide['text_en'] }}">
-                        {{ $slide['text_de'] }}
+                        {{ $slide['text_en'] }}
                     </p>
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <a href="/shop" class="button-primary cursor-pointer shadow-[0_16px_36px_rgba(120,0,11,0.36)]" data-i18n-de="Jetzt einkaufen" data-i18n-en="Shop now">Jetzt einkaufen</a>
-                        <a href="/ueber-uns" class="button-secondary cursor-pointer border-white/80 bg-[#120605]/28 text-white hover:border-[#d8b45a] hover:bg-[#d8b45a] hover:text-[#120807]" data-i18n-de="Manufaktur ansehen" data-i18n-en="View Atelier">Manufaktur ansehen</a>
+                        <a href="/shop" class="button-primary cursor-pointer shadow-[0_16px_36px_rgba(120,0,11,0.36)]" data-i18n-de="Jetzt einkaufen" data-i18n-en="Shop now">Shop now</a>
+                        <a href="/ueber-uns" class="button-secondary cursor-pointer border-white/80 bg-[#120605]/28 text-white hover:border-[#d8b45a] hover:bg-[#d8b45a] hover:text-[#120807]" data-i18n-de="Manufaktur ansehen" data-i18n-en="View Atelier">View Atelier</a>
                     </div>
                 </div>
             </div>

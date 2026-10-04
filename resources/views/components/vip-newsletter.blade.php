@@ -17,45 +17,45 @@
                     </div>
 
                     <h2 id="vip-newsletter-heading" class="mt-4 max-w-2xl font-display text-3xl font-normal leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#fffaf0] via-[#f5e6c8] to-[#d8b45a] sm:text-4xl lg:text-5xl" data-i18n-de="Früher Zugang zu neuen Kollektionen." data-i18n-en="Early access to new collections.">
-                        Früher Zugang zu neuen Kollektionen.
+                        Early access to new collections.
                     </h2>
 
                     <p class="mt-4 max-w-xl text-xs font-light leading-relaxed text-[#e8ded3]/85 sm:text-sm" data-i18n-de="Werden Sie Teil unserer exklusiven Community. Erhalten Sie bevorzugten Zugang zu limitierten Drops, VIP-Events & 10% Willkommensrabatt." data-i18n-en="Become part of our exclusive community. Enjoy priority access to limited drops, VIP events & 10% welcome privilege.">
-                        Werden Sie Teil unserer exklusiven Community. Erhalten Sie bevorzugten Zugang zu limitierten Drops, VIP-Events & 10% Willkommensrabatt.
+                        Become part of our exclusive community. Enjoy priority access to limited drops, VIP events & 10% welcome privilege.
                     </p>
 
                     <!-- Feature Perks List -->
                     <div class="mt-6 flex flex-wrap gap-4 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#d8b45a]/90">
-                        <span class="inline-flex items-center gap-1.5"><svg class="h-3.5 w-3.5 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Exklusive Pre-Order Drops</span>
-                        <span class="inline-flex items-center gap-1.5"><svg class="h-3.5 w-3.5 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 10% Willkommensrabatt</span>
-                        <span class="inline-flex items-center gap-1.5"><svg class="h-3.5 w-3.5 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Einladungen zu VIP Events</span>
+                        <span class="inline-flex items-center gap-1.5"><svg class="h-3.5 w-3.5 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> <span data-i18n-en="Exclusive Pre-Order Drops" data-i18n-de="Exklusive Pre-Order Drops">Exclusive Pre-Order Drops</span></span>
+                        <span class="inline-flex items-center gap-1.5"><svg class="h-3.5 w-3.5 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> <span data-i18n-en="10% Welcome Privilege" data-i18n-de="10% Willkommensrabatt">10% Welcome Privilege</span></span>
+                        <span class="inline-flex items-center gap-1.5"><svg class="h-3.5 w-3.5 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> <span data-i18n-en="Invitations to VIP Events" data-i18n-de="Einladungen zu VIP Events">Invitations to VIP Events</span></span>
                     </div>
                 </div>
 
                 <!-- Glass Subscribe Form -->
                 <div class="lg:col-span-5">
                     <form class="relative rounded-md border border-[#d8b45a]/25 bg-black/40 p-5 shadow-2xl backdrop-blur-md" action="#" method="post" onsubmit="handleVipNewsletterSubmit(event)">
-                        <p class="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#d8b45a]">JETZT MITGLIED WERDEN</p>
+                        <p class="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#d8b45a]" data-i18n-en="BECOME A MEMBER NOW" data-i18n-de="JETZT MITGLIED WERDEN">BECOME A MEMBER NOW</p>
                         
                         <div class="flex flex-col gap-3">
                             <input
                                 id="newsletter-email"
                                 class="h-11 w-full rounded-sm border border-[#d8b45a]/30 bg-black/50 px-4 text-xs font-medium text-white outline-none transition placeholder:text-white/40 focus:border-[#d8b45a] focus:bg-black/70 focus:ring-1 focus:ring-[#d8b45a]/40"
                                 type="email"
-                                placeholder="Ihre E-Mail-Adresse"
+                                placeholder="Your email address"
                                 data-i18n-placeholder-de="Ihre E-Mail-Adresse"
                                 data-i18n-placeholder-en="Your email address"
                                 required
                             >
 
                             <button class="h-11 w-full cursor-pointer rounded-sm bg-[#d8b45a] px-6 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-[#120807] transition-all duration-300 hover:bg-[#ffd45a] hover:shadow-[0_4px_20px_rgba(216,180,90,0.4)] active:scale-95 flex items-center justify-center gap-2" type="submit">
-                                <span data-i18n-de="VIP ZUGANG FREISCHALTEN" data-i18n-en="UNLOCK VIP ACCESS">VIP ZUGANG FREISCHALTEN</span>
+                                <span data-i18n-de="VIP ZUGANG FREISCHALTEN" data-i18n-en="UNLOCK VIP ACCESS">UNLOCK VIP ACCESS</span>
                                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
                             </button>
                         </div>
 
                         <p class="mt-3 text-[0.62rem] leading-relaxed text-white/50 text-center" data-i18n-de="Jederzeit abbestellbar. Wir respektieren Ihre Privatsphäre." data-i18n-en="Unsubscribe anytime. We respect your privacy.">
-                            Jederzeit abbestellbar. Wir respektieren Ihre Privatsphäre.
+                            Unsubscribe anytime. We respect your privacy.
                         </p>
                     </form>
                 </div>

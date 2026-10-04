@@ -82,6 +82,13 @@ Route::post('/cart/update', [CartController::class, 'update'])->name('cart.updat
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
+// Reviews & Customer Testimonials Routes
+use App\Http\Controllers\ReviewController;
+
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::get('/bewertungen', [ReviewController::class, 'index'])->name('reviews.de');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
 /*
 |--------------------------------------------------------------------------
 | Admin Portal Routes (Authentication, Categories & Subcategories)

@@ -56,9 +56,10 @@
             <div>
                 <h3 class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#d8b45a]" data-i18n-de="DAS HAUS MEHAAJ" data-i18n-en="THE HOUSE OF MEHAAJ">DAS HAUS MEHAAJ</h3>
                 <ul class="mt-4 grid gap-2.5 text-xs text-[#e4d9cc]/75">
-                    <li><a class="group inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/#brand-story-heading" data-i18n-de="Über Uns & Geschichte" data-i18n-en="About Us & Story"><span class="transition-transform group-hover:translate-x-1">Über Uns & Geschichte</span></a></li>
-                    <li><a class="group inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/kontakt" data-i18n-de="VIP Kundenservice" data-i18n-en="VIP Care"><span class="transition-transform group-hover:translate-x-1">VIP Kundenservice</span></a></li>
-                    <li><a class="group inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/versand" data-i18n-de="GoGreen Versand" data-i18n-en="GoGreen Shipping"><span class="transition-transform group-hover:translate-x-1">GoGreen Versand</span></a></li>
+                    <li><a class="group inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/reviews" data-i18n-de="Kundenbewertungen (4.9/5)" data-i18n-en="Client Reviews (4.9/5)"><span class="transition-transform group-hover:translate-x-1" data-i18n-de="Kundenbewertungen" data-i18n-en="Client Reviews">Client Reviews</span></a></li>
+                    <li><a class="group inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/#brand-story-heading" data-i18n-de="Über Uns & Geschichte" data-i18n-en="About Us & Story"><span class="transition-transform group-hover:translate-x-1" data-i18n-de="Über Uns & Geschichte" data-i18n-en="About Us & Story">Über Uns & Geschichte</span></a></li>
+                    <li><a class="group inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/kontakt" data-i18n-de="VIP Kundenservice" data-i18n-en="VIP Care"><span class="transition-transform group-hover:translate-x-1" data-i18n-de="VIP Kundenservice" data-i18n-en="VIP Care">VIP Kundenservice</span></a></li>
+                    <li><a class="group inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/versand" data-i18n-de="GoGreen Versand" data-i18n-en="GoGreen Shipping"><span class="transition-transform group-hover:translate-x-1" data-i18n-de="GoGreen Versand" data-i18n-en="GoGreen Shipping">GoGreen Versand</span></a></li>
                 </ul>
             </div>
 

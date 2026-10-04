@@ -40,17 +40,16 @@
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(216,180,90,0.08),transparent_70%)]"></div>
 
     <div class="luxury-container relative z-10">
-        <!-- Section Header -->
         <div class="mx-auto max-w-2xl text-center">
             <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
                 <span class="h-1.5 w-1.5 rounded-full bg-[#78000b] animate-pulse"></span>
-                <span data-i18n-de="SERVICE VERSPRECHEN" data-i18n-en="SERVICE PROMISE">SERVICE VERSPRECHEN</span>
+                <span data-i18n-de="SERVICE VERSPRECHEN" data-i18n-en="SERVICE PROMISE">SERVICE PROMISE</span>
             </div>
             <h2 id="trust-benefits-heading" class="mt-3 font-display text-3xl font-medium leading-tight text-[#1c1210] sm:text-4xl lg:text-5xl" data-i18n-de="Luxus braucht Vertrauen." data-i18n-en="Luxury Needs Trust.">
-                Luxus braucht Vertrauen.
+                Luxury Needs Trust.
             </h2>
-            <p class="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-[#685c54] sm:text-sm" data-i18n-de="Ein erstklassiges Einkaufserlebnis basiert aufTransparenz, absoluter Sicherheit und persönlicher Betreuung." data-i18n-en="A world-class shopping experience relies on transparency, total security, and personal care.">
-                Ein erstklassiges Einkaufserlebnis basiert auf Transparenz, absoluter Sicherheit und persönlicher Betreuung.
+            <p class="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-[#685c54] sm:text-sm" data-i18n-de="Ein erstklassiges Einkaufserlebnis basiert auf Transparenz, absoluter Sicherheit und persönlicher Betreuung." data-i18n-en="A world-class shopping experience relies on transparency, total security, and personal care.">
+                A world-class shopping experience relies on transparency, total security, and personal care.
             </p>
         </div>
 
@@ -81,11 +80,11 @@
 
                         <!-- Card Title & Description -->
                         <h3 class="mt-3 font-display text-2xl font-medium text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="{{ $benefit['title_de'] }}" data-i18n-en="{{ $benefit['title_en'] }}">
-                            {{ $benefit['title_de'] }}
+                            {{ $benefit['title_en'] }}
                         </h3>
                         <p class="mt-2 text-xs leading-relaxed text-[#685c54]" data-i18n-de="{{ $benefit['text_de'] }}" data-i18n-en="{{ $benefit['text_en'] }}">
-                            {{ $benefit['text_de'] }}
-                        </p>
+                            {{ $benefit['text_en'] }}
+                        </p>     </p>
                     </div>
                 </article>
             @endforeach

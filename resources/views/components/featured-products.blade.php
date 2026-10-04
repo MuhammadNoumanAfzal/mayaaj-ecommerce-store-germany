@@ -84,6 +84,16 @@
                         $pPrice = 'EUR ' . number_format($prod->price, 2, ',', '.');
                         $pSalePrice = $prod->sale_price ? 'EUR ' . number_format($prod->sale_price, 2, ',', '.') : null;
                         $pBadge = $prod->is_featured ? 'EXKLUSIV' : '';
+                        $prodPayload = htmlspecialchars(json_encode([
+                            'id' => $prod->id,
+                            'name' => $pName,
+                            'price' => $pPrice,
+                            'sale_price' => $pSalePrice,
+                            'image' => $pImg,
+                            'category' => $pCat,
+                            'slug' => $pSlug,
+                            'description' => $prod->description ?? null,
+                        ]), ENT_QUOTES, 'UTF-8');
                     @endphp
                     <article class="animate-shine-sweep group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-[0_6px_25px_rgba(0,0,0,0.05)] transition-all duration-500 hover:-translate-y-2 hover:border-[#d8b45a] hover:shadow-[0_0_35px_rgba(216,180,90,0.25)] outline-none focus:outline-none focus:ring-0 cursor-pointer">
                         
@@ -112,17 +122,32 @@
 
                             <!-- Floating Action Icons (Wishlist & Quick View) -->
                             <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                <button onclick="openWishlistModal()" class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/90 text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" aria-label="Add to wishlist">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
+                                <button
+                                    type="button"
+                                    data-wishlist-btn-id="{{ $prod->id }}"
+                                    onclick="toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
+                                    data-product="{{ $prodPayload }}"
+                                    class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-neutral-700 shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer"
+                                    aria-label="Add to wishlist"
+                                    title="Wishlist"
+                                >
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
                                     </svg>
                                 </button>
-                                <a href="/shop/{{ $pSlug }}" class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/90 text-[#1c1210] shadow-md transition hover:bg-[#d8b45a] hover:text-[#1c1210] cursor-pointer" aria-label="View Product">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <button
+                                    type="button"
+                                    onclick="openQuickViewModal(JSON.parse(this.dataset.product))"
+                                    data-product="{{ $prodPayload }}"
+                                    class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-[#1c1210] shadow-md transition hover:bg-[#d8b45a] hover:text-[#1c1210] cursor-pointer"
+                                    aria-label="Quick View"
+                                    title="Quick View"
+                                >
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="11" cy="11" r="6.5" />
                                         <path d="m16 16 4 4" stroke-linecap="round" />
                                     </svg>
-                                </a>
+                                </button>
                             </div>
                         </div>
 

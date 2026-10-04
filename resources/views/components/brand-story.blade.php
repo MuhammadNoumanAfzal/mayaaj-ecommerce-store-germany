@@ -24,8 +24,8 @@
                         <div class="flex items-center gap-3">
                             <div class="h-8 w-0.5 bg-[#d8b45a]"></div>
                             <div>
-                                <p class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#f2cf75]">SEIT 2026</p>
-                                <p class="font-display text-lg font-medium" data-i18n-de="Deutsches Lederhandwerk" data-i18n-en="German Leather Artistry">Deutsches Lederhandwerk</p>
+                                <p class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#f2cf75]">SINCE 2026</p>
+                                <p class="font-display text-lg font-medium" data-i18n-de="Deutsches Lederhandwerk" data-i18n-en="German Leather Artistry">German Leather Artistry</p>
                             </div>
                         </div>
                     </div>
@@ -39,9 +39,9 @@
                         class="h-14 w-14 rounded-sm object-cover border border-[#e6decb]"
                     >
                     <div class="pr-2">
-                        <p class="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b]" data-i18n-de="VOLLLEDER" data-i18n-en="FULL GRAIN">VOLLLEDER</p>
-                        <p class="font-display text-sm font-medium text-[#1c1210]" data-i18n-de="100% Handverlesen" data-i18n-en="100% Hand-Selected">100% Handverlesen</p>
-                        <p class="text-[0.68rem] text-[#685c54]" data-i18n-de="Sattler-Naht & Vergoldung" data-i18n-en="Saddle Stitching & Gold Finish">Sattler-Naht & Vergoldung</p>
+                        <p class="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b]" data-i18n-de="VOLLLEDER" data-i18n-en="FULL GRAIN">FULL GRAIN</p>
+                        <p class="font-display text-sm font-medium text-[#1c1210]" data-i18n-de="100% Handverlesen" data-i18n-en="100% Hand-Selected">100% Hand-Selected</p>
+                        <p class="text-[0.68rem] text-[#685c54]" data-i18n-de="Sattler-Naht & Vergoldung" data-i18n-en="Saddle Stitching & Gold Finish">Saddle Stitching & Gold Finish</p>
                     </div>
                 </div>
             </div>
@@ -51,17 +51,17 @@
                 <!-- Eyebrow -->
                 <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
                     <span class="h-1.5 w-1.5 rounded-full bg-[#78000b] animate-pulse"></span>
-                    <span data-i18n-de="MEISTERLICHE LEDERMANUFAKTUR" data-i18n-en="MASTER LEATHER ATELIER">MEISTERLICHE LEDERMANUFAKTUR</span>
+                    <span data-i18n-de="MEISTERLICHE LEDERMANUFAKTUR" data-i18n-en="MASTER LEATHER ATELIER">MASTER LEATHER ATELIER</span>
                 </div>
 
                 <!-- Main Heading -->
                 <h2 id="brand-story-heading" class="mt-4 font-display text-3xl font-medium leading-tight text-[#1c1210] sm:text-4xl lg:text-5xl" data-i18n-de="Zeitloser Luxus & Echtes Lederhandwerk." data-i18n-en="Timeless Luxury & Authentic Leather Craftsmanship.">
-                    Zeitloser Luxus & Echtes Lederhandwerk.
+                    Timeless Luxury & Authentic Leather Craftsmanship.
                 </h2>
 
                 <!-- Description -->
                 <p class="mt-4 text-sm font-light leading-relaxed text-[#5c4f46] sm:text-base" data-i18n-de="Mehaaj steht für feinste italienische Volllederelemente, klassisches deutsches Design und makellose Handverarbeitung. Jedes Stück altert in Würde und wird mit jedem Tag charmanter." data-i18n-en="Mehaaj stands for the finest full-grain leathers, classic German design, and flawless handcrafted precision. Every piece ages gracefully, gaining character with time.">
-                    Mehaaj steht für feinste italienische Volllederelemente, klassisches deutsches Design und makellose Handverarbeitung. Jedes Stück altert in Würde und wird mit jedem Tag charmanter.
+                    Mehaaj stands for the finest full-grain leathers, classic German design, and flawless handcrafted precision. Every piece ages gracefully, gaining character with time.
                 </p>
 
                 <!-- 3 Interactive Pillar Cards -->
@@ -72,8 +72,8 @@
                                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3 class="font-display text-lg font-medium text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="Materialien" data-i18n-en="Materials">Materialien</h3>
-                        <p class="mt-1 text-xs leading-relaxed text-[#685c54]" data-i18n-de="Ausgewählte Texturen mit erstklassigem Griff." data-i18n-en="Selected textures with a refined hand feel.">Ausgewählte Texturen mit erstklassigem Griff.</p>
+                        <h3 class="font-display text-lg font-medium text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="Materialien" data-i18n-en="Materials">Materials</h3>
+                        <p class="mt-1 text-xs leading-relaxed text-[#685c54]" data-i18n-de="Ausgewählte Texturen mit erstklassigem Griff." data-i18n-en="Selected textures with a refined hand feel.">Selected textures with a refined hand feel.</p>
                         <div class="mt-3 h-[2px] w-6 bg-[#d8b45a] transition-all duration-300 group-hover:w-12"></div>
                     </div>
 
@@ -84,8 +84,8 @@
                                 <path d="M12 7v5l3 3" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <h3 class="font-display text-lg font-medium text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="Zeitlos" data-i18n-en="Timeless">Zeitlos</h3>
-                        <p class="mt-1 text-xs leading-relaxed text-[#685c54]" data-i18n-de="Klare Linien für eine moderne Garderobe." data-i18n-en="Clean lines for modern wardrobes.">Klare Linien für eine moderne Garderobe.</p>
+                        <h3 class="font-display text-lg font-medium text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="Zeitlos" data-i18n-en="Timeless">Timeless</h3>
+                        <p class="mt-1 text-xs leading-relaxed text-[#685c54]" data-i18n-de="Klare Linien für eine moderne Garderobe." data-i18n-en="Clean lines for modern wardrobes.">Clean lines for modern wardrobes.</p>
                         <div class="mt-3 h-[2px] w-6 bg-[#d8b45a] transition-all duration-300 group-hover:w-12"></div>
                     </div>
 
@@ -95,8 +95,8 @@
                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3 class="font-display text-lg font-medium text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="Kuriert" data-i18n-en="Curated">Kuriert</h3>
-                        <p class="mt-1 text-xs leading-relaxed text-[#685c54]" data-i18n-de="Handverlesene Stücke statt Masse." data-i18n-en="Curated pieces instead of mass choice.">Handverlesene Stücke statt Masse.</p>
+                        <h3 class="font-display text-lg font-medium text-[#1c1210] transition-colors duration-300 group-hover:text-[#78000b]" data-i18n-de="Kuriert" data-i18n-en="Curated">Curated</h3>
+                        <p class="mt-1 text-xs leading-relaxed text-[#685c54]" data-i18n-de="Handverlesene Stücke statt Masse." data-i18n-en="Curated pieces instead of mass choice.">Curated pieces instead of mass choice.</p>
                         <div class="mt-3 h-[2px] w-6 bg-[#d8b45a] transition-all duration-300 group-hover:w-12"></div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                 <!-- CTA Button -->
                 <div class="mt-8">
                     <a href="/ueber-uns" class="group inline-flex items-center gap-3 rounded-sm bg-[#78000b] px-6 py-3 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-white shadow-md transition-all duration-300 hover:bg-[#5a0309] hover:shadow-lg active:scale-95 cursor-pointer">
-                        <span data-i18n-de="UNSERE GESCHICHTE ENTDECKEN" data-i18n-en="DISCOVER OUR STORY">UNSERE GESCHICHTE ENTDECKEN</span>
+                        <span data-i18n-de="UNSERE GESCHICHTE ENTDECKEN" data-i18n-en="DISCOVER OUR STORY">DISCOVER OUR STORY</span>
                         <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>

@@ -35,14 +35,14 @@
             <div>
                 <div class="inline-flex items-center gap-2 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-3 py-0.5 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
                     <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
-                    <span data-i18n-de="KOLLEKTION EINSTIEG" data-i18n-en="COLLECTION ENTRY">KOLLEKTION EINSTIEG</span>
+                    <span data-i18n-en="COLLECTION ENTRY" data-i18n-de="KOLLEKTION EINSTIEG">COLLECTION ENTRY</span>
                 </div>
-                <h2 id="featured-categories-heading" class="mt-2 font-display text-2xl font-medium leading-tight text-[#1c1210] sm:text-3xl lg:text-4xl" data-i18n-de="Entdecken Sie Mehaaj" data-i18n-en="Discover Mehaaj">
-                    Entdecken Sie Mehaaj
+                <h2 id="featured-categories-heading" class="mt-2 font-display text-2xl font-medium leading-tight text-[#1c1210] sm:text-3xl lg:text-4xl" data-i18n-en="Discover Mehaaj" data-i18n-de="Entdecken Sie Mehaaj">
+                    Discover Mehaaj
                 </h2>
             </div>
-            <p class="max-w-md text-xs leading-relaxed text-[#685c54] sm:text-sm" data-i18n-de="Kuratierte Kategorien für einen schnellen Einstieg in unsere Premium-Auswahl." data-i18n-en="Curated categories for a quick entry into our premium selection.">
-                Kuratierte Kategorien für einen schnellen Einstieg in unsere Premium-Auswahl.
+            <p class="max-w-md text-xs leading-relaxed text-[#685c54] sm:text-sm" data-i18n-en="Curated categories for a quick entry into our premium selection." data-i18n-de="Kuratierte Kategorien für einen schnellen Einstieg in unsere Premium-Auswahl.">
+                Curated categories for a quick entry into our premium selection.
             </p>
         </div>
 
@@ -105,11 +105,8 @@
                                         <h3 class="font-display text-xl sm:text-2xl font-medium text-white drop-shadow-sm transition-colors duration-300 group-hover:text-[#f2cf75]">
                                             {{ $catName }}
                                         </h3>
-                                        <p class="mt-1 line-clamp-1 text-xs text-white/85 transition-colors duration-300 group-hover:text-white">
-                                            {{ $catDesc }}
-                                        </p>
                                         <div class="mt-3 flex items-center text-[0.62rem] font-bold uppercase tracking-luxury text-[#f2cf75] transition-colors duration-300 group-hover:text-white">
-                                            <span data-i18n-de="ENTDECKEN" data-i18n-en="DISCOVER">ENTDECKEN</span>
+                                            <span data-i18n-en="DISCOVER" data-i18n-de="ENTDECKEN">DISCOVER</span>
                                             <svg class="ml-1.5 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                 <path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>

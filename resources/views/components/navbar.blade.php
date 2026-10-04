@@ -38,19 +38,20 @@
             @empty
                 <a class="transition hover:text-[#d8b45a]" href="/shop" data-i18n-de="Kollektion & Shop" data-i18n-en="Collection & Shop">Kollektion & Shop</a>
             @endforelse
-            <a class="transition hover:text-[#d8b45a]" href="/ueber-uns" data-i18n-de="Manufaktur" data-i18n-en="Atelier">Manufaktur</a>
+            <a class="transition hover:text-[#d8b45a]" href="/reviews" data-i18n-de="Bewertungen" data-i18n-en="Reviews">Reviews</a>
+            <a class="transition hover:text-[#d8b45a]" href="/ueber-uns" data-i18n-de="Manufaktur" data-i18n-en="Atelier">Atelier</a>
         </div>
 
-        <form class="ml-auto hidden min-w-[220px] max-w-[360px] flex-1 items-center border-b border-[#d8b45a]/65 pb-1 text-white lg:flex" action="/shop" method="get">
-            <label class="sr-only" for="site-search" data-i18n-de="Suche" data-i18n-en="Search">Suche</label>
+        <form class="ml-auto hidden min-w-[200px] max-w-[320px] flex-1 items-center border-b border-[#d8b45a]/65 pb-1 text-white lg:flex" action="/shop" method="get">
+            <label class="sr-only" for="site-search" data-i18n-de="Suche" data-i18n-en="Search">Search</label>
             <input
                 id="site-search"
                 name="search"
                 class="h-9 w-full bg-transparent text-[0.72rem] font-bold uppercase tracking-[0.08em] text-[#fffaf0] outline-none placeholder:text-[#fffaf0] placeholder:opacity-100"
                 type="search"
-                placeholder="Suche"
-                data-i18n-placeholder-de="Suche"
-                data-i18n-placeholder-en="Search"
+                placeholder="Search masterpieces..."
+                data-i18n-placeholder-de="Meisterwerke suchen..."
+                data-i18n-placeholder-en="Search masterpieces..."
             >
             <button class="inline-flex h-9 w-9 cursor-pointer items-center justify-center text-white transition hover:text-[#d8b45a]" type="submit" aria-label="Search">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
@@ -61,22 +62,26 @@
         </form>
 
         <div class="hidden items-center gap-5 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-white lg:flex xl:gap-6">
-            <!-- Google Translate Dropdown Widget -->
-            <div id="google_translate_element" class="inline-block"></div>
+            <!-- Language Switcher Pill (EN | DE) -->
+            <div class="inline-flex items-center rounded-full border border-[#d8b45a]/50 bg-[#160b09]/80 p-0.5 text-[0.65rem] font-bold shadow-xs">
+                <button type="button" onclick="setSiteLanguage('en')" id="lang-btn-en" class="px-2.5 py-0.5 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a]">EN</button>
+                <button type="button" onclick="setSiteLanguage('de')" id="lang-btn-de" class="px-2.5 py-0.5 rounded-full transition cursor-pointer text-white/80 hover:text-white">DE</button>
+            </div>
 
             <button class="inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openAccountModal()" aria-label="My account">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <circle cx="12" cy="8" r="3.5" />
                     <path d="M5.5 20c1.1-3.4 3.3-5.1 6.5-5.1s5.4 1.7 6.5 5.1" stroke-linecap="round" />
                 </svg>
-                <span data-i18n-de="Mein Konto" data-i18n-en="My Account">Mein Konto</span>
+                <span data-i18n-de="Mein Konto" data-i18n-en="My Account">My Account</span>
             </button>
 
-            <button class="inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openWishlistModal()" aria-label="Wishlist">
+            <button class="relative inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openWishlistDrawer()" aria-label="Wishlist">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
                 </svg>
-                <span data-i18n-de="Wunschliste" data-i18n-en="Wishlist">Wunschliste</span>
+                <span data-i18n-de="Wunschliste" data-i18n-en="Wishlist">Wishlist</span>
+                <span class="wishlist-badge-count absolute -right-3 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#78000b] text-[0.58rem] font-bold text-white shadow-xs">0</span>
             </button>
 
             <button class="relative inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openCartDrawer()" aria-label="Shopping cart">
@@ -84,18 +89,27 @@
                     <path d="M6.5 8.5h11l1 11h-13l1-11Z" stroke-linejoin="round" />
                     <path d="M9 8.5a3 3 0 0 1 6 0" stroke-linecap="round" />
                 </svg>
-                <span data-i18n-de="Warenkorb" data-i18n-en="Shopping Cart">Warenkorb</span>
+                <span data-i18n-de="Warenkorb" data-i18n-en="Shopping Cart">Shopping Cart</span>
                 <span class="cart-badge-count absolute -right-3 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#d8b45a] text-[0.58rem] font-bold text-[#120807]">{{ count(session('cart', [])) }}</span>
             </button>
         </div>
 
-        <button class="relative ml-auto inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#78000b] text-white shadow-md transition hover:bg-[#5a0309] lg:hidden" type="button" onclick="openCartDrawer()" aria-label="Open cart">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <path d="M6.5 8.5h11l1 11h-13l1-11Z" stroke-linejoin="round" />
-                <path d="M9 8.5a3 3 0 0 1 6 0" stroke-linecap="round" />
-            </svg>
-            <span class="cart-badge-count absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#d8b45a] text-[0.58rem] font-bold text-[#120807]">{{ count(session('cart', [])) }}</span>
-        </button>
+        <!-- Mobile Action Icons (Wishlist & Cart) -->
+        <div class="ml-auto flex items-center gap-2 lg:hidden">
+            <button class="relative inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-[#d8b45a]/40 bg-[#160b09] text-white shadow-md transition hover:bg-[#78000b]" type="button" onclick="openWishlistDrawer()" aria-label="Wishlist">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
+                </svg>
+                <span class="wishlist-badge-count absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#78000b] text-[0.55rem] font-bold text-white">0</span>
+            </button>
+            <button class="relative inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#78000b] text-white shadow-md transition hover:bg-[#5a0309]" type="button" onclick="openCartDrawer()" aria-label="Open cart">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M6.5 8.5h11l1 11h-13l1-11Z" stroke-linejoin="round" />
+                    <path d="M9 8.5a3 3 0 0 1 6 0" stroke-linecap="round" />
+                </svg>
+                <span class="cart-badge-count absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#d8b45a] text-[0.58rem] font-bold text-[#120807]">{{ count(session('cart', [])) }}</span>
+            </button>
+        </div>
     </nav>
 
     <!-- Mobile Menu Dark Backdrop -->
@@ -123,15 +137,32 @@
                 </div>
             </div>
 
-            <!-- Mobile Google Translate Widget -->
+            <!-- Mobile Language Switcher Pill -->
             <div class="mt-4 flex items-center justify-between rounded-lg border border-[#d8b45a]/30 bg-[#170b09] p-2.5">
-                <span class="text-xs font-bold uppercase tracking-wider text-[#d8b45a]">Sprache / Language:</span>
-                <div id="google_translate_element_mobile"></div>
+                <span class="text-xs font-bold uppercase tracking-wider text-[#d8b45a]" data-i18n-en="Language / Sprache:" data-i18n-de="Sprache / Language:">Language / Sprache:</span>
+                <div class="inline-flex items-center rounded-full border border-[#d8b45a]/50 bg-[#0d0605] p-0.5 text-xs font-bold">
+                    <button type="button" onclick="setSiteLanguage('en')" id="lang-btn-mobile-en" class="px-3 py-1 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a]">EN</button>
+                    <button type="button" onclick="setSiteLanguage('de')" id="lang-btn-mobile-de" class="px-3 py-1 rounded-full transition cursor-pointer text-white/80 hover:text-white">DE</button>
+                </div>
+            </div>
+
+            <!-- Mobile Quick Actions (Wishlist & Cart) -->
+            <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+                <button type="button" onclick="toggleMobileMenu(); openWishlistDrawer();" class="flex items-center justify-center gap-2 rounded border border-[#d8b45a]/30 bg-[#170b09] py-2 text-[#fbf4e8] hover:border-[#d8b45a]">
+                    <svg class="h-4 w-4 text-[#78000b]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/></svg>
+                    <span data-i18n-en="Wishlist" data-i18n-de="Wunschliste">Wishlist</span>
+                    <span class="wishlist-badge-count text-[0.65rem] font-bold text-[#d8b45a]">(0)</span>
+                </button>
+                <button type="button" onclick="toggleMobileMenu(); openCartDrawer();" class="flex items-center justify-center gap-2 rounded border border-[#d8b45a]/30 bg-[#170b09] py-2 text-[#fbf4e8] hover:border-[#d8b45a]">
+                    <svg class="h-4 w-4 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 8.5h11l1 11h-13l1-11Z"/><path d="M9 8.5a3 3 0 0 1 6 0"/></svg>
+                    <span data-i18n-en="Cart" data-i18n-de="Warenkorb">Cart</span>
+                    <span class="cart-badge-count text-[0.65rem] font-bold text-[#d8b45a]">({{ count(session('cart', [])) }})</span>
+                </button>
             </div>
 
             <!-- Mobile Search Bar -->
-            <form class="mt-5 flex items-center rounded-sm border border-[#d8b45a]/35 bg-[#170b09] px-3.5 py-2.5 text-white" action="/shop" method="get">
-                <input id="mobile-site-search" name="search" class="w-full bg-transparent text-xs font-medium uppercase tracking-[0.1em] text-[#fffaf0] outline-none placeholder:text-[#e4d9cc]/40" type="search" placeholder="Suche in Mehaaj..." data-i18n-placeholder-de="Suche in Mehaaj..." data-i18n-placeholder-en="Search in Mehaaj...">
+            <form class="mt-4 flex items-center rounded-sm border border-[#d8b45a]/35 bg-[#170b09] px-3.5 py-2.5 text-white" action="/shop" method="get">
+                <input id="mobile-site-search" name="search" class="w-full bg-transparent text-xs font-medium uppercase tracking-[0.1em] text-[#fffaf0] outline-none placeholder:text-[#e4d9cc]/40" type="search" placeholder="Search in Mehaaj..." data-i18n-placeholder-de="Suche in Mehaaj..." data-i18n-placeholder-en="Search in Mehaaj...">
                 <button type="submit" class="text-[#d8b45a] hover:text-white" aria-label="Search">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4" stroke-linecap="round"/></svg>
                 </button>
@@ -139,6 +170,15 @@
 
             <!-- Navigation Links Grid with Dynamic Database Categories & Subcategories -->
             <nav class="mt-4 grid divide-y divide-[#d8b45a]/12 text-sm uppercase" aria-label="Mobile Menu Navigation">
+                <div class="py-3">
+                    <a class="group flex items-center justify-between py-1 transition-all duration-300 hover:text-[#d8b45a]" href="/reviews">
+                        <div class="flex items-center gap-3">
+                            <span class="text-[0.65rem] font-bold text-[#d8b45a]">★</span>
+                            <span class="font-display text-lg font-medium" data-i18n-en="Client Reviews" data-i18n-de="Kundenbewertungen">Client Reviews</span>
+                        </div>
+                        <span class="text-[0.62rem] font-bold px-2 py-0.5 rounded bg-[#d8b45a]/20 text-[#d8b45a]">4.9 / 5</span>
+                    </a>
+                </div>
                 @forelse($globalCategories ?? [] as $index => $category)
                     <div class="py-3">
                         <a class="group flex items-center justify-between py-1 transition-all duration-300 hover:text-[#d8b45a]" href="/shop?category={{ $category->slug }}">

@@ -47,13 +47,17 @@ class DashboardController extends Controller
         $categoryData = [];
 
         try {
-            $categoriesWithCount = Category::withCount('products')->get();
-            if ($categoriesWithCount->count() > 0 && $categoriesWithCount->sum('products_count') > 0) {
+            $categoriesWithCount = Category::withCount('products')
+                ->where('status', 'active')
+                ->having('products_count', '>', 0)
+                ->orderByDesc('products_count')
+                ->take(5)
+                ->get();
+
+            if ($categoriesWithCount->count() > 0) {
                 foreach ($categoriesWithCount as $cat) {
-                    if ($cat->products_count > 0) {
-                        $categoryLabels[] = $cat->name;
-                        $categoryData[] = $cat->products_count;
-                    }
+                    $categoryLabels[] = $cat->name;
+                    $categoryData[] = $cat->products_count;
                 }
             }
         } catch (\Throwable $e) {

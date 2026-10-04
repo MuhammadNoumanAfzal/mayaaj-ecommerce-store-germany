@@ -216,10 +216,43 @@
                                             <span class="rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md">EXKLUSIV</span>
                                         </div>
                                     @endif
+                                    @php
+                                        $prodPayload = htmlspecialchars(json_encode([
+                                            'id' => $product->id,
+                                            'name' => $product->name,
+                                            'price' => 'EUR ' . number_format($product->price, 2, ',', '.'),
+                                            'sale_price' => $product->sale_price ? 'EUR ' . number_format($product->sale_price, 2, ',', '.') : null,
+                                            'image' => $product->image_url,
+                                            'category' => $product->category->name ?? 'Exklusiv',
+                                            'slug' => $product->slug,
+                                            'description' => $product->description,
+                                        ]), ENT_QUOTES, 'UTF-8');
+                                    @endphp
                                     <div class="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                        <button class="flex h-8 w-8 items-center justify-center rounded-full border border-[#e6decb] bg-white text-[#78000b] shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer" type="button" onclick="openWishlistModal()" aria-label="Add to wishlist">
-                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
+                                        <button
+                                            type="button"
+                                            data-wishlist-btn-id="{{ $product->id }}"
+                                            onclick="toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
+                                            data-product="{{ $prodPayload }}"
+                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-neutral-700 shadow-md transition hover:bg-[#78000b] hover:text-white cursor-pointer"
+                                            aria-label="Add to wishlist"
+                                            title="Wishlist"
+                                        >
+                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
+                                            </svg>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onclick="openQuickViewModal(JSON.parse(this.dataset.product))"
+                                            data-product="{{ $prodPayload }}"
+                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-[#1c1210] shadow-md transition hover:bg-[#d8b45a] hover:text-[#1c1210] cursor-pointer"
+                                            aria-label="Quick View"
+                                            title="Quick View"
+                                        >
+                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="11" cy="11" r="6.5" />
+                                                <path d="m16 16 4 4" stroke-linecap="round" />
                                             </svg>
                                         </button>
                                     </div>
