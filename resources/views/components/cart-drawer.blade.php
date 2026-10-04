@@ -1,7 +1,7 @@
 <!-- Global Slide-Over Cart Drawer Component -->
 <div id="cart-drawer-backdrop" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md transition-opacity duration-500 opacity-0 pointer-events-none cursor-pointer" onclick="closeCartDrawer()"></div>
 
-<div id="cart-drawer-panel" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transition-transform duration-500 translate-x-full border-l border-[#e6decb] flex flex-col justify-between overflow-hidden">
+<div id="cart-drawer-panel" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transition-all duration-500 translate-x-full invisible pointer-events-none border-l border-[#e6decb] flex flex-col justify-between overflow-hidden">
     
     <!-- Drawer Header -->
     <div class="border-b border-[#e6decb] bg-[#faf7f2] p-5">
@@ -144,7 +144,7 @@
         const panel = document.getElementById('cart-drawer-panel');
         backdrop.classList.remove('pointer-events-none', 'opacity-0');
         backdrop.classList.add('opacity-100');
-        panel.classList.remove('translate-x-full');
+        panel.classList.remove('translate-x-full', 'invisible', 'pointer-events-none');
     }
 
     function closeCartDrawer() {
@@ -152,7 +152,7 @@
         const panel = document.getElementById('cart-drawer-panel');
         backdrop.classList.remove('opacity-100');
         backdrop.classList.add('opacity-0', 'pointer-events-none');
-        panel.classList.add('translate-x-full');
+        panel.classList.add('translate-x-full', 'invisible', 'pointer-events-none');
     }
 
     function fetchAndUpdateCartDrawer() {

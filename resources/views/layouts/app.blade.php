@@ -12,11 +12,19 @@
         <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600|inter:400,500,600&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+                position: relative;
+            }
+        </style>
     </head>
-    <body class="bg-[#faf7f2] text-[#1c1210] antialiased selection:bg-[#78000b] selection:text-white">
+    <body class="overflow-x-hidden w-full max-w-[100vw] bg-[#faf7f2] text-[#1c1210] antialiased selection:bg-[#78000b] selection:text-white">
         <x-navbar />
 
-        <main>
+        <main class="overflow-x-hidden w-full max-w-[100vw]">
             @yield('content')
         </main>
 
@@ -26,7 +34,7 @@
         <!-- Global Slide-Over Wishlist Drawer -->
         <div id="wishlist-drawer-backdrop" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none cursor-pointer" onclick="closeWishlistDrawer()"></div>
 
-        <div id="wishlist-drawer-panel" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transition-transform duration-500 translate-x-full border-l border-[#e6decb] flex flex-col justify-between overflow-hidden">
+        <div id="wishlist-drawer-panel" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transition-all duration-500 translate-x-full invisible pointer-events-none border-l border-[#e6decb] flex flex-col justify-between overflow-hidden">
             <!-- Wishlist Header -->
             <div class="border-b border-[#e6decb] bg-[#faf7f2] p-5">
                 <div class="flex items-center justify-between">
@@ -276,7 +284,7 @@
                     backdrop.classList.add('opacity-100');
                 }
                 if (panel) {
-                    panel.classList.remove('translate-x-full');
+                    panel.classList.remove('translate-x-full', 'invisible', 'pointer-events-none');
                     panel.classList.add('translate-x-0');
                 }
                 document.body.style.overflow = 'hidden';
@@ -291,7 +299,7 @@
                 }
                 if (panel) {
                     panel.classList.remove('translate-x-0');
-                    panel.classList.add('translate-x-full');
+                    panel.classList.add('translate-x-full', 'invisible', 'pointer-events-none');
                 }
                 document.body.style.overflow = '';
             }

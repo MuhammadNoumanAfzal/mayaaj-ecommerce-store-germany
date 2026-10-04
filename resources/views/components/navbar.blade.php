@@ -1,96 +1,110 @@
-<header class="fixed inset-x-0 top-0 z-50 bg-transparent text-white transition-all duration-500" data-site-header>
-    <nav class="flex h-16 w-full items-center gap-5 px-5 sm:px-7 lg:h-[4.8rem] lg:px-8" aria-label="Main navigation">
-        <button class="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm border border-[#d8b45a]/55 bg-[#d8b45a]/10 text-white transition hover:border-[#d8b45a] hover:bg-[#78000b] hover:text-white shadow-sm" type="button" onclick="toggleMobileMenu()" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                <path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17" stroke-linecap="round" />
-            </svg>
+<header class="sticky top-0 z-50 w-full bg-[#17100e]/95 border-b border-[#e6decb]/15 shadow-[0_4px_25px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300" data-site-header>
+    <!-- Solid Maison Warm Atelier Navigation Bar (Soft on the eyes) -->
+    <nav class="flex h-16 w-full max-w-full items-center gap-3 sm:gap-4 lg:gap-4 xl:gap-6 px-3 sm:px-5 lg:h-[4.6rem] lg:px-6 xl:px-8 bg-transparent text-[#f4ede4]" aria-label="Main navigation">
+        <!-- Luxury Soft Pink Salt & Gold Categories Button -->
+        <button class="inline-flex h-10 items-center gap-2 rounded-sm border border-[#d8b45a]/40 bg-[#261412] px-3 py-1 text-[#f5ebd9] shadow-sm transition-all duration-300 hover:border-[#ffd45a] hover:bg-[#78000b] hover:shadow-[0_0_16px_rgba(216,180,90,0.25)] cursor-pointer group shrink-0" type="button" onclick="toggleMobileMenu()" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open categories menu">
+            <div class="flex flex-col gap-1">
+                <span class="h-0.5 w-4 bg-[#ffd45a] rounded-full transition-all duration-300 group-hover:w-5"></span>
+                <span class="h-0.5 w-3 bg-[#ffd45a] rounded-full transition-all duration-300 group-hover:w-5"></span>
+                <span class="h-0.5 w-4 bg-[#ffd45a] rounded-full transition-all duration-300 group-hover:w-5"></span>
+            </div>
+            <span class="hidden sm:inline font-bold text-[0.68rem] uppercase tracking-[0.16em] text-[#ffd45a]" data-i18n-en="CATEGORIES" data-i18n-de="KATEGORIEN">CATEGORIES</span>
         </button>
 
+        <!-- Brand Logo -->
         <a href="/" class="flex shrink-0 items-center" aria-label="MEHAAJ home">
-            <img src="/logo.png" alt="MEHAAJ" class="h-11 w-auto max-w-[148px] object-contain lg:h-12 lg:max-w-[170px]">
+            <img src="/logo.png" alt="MEHAAJ" class="h-9 w-auto max-w-[125px] object-contain sm:h-11 sm:max-w-[150px] lg:h-12 lg:max-w-[160px]">
         </a>
 
-        <div class="hidden items-center gap-7 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white/90 lg:flex xl:gap-9">
-            @forelse($globalCategories ?? [] as $category)
-                <div class="relative group py-2">
-                    <a class="inline-flex items-center gap-1.5 transition hover:text-[#d8b45a]" href="/shop?category={{ $category->slug }}">
-                        <span>{{ $category->name }}</span>
-                        @if($category->activeSubcategories && $category->activeSubcategories->count() > 0)
-                            <svg class="h-3 w-3 text-[#d8b45a]/80 group-hover:rotate-180 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                        @endif
-                    </a>
+        <!-- Streamlined Desktop Navigation (Does not overflow) -->
+        <div class="hidden items-center gap-4 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white/90 lg:flex xl:gap-6 shrink-0">
+            <!-- Collections Mega Dropdown Trigger -->
+            <div class="relative group py-2">
+                <button type="button" class="inline-flex items-center gap-1.5 transition hover:text-[#d8b45a] cursor-pointer" onclick="toggleMobileMenu()">
+                    <span data-i18n-en="Collections" data-i18n-de="Kollektionen">Collections</span>
+                    <svg class="h-3.5 w-3.5 text-[#d8b45a] group-hover:rotate-180 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
 
-                    @if($category->activeSubcategories && $category->activeSubcategories->count() > 0)
-                        <div class="absolute left-0 top-full hidden group-hover:block min-w-[210px] rounded-md border border-[#d8b45a]/40 bg-[#0d0605]/95 p-3 shadow-2xl backdrop-blur-md z-50">
-                            <div class="text-[0.58rem] font-bold uppercase tracking-widest text-[#d8b45a]/70 px-3 pb-2 border-b border-[#d8b45a]/15 mb-1">
+                <!-- Elegant Mega Dropdown Menu for Collections -->
+                <div class="absolute left-0 top-full hidden group-hover:grid grid-cols-2 gap-4 w-[420px] max-w-[calc(100vw-2rem)] rounded-md border border-[#d8b45a]/40 bg-[#0d0605]/98 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur-xl z-50 transition-all duration-300">
+                    <div class="col-span-2 flex items-center justify-between border-b border-[#d8b45a]/20 pb-2">
+                        <span class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[#d8b45a]" data-i18n-en="MAISON ATELIER CATEGORIES" data-i18n-de="MAISON ATELIER KATEGORIEN">MAISON ATELIER CATEGORIES</span>
+                        <a href="/shop" class="text-[0.62rem] text-[#e4d9cc]/70 hover:text-[#d8b45a] transition" data-i18n-en="View All ({{ count($globalCategories ?? []) }}) →" data-i18n-de="Alle anzeigen ({{ count($globalCategories ?? []) }}) →">View All ({{ count($globalCategories ?? []) }}) →</a>
+                    </div>
+                    @foreach($globalCategories ?? [] as $category)
+                        <div class="space-y-1">
+                            <a href="/shop?category={{ $category->slug }}" class="font-display text-sm font-medium text-[#fffaf0] hover:text-[#d8b45a] transition block">
                                 {{ $category->name }}
-                            </div>
-                            <div class="space-y-1">
-                                @foreach($category->activeSubcategories as $subcat)
-                                    <a href="/shop?category={{ $category->slug }}&subcategory={{ $subcat->slug }}" class="block px-3 py-1.5 text-[0.68rem] font-semibold text-[#e4d9cc] hover:text-[#d8b45a] hover:bg-white/10 rounded transition">
-                                        {{ $subcat->name }}
-                                    </a>
-                                @endforeach
-                            </div>
+                            </a>
+                            @if($category->activeSubcategories && $category->activeSubcategories->count() > 0)
+                                <div class="space-y-0.5 pl-2 border-l border-[#d8b45a]/30">
+                                    @foreach($category->activeSubcategories->take(2) as $subcat)
+                                        <a href="/shop?category={{ $category->slug }}&subcategory={{ $subcat->slug }}" class="block text-[0.65rem] text-[#e4d9cc]/60 hover:text-[#d8b45a] transition">
+                                            • {{ $subcat->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
-                    @endif
+                    @endforeach
                 </div>
-            @empty
-                <a class="transition hover:text-[#d8b45a]" href="/shop" data-i18n-de="Kollektion & Shop" data-i18n-en="Collection & Shop">Kollektion & Shop</a>
-            @endforelse
-            <a class="transition hover:text-[#d8b45a]" href="/reviews" data-i18n-de="Bewertungen" data-i18n-en="Reviews">Reviews</a>
-            <a class="transition hover:text-[#d8b45a]" href="/ueber-uns" data-i18n-de="Manufaktur" data-i18n-en="Atelier">Atelier</a>
+            </div>
+
+            <a class="transition hover:text-[#d8b45a]" href="/shop" data-i18n-en="Shop All" data-i18n-de="Alle Artikel">Shop All</a>
+            <a class="transition hover:text-[#d8b45a]" href="/reviews" data-i18n-en="Reviews" data-i18n-de="Bewertungen">Reviews</a>
+            <a class="transition hover:text-[#d8b45a]" href="/ueber-uns" data-i18n-en="Atelier" data-i18n-de="Manufaktur">Atelier</a>
         </div>
 
-        <form class="ml-auto hidden min-w-[200px] max-w-[320px] flex-1 items-center border-b border-[#d8b45a]/65 pb-1 text-white lg:flex" action="/shop" method="get">
+        <!-- Search Bar (Responsive Width) -->
+        <form class="ml-auto hidden w-32 md:w-36 lg:w-40 xl:w-52 focus-within:w-48 xl:focus-within:w-60 transition-all duration-300 items-center border-b border-[#d8b45a]/65 pb-1 text-white lg:flex" action="/shop" method="get">
             <label class="sr-only" for="site-search" data-i18n-de="Suche" data-i18n-en="Search">Search</label>
             <input
                 id="site-search"
                 name="search"
-                class="h-9 w-full bg-transparent text-[0.72rem] font-bold uppercase tracking-[0.08em] text-[#fffaf0] outline-none placeholder:text-[#fffaf0] placeholder:opacity-100"
+                class="h-8 w-full bg-transparent text-[0.72rem] font-bold uppercase tracking-[0.06em] text-[#fffaf0] outline-none placeholder:text-[#fffaf0]/80"
                 type="search"
-                placeholder="Search masterpieces..."
-                data-i18n-placeholder-de="Meisterwerke suchen..."
-                data-i18n-placeholder-en="Search masterpieces..."
+                placeholder="Search..."
+                data-i18n-placeholder-de="Suchen..."
+                data-i18n-placeholder-en="Search..."
             >
-            <button class="inline-flex h-9 w-9 cursor-pointer items-center justify-center text-white transition hover:text-[#d8b45a]" type="submit" aria-label="Search">
-                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <button class="inline-flex h-8 w-8 cursor-pointer items-center justify-center text-white transition hover:text-[#d8b45a]" type="submit" aria-label="Search">
+                <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                     <circle cx="11" cy="11" r="6.5" />
                     <path d="m16 16 4 4" stroke-linecap="round" />
                 </svg>
             </button>
         </form>
 
-        <div class="hidden items-center gap-5 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-white lg:flex xl:gap-6">
+        <div class="hidden items-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-white lg:flex xl:gap-4 shrink-0">
             <!-- Language Switcher Pill (EN | DE) -->
-            <div class="inline-flex items-center rounded-full border border-[#d8b45a]/50 bg-[#160b09]/80 p-0.5 text-[0.65rem] font-bold shadow-xs">
-                <button type="button" onclick="setSiteLanguage('en')" id="lang-btn-en" class="px-2.5 py-0.5 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a]">EN</button>
-                <button type="button" onclick="setSiteLanguage('de')" id="lang-btn-de" class="px-2.5 py-0.5 rounded-full transition cursor-pointer text-white/80 hover:text-white">DE</button>
+            <div class="inline-flex items-center rounded-full border border-[#d8b45a]/50 bg-[#160b09]/80 p-0.5 text-[0.62rem] font-bold shadow-xs">
+                <button type="button" onclick="setSiteLanguage('en')" id="lang-btn-en" class="px-2 py-0.5 rounded-full transition cursor-pointer text-[#120807] bg-[#d8b45a]">EN</button>
+                <button type="button" onclick="setSiteLanguage('de')" id="lang-btn-de" class="px-2 py-0.5 rounded-full transition cursor-pointer text-white/80 hover:text-white">DE</button>
             </div>
 
-            <button class="inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openAccountModal()" aria-label="My account">
+            <button class="inline-flex cursor-pointer items-center gap-1.5 transition hover:text-[#d8b45a]" type="button" onclick="openAccountModal()" aria-label="My account">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <circle cx="12" cy="8" r="3.5" />
                     <path d="M5.5 20c1.1-3.4 3.3-5.1 6.5-5.1s5.4 1.7 6.5 5.1" stroke-linecap="round" />
                 </svg>
-                <span data-i18n-de="Mein Konto" data-i18n-en="My Account">My Account</span>
+                <span class="hidden 2xl:inline" data-i18n-de="Konto" data-i18n-en="Account">Account</span>
             </button>
 
-            <button class="relative inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openWishlistDrawer()" aria-label="Wishlist">
+            <button class="relative inline-flex cursor-pointer items-center gap-1.5 transition hover:text-[#d8b45a]" type="button" onclick="openWishlistDrawer()" aria-label="Wishlist">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
                 </svg>
-                <span data-i18n-de="Wunschliste" data-i18n-en="Wishlist">Wishlist</span>
-                <span class="wishlist-badge-count absolute -right-3 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#78000b] text-[0.58rem] font-bold text-white shadow-xs">0</span>
+                <span class="hidden xl:inline" data-i18n-de="Wunschliste" data-i18n-en="Wishlist">Wishlist</span>
+                <span class="wishlist-badge-count absolute -right-2.5 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#78000b] text-[0.58rem] font-bold text-white shadow-xs">0</span>
             </button>
 
-            <button class="relative inline-flex cursor-pointer items-center gap-2 transition hover:text-[#d8b45a]" type="button" onclick="openCartDrawer()" aria-label="Shopping cart">
+            <button class="relative inline-flex cursor-pointer items-center gap-1.5 transition hover:text-[#d8b45a]" type="button" onclick="openCartDrawer()" aria-label="Shopping cart">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <path d="M6.5 8.5h11l1 11h-13l1-11Z" stroke-linejoin="round" />
                     <path d="M9 8.5a3 3 0 0 1 6 0" stroke-linecap="round" />
                 </svg>
-                <span data-i18n-de="Warenkorb" data-i18n-en="Shopping Cart">Shopping Cart</span>
-                <span class="cart-badge-count absolute -right-3 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#d8b45a] text-[0.58rem] font-bold text-[#120807]">{{ count(session('cart', [])) }}</span>
+                <span class="hidden xl:inline" data-i18n-de="Warenkorb" data-i18n-en="Cart">Cart</span>
+                <span class="cart-badge-count absolute -right-2.5 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#d8b45a] text-[0.58rem] font-bold text-[#120807]">{{ count(session('cart', [])) }}</span>
             </button>
         </div>
 

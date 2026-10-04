@@ -7,10 +7,17 @@
 @layer base {
     html {
         scroll-behavior: smooth;
+        overflow-x: hidden;
+        max-width: 100%;
+        width: 100%;
     }
 
     body {
         @apply bg-espresso font-sans text-charcoal antialiased;
+        overflow-x: hidden;
+        max-width: 100%;
+        width: 100%;
+        position: relative;
     }
 
     ::selection {

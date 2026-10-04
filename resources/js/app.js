@@ -109,23 +109,15 @@ if (slider) {
     startTimer();
 }
 
-// Scrolled Navbar & Route-Aware Backdrop
+// Scrolled Navbar Shadow Enhancer (Navbar remains solid Maison Noir)
 const siteHeader = document.querySelector('[data-site-header]');
-
 if (siteHeader) {
-    const pathname = window.location.pathname.replace(/\/$/, '');
-    const isHomePage = pathname === '' || pathname === '/home' || pathname.endsWith('index.php');
-
     const handleScroll = () => {
-        if (!isHomePage || window.scrollY > 15) {
-            siteHeader.classList.add('bg-[#0d0605]/95', 'backdrop-blur-md', 'border-b', 'border-[#d8b45a]/30', 'shadow-[0_10px_35px_rgba(0,0,0,0.6)]');
-            siteHeader.classList.remove('bg-transparent');
+        if (window.scrollY > 20) {
+            siteHeader.classList.add('shadow-[0_12px_40px_rgba(0,0,0,0.85)]');
         } else {
-            siteHeader.classList.remove('bg-[#0d0605]/95', 'backdrop-blur-md', 'border-b', 'border-[#d8b45a]/30', 'shadow-[0_10px_35px_rgba(0,0,0,0.6)]');
-            siteHeader.classList.add('bg-transparent');
+            siteHeader.classList.remove('shadow-[0_12px_40px_rgba(0,0,0,0.85)]');
         }
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
 }
