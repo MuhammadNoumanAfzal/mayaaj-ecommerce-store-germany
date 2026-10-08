@@ -181,9 +181,19 @@
             border-radius: 0.75rem;
         }
 
+        .admin-nav-item svg {
+            color: #8C827A;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         .admin-nav-item:hover {
             background-color: #FBF6F4 !important;
             color: #964B42 !important;
+        }
+
+        .admin-nav-item:hover svg {
+            color: #964B42 !important;
+            transform: scale(1.08);
         }
 
         .admin-nav-item-active {
@@ -193,14 +203,28 @@
             border-radius: 0.75rem;
         }
 
+        .admin-nav-item-active svg {
+            color: #964B42 !important;
+        }
+
         .admin-nav-subitem {
             color: #66605B !important;
             font-weight: 500;
         }
 
+        .admin-nav-subitem svg {
+            color: #A39B93;
+            transition: all 0.2s ease;
+        }
+
         .admin-nav-subitem:hover {
             background-color: #FBF6F4 !important;
             color: #964B42 !important;
+        }
+
+        .admin-nav-subitem:hover svg {
+            color: #964B42 !important;
+            transform: translateX(2px);
         }
 
         .admin-nav-subitem-active {
@@ -504,17 +528,26 @@
                     <!-- Dashboard Overview (All Roles) -->
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.dashboard') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
-                            <svg class="h-4 w-4 {{ request()->routeIs('admin.dashboard') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.dashboard') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="9" rx="1.5"/>
+                                <rect x="14" y="3" width="7" height="5" rx="1.5"/>
+                                <rect x="14" y="12" width="7" height="9" rx="1.5"/>
+                                <rect x="3" y="16" width="7" height="5" rx="1.5"/>
+                            </svg>
                             <span data-i18n-de="Dashboard Übersicht" data-i18n-en="Dashboard Overview">Dashboard Overview</span>
                         </div>
                     </a>
 
                     @if($canManageCatalog)
-                    <!-- Collapsible Categories Dropdown -->
+                    <!-- Collapsible Categories Dropdown (Haute Couture Layer Stack) -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('categories-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.categories*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                             <div class="flex items-center gap-3">
-                                <svg class="h-4 w-4 {{ request()->routeIs('admin.categories*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.categories*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                                    <polyline points="2 17 12 22 22 17"/>
+                                    <polyline points="2 12 12 17 22 12"/>
+                                </svg>
                                 <span data-i18n-de="Kategorien" data-i18n-en="Categories">Categories</span>
                             </div>
                             <svg id="categories-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.categories*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -522,7 +555,7 @@
 
                         <div id="categories-menu" class="{{ request()->routeIs('admin.categories*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
                             <a href="{{ route('admin.categories') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.categories') && !request()->routeIs('admin.categories.create') && !request()->routeIs('admin.categories.edit') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
-                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
                                 <span data-i18n-de="Kategorien Übersicht" data-i18n-en="View Categories">View Categories</span>
                             </a>
                             <a href="{{ route('admin.categories.create') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.categories.create') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
@@ -532,11 +565,16 @@
                         </div>
                     </div>
 
-                    <!-- Collapsible Subcategories Dropdown -->
+                    <!-- Collapsible Subcategories Dropdown (Taxonomy Branches) -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('subcategories-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.subcategories*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                             <div class="flex items-center gap-3">
-                                <svg class="h-4 w-4 {{ request()->routeIs('admin.subcategories*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2z"/></svg>
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.subcategories*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="6" y1="3" x2="6" y2="15"/>
+                                    <circle cx="18" cy="6" r="3"/>
+                                    <circle cx="6" cy="18" r="3"/>
+                                    <path d="M18 9a9 9 0 0 1-9 9"/>
+                                </svg>
                                 <span data-i18n-de="Unterkategorien" data-i18n-en="Subcategories">Subcategories</span>
                             </div>
                             <svg id="subcategories-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.subcategories*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -544,7 +582,7 @@
 
                         <div id="subcategories-menu" class="{{ request()->routeIs('admin.subcategories*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
                             <a href="{{ route('admin.subcategories') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.subcategories') && !request()->routeIs('admin.subcategories.create') && !request()->routeIs('admin.subcategories.edit') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
-                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
                                 <span data-i18n-de="Unterkategorien Übersicht" data-i18n-en="View Subcategories">View Subcategories</span>
                             </a>
                             <a href="{{ route('admin.subcategories.create') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.subcategories.create') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
@@ -554,11 +592,14 @@
                         </div>
                     </div>
 
-                    <!-- Collapsible Products Catalog Dropdown -->
+                    <!-- Collapsible Products Catalog Dropdown (Luxury Garment Tag) -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('products-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.products*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                             <div class="flex items-center gap-3">
-                                <svg class="h-4 w-4 {{ request()->routeIs('admin.products*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.products*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                                    <line x1="7" y1="7" x2="7.01" y2="7"/>
+                                </svg>
                                 <span data-i18n-de="Produkte Katalog" data-i18n-en="Product Catalog">Product Catalog</span>
                             </div>
                             <svg id="products-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.products*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -566,7 +607,7 @@
 
                         <div id="products-menu" class="{{ request()->routeIs('admin.products*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
                             <a href="{{ route('admin.products') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.products') && !request()->routeIs('admin.products.create') && !request()->routeIs('admin.products.edit') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
-                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
                                 <span data-i18n-de="Produkte Übersicht" data-i18n-en="View Products">View Products</span>
                             </a>
                             <a href="{{ route('admin.products.create') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.products.create') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
@@ -576,10 +617,15 @@
                         </div>
                     </div>
 
-                    <!-- Inventory & Stock Management -->
+                    <!-- Inventory & Stock Management (Warehouse Package 3D) -->
                     <a href="{{ route('admin.inventory') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.inventory*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
-                            <svg class="h-4 w-4 {{ request()->routeIs('admin.inventory*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.inventory*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m7.5 4.27 9 5.15"/>
+                                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                                <path d="m3.3 7 8.7 5 8.7-5"/>
+                                <path d="M12 22V12"/>
+                            </svg>
                             <span data-i18n-de="Lagerbestand & Inventar" data-i18n-en="Inventory & Stock">Inventory & Stock</span>
                         </div>
                         @php
@@ -592,11 +638,15 @@
                     @endif
 
                     @if($canManageOrders)
-                    <!-- Collapsible Orders Dropdown -->
+                    <!-- Collapsible Orders Dropdown (Verified Order Processing) -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('orders-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.orders*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                             <div class="flex items-center gap-3">
-                                <svg class="h-4 w-4 {{ request()->routeIs('admin.orders*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.orders*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                                    <path d="m9 14 2 2 4-4"/>
+                                </svg>
                                 <span data-i18n-de="Bestellungen & Vorkasse" data-i18n-en="Bulk Orders">Bulk Orders</span>
                             </div>
                             <svg id="orders-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.orders*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -604,7 +654,7 @@
 
                         <div id="orders-menu" class="{{ request()->routeIs('admin.orders*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
                             <a href="{{ route('admin.orders') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.orders') && !request('payment_method') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
-                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
                                 <span data-i18n-de="Bestellungen Übersicht" data-i18n-en="View Orders">View Orders</span>
                             </a>
                             <a href="{{ route('admin.orders', ['payment_method' => 'vorkasse']) }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request('payment_method') === 'vorkasse' ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
@@ -614,11 +664,14 @@
                         </div>
                     </div>
 
-                    <!-- Collapsible VIP Customers Dropdown -->
+                    <!-- Collapsible VIP Customers Dropdown (Royal Crown Elite) -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('customers-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.customers*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                             <div class="flex items-center gap-3">
-                                <svg class="h-4 w-4 {{ request()->routeIs('admin.customers*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.customers*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 18h18v2H3z"/>
+                                    <path d="m4 15 2-9 4.5 4L12 4l1.5 6L18 6l2 9H4z"/>
+                                </svg>
                                 <span data-i18n-de="VIP Kundenstamm" data-i18n-en="VIP Customers">VIP Customers</span>
                             </div>
                             <svg id="customers-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.customers*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -626,7 +679,7 @@
 
                         <div id="customers-menu" class="{{ request()->routeIs('admin.customers*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
                             <a href="{{ route('admin.customers') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.customers') && !request()->routeIs('admin.customers.create') && !request()->routeIs('admin.customers.edit') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
-                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                                 <span data-i18n-de="Kunden Übersicht" data-i18n-en="View Customers">View Customers</span>
                             </a>
                             <a href="{{ route('admin.customers.create') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.customers.create') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
@@ -636,11 +689,17 @@
                         </div>
                     </div>
 
-                    <!-- Collapsible Financial Intelligence Dropdown (Profit & Loss, Balance Sheet, OpEx) -->
+                    <!-- Collapsible Financial Intelligence Dropdown (Accounting Balance Scales) -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('finance-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.finance*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                             <div class="flex items-center gap-3">
-                                <svg class="h-4 w-4 {{ request()->routeIs('admin.finance*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.finance*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                                    <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                                    <path d="M7 21h10"/>
+                                    <path d="M12 3v18"/>
+                                    <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+                                </svg>
                                 <span data-i18n-de="Finanzen & GuV" data-i18n-en="Finance & GuV">Finance & GuV</span>
                             </div>
                             <svg id="finance-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.finance*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -664,10 +723,15 @@
                     @endif
 
                     @if($canModerate)
-                    <!-- Customer Contact Inquiries / Messages -->
+                    <!-- Customer Contact Inquiries / Messages (Concierge Message Bubble) -->
                     <a href="{{ route('admin.messages') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.messages*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
-                            <svg class="h-4 w-4 {{ request()->routeIs('admin.messages*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 10 13 2 6"/></svg>
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.messages*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                <circle cx="8" cy="10" r="1" fill="currentColor"/>
+                                <circle cx="12" cy="10" r="1" fill="currentColor"/>
+                                <circle cx="16" cy="10" r="1" fill="currentColor"/>
+                            </svg>
                             <span data-i18n-de="Kundenanfragen" data-i18n-en="Customer Messages">Customer Messages</span>
                         </div>
                         @php
@@ -678,10 +742,13 @@
                         @endif
                     </a>
 
-                    <!-- Customer Reviews & Testimonials Moderation -->
+                    <!-- Customer Reviews & Testimonials Moderation (Verified Medal Award) -->
                     <a href="{{ route('admin.reviews') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.reviews*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
-                            <svg class="h-4 w-4 {{ request()->routeIs('admin.reviews*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.reviews*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="6"/>
+                                <path d="m15.5 13.5 1.5 7.5-5-2.5-5 2.5 1.5-7.5"/>
+                            </svg>
                             <span data-i18n-de="Kundenbewertungen" data-i18n-en="Customer Reviews">Customer Reviews</span>
                         </div>
                         @php
@@ -694,19 +761,33 @@
                     @endif
 
                     @if($isSuperAdmin)
-                    <!-- Staff & Role Management (Super Admin Exclusive) -->
+                    <!-- Staff & Role Management (Security Governance Shield) -->
                     <a href="{{ route('admin.staff') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.staff*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
-                            <svg class="h-4 w-4 {{ request()->routeIs('admin.staff*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.staff*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <circle cx="12" cy="10" r="2.5"/>
+                                <path d="M12 12.5v3.5"/>
+                            </svg>
                             <span data-i18n-de="Mitarbeiter & Rollen" data-i18n-en="Staff & Roles">Staff & Roles</span>
                         </div>
                         <span class="rounded bg-purple-50 text-purple-700 border border-purple-200 px-1.5 py-0.5 text-[0.6rem] font-bold">RBAC</span>
                     </a>
 
-                    <!-- Store Settings (Super Admin Exclusive) -->
+                    <!-- Store Settings (Executive Control Sliders) -->
                     <a href="{{ route('admin.settings') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.settings') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
-                            <svg class="h-4 w-4 {{ request()->routeIs('admin.settings') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.settings') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="21" x2="4" y2="14"/>
+                                <line x1="4" y1="10" x2="4" y2="3"/>
+                                <line x1="12" y1="21" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12" y2="3"/>
+                                <line x1="20" y1="21" x2="20" y2="16"/>
+                                <line x1="20" y1="12" x2="20" y2="3"/>
+                                <line x1="1" y1="14" x2="7" y2="14"/>
+                                <line x1="9" y1="8" x2="15" y2="8"/>
+                                <line x1="17" y1="16" x2="23" y2="16"/>
+                            </svg>
                             <span data-i18n-de="Store Einstellungen" data-i18n-en="Store Settings">Store Settings</span>
                         </div>
                     </a>
