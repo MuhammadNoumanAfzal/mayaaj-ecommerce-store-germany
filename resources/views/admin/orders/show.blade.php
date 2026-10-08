@@ -17,15 +17,20 @@
                 <p class="text-xs text-stone-500 font-medium" data-i18n-de="Detaillierte Übersicht, Status-Workflow und druckbare Rechnung." data-i18n-en="Detailed overview, status workflow and printable invoice.">Detailed overview, status workflow and printable invoice.</p>
             </div>
             
-            <div class="flex items-center gap-2">
-                <button type="button" onclick="window.print()" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
-                    <svg class="h-3.5 w-3.5 text-saltora-terracotta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                    <span data-i18n-de="Rechnung Drucken" data-i18n-en="Print Invoice">Print Invoice</span>
-                </button>
+            <div class="flex flex-wrap items-center gap-2">
+                <a href="{{ route('admin.orders.invoice', $order->id) }}" target="_blank" class="btn-exec-primary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Open official A4 Tax Invoice with Company Logo">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    <span data-i18n-de="Rechnung (PDF/Druck)" data-i18n-en="Print Invoice">Print Invoice</span>
+                </a>
+
+                <a href="{{ route('admin.orders.packing-slip', $order->id) }}" target="_blank" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer" title="Open warehouse dispatch note / packing slip">
+                    <svg class="h-3.5 w-3.5 text-stone-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span data-i18n-de="Lieferschein" data-i18n-en="Packing Slip">Packing Slip</span>
+                </a>
 
                 <a href="{{ route('admin.orders') }}" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    <span data-i18n-de="Zurück zu Bestellungen" data-i18n-en="Back to Orders">Back to Orders</span>
+                    <span data-i18n-de="Zurück" data-i18n-en="Back to Orders">Back to Orders</span>
                 </a>
             </div>
         </div>

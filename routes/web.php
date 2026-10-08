@@ -155,6 +155,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Dashboard accessible by all authenticated roles
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+        // Dynamic Locale Switcher for English / German (Persistent)
+        Route::post('/lang/{locale}', function (string $locale) {
+            if (in_array($locale, ['en', 'de'])) {
+                session(['locale' => $locale, 'mehaaj_admin_lang' => $locale]);
+                cookie()->queue('mehaaj_admin_lang', $locale, 60 * 24 * 365);
+                cookie()->queue('locale', $locale, 60 * 24 * 365);
+                app()->setLocale($locale);
+            }
+            return response()->json(['success' => true, 'locale' => $locale]);
+        })->name('lang.switch');
+
         // 1. Staff & Role Management (Super Admin Exclusive)
         Route::middleware(['admin.role:super_admin'])->group(function () {
             Route::get('/staff', [\App\Http\Controllers\Admin\StaffController::class, 'index'])->name('staff');
@@ -204,6 +215,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             // Orders & Invoices CRUD Routes
             Route::get('/orders', [OrderController::class, 'index'])->name('orders');
             Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+            Route::get('/orders/{order}/invoice', [OrderController::class, 'printInvoice'])->name('orders.invoice');
+            Route::get('/orders/{order}/packing-slip', [OrderController::class, 'printPackingSlip'])->name('orders.packing-slip');
             Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
             Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 

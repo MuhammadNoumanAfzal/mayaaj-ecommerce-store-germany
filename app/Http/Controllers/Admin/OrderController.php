@@ -52,6 +52,24 @@ class OrderController extends Controller
     }
 
     /**
+     * Dedicated standalone luxury printable invoice.
+     */
+    public function printInvoice(Order $order)
+    {
+        $order->load('items.product');
+        return view('admin.orders.invoice', compact('order'));
+    }
+
+    /**
+     * Dedicated standalone luxury warehouse packing slip & dispatch note.
+     */
+    public function printPackingSlip(Order $order)
+    {
+        $order->load('items.product');
+        return view('admin.orders.packing_slip', compact('order'));
+    }
+
+    /**
      * Update the status and payment status of an order.
      */
     public function updateStatus(Request $request, Order $order)

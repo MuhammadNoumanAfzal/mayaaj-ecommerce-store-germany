@@ -38,25 +38,25 @@
             <!-- Super Admin -->
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center flex flex-col justify-center">
                 <span class="block text-2xl sm:text-3xl font-bold font-serif text-purple-300">{{ $superAdminCount }}</span>
-                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">Super Admins</span>
+                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="Super Admins" data-i18n-de="Super-Administratoren">Super Admins</span>
             </div>
 
             <!-- Store Admin -->
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center flex flex-col justify-center">
                 <span class="block text-2xl sm:text-3xl font-bold font-serif text-white">{{ $adminCount }}</span>
-                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">Store Admins</span>
+                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="Store Admins" data-i18n-de="Store-Administratoren">Store Admins</span>
             </div>
 
             <!-- Review Moderator -->
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center flex flex-col justify-center">
                 <span class="block text-2xl sm:text-3xl font-bold font-serif text-blue-300">{{ $moderatorCount }}</span>
-                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">Review Moderators</span>
+                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="Review Moderators" data-i18n-de="Bewertungs-Moderatoren">Review Moderators</span>
             </div>
 
             <!-- Inventory Manager -->
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center flex flex-col justify-center">
                 <span class="block text-2xl sm:text-3xl font-bold font-serif text-amber-300">{{ $inventoryCount }}</span>
-                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">Inventory Staff</span>
+                <span class="text-[0.65rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="Inventory Staff" data-i18n-de="Lager-Mitarbeiter">Inventory Staff</span>
             </div>
         </div>
     </div>

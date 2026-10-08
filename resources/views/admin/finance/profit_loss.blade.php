@@ -1,11 +1,82 @@
 @extends('layouts.admin')
 @section('title', 'Profit & Loss Statement (GuV) — MEHAAJ Atelier')
 
+@section('admin-styles')
+<style>
+@media print {
+    .screen-only {
+        display: none !important;
+    }
+    .print-only {
+        display: block !important;
+    }
+    .print-flex {
+        display: flex !important;
+    }
+    body {
+        background: #ffffff !important;
+        color: #1c1917 !important;
+    }
+    .bg-white {
+        background: #ffffff !important;
+    }
+    .border-stone-200 {
+        border-color: #e7e5e4 !important;
+    }
+    .shadow-sm, .shadow-md, .shadow-2xs {
+        box-shadow: none !important;
+    }
+    .page-break-avoid {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+}
+@media screen {
+    .print-only {
+        display: none !important;
+    }
+    .print-flex {
+        display: none !important;
+    }
+}
+</style>
+@endsection
+
 @section('admin-content')
 <div class="space-y-6 max-w-full overflow-hidden">
 
+    <!-- Official Printable Document Header (Company Logo & Letterhead) -->
+    <div class="print-only mb-6 pb-4 border-b-2 border-stone-900">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <img src="/logo.png" alt="MEHAAJ Logo" class="h-16 w-auto object-contain">
+                <div>
+                    <h1 class="font-serif text-2xl font-black tracking-wider text-stone-900 uppercase">MEHAAJ LUXURY ATELIER</h1>
+                    <p class="text-[9pt] text-stone-600 font-medium">MEHAAJ Handelsgesellschaft mbH • Goetheplatz 7, 60313 Frankfurt am Main</p>
+                    <p class="text-[8pt] text-stone-500">USt-IdNr.: DE 349 881 294 • HRB 128492 Amtsgericht Frankfurt am Main • atelier@mehaaj.com</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <span class="inline-block px-2.5 py-1 text-[8pt] font-black uppercase tracking-wider bg-stone-900 text-white rounded">CONFIDENTIAL • AUDIT REPORT</span>
+                <p class="text-xs font-mono font-bold text-stone-800 mt-1.5">DOC REF: GUV-{{ now()->format('Ymd') }}-{{ strtoupper(substr(md5($period), 0, 4)) }}</p>
+                <p class="text-[8.5pt] text-stone-600 font-medium mt-0.5">Date: {{ now()->format('d.m.Y H:i') }} CET</p>
+            </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-stone-200 flex items-center justify-between">
+            <div>
+                <h2 class="text-lg font-serif font-black text-stone-900 uppercase" data-i18n-en="Profit & Loss Statement (GuV)" data-i18n-de="Gewinn- und Verlustrechnung (GuV)">Profit & Loss Statement (GuV)</h2>
+                <p class="text-xs text-stone-600 font-medium" data-i18n-en="Accounting Framework: German Commercial Code (HGB § 275) / European GAAP" data-i18n-de="Rechnungslegung: Handelsgesetzbuch (HGB § 275) / GoB">Accounting Framework: German Commercial Code (HGB § 275) / European GAAP</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs font-bold text-stone-900"><span data-i18n-en="Reporting Period:" data-i18n-de="Berichtszeitraum:">Reporting Period:</span> <span class="font-black text-[#964B42]">{{ $periodLabel }}</span></p>
+                <p class="text-[8.5pt] text-stone-500 font-mono">{{ $startDate->format('d M Y') }} – {{ $endDate->format('d M Y') }}</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Executive Header Banner (Terracotta Gradient) -->
-    <div class="rounded-2xl p-5 sm:p-7 bg-gradient-to-r from-[#964B42] via-[#853E36] to-[#6d3029] shadow-sm text-white relative overflow-hidden">
+    <div class="screen-only rounded-2xl p-5 sm:p-7 bg-gradient-to-r from-[#964B42] via-[#853E36] to-[#6d3029] shadow-sm text-white relative overflow-hidden">
         <!-- Luxury ambient texture watermark -->
         <div class="absolute -right-8 -bottom-10 opacity-10 pointer-events-none">
             <svg class="w-64 h-64 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
@@ -26,7 +97,7 @@
                 <div class="mt-2 flex items-center gap-2 text-xs text-rose-200">
                     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
                     <span class="font-bold text-white">{{ $periodLabel }}</span>
-                    <span>• German GAAP / HGB Compliant Format</span>
+                    <span data-i18n-en="• German GAAP / HGB Compliant Format" data-i18n-de="• HGB-konformes Format nach § 275">• German GAAP / HGB Compliant Format</span>
                 </div>
             </div>
 
@@ -53,28 +124,30 @@
         <div class="mt-6 pt-4 border-t border-white/20 flex flex-wrap items-center gap-1.5">
             <span class="text-[0.68rem] font-bold uppercase tracking-wider text-rose-200 mr-2 flex items-center gap-1">
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                Period:
+                <span data-i18n-en="Period:" data-i18n-de="Zeitraum:">Period:</span>
             </span>
 
             @php
                 $periods = [
-                    'this_month' => 'This Month',
-                    'last_month' => 'Last Month',
-                    'q1'         => 'Q1',
-                    'q2'         => 'Q2',
-                    'q3'         => 'Q3',
-                    'q4'         => 'Q4',
-                    'ytd'        => 'YTD (2026)',
-                    'last_year'  => 'Last Year',
+                    'this_month' => ['en' => 'This Month', 'de' => 'Dieser Monat'],
+                    'last_month' => ['en' => 'Last Month', 'de' => 'Letzter Monat'],
+                    'q1'         => ['en' => 'Q1', 'de' => 'Q1'],
+                    'q2'         => ['en' => 'Q2', 'de' => 'Q2'],
+                    'q3'         => ['en' => 'Q3', 'de' => 'Q3'],
+                    'q4'         => ['en' => 'Q4', 'de' => 'Q4'],
+                    'ytd'        => ['en' => 'YTD (2026)', 'de' => 'Laufendes Jahr'],
+                    'last_year'  => ['en' => 'Last Year', 'de' => 'Vorjahr'],
                 ];
             @endphp
 
-            @foreach($periods as $key => $label)
+            @foreach($periods as $key => $names)
                 <a
                     href="{{ route('admin.finance.profit-loss', ['period' => $key]) }}"
                     class="px-3 py-1 rounded-full text-xs font-bold transition {{ $period === $key ? 'bg-white text-[#964B42] shadow-sm' : 'bg-white/10 hover:bg-white/20 text-white' }}"
+                    data-i18n-en="{{ $names['en'] }}"
+                    data-i18n-de="{{ $names['de'] }}"
                 >
-                    {{ $label }}
+                    {{ $names['en'] }}
                 </a>
             @endforeach
 
@@ -84,7 +157,7 @@
                 onclick="document.getElementById('custom-date-box').classList.toggle('hidden')"
                 class="px-3 py-1 rounded-full text-xs font-bold transition {{ $period === 'custom' ? 'bg-white text-[#964B42]' : 'bg-white/10 hover:bg-white/20 text-white' }} flex items-center gap-1"
             >
-                <span>Custom Date...</span>
+                <span data-i18n-en="Custom Date..." data-i18n-de="Benutzerdefiniert...">Custom Date...</span>
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </button>
         </div>
@@ -94,14 +167,14 @@
             <form action="{{ route('admin.finance.profit-loss') }}" method="GET" class="flex flex-wrap items-center gap-2 text-xs">
                 <input type="hidden" name="period" value="custom">
                 <div class="flex items-center gap-2">
-                    <label class="text-rose-100 font-semibold">From:</label>
+                    <label class="text-rose-100 font-semibold" data-i18n-en="From:" data-i18n-de="Von:">From:</label>
                     <input type="date" name="start_date" value="{{ $startDate->format('Y-m-d') }}" class="px-2.5 py-1.5 rounded-lg bg-white text-stone-900 text-xs font-semibold">
                 </div>
                 <div class="flex items-center gap-2">
-                    <label class="text-rose-100 font-semibold">To:</label>
+                    <label class="text-rose-100 font-semibold" data-i18n-en="To:" data-i18n-de="Bis:">To:</label>
                     <input type="date" name="end_date" value="{{ $endDate->format('Y-m-d') }}" class="px-2.5 py-1.5 rounded-lg bg-white text-stone-900 text-xs font-semibold">
                 </div>
-                <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold transition">
+                <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold transition" data-i18n-en="Apply Filter" data-i18n-de="Filter Anwenden">
                     Apply Filter
                 </button>
             </form>
@@ -471,6 +544,35 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <!-- Executive Print Sign-Off Block -->
+    <div class="print-only mt-10 pt-6 border-t-2 border-stone-800 page-break-avoid">
+        <div class="grid grid-cols-3 gap-6 text-[9pt]">
+            <div>
+                <p class="font-bold text-stone-700 uppercase tracking-wider text-[8pt]" data-i18n-en="Report Prepared By:" data-i18n-de="Bericht erstellt durch:">Report Prepared By:</p>
+                <div class="mt-8 border-b border-stone-400 pb-1">
+                    <p class="font-bold text-stone-900">{{ auth()->user()->name ?? 'Executive Finance' }}</p>
+                </div>
+                <p class="text-[7.5pt] text-stone-500 mt-1" data-i18n-en="Financial Controller / Management" data-i18n-de="Leitung Rechnungswesen / Controlling">Financial Controller / Management</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-stone-700 uppercase tracking-wider text-[8pt]" data-i18n-en="Certified & Verified By:" data-i18n-de="Geprüft & Bestätigt durch:">Certified & Verified By:</p>
+                <div class="mt-8 border-b border-stone-400 pb-1">
+                    <p class="font-serif italic text-stone-900 font-bold">MEHAAJ Geschäftsführung</p>
+                </div>
+                <p class="text-[7.5pt] text-stone-500 mt-1" data-i18n-en="Managing Director / Authorized Signatory" data-i18n-de="Geschäftsführung / Vertretungsberechtigt">Managing Director / Authorized Signatory</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-stone-700 uppercase tracking-wider text-[8pt]" data-i18n-en="Atelier Stamp / Seal:" data-i18n-de="Atelier-Stempel / Siegel:">Atelier Stamp / Seal:</p>
+                <div class="mt-2 h-16 border border-dashed border-stone-300 rounded flex items-center justify-center text-stone-400 text-[8pt] uppercase tracking-wider">
+                    [ Official Corporate Seal ]
+                </div>
+            </div>
+        </div>
+        <p class="mt-4 text-center text-[7.5pt] text-stone-400" data-i18n-en="MEHAAJ Luxury Atelier • Certified Corporate Financial Record • Confirmed under German Commercial Code (HGB)" data-i18n-de="MEHAAJ Luxury Atelier • Geprüfter Jahresabschluss • Konform mit handelsrechtlichen Grundsätzen (HGB)">MEHAAJ Luxury Atelier • Certified Corporate Financial Record • Confirmed under German Commercial Code (HGB)</p>
     </div>
 
 </div>

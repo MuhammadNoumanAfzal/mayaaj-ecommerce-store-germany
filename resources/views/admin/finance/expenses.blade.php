@@ -42,19 +42,19 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-5 border-t border-white/20">
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center">
                 <span class="block text-xl sm:text-2xl font-bold font-serif text-white">€{{ number_format($thisMonthTotal, 2) }}</span>
-                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">This Month</span>
+                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="This Month" data-i18n-de="Dieser Monat">This Month</span>
             </div>
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center">
                 <span class="block text-xl sm:text-2xl font-bold font-serif text-white">€{{ number_format($lastMonthTotal, 2) }}</span>
-                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">Last Month</span>
+                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="Last Month" data-i18n-de="Letzter Monat">Last Month</span>
             </div>
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center">
                 <span class="block text-xl sm:text-2xl font-bold font-serif text-amber-300">€{{ number_format($ytdTotal, 2) }}</span>
-                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">Year to Date</span>
+                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="Year to Date" data-i18n-de="Laufendes Jahr">Year to Date</span>
             </div>
             <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/20 text-center">
                 <span class="block text-xl sm:text-2xl font-bold font-serif text-purple-200">€{{ number_format($allTimeTotal, 2) }}</span>
-                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1">Total Recorded</span>
+                <span class="text-[0.62rem] sm:text-xs font-bold text-rose-200 uppercase tracking-wider block mt-1" data-i18n-en="Total Recorded" data-i18n-de="Gesamtausgaben">Total Recorded</span>
             </div>
         </div>
     </div>

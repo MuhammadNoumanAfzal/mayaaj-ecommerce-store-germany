@@ -1,11 +1,78 @@
 @extends('layouts.admin')
 @section('title', 'Balance Sheet (Bilanz) — MEHAAJ Atelier')
 
+@section('admin-styles')
+<style>
+@media print {
+    .screen-only {
+        display: none !important;
+    }
+    .print-only {
+        display: block !important;
+    }
+    body {
+        background: #ffffff !important;
+        color: #1c1917 !important;
+    }
+    .bg-white {
+        background: #ffffff !important;
+    }
+    .border-stone-200 {
+        border-color: #e7e5e4 !important;
+    }
+    .shadow-sm, .shadow-md, .shadow-2xs {
+        box-shadow: none !important;
+    }
+    .page-break-avoid {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+}
+@media screen {
+    .print-only {
+        display: none !important;
+    }
+}
+</style>
+@endsection
+
 @section('admin-content')
 <div class="space-y-6 max-w-full overflow-hidden">
 
+    <!-- Official Printable Document Header (Company Logo & Letterhead) -->
+    <div class="print-only mb-6 pb-4 border-b-2 border-stone-900">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <img src="/logo.png" alt="MEHAAJ Logo" class="h-16 w-auto object-contain">
+                <div>
+                    <h1 class="font-serif text-2xl font-black tracking-wider text-stone-900 uppercase">MEHAAJ LUXURY ATELIER</h1>
+                    <p class="text-[9pt] text-stone-600 font-medium">MEHAAJ Handelsgesellschaft mbH • Goetheplatz 7, 60313 Frankfurt am Main</p>
+                    <p class="text-[8pt] text-stone-500">USt-IdNr.: DE 349 881 294 • HRB 128492 Amtsgericht Frankfurt am Main • atelier@mehaaj.com</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <span class="inline-block px-2.5 py-1 text-[8pt] font-black uppercase tracking-wider bg-stone-900 text-white rounded">CONFIDENTIAL • BALANCE SHEET</span>
+                <p class="text-xs font-mono font-bold text-stone-800 mt-1.5">DOC REF: BIL-{{ $asOfDate->format('Ymd') }}-{{ strtoupper(substr(md5($asOfDate->timestamp), 0, 4)) }}</p>
+                <p class="text-[8.5pt] text-stone-600 font-medium mt-0.5">As of: {{ $asOfDate->format('d M Y') }}</p>
+            </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-stone-200 flex items-center justify-between">
+            <div>
+                <h2 class="text-lg font-serif font-black text-stone-900 uppercase">Official Balance Sheet (Bilanz nach HGB § 266)</h2>
+                <p class="text-xs text-stone-600 font-medium">Accounting Framework: German Commercial Code (HGB) / Dual-Entry Statement of Financial Position</p>
+            </div>
+            <div class="text-right">
+                <span class="inline-block px-2 py-0.5 rounded text-[8pt] font-extrabold uppercase {{ $isBalanced ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-amber-100 text-amber-800 border border-amber-300' }}">
+                    {{ $isBalanced ? 'BALANCED: AKTIVA = PASSIVA' : 'UNBALANCED: ACTION REQUIRED' }}
+                </span>
+                <p class="text-[8pt] text-stone-500 mt-0.5">Total: €{{ number_format($totalAssets, 2) }}</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Executive Header Banner (Pink-Salt Terracotta Theme) -->
-    <div class="rounded-2xl p-5 sm:p-7 bg-gradient-to-r from-[#964B42] via-[#853E36] to-[#6d3029] shadow-sm text-white relative overflow-hidden">
+    <div class="screen-only rounded-2xl p-5 sm:p-7 bg-gradient-to-r from-[#964B42] via-[#853E36] to-[#6d3029] shadow-sm text-white relative overflow-hidden">
         <!-- Luxury ambient watermark -->
         <div class="absolute -right-8 -bottom-10 opacity-10 pointer-events-none">
             <svg class="w-64 h-64 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v18M3 9l9-6 9 6M3 9l9 6 9-6M3 9v6l9 6 9-6V9"/></svg>
@@ -52,9 +119,9 @@
         <!-- As Of Date Filter Form -->
         <div class="mt-6 pt-4 border-t border-white/20 flex flex-wrap items-center justify-between gap-3 text-xs">
             <form action="{{ route('admin.finance.balance-sheet') }}" method="GET" class="flex items-center gap-2">
-                <label class="font-bold text-rose-100 uppercase tracking-wider text-[0.68rem]">Reporting Date:</label>
+                <label class="font-bold text-rose-100 uppercase tracking-wider text-[0.68rem]" data-i18n-en="Reporting Date:" data-i18n-de="Stichtag:">Reporting Date:</label>
                 <input type="date" name="as_of_date" value="{{ $asOfDate->format('Y-m-d') }}" class="px-3 py-1.5 rounded-xl bg-white text-stone-900 text-xs font-semibold border-none shadow-sm">
-                <button type="submit" class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold transition shadow-xs">
+                <button type="submit" class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold transition shadow-xs" data-i18n-en="Update Statement" data-i18n-de="Bilanz Aktualisieren">
                     Update Statement
                 </button>
             </form>
@@ -62,12 +129,12 @@
             <!-- Verification Status Pill -->
             <div class="flex items-center gap-2">
                 @if($isBalanced)
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/40 text-xs font-bold">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/40 text-xs font-bold" data-i18n-en="100% PERFECTLY BALANCED (HGB VERIFIED)" data-i18n-de="100% AUSGEGLICHEN (HGB KONFORM)">
                         <svg class="w-3.5 h-3.5 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                         <span>100% PERFECTLY BALANCED (HGB VERIFIED)</span>
                     </span>
                 @else
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/40 text-xs font-bold">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/40 text-xs font-bold" data-i18n-en="VARIANCE MONITORED" data-i18n-de="DIFFERENZ WIRD ÜBERWACHT">
                         <span>VARIANCE MONITORED</span>
                     </span>
                 @endif
@@ -427,6 +494,35 @@
             </div>
 
         </div>
+    </div>
+
+    <!-- Executive Print Sign-Off Block -->
+    <div class="print-only mt-10 pt-6 border-t-2 border-stone-800 page-break-avoid">
+        <div class="grid grid-cols-3 gap-6 text-[9pt]">
+            <div>
+                <p class="font-bold text-stone-700 uppercase tracking-wider text-[8pt]" data-i18n-en="Balance Sheet Prepared By:" data-i18n-de="Bilanz erstellt durch:">Balance Sheet Prepared By:</p>
+                <div class="mt-8 border-b border-stone-400 pb-1">
+                    <p class="font-bold text-stone-900">{{ auth()->user()->name ?? 'Executive Accounting' }}</p>
+                </div>
+                <p class="text-[7.5pt] text-stone-500 mt-1" data-i18n-en="Chief Accountant / Controller" data-i18n-de="Hauptbuchhaltung / Bilanzbuchhalter">Chief Accountant / Controller</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-stone-700 uppercase tracking-wider text-[8pt]" data-i18n-en="Audited & Approved By:" data-i18n-de="Geprüft & Freigegeben durch:">Audited & Approved By:</p>
+                <div class="mt-8 border-b border-stone-400 pb-1">
+                    <p class="font-serif italic text-stone-900 font-bold">MEHAAJ Geschäftsführung</p>
+                </div>
+                <p class="text-[7.5pt] text-stone-500 mt-1" data-i18n-en="Managing Director / Authorized Representative" data-i18n-de="Geschäftsführung / Vertretungsberechtigt">Managing Director / Authorized Representative</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-stone-700 uppercase tracking-wider text-[8pt]" data-i18n-en="Atelier Stamp / Seal:" data-i18n-de="Atelier-Stempel / Siegel:">Atelier Stamp / Seal:</p>
+                <div class="mt-2 h-16 border border-dashed border-stone-300 rounded flex items-center justify-center text-stone-400 text-[8pt] uppercase tracking-wider">
+                    [ Official Corporate Seal ]
+                </div>
+            </div>
+        </div>
+        <p class="mt-4 text-center text-[7.5pt] text-stone-400" data-i18n-en="MEHAAJ Luxury Atelier • Certified Dual-Entry Balance Sheet • Standard Financial Ratio Assessment" data-i18n-de="MEHAAJ Luxury Atelier • Amtliche Bilanzaufstellung nach HGB • Kennzahlenanalyse">MEHAAJ Luxury Atelier • Certified Dual-Entry Balance Sheet • Standard Financial Ratio Assessment</p>
     </div>
 
 </div>

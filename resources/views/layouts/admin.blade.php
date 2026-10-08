@@ -22,6 +22,34 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <style>
+        @media print {
+            aside, header, footer, .no-print, button:not(.print-keep), a.btn-exec-primary, a.btn-exec-secondary, .swal2-container {
+                display: none !important;
+            }
+            body, html {
+                background: #ffffff !important;
+                color: #000000 !important;
+                font-size: 11pt !important;
+            }
+            .lg\:ml-64 {
+                margin-left: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+    @yield('admin-styles')
+
     <!-- Early Language Hydration Script (Zero-Flash, English as Default) -->
     <script>
         (function() {

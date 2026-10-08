@@ -183,24 +183,47 @@
 
                             <!-- Actions -->
                             <td class="py-4 px-5 text-center">
-                                <div class="flex items-center justify-center gap-2">
-                                    <!-- View / Invoice Button -->
+                                <div class="flex items-center justify-center gap-1.5 flex-wrap">
+                                    <!-- View Detail Button -->
                                     <a 
                                         href="{{ route('admin.orders.show', $order->id) }}"
-                                        class="btn-exec-secondary rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
+                                        class="btn-exec-secondary rounded-xl px-2.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1 shadow-2xs hover:shadow-xs"
+                                        title="View order workflow & customer details"
                                     >
                                         <svg class="h-3.5 w-3.5 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <span data-i18n-de="Details" data-i18n-en="Details">Details</span>
+                                    </a>
+
+                                    <!-- Direct Print Invoice -->
+                                    <a 
+                                        href="{{ route('admin.orders.invoice', $order->id) }}"
+                                        target="_blank"
+                                        class="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 text-xs font-bold bg-[#964B42]/10 hover:bg-[#964B42] text-[#964B42] hover:text-white border border-[#964B42]/20 transition-all cursor-pointer shadow-2xs"
+                                        title="Print A4 Tax Invoice with Company Logo"
+                                    >
+                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
                                         <span data-i18n-de="Rechnung" data-i18n-en="Invoice">Invoice</span>
+                                    </a>
+
+                                    <!-- Direct Print Packing Slip -->
+                                    <a 
+                                        href="{{ route('admin.orders.packing-slip', $order->id) }}"
+                                        target="_blank"
+                                        class="inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 text-xs font-bold bg-stone-100 hover:bg-stone-800 text-stone-700 hover:text-white border border-stone-200 transition-all cursor-pointer shadow-2xs"
+                                        title="Print Warehouse Packing Slip"
+                                    >
+                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
+                                        <span data-i18n-de="Lieferschein" data-i18n-en="Slip">Slip</span>
                                     </a>
 
                                     <!-- Delete Button -->
                                     <button
                                         type="button"
                                         onclick="confirmDeleteOrder({{ $order->id }}, '{{ addslashes($order->order_number) }}')"
-                                        class="btn-exec-danger rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs"
+                                        class="btn-exec-danger rounded-xl px-2.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1 shadow-2xs"
+                                        title="Delete Order"
                                     >
                                         <svg class="h-3.5 w-3.5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                        <span data-i18n-de="Löschen" data-i18n-en="Delete">Delete</span>
                                     </button>
 
                                     <form id="delete-order-form-{{ $order->id }}" action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" class="hidden">
