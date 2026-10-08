@@ -116,6 +116,13 @@ return [
     'message_status_updated' => 'Nachrichtenstatus erfolgreich aktualisiert! ✓',
     'message_deleted' => 'Nachricht erfolgreich gelöscht! ✓',
 
+    // Reviews Controller
+    'review_approved' => 'Bewertung erfolgreich freigegeben! Sie ist nun im Shop sichtbar. ✓',
+    'review_rejected' => 'Bewertung abgelehnt. Sie ist nun im Shop ausgeblendet. ✓',
+    'review_pending' => 'Bewertungsstatus auf ausstehend gesetzt. ✓',
+    'review_deleted' => 'Bewertung erfolgreich gelöscht! ✓',
+    'review_submitted' => 'Vielen Dank! Ihre Bewertung wurde zur Überprüfung eingereicht und erscheint nach der Freigabe.',
+
     // Settings Controller
     'settings_updated' => 'Store Einstellungen erfolgreich gespeichert! ✓',
 

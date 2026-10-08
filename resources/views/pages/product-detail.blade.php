@@ -249,9 +249,10 @@
                             $firstVarName = $variationsList[0]['name'] ?? 'Standard';
                         @endphp
                         <div class="mt-5 border-t border-[#f2ebdc] pt-4">
-                            <label class="block text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#1c1210] mb-2">
+                            <label class="block text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[#1c1210] mb-2 flex items-center flex-wrap gap-1">
                                 <span data-i18n-de="AUSGEWÄHLTE LEDERAUSFÜHRUNG" data-i18n-en="SELECTED LEATHER FINISH">AUSGEWÄHLTE LEDERAUSFÜHRUNG</span>:
                                 <span id="active-variation-name" class="font-bold text-[#78000b] ml-1">{{ $firstVarName }}</span>
+                                <span id="active-variation-stock" class="ml-2 text-[0.62rem] font-bold"></span>
                             </label>
                             <div class="flex flex-wrap items-center gap-2.5" id="variation-options-container">
                                 @foreach($variationsList as $vIdx => $vItem)
@@ -259,19 +260,24 @@
                                         $vName = $vItem['name'] ?? 'Standard';
                                         $vColor = $vItem['color'] ?? '#5a2e1e';
                                         $vPrice = !empty($vItem['price']) ? (float)$vItem['price'] : null;
+                                        $vStock = isset($vItem['stock']) && is_numeric($vItem['stock']) ? (int)$vItem['stock'] : null;
                                         $isFirst = ($vIdx === 0);
                                     @endphp
                                     <button
                                         type="button"
-                                        onclick="selectVariation('{{ addslashes($vName) }}', this, {{ $vPrice ? $vPrice : 'null' }})"
+                                        onclick="selectVariation('{{ addslashes($vName) }}', this, {{ $vPrice ? $vPrice : 'null' }}, {{ $vStock !== null ? $vStock : 'null' }})"
                                         data-name="{{ $vName }}"
                                         data-price="{{ $vPrice ?? '' }}"
+                                        data-stock="{{ $vStock ?? '' }}"
                                         class="variation-pill group relative flex items-center gap-2 rounded-full border px-3 py-1.5 shadow-xs transition-all duration-300 cursor-pointer {{ $isFirst ? 'border-2 border-[#78000b] bg-[#faf7f2] ring-2 ring-[#78000b]/20 active-var font-semibold' : 'border-[#e6decb] bg-white opacity-85 hover:opacity-100 hover:border-[#78000b]' }}"
                                     >
                                         <span class="h-3.5 w-3.5 rounded-full ring-1 ring-black/20 shrink-0 shadow-xs" style="background-color: {{ $vColor }};"></span>
                                         <span class="text-xs text-[#1c1210] font-medium">{{ $vName }}</span>
                                         @if($vPrice && $vPrice != $effectivePrice)
                                             <span class="text-[0.65rem] text-[#8a7c74] font-mono">(EUR {{ number_format($vPrice, 2, ',', '.') }})</span>
+                                        @endif
+                                        @if($vStock !== null && $vStock === 0)
+                                            <span class="text-[0.6rem] text-rose-600 font-bold ml-0.5">(Ausverkauft)</span>
                                         @endif
                                     </button>
                                 @endforeach
@@ -502,59 +508,89 @@
 
             <!-- Review Cards Grid -->
             <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Review Card 1 -->
-                <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between text-xs text-[#8a7c74]">
-                            <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                            <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 2 Wochen" data-i18n-en="2 weeks ago">2 weeks ago</span>
+                @if(isset($approvedReviews) && $approvedReviews->count() > 0)
+                    @foreach($approvedReviews as $rev)
+                        <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+                            <div>
+                                <div class="flex items-center justify-between text-xs text-[#8a7c74]">
+                                    <div class="flex text-[#d8b45a] text-xs">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <span>{{ $i <= $rev->rating ? '★' : '☆' }}</span>
+                                        @endfor
+                                    </div>
+                                    <span class="font-mono text-[0.7rem]">{{ $rev->created_at->diffForHumans() }}</span>
+                                </div>
+                                @if($rev->title)
+                                    <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]">“{{ $rev->title }}”</h3>
+                                @endif
+                                <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed">
+                                    {{ $rev->comment }}
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
+                                <span class="font-bold text-[#1c1210]">{{ $rev->customer_name }}</span>
+                                <span class="text-[#2e683a] font-semibold">
+                                    ✓ <span data-i18n-de="Verifizierter Käufer" data-i18n-en="Verified Buyer">Verified Buyer</span>
+                                    @if($rev->location) ({{ $rev->location }}) @endif
+                                </span>
+                            </div>
                         </div>
-                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Unübertroffene Haptik und Lederqualität“" data-i18n-en="“Unrivaled leather touch and finish”">“Unrivaled leather touch and finish”</h3>
-                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Ich besitze Taschen von renommierten Pariser Häusern, doch die Lederqualität und Nahtpräzision von MEHAAJ übertrifft alles. Die natürliche Narbung und der Duft sind unvergleichlich." data-i18n-en="I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.">
-                            I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.
-                        </p>
+                    @endforeach
+                @else
+                    <!-- Review Card 1 (Curated Atelier Experience) -->
+                    <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-[#8a7c74]">
+                                <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
+                                <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 2 Wochen" data-i18n-en="2 weeks ago">2 weeks ago</span>
+                            </div>
+                            <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Unübertroffene Haptik und Lederqualität“" data-i18n-en="“Unrivaled leather touch and finish”">“Unrivaled leather touch and finish”</h3>
+                            <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Ich besitze Taschen von renommierten Pariser Häusern, doch die Lederqualität und Nahtpräzision von MEHAAJ übertrifft alles. Die natürliche Narbung und der Duft sind unvergleichlich." data-i18n-en="I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.">
+                                I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
+                            <span class="font-bold text-[#1c1210]">Dr. Maximilian v. B.</span>
+                            <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (München)" data-i18n-en="✓ Verified Buyer (Munich)">✓ Verified Buyer (Munich)</span>
+                        </div>
                     </div>
-                    <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
-                        <span class="font-bold text-[#1c1210]">Dr. Maximilian v. B.</span>
-                        <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (München)" data-i18n-en="✓ Verified Buyer (Munich)">✓ Verified Buyer (Munich)</span>
-                    </div>
-                </div>
 
-                <!-- Review Card 2 -->
-                <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between text-xs text-[#8a7c74]">
-                            <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                            <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 1 Monat" data-i18n-en="1 month ago">1 month ago</span>
+                    <!-- Review Card 2 -->
+                    <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-[#8a7c74]">
+                                <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
+                                <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 1 Monat" data-i18n-en="1 month ago">1 month ago</span>
+                            </div>
+                            <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Ein architektonisches Kunstwerk“" data-i18n-en="“An architectural work of art”">“An architectural work of art”</h3>
+                            <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Kantenversiegelung ist makellos. Schneller Expressversand in einer traumhaften Box. Man spürt die deutsche Detailverliebtheit in jedem Millimeter." data-i18n-en="The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.">
+                                The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.
+                            </p>
                         </div>
-                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Ein architektonisches Kunstwerk“" data-i18n-en="“An architectural work of art”">“An architectural work of art”</h3>
-                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Kantenversiegelung ist makellos. Schneller Expressversand in einer traumhaften Box. Man spürt die deutsche Detailverliebtheit in jedem Millimeter." data-i18n-en="The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.">
-                            The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.
-                        </p>
+                        <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
+                            <span class="font-bold text-[#1c1210]">Sophie Laurent</span>
+                            <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierte Käuferin (Zürich)" data-i18n-en="✓ Verified Buyer (Zurich)">✓ Verified Buyer (Zurich)</span>
+                        </div>
                     </div>
-                    <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
-                        <span class="font-bold text-[#1c1210]">Sophie Laurent</span>
-                        <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierte Käuferin (Zürich)" data-i18n-en="✓ Verified Buyer (Zurich)">✓ Verified Buyer (Zurich)</span>
-                    </div>
-                </div>
 
-                <!-- Review Card 3 -->
-                <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between text-xs text-[#8a7c74]">
-                            <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                            <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 6 Wochen" data-i18n-en="6 weeks ago">6 weeks ago</span>
+                    <!-- Review Card 3 -->
+                    <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-[#8a7c74]">
+                                <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
+                                <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 6 Wochen" data-i18n-en="6 weeks ago">6 weeks ago</span>
+                            </div>
+                            <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Jeden Euro absolut wert“" data-i18n-en="“Worth every single euro”">“Worth every single euro”</h3>
+                            <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Beschläge haben ein substanzielles Gewicht und der Reißverschluss gleitet wie Butter. Die Patina nach den ersten Wochen des täglichen Gebrauchs ist sagenhaft schön." data-i18n-en="Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.">
+                                Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.
+                            </p>
                         </div>
-                        <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Jeden Euro absolut wert“" data-i18n-en="“Worth every single euro”">“Worth every single euro”</h3>
-                        <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Beschläge haben ein substanzielles Gewicht und der Reißverschluss gleitet wie Butter. Die Patina nach den ersten Wochen des täglichen Gebrauchs ist sagenhaft schön." data-i18n-en="Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.">
-                            Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.
-                        </p>
+                        <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
+                            <span class="font-bold text-[#1c1210]">Alexander K.</span>
+                            <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (Düsseldorf)" data-i18n-en="✓ Verified Buyer (Dusseldorf)">✓ Verified Buyer (Dusseldorf)</span>
+                        </div>
                     </div>
-                    <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
-                        <span class="font-bold text-[#1c1210]">Alexander K.</span>
-                        <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (Düsseldorf)" data-i18n-en="✓ Verified Buyer (Dusseldorf)">✓ Verified Buyer (Dusseldorf)</span>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
     </section>
@@ -732,10 +768,34 @@
     // Variation Selector State
     window.selectedVariationName = '{{ addslashes($firstVarName) }}';
 
-    function selectVariation(name, btnElement, price = null) {
+    function selectVariation(name, btnElement, price = null, stock = null) {
         window.selectedVariationName = name;
         const label = document.getElementById('active-variation-name');
         if (label) label.textContent = name;
+
+        const stockLabel = document.getElementById('active-variation-stock');
+        const cartBtn = document.getElementById('add-to-cart-btn');
+
+        if (stockLabel) {
+            if (stock !== null) {
+                if (stock > 5) {
+                    stockLabel.className = 'ml-2 text-[0.62rem] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200';
+                    stockLabel.textContent = `(Auf Lager: ${stock})`;
+                    if (cartBtn) cartBtn.classList.remove('opacity-50', 'pointer-events-none');
+                } else if (stock > 0) {
+                    stockLabel.className = 'ml-2 text-[0.62rem] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200';
+                    stockLabel.textContent = `(Nur noch ${stock}!)`;
+                    if (cartBtn) cartBtn.classList.remove('opacity-50', 'pointer-events-none');
+                } else {
+                    stockLabel.className = 'ml-2 text-[0.62rem] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200';
+                    stockLabel.textContent = `(Ausverkauft)`;
+                    if (cartBtn) cartBtn.classList.add('opacity-50', 'pointer-events-none');
+                }
+            } else {
+                stockLabel.textContent = '';
+                if (cartBtn) cartBtn.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
 
         document.querySelectorAll('.variation-pill').forEach(pill => {
             pill.classList.remove('border-2', 'border-[#78000b]', 'bg-[#faf7f2]', 'ring-2', 'ring-[#78000b]/20', 'active-var', 'font-semibold');
@@ -840,35 +900,94 @@
                 title: isEn ? 'Write a Review for ' + productName : 'Bewertung für ' + productName,
                 html: `
                     <div class="text-left space-y-3 mt-3 text-xs">
-                        <label class="block font-bold text-neutral-700">${isEn ? 'Rating (1-5 Stars)' : 'Bewertung (1-5 Sterne)'}</label>
-                        <select id="review-stars" class="w-full h-10 px-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]">
-                            <option value="5">★★★★★ (5/5) - ${isEn ? 'Exceptional Luxury' : 'Vollendeter Luxus'}</option>
-                            <option value="4">★★★★☆ (4/5) - ${isEn ? 'Very Good' : 'Sehr gut'}</option>
-                            <option value="3">★★★☆☆ (3/5) - ${isEn ? 'Good' : 'Gut'}</option>
-                        </select>
-                        <label class="block font-bold text-neutral-700 mt-2">${isEn ? 'Your Name' : 'Ihr Name'}</label>
-                        <input id="review-name" class="w-full h-10 px-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]" placeholder="${isEn ? 'e.g. Maximilian S.' : 'z.B. Maximilian S.'}">
-                        <label class="block font-bold text-neutral-700 mt-2">${isEn ? 'Your Experience' : 'Ihre Erfahrung mit diesem Meisterstück'}</label>
-                        <textarea id="review-comment" class="w-full h-24 p-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]" placeholder="${isEn ? 'Describe the leather feel, craftsmanship, and presentation...' : 'Beschreiben Sie Lederqualität, Nahtführung und Haptik...'}"></textarea>
+                        <div>
+                            <label class="block font-bold text-neutral-700 mb-1">${isEn ? 'Rating (1-5 Stars) *' : 'Bewertung (1-5 Sterne) *'}</label>
+                            <select id="review-stars" class="w-full h-10 px-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]">
+                                <option value="5">★★★★★ (5/5) - ${isEn ? 'Exceptional Luxury' : 'Vollendeter Luxus'}</option>
+                                <option value="4">★★★★☆ (4/5) - ${isEn ? 'Very Good' : 'Sehr gut'}</option>
+                                <option value="3">★★★☆☆ (3/5) - ${isEn ? 'Good' : 'Gut'}</option>
+                                <option value="2">★★☆☆☆ (2/5) - ${isEn ? 'Fair' : 'Befriedigend'}</option>
+                                <option value="1">★☆☆☆☆ (1/5) - ${isEn ? 'Poor' : 'Ungenügend'}</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-neutral-700 mb-1">${isEn ? 'Your Name *' : 'Ihr Name *'}</label>
+                                <input id="review-name" class="w-full h-10 px-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]" placeholder="${isEn ? 'e.g. Maximilian S.' : 'z.B. Maximilian S.'}">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-neutral-700 mb-1">${isEn ? 'Your Email *' : 'Ihre E-Mail *'}</label>
+                                <input id="review-email" type="email" class="w-full h-10 px-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]" placeholder="${isEn ? 'e.g. maximilian@example.com' : 'z.B. maximilian@example.com'}">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-neutral-700 mb-1">${isEn ? 'Location / City' : 'Stadt / Standort'}</label>
+                            <input id="review-location" class="w-full h-10 px-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]" placeholder="${isEn ? 'e.g. Munich, Germany' : 'z.B. München, Deutschland'}">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-neutral-700 mb-1">${isEn ? 'Review Headline / Title' : 'Titel der Bewertung'}</label>
+                            <input id="review-title" class="w-full h-10 px-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]" placeholder="${isEn ? 'e.g. Masterful leathercraft and finishing' : 'z.B. Meisterhafte Lederverarbeitung'}">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-neutral-700 mb-1">${isEn ? 'Your Experience *' : 'Ihre Erfahrung mit diesem Meisterstück *'}</label>
+                            <textarea id="review-comment" class="w-full h-24 p-3 border border-[#e6decb] bg-white rounded outline-none focus:border-[#78000b]" placeholder="${isEn ? 'Describe the leather feel, craftsmanship, and presentation...' : 'Beschreiben Sie Lederqualität, Nahtführung und Haptik...'}"></textarea>
+                        </div>
                     </div>
                 `,
                 showCancelButton: true,
                 confirmButtonText: isEn ? 'Submit Review' : 'Bewertung absenden',
                 cancelButtonText: isEn ? 'Cancel' : 'Abbrechen',
+                focusConfirm: false,
                 preConfirm: () => {
-                    const name = document.getElementById('review-name').value;
-                    const comment = document.getElementById('review-comment').value;
-                    if (!name || !comment) {
-                        Swal.showValidationMessage(isEn ? 'Please fill in all fields' : 'Bitte füllen Sie alle Felder aus');
+                    const name = document.getElementById('review-name').value.trim();
+                    const email = document.getElementById('review-email').value.trim();
+                    const comment = document.getElementById('review-comment').value.trim();
+                    const rating = document.getElementById('review-stars').value;
+                    const location = document.getElementById('review-location').value.trim();
+                    const title = document.getElementById('review-title').value.trim();
+
+                    if (!name || !email || !comment) {
+                        Swal.showValidationMessage(isEn ? 'Please fill in Name, Email and Comments.' : 'Bitte füllen Sie Name, E-Mail und Kommentar aus.');
                         return false;
                     }
-                    return { name, comment, rating: document.getElementById('review-stars').value };
+
+                    return {
+                        customer_name: name,
+                        customer_email: email,
+                        rating: parseInt(rating),
+                        comment: comment,
+                        location: location,
+                        title: title,
+                        product_id: {{ $product->id }}
+                    };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    LuxuryToast.fire({
-                        icon: 'success',
-                        title: isEn ? 'Thank you! Your review has been submitted.' : 'Vielen Dank! Ihre Bewertung wurde übermittelt.'
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    fetch('{{ route('reviews.store') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token || '',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(result.value)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        LuxurySwal.fire({
+                            icon: 'success',
+                            title: isEn ? 'Review Submitted for Verification! 🌟' : 'Bewertung zur Prüfung eingereicht! 🌟',
+                            text: isEn ? (data.message || 'Thank you! Your review has been submitted and will appear once approved by our atelier team.') : (data.message || 'Vielen Dank! Ihre Bewertung wurde übermittelt und erscheint nach redaktioneller Freigabe.'),
+                            confirmButtonText: isEn ? 'Continue' : 'Weiter'
+                        });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        LuxuryToast.fire({
+                            icon: 'error',
+                            title: isEn ? 'Could not submit review.' : 'Bewertung konnte nicht gesendet werden.'
+                        });
                     });
                 }
             });

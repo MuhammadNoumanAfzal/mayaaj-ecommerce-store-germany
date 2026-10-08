@@ -116,6 +116,13 @@ return [
     'message_status_updated' => 'Message status updated successfully! ✓',
     'message_deleted' => 'Customer message deleted successfully! ✓',
 
+    // Reviews Controller
+    'review_approved' => 'Review approved successfully! It is now live on the store. ✓',
+    'review_rejected' => 'Review rejected. It is now hidden from the store. ✓',
+    'review_pending' => 'Review status set to pending moderation. ✓',
+    'review_deleted' => 'Review record deleted successfully! ✓',
+    'review_submitted' => 'Thank you! Your review has been submitted for verification and will appear after atelier approval.',
+
     // Settings Controller
     'settings_updated' => 'Store settings saved successfully! ✓',
 

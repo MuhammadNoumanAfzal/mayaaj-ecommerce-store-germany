@@ -56,18 +56,18 @@ class ReviewController extends Controller
             'product_id' => 'nullable|exists:products,id',
         ]);
 
-        $validated['is_verified'] = true;
-        $validated['status'] = 'approved';
+        $validated['is_verified'] = false;
+        $validated['status'] = 'pending';
 
         $review = Review::create($validated);
 
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => __('admin.review_submitted', [], session('locale', 'en')) ?: 'Thank you! Your verified review has been submitted successfully.'
+                'message' => __('admin.review_submitted', [], session('locale', 'en')) ?: 'Thank you! Your review has been submitted for verification and will appear after atelier approval.'
             ]);
         }
 
-        return redirect()->back()->with('success', 'Thank you! Your review has been submitted.');
+        return redirect()->back()->with('success', 'Thank you! Your review has been submitted and will appear once approved by our atelier team.');
     }
 }

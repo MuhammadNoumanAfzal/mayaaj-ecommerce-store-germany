@@ -109,6 +109,8 @@ class ShopController extends Controller
                 ->get();
         }
 
-        return view('pages.product-detail', compact('product', 'relatedProducts'));
+        $approvedReviews = $product->reviews()->where('status', 'approved')->latest()->get();
+
+        return view('pages.product-detail', compact('product', 'relatedProducts', 'approvedReviews'));
     }
 }

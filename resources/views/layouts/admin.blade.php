@@ -302,9 +302,92 @@
             border: 1px solid #E7E5E4 !important;
             font-weight: 700 !important;
         }
+
+        /* Luxury Accordion Tabs & Quill Editor Spacing & Styling */
+        .tab-card {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1.25rem !important; /* Generous 20px clean gap between all elements */
+        }
+
+        .tab-card .tab-header-row {
+            padding-bottom: 0.875rem !important;
+            border-bottom: 1px solid #f5f5f4 !important;
+        }
+
+        .tab-card .tab-content-block,
+        .tab-card .tab-features-block {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.5rem !important; /* Clean space between label and input */
+        }
+
+        /* Seamless Luxury Quill Snow Styling for Admin (No harsh edges, perfect spacing) */
+        .ql-toolbar.ql-snow {
+            border: 1px solid #e7e5e4 !important;
+            border-top-left-radius: 0.75rem !important;
+            border-top-right-radius: 0.75rem !important;
+            border-bottom: 1px solid #f5f5f4 !important;
+            background-color: #fafaf9 !important;
+            padding: 8px 12px !important;
+        }
+
+        .ql-container.ql-snow {
+            border: 1px solid #e7e5e4 !important;
+            border-top: none !important;
+            border-bottom-left-radius: 0.75rem !important;
+            border-bottom-right-radius: 0.75rem !important;
+            background-color: #ffffff !important;
+            font-family: inherit !important;
+        }
+
+        .ql-editor {
+            min-height: 90px !important;
+            font-size: 0.8125rem !important;
+            line-height: 1.6 !important;
+            color: #292524 !important;
+            padding: 12px 14px !important;
+        }
+
+        .ql-editor.ql-blank::before {
+            color: #a8a29e !important;
+            font-style: normal !important;
+            font-size: 0.8125rem !important;
+            left: 14px !important;
+        }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col bg-[#F8F5EF] text-stone-800">
+    @php
+        $currentAdmin = auth()->user();
+        $currentRole = $currentAdmin?->role ?? session('admin_role', 'admin');
+        $canManageCatalog = in_array($currentRole, ['super_admin', 'admin', 'inventory_manager']);
+        $canManageOrders = in_array($currentRole, ['super_admin', 'admin']);
+        $canModerate = in_array($currentRole, ['super_admin', 'admin', 'moderator']);
+        $isSuperAdmin = ($currentRole === 'super_admin');
+        
+        $roleName = match($currentRole) {
+            'super_admin'       => 'Super Admin',
+            'admin'             => 'Store Admin',
+            'moderator'         => 'Review Moderator',
+            'inventory_manager' => 'Inventory Staff',
+            default             => ucfirst(str_replace('_', ' ', $currentRole ?? 'Staff'))
+        };
+        $roleBadgeStyle = match($currentRole) {
+            'super_admin'       => 'bg-purple-100 text-purple-800 border-purple-200',
+            'admin'             => 'bg-rose-100 text-rose-800 border-rose-200',
+            'moderator'         => 'bg-blue-100 text-blue-800 border-blue-200',
+            'inventory_manager' => 'bg-amber-100 text-amber-800 border-amber-200',
+            default             => 'bg-stone-100 text-stone-700 border-stone-200'
+        };
+        $adminDisplayName = $currentAdmin?->name ?? session('admin_name', 'MEHAAJ Admin');
+        $adminDisplayEmail = $currentAdmin?->email ?? session('admin_email', 'admin@mehaaj.de');
+        $nameParts = explode(' ', trim($adminDisplayName));
+        $adminInitials = strtoupper(
+            (isset($nameParts[0][0]) ? $nameParts[0][0] : 'M') .
+            (isset($nameParts[1][0]) ? $nameParts[1][0] : (isset($nameParts[0][1]) ? $nameParts[0][1] : 'H'))
+        );
+    @endphp
 
     <!-- Top Executive Header Bar (Clean White & Warm Stone) -->
     <header class="admin-executive-header fixed top-0 inset-x-0 z-50 h-16 bg-white border-b border-[#E5DED5] shadow-2xs flex items-center justify-between px-4 sm:px-6">
@@ -349,11 +432,13 @@
         <!-- Header Right Actions: View Website, Language, Add Product & Avatar -->
         <div class="flex items-center gap-2 sm:gap-3 text-xs">
             
+            @if($canManageCatalog)
             <!-- Add Product Button (Pink-Salt Styled) -->
             <a href="{{ route('admin.products.create') }}" class="flex items-center gap-1.5 rounded-full bg-saltora-terracotta hover:bg-saltora-terracotta-dark text-white px-4 py-2 text-xs font-bold transition shadow-xs shadow-saltora-terracotta/20">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                 <span data-i18n-de="+ Produkt" data-i18n-en="+ Add Product">+ Add Product</span>
             </a>
+            @endif
 
             <!-- View Live Website Button -->
             <a href="/" target="_blank" class="hidden sm:flex items-center gap-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 px-3.5 py-2 text-xs font-semibold transition border border-stone-200">
@@ -368,8 +453,8 @@
             </div>
 
             <!-- Admin Avatar Circle -->
-            <div class="h-9 w-9 rounded-full bg-stone-900 text-white flex items-center justify-center font-bold text-xs shadow-xs" title="Super Admin">
-                MH
+            <div class="h-9 w-9 rounded-full bg-stone-900 text-white flex items-center justify-center font-bold text-xs shadow-xs" title="{{ $adminDisplayName }} ({{ $roleName }})">
+                {{ $adminInitials }}
             </div>
 
         </div>
@@ -388,7 +473,7 @@
                 <!-- Admin Navigation List -->
                 <nav class="space-y-1 text-xs font-semibold">
                     
-                    <!-- Dashboard Overview -->
+                    <!-- Dashboard Overview (All Roles) -->
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.dashboard') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
                             <svg class="h-4 w-4 {{ request()->routeIs('admin.dashboard') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
@@ -396,6 +481,7 @@
                         </div>
                     </a>
 
+                    @if($canManageCatalog)
                     <!-- Collapsible Categories Dropdown -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('categories-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.categories*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
@@ -462,6 +548,22 @@
                         </div>
                     </div>
 
+                    <!-- Inventory & Stock Management -->
+                    <a href="{{ route('admin.inventory') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.inventory*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.inventory*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                            <span data-i18n-de="Lagerbestand & Inventar" data-i18n-en="Inventory & Stock">Inventory & Stock</span>
+                        </div>
+                        @php
+                            $adminLowStockAlertCount = \App\Models\Product::where('stock', '<=', 5)->count();
+                        @endphp
+                        @if($adminLowStockAlertCount > 0)
+                            <span class="rounded-full bg-amber-50 text-amber-700 border border-amber-200/80 px-2 py-0.5 text-[0.62rem] font-bold">{{ $adminLowStockAlertCount }} Low</span>
+                        @endif
+                    </a>
+                    @endif
+
+                    @if($canManageOrders)
                     <!-- Collapsible Orders Dropdown -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('orders-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.orders*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
@@ -484,20 +586,6 @@
                         </div>
                     </div>
 
-                    <!-- Customer Contact Inquiries / Messages -->
-                    <a href="{{ route('admin.messages') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.messages*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
-                        <div class="flex items-center gap-3">
-                            <svg class="h-4 w-4 {{ request()->routeIs('admin.messages*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 10 13 2 6"/></svg>
-                            <span data-i18n-de="Kundenanfragen" data-i18n-en="Customer Messages">Customer Messages</span>
-                        </div>
-                        @php
-                            $unreadMsgCount = \App\Models\ContactMessage::where('status', 'unread')->count();
-                        @endphp
-                        @if($unreadMsgCount > 0)
-                            <span class="rounded-full bg-saltora-blush border border-saltora-terracotta/30 px-2 py-0.5 text-[0.6rem] font-bold text-saltora-terracotta">{{ $unreadMsgCount }} New</span>
-                        @endif
-                    </a>
-
                     <!-- Collapsible VIP Customers Dropdown -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('customers-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.customers*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
@@ -519,32 +607,77 @@
                             </a>
                         </div>
                     </div>
+                    @endif
 
-                    <!-- Store Settings -->
+                    @if($canModerate)
+                    <!-- Customer Contact Inquiries / Messages -->
+                    <a href="{{ route('admin.messages') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.messages*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.messages*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 10 13 2 6"/></svg>
+                            <span data-i18n-de="Kundenanfragen" data-i18n-en="Customer Messages">Customer Messages</span>
+                        </div>
+                        @php
+                            $unreadMsgCount = \App\Models\ContactMessage::where('status', 'unread')->count();
+                        @endphp
+                        @if($unreadMsgCount > 0)
+                            <span class="rounded-full bg-saltora-blush border border-saltora-terracotta/30 px-2 py-0.5 text-[0.6rem] font-bold text-saltora-terracotta">{{ $unreadMsgCount }} New</span>
+                        @endif
+                    </a>
+
+                    <!-- Customer Reviews & Testimonials Moderation -->
+                    <a href="{{ route('admin.reviews') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.reviews*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.reviews*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <span data-i18n-de="Kundenbewertungen" data-i18n-en="Customer Reviews">Customer Reviews</span>
+                        </div>
+                        @php
+                            $pendingReviewsBadgeCount = \App\Models\Review::where('status', 'pending')->count();
+                        @endphp
+                        @if($pendingReviewsBadgeCount > 0)
+                            <span class="rounded-full bg-amber-50 border border-amber-300 text-amber-800 px-2 py-0.5 text-[0.6rem] font-bold animate-pulse">{{ $pendingReviewsBadgeCount }} Pending</span>
+                        @endif
+                    </a>
+                    @endif
+
+                    @if($isSuperAdmin)
+                    <!-- Staff & Role Management (Super Admin Exclusive) -->
+                    <a href="{{ route('admin.staff') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.staff*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.staff*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span data-i18n-de="Mitarbeiter & Rollen" data-i18n-en="Staff & Roles">Staff & Roles</span>
+                        </div>
+                        <span class="rounded bg-purple-50 text-purple-700 border border-purple-200 px-1.5 py-0.5 text-[0.6rem] font-bold">RBAC</span>
+                    </a>
+
+                    <!-- Store Settings (Super Admin Exclusive) -->
                     <a href="{{ route('admin.settings') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.settings') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
                             <svg class="h-4 w-4 {{ request()->routeIs('admin.settings') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                             <span data-i18n-de="Store Einstellungen" data-i18n-en="Store Settings">Store Settings</span>
                         </div>
                     </a>
+                    @endif
 
                 </nav>
             </div>
 
             <!-- Sidebar Bottom User Profile Card with SweetAlert Sign Out -->
-            <div class="p-3.5 border-t border-stone-200">
+            <div class="p-3 border-t border-stone-200">
                 <div class="flex items-center justify-between p-2 rounded-xl bg-stone-50 border border-stone-200/80">
-                    <div class="flex items-center gap-2.5 overflow-hidden">
+                    <div class="flex items-center gap-2 overflow-hidden min-w-0">
                         <div class="h-8 w-8 shrink-0 rounded-full bg-stone-900 text-white flex items-center justify-center font-bold text-xs shadow-2xs">
-                            MH
+                            {{ $adminInitials }}
                         </div>
-                        <div class="truncate">
-                            <p class="font-bold text-xs text-stone-800 truncate leading-tight">{{ session('admin_name', 'MEHAAJ Admin') }}</p>
-                            <p class="text-[0.62rem] text-stone-400 font-medium truncate">admin@mehaaj.de</p>
+                        <div class="min-w-0 flex-1 truncate">
+                            <p class="font-bold text-xs text-stone-800 truncate leading-tight">{{ $adminDisplayName }}</p>
+                            <div class="mt-0.5">
+                                <span class="inline-block px-1.5 py-0.5 rounded text-[0.58rem] font-bold uppercase tracking-wider border {{ $roleBadgeStyle }}">{{ $roleName }}</span>
+                            </div>
+                            <p class="text-[0.6rem] text-stone-400 font-medium truncate mt-0.5">{{ $adminDisplayEmail }}</p>
                         </div>
                     </div>
 
-                    <form id="admin-logout-form" action="{{ route('admin.logout') }}" method="POST">
+                    <form id="admin-logout-form" action="{{ route('admin.logout') }}" method="POST" class="shrink-0 ml-1">
                         @csrf
                         <button type="button" onclick="confirmSignOut()" class="transition cursor-pointer p-1.5 rounded-lg text-stone-400 hover:text-saltora-terracotta hover:bg-saltora-blush-light" title="Sign Out">
                             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -555,9 +688,9 @@
         </aside>
 
         <!-- Main Dynamic Content Area (#F8F5EF Pink-Salt Ambient Background) -->
-        <div class="flex-1 lg:ml-64 min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8 pb-16 flex flex-col justify-between transition-all duration-300 bg-[#F8F5EF]">
+        <div class="flex-1 min-w-0 max-w-full lg:ml-64 min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8 pb-16 flex flex-col justify-between transition-all duration-300 bg-[#F8F5EF]">
             
-            <main class="space-y-6 flex-1 pb-20">
+            <main class="space-y-6 flex-1 min-w-0 max-w-full pb-20">
                 @yield('admin-content')
             </main>
 

@@ -193,6 +193,7 @@ class ProductController extends Controller
                             'color' => $v['color'] ?? '#1c1210',
                             'price' => (!empty($v['price']) && is_numeric($v['price'])) ? (float)$v['price'] : null,
                             'sku' => !empty($v['sku']) ? trim($v['sku']) : null,
+                            'stock' => (isset($v['stock']) && is_numeric($v['stock'])) ? (int)$v['stock'] : null,
                         ];
                     }
                 }
@@ -209,6 +210,7 @@ class ProductController extends Controller
                         'color' => $v['color'] ?? '#1c1210',
                         'price' => (!empty($v['price']) && is_numeric($v['price'])) ? (float)$v['price'] : null,
                         'sku' => !empty($v['sku']) ? trim($v['sku']) : null,
+                        'stock' => (isset($v['stock']) && is_numeric($v['stock'])) ? (int)$v['stock'] : null,
                     ];
                 }
             }

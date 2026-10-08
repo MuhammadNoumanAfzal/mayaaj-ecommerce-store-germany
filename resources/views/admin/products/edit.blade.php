@@ -292,7 +292,7 @@
 
                 <!-- Tabs Container -->
                 <input type="hidden" name="accordion_tabs_json" id="accordion_tabs_json" value="{{ old('accordion_tabs_json', json_encode($product->accordion_tabs ?? [])) }}">
-                <div id="tabs-container" class="space-y-4">
+                <div id="tabs-container" class="space-y-6">
                     <!-- Populated dynamically by JavaScript -->
                 </div>
             </div>
@@ -354,10 +354,10 @@
             if (Array.isArray(vars) && vars.length > 0) {
                 vars.forEach(v => renderVariationRow(v));
             } else {
-                loadDefaultVariations();
+                renderEmptyVariationsState();
             }
         } catch(e) {
-            loadDefaultVariations();
+            renderEmptyVariationsState();
         }
 
         // Initialize Accordion Tabs from product or old
@@ -367,10 +367,10 @@
             if (Array.isArray(tabs) && tabs.length > 0) {
                 tabs.forEach(t => renderAccordionTab(t));
             } else {
-                loadDefaultTabs();
+                renderEmptyTabsState();
             }
         } catch(e) {
-            loadDefaultTabs();
+            renderEmptyTabsState();
         }
 
         // Sync all Quills and dynamic repeaters on form submit
@@ -392,25 +392,41 @@
     // ========================================================
     // VARIATIONS BUILDER
     // ========================================================
+    function renderEmptyVariationsState() {
+        const container = document.getElementById('variations-container');
+        if (!container.querySelector('.variation-row')) {
+            container.innerHTML = `
+                <div id="empty-variations-notice" class="p-6 rounded-xl border border-dashed border-stone-200 bg-stone-50/40 text-center text-xs text-stone-500">
+                    <i class="fa-solid fa-swatchbook text-stone-300 text-xl mb-1.5 block"></i>
+                    <p class="font-medium text-stone-600">No variations added yet.</p>
+                    <p class="text-[0.68rem] text-stone-400 mt-0.5">Click <strong class="text-saltora-terracotta cursor-pointer hover:underline" onclick="addVariationRow()">+ Add Variation</strong> to add custom leather swatches, or click <strong>Load Default Leather Finishes</strong> if desired.</p>
+                </div>
+            `;
+        }
+    }
+
     function loadDefaultVariations() {
         const container = document.getElementById('variations-container');
         container.innerHTML = '';
         const defaults = [
-            { name: 'Burnished Mahogany', color: '#5a2e1e', sku: '', price: '' },
-            { name: 'Noir Profond', color: '#1c1210', sku: '', price: '' },
-            { name: 'Cognac Vintage', color: '#8c5836', sku: '', price: '' }
+            { name: 'Burnished Mahogany', color: '#5a2e1e', sku: '', price: '', stock: 10 },
+            { name: 'Noir Profond', color: '#1c1210', sku: '', price: '', stock: 8 },
+            { name: 'Cognac Vintage', color: '#8c5836', sku: '', price: '', stock: 5 }
         ];
         defaults.forEach(v => renderVariationRow(v));
         syncVariationsJSON();
     }
 
     function addVariationRow() {
-        renderVariationRow({ name: '', color: '#78000b', sku: '', price: '' });
+        renderVariationRow({ name: '', color: '#78000b', sku: '', price: '', stock: '' });
         syncVariationsJSON();
     }
 
     function renderVariationRow(data) {
         const container = document.getElementById('variations-container');
+        const emptyNotice = document.getElementById('empty-variations-notice');
+        if (emptyNotice) emptyNotice.remove();
+
         const id = 'var_' + Math.random().toString(36).substr(2, 9);
 
         const card = document.createElement('div');
@@ -431,8 +447,12 @@
                 <input type="text" value="${data.sku || ''}" placeholder="SKU (optional)" class="w-full h-9 rounded-lg px-2.5 text-xs text-stone-700 border border-stone-200 bg-stone-50 outline-none var-sku" oninput="syncVariationsJSON();">
             </div>
 
-            <div class="w-28">
-                <input type="number" step="0.01" value="${data.price || ''}" placeholder="Price (optional)" class="w-full h-9 rounded-lg px-2.5 text-xs text-stone-700 border border-stone-200 bg-stone-50 outline-none var-price" oninput="syncVariationsJSON();">
+            <div class="w-24">
+                <input type="number" step="0.01" value="${data.price || ''}" placeholder="Price (€)" class="w-full h-9 rounded-lg px-2.5 text-xs text-stone-700 border border-stone-200 bg-stone-50 outline-none var-price" oninput="syncVariationsJSON();">
+            </div>
+
+            <div class="w-24">
+                <input type="number" min="0" value="${data.stock !== undefined && data.stock !== null ? data.stock : ''}" placeholder="Stock (Qty)" class="w-full h-9 rounded-lg px-2.5 text-xs text-stone-700 border border-stone-200 bg-stone-50 outline-none var-stock" oninput="syncVariationsJSON();" title="Variant Stock Quantity">
             </div>
 
             <button type="button" onclick="document.getElementById('${id}').remove(); syncVariationsJSON();" class="h-9 w-9 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition cursor-pointer" title="Remove Variation">
@@ -451,12 +471,17 @@
             const color = r.querySelector('.var-color-hex')?.value.trim() || '#1c1210';
             const sku = r.querySelector('.var-sku')?.value.trim() || null;
             const price = r.querySelector('.var-price')?.value.trim() || null;
+            const stockRaw = r.querySelector('.var-stock')?.value.trim();
+            const stock = (stockRaw !== '' && !isNaN(stockRaw)) ? parseInt(stockRaw) : null;
 
             if (name) {
-                items.push({ name, color, sku, price });
+                items.push({ name, color, sku, price, stock });
             }
         });
         document.getElementById('variations_json').value = JSON.stringify(items);
+        if (rows.length === 0) {
+            renderEmptyVariationsState();
+        }
     }
 
     // ========================================================
@@ -498,6 +523,19 @@
         syncTabsJSON();
     }
 
+    function renderEmptyTabsState() {
+        const container = document.getElementById('tabs-container');
+        if (!container.querySelector('.tab-card')) {
+            container.innerHTML = `
+                <div id="empty-tabs-notice" class="p-6 rounded-xl border border-dashed border-stone-200 bg-stone-50/40 text-center text-xs text-stone-500">
+                    <i class="fa-solid fa-layer-group text-stone-300 text-xl mb-1.5 block"></i>
+                    <p class="font-medium text-stone-600">No accordion tabs added yet.</p>
+                    <p class="text-[0.68rem] text-stone-400 mt-0.5">Click <strong class="text-amber-600 cursor-pointer hover:underline" onclick="addAccordionTab()">+ Add Tab / FAQ</strong> to create custom sections, or click <strong>Load 4 Luxury Default Tabs</strong> if desired.</p>
+                </div>
+            `;
+        }
+    }
+
     function addAccordionTab() {
         renderAccordionTab({
             title: '',
@@ -510,47 +548,59 @@
 
     function renderAccordionTab(data) {
         const container = document.getElementById('tabs-container');
+        const emptyNotice = document.getElementById('empty-tabs-notice');
+        if (emptyNotice) emptyNotice.remove();
+
         const tabId = 'tab_' + Math.random().toString(36).substr(2, 9);
         const editorId = 'editor_' + tabId;
 
         const card = document.createElement('div');
         card.id = tabId;
-        card.className = 'tab-card bg-white rounded-xl border border-stone-200 p-4 sm:p-5 shadow-sm space-y-3.5 transition-all hover:border-amber-600/40';
+        card.className = 'tab-card bg-white rounded-xl border border-stone-200/90 p-5 sm:p-6 shadow-sm flex flex-col gap-5 transition-all hover:border-amber-600/40 hover:shadow-md';
 
         const featuresText = Array.isArray(data.features) ? data.features.join('\n') : (data.features || '');
 
         card.innerHTML = `
-            <div class="flex items-center justify-between pb-2.5 border-b border-stone-100">
+            <div class="tab-header-row flex items-center justify-between pb-3 border-b border-stone-100">
                 <div class="flex items-center gap-2.5 flex-1 mr-3">
-                    <span class="tab-dot-preview h-3 w-3 rounded-full shrink-0 shadow-xs" style="background-color: ${data.dot_color || '#78000b'};"></span>
+                    <span class="tab-dot-preview h-3.5 w-3.5 rounded-full shrink-0 shadow-xs ring-2 ring-stone-100" style="background-color: ${data.dot_color || '#78000b'};"></span>
                     <input type="text" value="${data.title || ''}" placeholder="Tab Title (e.g. Master Craftsmanship & Saddlery Finishing)" required class="tab-title w-full font-bold text-stone-900 text-xs sm:text-sm bg-transparent border-b border-transparent hover:border-stone-300 focus:border-amber-600 outline-none pb-0.5" oninput="syncTabsJSON();">
                 </div>
                 <div class="flex items-center gap-2">
-                    <select class="tab-dot-color h-8 rounded-lg px-2 text-[0.68rem] font-bold text-stone-700 border border-stone-200 bg-stone-50 outline-none" onchange="this.closest('.tab-card').querySelector('.tab-dot-preview').style.backgroundColor = this.value; syncTabsJSON();">
+                    <select class="tab-dot-color h-8.5 rounded-lg px-2.5 text-[0.68rem] font-bold text-stone-700 border border-stone-200 bg-stone-50 outline-none focus:border-amber-600 cursor-pointer" onchange="this.closest('.tab-card').querySelector('.tab-dot-preview').style.backgroundColor = this.value; syncTabsJSON();">
                         <option value="#78000b" ${data.dot_color === '#78000b' ? 'selected' : ''}>Burgundy (#78000b)</option>
                         <option value="#d8b45a" ${data.dot_color === '#d8b45a' ? 'selected' : ''}>Gold (#d8b45a)</option>
                         <option value="#2e683a" ${data.dot_color === '#2e683a' ? 'selected' : ''}>Forest (#2e683a)</option>
                         <option value="#1c1210" ${data.dot_color === '#1c1210' ? 'selected' : ''}>Onyx (#1c1210)</option>
                     </select>
-                    <button type="button" onclick="deleteAccordionTab('${tabId}')" class="h-8 w-8 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition cursor-pointer" title="Remove Tab">
+                    <button type="button" onclick="deleteAccordionTab('${tabId}')" class="h-8.5 w-8.5 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition cursor-pointer" title="Remove Tab">
                         <i class="fa-solid fa-trash-can text-xs"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Tab Content Rich Text Editor -->
-            <div>
-                <label class="block text-[0.65rem] font-bold uppercase tracking-wider text-stone-500 mb-1">TAB CONTENT / DESCRIPTION (RICH TEXT)</label>
-                <div id="${editorId}" class="tab-editor-container bg-stone-50/60 rounded-lg border border-stone-200 min-h-[90px] text-xs text-stone-800">${data.content || ''}</div>
+            <div class="tab-content-block flex flex-col gap-1.5">
+                <div class="flex items-center justify-between">
+                    <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-stone-700">
+                        TAB CONTENT / DESCRIPTION (RICH TEXT)
+                    </label>
+                    <span class="text-[0.62rem] text-stone-400">Rich text content for this accordion section</span>
+                </div>
+                <div class="quill-tab-wrapper">
+                    <div id="${editorId}" class="tab-editor-container bg-white text-xs text-stone-800">${data.content || ''}</div>
+                </div>
             </div>
 
             <!-- Tab Checklist / Feature Highlights (As seen in screenshot) -->
-            <div>
-                <div class="flex items-center justify-between mb-1">
-                    <label class="block text-[0.65rem] font-bold uppercase tracking-wider text-stone-500">KEY HIGHLIGHT BULLETS (1 PER LINE)</label>
+            <div class="tab-features-block flex flex-col gap-1.5 pt-1">
+                <div class="flex items-center justify-between">
+                    <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-stone-700">
+                        KEY HIGHLIGHT BULLETS (1 PER LINE)
+                    </label>
                     <span class="text-[0.62rem] text-stone-400">Renders as checkmark badges (e.g. ✓ Double saddle stitching...)</span>
                 </div>
-                <textarea rows="2" placeholder="Double saddle stitching with waxed linen thread&#10;Hand-burnished solid brass hardware" class="tab-features w-full p-2.5 rounded-lg text-xs text-stone-800 border border-stone-200 bg-stone-50/50 outline-none focus:border-amber-600 focus:bg-white transition" oninput="syncTabsJSON();">${featuresText}</textarea>
+                <textarea rows="3" placeholder="Double saddle stitching with waxed linen thread&#10;Hand-burnished solid brass hardware" class="tab-features w-full p-3 rounded-xl text-xs text-stone-800 border border-stone-200 bg-stone-50/50 outline-none focus:border-amber-600 focus:bg-white focus:ring-2 focus:ring-amber-600/10 transition shadow-2xs leading-relaxed" oninput="syncTabsJSON();">${featuresText}</textarea>
             </div>
         `;
 
@@ -614,6 +664,9 @@
             }
         });
         document.getElementById('accordion_tabs_json').value = JSON.stringify(items);
+        if (cards.length === 0) {
+            renderEmptyTabsState();
+        }
     }
 </script>
 @endsection

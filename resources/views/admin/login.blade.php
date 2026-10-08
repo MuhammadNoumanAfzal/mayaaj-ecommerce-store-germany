@@ -101,15 +101,49 @@
                     </div>
                 </div>
 
-                <!-- Demo Credentials Box -->
-                <div class="rounded-xl border border-saltora-terracotta/20 bg-saltora-blush-light p-2.5 text-xs flex items-center justify-between shadow-2xs">
-                    <div>
-                        <p class="font-bold text-saltora-terracotta text-[0.72rem]" data-i18n-en="Demo Credentials" data-i18n-de="Demo Zugangsdaten">Demo Credentials</p>
-                        <p class="text-[0.64rem] text-stone-500 font-mono">admin@mehaaj.de / password123</p>
+                <!-- Multi-Role Credentials Selector -->
+                <div class="rounded-xl border border-saltora-terracotta/20 bg-saltora-blush-light/60 p-2.5 text-xs shadow-2xs space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-saltora-terracotta text-[0.68rem] uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-users-gear text-[11px]"></i>
+                            <span data-i18n-en="Role Presets" data-i18n-de="Rollen-Vorauswahl">Role Presets</span>
+                        </span>
+                        <span class="text-[0.6rem] text-stone-500 font-mono">pw: password123</span>
                     </div>
-                    <button type="button" onclick="autoFillCredentials()" class="rounded-lg bg-saltora-terracotta hover:bg-saltora-terracotta-dark text-white px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-wider transition cursor-pointer shadow-2xs" data-i18n-en="Auto-fill" data-i18n-de="Einfügen">
-                        Auto-fill
-                    </button>
+
+                    <div class="grid grid-cols-2 gap-1.5">
+                        <button type="button" onclick="autoFillRole('admin@mehaaj.de', 'Super Admin')" class="text-left px-2 py-1.5 rounded-lg bg-white border border-purple-200/80 hover:border-purple-400 hover:bg-purple-50/50 transition cursor-pointer flex flex-col shadow-2xs">
+                            <span class="font-bold text-[0.66rem] text-purple-900 flex items-center justify-between">
+                                <span>Super Admin</span>
+                                <i class="fa-solid fa-crown text-[8px] text-amber-500"></i>
+                            </span>
+                            <span class="text-[0.56rem] text-stone-500 truncate">admin@mehaaj.de</span>
+                        </button>
+
+                        <button type="button" onclick="autoFillRole('manager@mehaaj.de', 'Store Admin')" class="text-left px-2 py-1.5 rounded-lg bg-white border border-rose-200/80 hover:border-rose-400 hover:bg-rose-50/50 transition cursor-pointer flex flex-col shadow-2xs">
+                            <span class="font-bold text-[0.66rem] text-rose-900 flex items-center justify-between">
+                                <span>Store Admin</span>
+                                <i class="fa-solid fa-store text-[8px] text-rose-500"></i>
+                            </span>
+                            <span class="text-[0.56rem] text-stone-500 truncate">manager@mehaaj.de</span>
+                        </button>
+
+                        <button type="button" onclick="autoFillRole('moderator@mehaaj.de', 'Moderator')" class="text-left px-2 py-1.5 rounded-lg bg-white border border-blue-200/80 hover:border-blue-400 hover:bg-blue-50/50 transition cursor-pointer flex flex-col shadow-2xs">
+                            <span class="font-bold text-[0.66rem] text-blue-900 flex items-center justify-between">
+                                <span>Moderator</span>
+                                <i class="fa-solid fa-shield-halved text-[8px] text-blue-500"></i>
+                            </span>
+                            <span class="text-[0.56rem] text-stone-500 truncate">moderator@mehaaj.de</span>
+                        </button>
+
+                        <button type="button" onclick="autoFillRole('inventory@mehaaj.de', 'Inventory Staff')" class="text-left px-2 py-1.5 rounded-lg bg-white border border-amber-200/80 hover:border-amber-400 hover:bg-amber-50/50 transition cursor-pointer flex flex-col shadow-2xs">
+                            <span class="font-bold text-[0.66rem] text-amber-900 flex items-center justify-between">
+                                <span>Inventory</span>
+                                <i class="fa-solid fa-boxes-stacked text-[8px] text-amber-600"></i>
+                            </span>
+                            <span class="text-[0.56rem] text-stone-500 truncate">inventory@mehaaj.de</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Remember & Public Site Link -->
@@ -141,6 +175,17 @@
 
     <!-- Scripts -->
     <script>
+        const LuxuryToast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            background: '#ffffff',
+            color: '#1c1917',
+            iconColor: '#964B42'
+        });
+
         // Language state management (English as default)
         let currentLang = localStorage.getItem('mehaaj_admin_lang') || 'en';
 
@@ -210,20 +255,18 @@
             }
         }
 
-        function autoFillCredentials() {
-            document.getElementById('email').value = 'admin@mehaaj.de';
+        function autoFillRole(email, roleTitle) {
+            document.getElementById('email').value = email;
             document.getElementById('password').value = 'password123';
 
-            Swal.fire({
+            LuxuryToast.fire({
                 icon: 'success',
-                title: currentLang === 'de' ? 'Zugangsdaten eingefügt' : 'Credentials filled',
-                text: currentLang === 'de' ? 'Demo-Zugangsdaten erfolgreich eingetragen.' : 'Demo admin credentials loaded.',
-                timer: 1300,
-                showConfirmButton: false,
-                background: '#ffffff',
-                color: '#1c1917',
-                iconColor: '#964B42'
+                title: `${roleTitle}: ${email}`
             });
+        }
+
+        function autoFillCredentials() {
+            autoFillRole('admin@mehaaj.de', 'Super Admin');
         }
 
         // Form Submit with SweetAlert2 & Animated Feedback

@@ -70,4 +70,21 @@ class Product extends Model
 
         return 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=400&auto=format&fit=crop';
     }
+
+    /**
+     * Get all reviews for this product.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get only approved reviews for this product.
+     */
+    public function approvedReviews()
+    {
+        return $this->hasMany(Review::class)->where('status', 'approved');
+    }
 }
+

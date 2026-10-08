@@ -271,8 +271,8 @@
                 .then(data => {
                     LuxurySwal.fire({
                         icon: 'success',
-                        title: isEn ? 'Thank you for your review! 🌟' : 'Vielen Dank für Ihre Bewertung! 🌟',
-                        text: isEn ? 'Your verified feedback has been published to our atelier journal.' : 'Ihr verifiziertes Feedback wurde veröffentlicht.',
+                        title: isEn ? 'Review Submitted for Verification! 🌟' : 'Bewertung zur Prüfung eingereicht! 🌟',
+                        text: isEn ? (data.message || 'Thank you! Your review has been received and will appear once approved by our atelier team.') : (data.message || 'Vielen Dank! Ihre Bewertung wurde übermittelt und erscheint nach redaktioneller Freigabe.'),
                         confirmButtonText: isEn ? 'Continue' : 'Weiter'
                     }).then(() => {
                         window.location.reload();
