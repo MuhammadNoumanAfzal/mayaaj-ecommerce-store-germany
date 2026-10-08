@@ -214,6 +214,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
             Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
             Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+            // Financial Intelligence & Accounting (Profit & Loss, Balance Sheet, OpEx)
+            Route::prefix('finance')->name('finance.')->group(function () {
+                Route::get('/profit-loss', [\App\Http\Controllers\Admin\FinanceController::class, 'profitAndLoss'])->name('profit-loss');
+                Route::get('/balance-sheet', [\App\Http\Controllers\Admin\FinanceController::class, 'balanceSheet'])->name('balance-sheet');
+                Route::get('/expenses', [\App\Http\Controllers\Admin\FinanceController::class, 'expenses'])->name('expenses');
+                Route::post('/expenses', [\App\Http\Controllers\Admin\FinanceController::class, 'storeExpense'])->name('expenses.store');
+                Route::put('/expenses/{expense}', [\App\Http\Controllers\Admin\FinanceController::class, 'updateExpense'])->name('expenses.update');
+                Route::delete('/expenses/{expense}', [\App\Http\Controllers\Admin\FinanceController::class, 'destroyExpense'])->name('expenses.destroy');
+                Route::put('/balance-accounts/{account}', [\App\Http\Controllers\Admin\FinanceController::class, 'updateBalanceAccount'])->name('balance-accounts.update');
+            });
         });
 
         // 4. Client Moderation & Inquiries (Super Admin, Store Admin & Review Moderator)

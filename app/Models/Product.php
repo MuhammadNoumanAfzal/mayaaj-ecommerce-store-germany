@@ -17,6 +17,7 @@ class Product extends Model
         'sku',
         'price',
         'sale_price',
+        'cost_price',
         'stock',
         'variations',
         'description',
@@ -31,6 +32,7 @@ class Product extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'sale_price' => 'decimal:2',
+        'cost_price' => 'decimal:2',
         'stock' => 'integer',
         'is_featured' => 'boolean',
         'gallery_images' => 'array',
@@ -39,6 +41,34 @@ class Product extends Model
     ];
 
     protected $appends = ['image_url'];
+
+    /**
+     * Get effective unit cost price (defaults to 45% of retail price if not specified).
+     */
+    public function getEffectiveCostPriceAttribute(): float
+    {
+        if ($this->cost_price !== null && (float)$this->cost_price > 0) {
+            return (float)$this->cost_price;
+        }
+        return round((float)$this->price * 0.45, 2);
+    }
+
+    /**
+     * Gross Profit per piece.
+     */
+    public function getUnitGrossProfitAttribute(): float
+    {
+        return round((float)$this->price - $this->effective_cost_price, 2);
+    }
+
+    /**
+     * Gross Profit Margin percentage.
+     */
+    public function getGrossMarginPercentAttribute(): float
+    {
+        if ((float)$this->price <= 0) return 0.0;
+        return round(($this->unit_gross_profit / (float)$this->price) * 100, 1);
+    }
 
     /**
      * Get the category that owns the product.

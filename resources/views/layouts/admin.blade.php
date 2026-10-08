@@ -607,6 +607,32 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- Collapsible Financial Intelligence Dropdown (Profit & Loss, Balance Sheet, OpEx) -->
+                    <div class="space-y-1">
+                        <button type="button" onclick="toggleSidebarMenu('finance-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.finance*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                            <div class="flex items-center gap-3">
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.finance*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <span data-i18n-de="Finanzen & GuV" data-i18n-en="Finance & GuV">Finance & GuV</span>
+                            </div>
+                            <svg id="finance-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.finance*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </button>
+
+                        <div id="finance-menu" class="{{ request()->routeIs('admin.finance*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
+                            <a href="{{ route('admin.finance.profit-loss') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.finance.profit-loss') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                                <span data-i18n-de="Gewinn & Verlust (GuV)" data-i18n-en="Profit & Loss (P&L)">Profit & Loss (P&L)</span>
+                            </a>
+                            <a href="{{ route('admin.finance.balance-sheet') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.finance.balance-sheet') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 9l9-6 9 6M3 9l9 6 9-6M3 9v6l9 6 9-6V9"/></svg>
+                                <span data-i18n-de="Bilanz (Balance Sheet)" data-i18n-en="Balance Sheet">Balance Sheet</span>
+                            </a>
+                            <a href="{{ route('admin.finance.expenses') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.finance.expenses') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                                <span data-i18n-de="Betriebsausgaben" data-i18n-en="Operating Expenses">Operating Expenses</span>
+                            </a>
+                        </div>
+                    </div>
                     @endif
 
                     @if($canModerate)

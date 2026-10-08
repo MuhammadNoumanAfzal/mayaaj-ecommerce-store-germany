@@ -127,6 +127,19 @@
                     >
                 </div>
 
+                <!-- Production Cost Price (€) -->
+                <div>
+                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="HERSTELLKOSTEN / EK (€)" data-i18n-en="COST / PURCHASE PRICE (€)">COST PRICE (€)</label>
+                    <input 
+                        type="number" 
+                        step="0.01" 
+                        name="cost_price" 
+                        value="{{ old('cost_price', $product->cost_price) }}" 
+                        placeholder="0.00" 
+                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
+                    >
+                </div>
+
                 <!-- Stock Quantity -->
                 <div>
                     <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="LAGERBESTAND *" data-i18n-en="STOCK QUANTITY *">STOCK QUANTITY <span class="text-saltora-terracotta">*</span></label>
