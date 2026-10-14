@@ -17,8 +17,66 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        (function() {
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            }
+            const savedTheme = localStorage.getItem('mehaaj_admin_theme') || getCookie('mehaaj_admin_theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
     <style>
         [x-cloak] { display: none !important; }
+        
+        /* Dark Mode for Login */
+        html.dark body {
+            background-color: #0E0D12 !important;
+            color: #F3F4F6 !important;
+        }
+        html.dark .bg-white\/95 {
+            background-color: #191820 !important;
+            border-color: #2C2936 !important;
+            color: #F3F4F6 !important;
+        }
+        html.dark .text-stone-900 {
+            color: #F9FAFB !important;
+        }
+        html.dark .text-stone-700 {
+            color: #D1D5DB !important;
+        }
+        html.dark .text-stone-500 {
+            color: #9CA3AF !important;
+        }
+        html.dark .border-stone-300,
+        html.dark .border-stone-200\/90 {
+            border-color: #353140 !important;
+        }
+        html.dark input[type="email"],
+        html.dark input[type="password"] {
+            background-color: #141318 !important;
+            color: #F9FAFB !important;
+            border-color: #353140 !important;
+        }
+        html.dark input:focus {
+            background-color: #1A1922 !important;
+            border-color: #E07A6F !important;
+        }
+        html.dark .bg-stone-50\/80 {
+            background-color: #141318 !important;
+        }
+        html.dark .bg-white\/80 {
+            background-color: #22202A !important;
+            border-color: #363242 !important;
+        }
+        html.dark [class*="bg-[radial-gradient"] {
+            background: radial-gradient(circle at top, #231A24 0%, #0E0D12 60%, #0A090D 100%) !important;
+        }
     </style>
 </head>
 <body class="h-full w-full overflow-hidden flex items-center justify-center p-4 font-sans antialiased text-stone-800 bg-[#F8F5EF] relative select-none">
@@ -36,8 +94,11 @@
     <!-- Login Container -->
     <div class="w-full max-w-[430px] relative z-10 flex flex-col items-center">
         
-        <!-- Top Language Selector Pill (Default: English) -->
-        <div class="mb-3 flex items-center justify-end w-full px-1">
+        <!-- Top Controls: Theme Toggle & Language Selector -->
+        <div class="mb-3 flex items-center justify-end gap-2 w-full px-1">
+            <button type="button" onclick="toggleLoginTheme()" class="flex items-center justify-center h-7 w-7 rounded-full bg-white/80 backdrop-blur-md border border-stone-200 text-stone-700 hover:text-saltora-terracotta transition cursor-pointer shadow-2xs" title="Toggle Theme">
+                <i id="loginThemeIcon" class="fa-solid fa-moon text-xs"></i>
+            </button>
             <div class="flex items-center rounded-full bg-white/80 backdrop-blur-md p-1 border border-stone-200 shadow-2xs" aria-label="Language selector">
                 <button type="button" onclick="setLoginLanguage('en')" data-login-lang="en" class="cursor-pointer rounded-full px-3 py-1 text-[0.65rem] font-black uppercase tracking-wider transition bg-stone-900 text-white shadow-2xs">EN</button>
                 <button type="button" onclick="setLoginLanguage('de')" data-login-lang="de" class="cursor-pointer rounded-full px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider transition text-stone-600 hover:text-stone-900">DE</button>
@@ -323,9 +384,29 @@
             }
         });
 
-        // Initialize language
+        // Theme Toggling Logic
+        function updateLoginThemeUI(isDark) {
+            const icon = document.getElementById('loginThemeIcon');
+            if (icon) {
+                icon.className = isDark ? 'fa-solid fa-sun text-xs text-amber-400' : 'fa-solid fa-moon text-xs text-stone-700';
+            }
+        }
+
+        function toggleLoginTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            const theme = isDark ? 'dark' : 'light';
+            try {
+                localStorage.setItem('mehaaj_admin_theme', theme);
+            } catch(e) {}
+            document.cookie = `mehaaj_admin_theme=${theme};path=/;max-age=31536000`;
+            updateLoginThemeUI(isDark);
+        }
+
+        // Initialize language & theme
         document.addEventListener('DOMContentLoaded', () => {
             setLoginLanguage(currentLang);
+            const isDark = document.documentElement.classList.contains('dark');
+            updateLoginThemeUI(isDark);
         });
     </script>
 </body>

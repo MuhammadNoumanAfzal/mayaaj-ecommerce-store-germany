@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-[#F8F5EF] text-stone-800">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-[#F8F5EF] text-stone-800 {{ (request()->cookie('mehaaj_admin_theme') === 'dark') ? 'dark' : '' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,7 +50,7 @@
     </style>
     @yield('admin-styles')
 
-    <!-- Early Language Hydration Script (Zero-Flash, English as Default) -->
+    <!-- Early Language & Dark Theme Hydration Script (Zero-Flash) -->
     <script>
         (function() {
             function getCookie(name) {
@@ -62,6 +62,15 @@
             const savedLang = localStorage.getItem('mehaaj_admin_lang') || getCookie('mehaaj_admin_lang') || 'en';
             window.__mehaaj_lang = savedLang;
             document.documentElement.lang = savedLang;
+
+            // Early Dark/Light Theme Hydration (Immediate class toggle to prevent white flash)
+            const savedTheme = localStorage.getItem('mehaaj_admin_theme') || getCookie('mehaaj_admin_theme') || 'light';
+            window.__mehaaj_theme = savedTheme;
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
         })();
     </script>
 
@@ -407,6 +416,453 @@
             font-size: 0.8125rem !important;
             left: 14px !important;
         }
+
+        /* ==========================================================
+           MEHAAJ LUXURY OBSIDIAN DARK THEME ENGINE
+           ========================================================== */
+        html.dark {
+            color-scheme: dark;
+            background-color: #0E0D12 !important;
+        }
+
+        html.dark body {
+            background-color: #0E0D12 !important;
+            color: #F3F4F6 !important;
+        }
+
+        /* Layout & Main Ambient Background */
+        html.dark .bg-\[\#F8F5EF\],
+        html.dark [class*="bg-[#F8F5EF]"],
+        html.dark .min-h-\[calc\(100vh-4rem\)\] {
+            background-color: #0E0D12 !important;
+        }
+
+        /* Header & Sidebar */
+        html.dark header.admin-executive-header {
+            background-color: #16151B !important;
+            color: #F3F4F6 !important;
+            border-bottom: 1px solid #2B2834 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        html.dark aside.admin-executive-sidebar {
+            background-color: #16151B !important;
+            color: #E5E7EB !important;
+            border-right: 1px solid #2B2834 !important;
+        }
+
+        html.dark aside.admin-executive-sidebar .border-t,
+        html.dark aside.admin-executive-sidebar .border-stone-200 {
+            border-color: #2B2834 !important;
+        }
+
+        html.dark aside.admin-executive-sidebar .bg-stone-50 {
+            background-color: #1D1C24 !important;
+            border-color: #2B2834 !important;
+        }
+
+        /* Sidebar Navigation Links */
+        html.dark .admin-nav-item {
+            color: #C5BFB8 !important;
+        }
+
+        html.dark .admin-nav-item svg {
+            color: #9CA3AF !important;
+        }
+
+        html.dark .admin-nav-item:hover {
+            background-color: #24222C !important;
+            color: #E88376 !important;
+        }
+
+        html.dark .admin-nav-item:hover svg {
+            color: #E88376 !important;
+        }
+
+        html.dark .admin-nav-item-active {
+            background-color: #351C1B !important;
+            color: #F87171 !important;
+        }
+
+        html.dark .admin-nav-item-active svg {
+            color: #F87171 !important;
+        }
+
+        html.dark .admin-nav-subitem {
+            color: #9CA3AF !important;
+        }
+
+        html.dark .admin-nav-subitem svg {
+            color: #6B7280 !important;
+        }
+
+        html.dark .admin-nav-subitem:hover {
+            background-color: #24222C !important;
+            color: #E88376 !important;
+        }
+
+        html.dark .admin-nav-subitem:hover svg {
+            color: #E88376 !important;
+        }
+
+        html.dark .admin-nav-subitem-active {
+            background-color: #351C1B !important;
+            color: #F87171 !important;
+        }
+
+        /* Cards, Panels & Containers */
+        html.dark .bg-white,
+        html.dark .exec-card {
+            background-color: #191820 !important;
+            border-color: #2C2936 !important;
+            color: #F3F4F6 !important;
+        }
+
+        html.dark .bg-stone-50,
+        html.dark .bg-stone-50\/60,
+        html.dark .bg-stone-50\/90,
+        html.dark .bg-stone-100,
+        html.dark .bg-\[\#faf7f2\],
+        html.dark .bg-\[\#FBF6F4\] {
+            background-color: #1E1C25 !important;
+            border-color: #2E2B38 !important;
+            color: #E5E7EB !important;
+        }
+
+        /* Text Legibility & Contrast in Dark Mode */
+        html.dark .text-stone-900,
+        html.dark .text-stone-800 {
+            color: #F9FAFB !important;
+        }
+
+        html.dark .text-stone-700,
+        html.dark .text-stone-600 {
+            color: #D1D5DB !important;
+        }
+
+        html.dark .text-stone-500 {
+            color: #9CA3AF !important;
+        }
+
+        html.dark .text-stone-400 {
+            color: #8C8697 !important;
+        }
+
+        html.dark .text-stone-300 {
+            color: #555060 !important;
+        }
+
+        html.dark h1,
+        html.dark h2,
+        html.dark h3,
+        html.dark h4,
+        html.dark h5,
+        html.dark h6 {
+            color: #F9FAFB !important;
+        }
+
+        html.dark label,
+        html.dark form label {
+            color: #E5E7EB !important;
+        }
+
+        /* Borders */
+        html.dark .border-stone-100,
+        html.dark .border-stone-200,
+        html.dark .border-stone-200\/50,
+        html.dark .border-stone-200\/60,
+        html.dark .border-stone-200\/80,
+        html.dark .border-stone-200\/90,
+        html.dark .border-stone-300,
+        html.dark .border-\[\#E5DED5\],
+        html.dark .border-\[\#e6decb\] {
+            border-color: #2C2936 !important;
+        }
+
+        html.dark .divide-stone-100 > :not([hidden]) ~ :not([hidden]),
+        html.dark .divide-stone-200 > :not([hidden]) ~ :not([hidden]) {
+            border-color: #2C2936 !important;
+        }
+
+        /* Form Inputs & Controls */
+        html.dark input[type="text"],
+        html.dark input[type="number"],
+        html.dark input[type="email"],
+        html.dark input[type="password"],
+        html.dark input[type="search"],
+        html.dark select,
+        html.dark textarea,
+        html.dark .exec-input,
+        html.dark #admin-search-input {
+            background-color: #141318 !important;
+            color: #F9FAFB !important;
+            border: 1px solid #353140 !important;
+        }
+
+        html.dark select option {
+            background-color: #191820 !important;
+            color: #F9FAFB !important;
+        }
+
+        html.dark input::placeholder,
+        html.dark textarea::placeholder {
+            color: #6B7280 !important;
+        }
+
+        html.dark input:focus,
+        html.dark select:focus,
+        html.dark textarea:focus,
+        html.dark #admin-search-input:focus {
+            background-color: #1A1922 !important;
+            border-color: #E07A6F !important;
+            box-shadow: 0 0 0 3px rgba(224, 122, 111, 0.25) !important;
+        }
+
+        /* Buttons & Actions Visibility */
+        html.dark .btn-exec-primary {
+            background-color: #A3483E !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 14px rgba(163, 72, 62, 0.45) !important;
+        }
+
+        html.dark .btn-exec-primary:hover {
+            background-color: #B55246 !important;
+            color: #FFFFFF !important;
+            transform: translateY(-1px);
+        }
+
+        html.dark .btn-exec-secondary {
+            background-color: #22202A !important;
+            color: #F3F4F6 !important;
+            border: 1px solid #3E3A4B !important;
+        }
+
+        html.dark .btn-exec-secondary:hover {
+            background-color: #2C2937 !important;
+            color: #E88376 !important;
+            border-color: #E88376 !important;
+        }
+
+        html.dark .btn-exec-danger {
+            background-color: #3B1219 !important;
+            color: #FDA4AF !important;
+            border: 1px solid #881337 !important;
+        }
+
+        html.dark .btn-exec-danger:hover {
+            background-color: #4C1D24 !important;
+            color: #FECDD3 !important;
+        }
+
+        /* Generic stone-100 buttons in dark mode */
+        html.dark a.bg-stone-100,
+        html.dark button.bg-stone-100 {
+            background-color: #24222D !important;
+            color: #E5E7EB !important;
+            border-color: #383445 !important;
+        }
+
+        html.dark a.bg-stone-100:hover,
+        html.dark button.bg-stone-100:hover {
+            background-color: #2E2B3A !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Tables & Lists */
+        html.dark table thead tr,
+        html.dark .exec-table-head {
+            background-color: #141318 !important;
+            border-bottom: 2px solid #2C2936 !important;
+            color: #D1D5DB !important;
+        }
+
+        html.dark table thead th,
+        html.dark .exec-table-head th {
+            color: #D1D5DB !important;
+        }
+
+        html.dark table tbody tr,
+        html.dark .exec-table-row {
+            border-bottom: 1px solid #25232D !important;
+            color: #E5E7EB !important;
+        }
+
+        html.dark table tbody tr:hover,
+        html.dark .exec-table-row:hover {
+            background-color: #201E28 !important;
+        }
+
+        html.dark table tbody td {
+            color: #E5E7EB !important;
+        }
+
+        /* Badges & Pills */
+        html.dark .bg-emerald-50 {
+            background-color: #052F1E !important;
+            border-color: #065F46 !important;
+            color: #6EE7B7 !important;
+        }
+
+        html.dark .bg-emerald-100 {
+            background-color: #064E3B !important;
+            color: #A7F3D0 !important;
+        }
+
+        html.dark .bg-rose-50 {
+            background-color: #330C15 !important;
+            border-color: #881337 !important;
+            color: #FDA4AF !important;
+        }
+
+        html.dark .bg-rose-100 {
+            background-color: #4C1D24 !important;
+            color: #FECDD3 !important;
+        }
+
+        html.dark .bg-amber-50 {
+            background-color: #2E1704 !important;
+            border-color: #78350F !important;
+            color: #FCD34D !important;
+        }
+
+        html.dark .bg-amber-100 {
+            background-color: #451A03 !important;
+            color: #FDE68A !important;
+        }
+
+        html.dark .bg-sky-50,
+        html.dark .bg-blue-50 {
+            background-color: #071E36 !important;
+            border-color: #1E3A8A !important;
+            color: #93C5FD !important;
+        }
+
+        html.dark .bg-purple-50 {
+            background-color: #220D38 !important;
+            border-color: #581C87 !important;
+            color: #D8B4FE !important;
+        }
+
+        html.dark .bg-saltora-blush {
+            background-color: #351C1B !important;
+            border-color: #7F1D1D !important;
+            color: #F87171 !important;
+        }
+
+        /* Language Toggle Pill in Dark Mode */
+        html.dark div[aria-label="Language selector"] {
+            background-color: #22202A !important;
+            border-color: #363242 !important;
+        }
+
+        html.dark div[aria-label="Language selector"] button:not(.bg-saltora-terracotta) {
+            color: #C5BFB8 !important;
+        }
+
+        /* Modals & SweetAlert in Dark Mode */
+        html.dark #review-detail-dialog,
+        html.dark [id*="modal"] .bg-white {
+            background-color: #191820 !important;
+            border-color: #2C2936 !important;
+            color: #F3F4F6 !important;
+        }
+
+        html.dark .swal2-popup {
+            background-color: #191820 !important;
+            color: #F3F4F6 !important;
+            border: 1px solid #2C2936 !important;
+        }
+
+        html.dark .swal2-title {
+            color: #F9FAFB !important;
+        }
+
+        html.dark .swal2-html-container {
+            color: #D1D5DB !important;
+        }
+
+        /* Quill Editor in Dark Mode */
+        html.dark .ql-toolbar.ql-snow {
+            background-color: #141318 !important;
+            border-color: #2C2936 !important;
+        }
+
+        html.dark .ql-container.ql-snow {
+            background-color: #191820 !important;
+            border-color: #2C2936 !important;
+            color: #F3F4F6 !important;
+        }
+
+        html.dark .ql-editor {
+            color: #F3F4F6 !important;
+        }
+
+        html.dark .ql-snow .ql-stroke {
+            stroke: #9CA3AF !important;
+        }
+
+        html.dark .ql-snow .ql-fill {
+            fill: #9CA3AF !important;
+        }
+
+        html.dark .ql-snow .ql-picker {
+            color: #D1D5DB !important;
+        }
+
+        html.dark .ql-snow .ql-picker-options {
+            background-color: #16151B !important;
+            border-color: #2C2936 !important;
+            color: #F3F4F6 !important;
+        }
+
+        /* Preserve high-contrast CTA buttons inside gradient banners */
+        html.dark [class*="bg-gradient-to-r"] a.bg-white,
+        html.dark [class*="bg-gradient-to-r"] button.bg-white {
+            background-color: #FFFFFF !important;
+            color: #964B42 !important;
+        }
+
+        /* Pagination Controls in Dark Mode */
+        html.dark nav[role="navigation"] a,
+        html.dark nav[role="navigation"] span {
+            background-color: #22202A !important;
+            border-color: #363242 !important;
+            color: #D1D5DB !important;
+        }
+        html.dark nav[role="navigation"] a:hover {
+            background-color: #2C2937 !important;
+            color: #FFFFFF !important;
+        }
+        html.dark nav[role="navigation"] span[aria-current="page"] span {
+            background-color: #A3483E !important;
+            border-color: #A3483E !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Sidebar dropdown arrows in Dark Mode */
+        html.dark svg[id$="-menu-arrow"] {
+            color: #9CA3AF !important;
+        }
+        html.dark .admin-nav-item-active svg[id$="-menu-arrow"] {
+            color: #F87171 !important;
+        }
+
+        /* Header search bar in Dark Mode */
+        html.dark #admin-search-input {
+            background-color: #1F1D26 !important;
+            border-color: #332F3D !important;
+            color: #F9FAFB !important;
+        }
+        html.dark #admin-search-input:focus {
+            background-color: #25232F !important;
+            border-color: #E07A6F !important;
+        }
+
+        /* Footer in Dark Mode */
+        html.dark footer {
+            border-color: #2B2834 !important;
+            color: #8C8697 !important;
+        }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col bg-[#F8F5EF] text-stone-800">
@@ -497,6 +953,35 @@
                 <svg class="h-3.5 w-3.5 text-stone-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 <span data-i18n-de="Live Store" data-i18n-en="View Live Store">View Live Store</span>
             </a>
+
+            <!-- Dark / Light Theme Toggle Button -->
+            <button
+                id="admin-theme-toggle-btn"
+                type="button"
+                onclick="toggleAdminTheme()"
+                class="flex items-center justify-center h-8 w-8 rounded-full border border-stone-200 bg-stone-100 text-stone-700 hover:text-saltora-terracotta hover:border-saltora-terracotta/40 transition cursor-pointer shadow-2xs"
+                title="Toggle Dark / Light Theme"
+                data-i18n-title-en="Toggle Dark / Light Theme"
+                data-i18n-title-de="Dunkel-/Hellmodus umschalten"
+                aria-label="Toggle Dark / Light Theme"
+            >
+                <!-- Sun Icon (Active in Dark Mode to switch to Light) -->
+                <svg id="theme-toggle-sun" class="h-4 w-4 hidden text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <!-- Moon Icon (Active in Light Mode to switch to Dark) -->
+                <svg id="theme-toggle-moon" class="h-4 w-4 block text-stone-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
 
             <!-- Language Toggle Pill (Default: EN) -->
             <div class="flex items-center rounded-full bg-stone-100 p-1 border border-stone-200" aria-label="Language selector">
@@ -956,18 +1441,96 @@
             } catch(e) {}
         }
 
+        // ==========================================
+        // Luxury Obsidian Dark Theme Engine
+        // ==========================================
+        function setAdminTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') theme = 'light';
+            
+            try {
+                localStorage.setItem('mehaaj_admin_theme', theme);
+            } catch(e) {}
+            setCookie('mehaaj_admin_theme', theme, 365);
+            window.__mehaaj_theme = theme;
+
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+            const themeBtn = document.getElementById('admin-theme-toggle-btn');
+
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                if (document.body) document.body.classList.add('dark');
+                if (sunIcon) sunIcon.classList.remove('hidden');
+                if (moonIcon) moonIcon.classList.add('hidden');
+                if (themeBtn) {
+                    themeBtn.setAttribute('title', (window.__mehaaj_lang === 'de') ? 'Hellmodus aktivieren' : 'Switch to Light Mode');
+                }
+                
+                // Reconfigure LuxurySwal for Obsidian Dark Mode
+                if (window.LuxurySwal) {
+                    window.LuxurySwal = Swal.mixin({
+                        background: '#191820',
+                        color: '#F3F4F6',
+                        confirmButtonColor: '#A3483E',
+                        cancelButtonColor: '#4B5563',
+                        customClass: {
+                            popup: 'rounded-2xl shadow-2xl border border-[#2C2936] font-sans',
+                            title: 'font-bold text-lg text-white',
+                            confirmButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-[#964B42]/30 cursor-pointer',
+                            cancelButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer bg-stone-800 text-stone-200'
+                        }
+                    });
+                }
+            } else {
+                document.documentElement.classList.remove('dark');
+                if (document.body) document.body.classList.remove('dark');
+                if (sunIcon) sunIcon.classList.add('hidden');
+                if (moonIcon) moonIcon.classList.remove('hidden');
+                if (themeBtn) {
+                    themeBtn.setAttribute('title', (window.__mehaaj_lang === 'de') ? 'Dunkelmodus aktivieren' : 'Switch to Dark Mode');
+                }
+
+                // Reconfigure LuxurySwal for Ivory Light Mode
+                if (window.LuxurySwal) {
+                    window.LuxurySwal = Swal.mixin({
+                        background: '#ffffff',
+                        color: '#1c1917',
+                        confirmButtonColor: '#964B42',
+                        cancelButtonColor: '#64748b',
+                        customClass: {
+                            popup: 'rounded-2xl shadow-2xl border border-stone-200 font-sans',
+                            title: 'font-bold text-lg text-stone-900',
+                            confirmButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-[#964B42]/20 cursor-pointer',
+                            cancelButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer'
+                        }
+                    });
+                }
+            }
+        }
+
+        function toggleAdminTheme() {
+            const current = (window.__mehaaj_theme || localStorage.getItem('mehaaj_admin_theme') || 'light');
+            const nextTheme = current === 'dark' ? 'light' : 'dark';
+            setAdminTheme(nextTheme);
+        }
+
         // Cross-tab real-time persistence sync
         window.addEventListener('storage', function(e) {
             if (e.key === 'mehaaj_admin_lang' && e.newValue) {
                 applyLanguage(e.newValue);
             }
+            if (e.key === 'mehaaj_admin_theme' && e.newValue) {
+                setAdminTheme(e.newValue);
+            }
         });
 
         // Apply immediately and setup click listeners
         const initialLang = localStorage.getItem('mehaaj_admin_lang') || getCookie('mehaaj_admin_lang') || 'en';
+        const initialTheme = localStorage.getItem('mehaaj_admin_theme') || getCookie('mehaaj_admin_theme') || 'light';
 
         document.addEventListener('DOMContentLoaded', function() {
             applyLanguage(initialLang);
+            setAdminTheme(initialTheme);
 
             document.querySelectorAll('[data-language-option]').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -979,11 +1542,13 @@
 
         window.addEventListener('load', function() {
             applyLanguage(localStorage.getItem('mehaaj_admin_lang') || getCookie('mehaaj_admin_lang') || 'en');
+            setAdminTheme(localStorage.getItem('mehaaj_admin_theme') || getCookie('mehaaj_admin_theme') || 'light');
         });
 
-        // Pink-Salt SweetAlert Logout Modal
+        // Pink-Salt SweetAlert Logout Modal (Adapts to Dark / Light)
         function confirmSignOut() {
             const isEn = (window.__mehaaj_lang || 'en') === 'en';
+            const isDark = document.documentElement.classList.contains('dark');
             Swal.fire({
                 title: isEn ? 'Sign Out?' : 'Abmelden?',
                 text: isEn ? 'Are you sure you want to end your admin session?' : 'Möchten Sie Ihre Admin-Sitzung wirklich beenden?',
@@ -994,10 +1559,10 @@
                 confirmButtonText: isEn ? '<i class="fa-solid fa-right-from-bracket mr-1.5"></i> Yes, Sign Out' : '<i class="fa-solid fa-right-from-bracket mr-1.5"></i> Ja, Abmelden',
                 cancelButtonText: isEn ? 'Cancel' : 'Abbrechen',
                 reverseButtons: true,
-                background: '#ffffff',
-                color: '#1c1917',
+                background: isDark ? '#191820' : '#ffffff',
+                color: isDark ? '#F3F4F6' : '#1c1917',
                 customClass: {
-                    popup: 'rounded-2xl shadow-2xl border border-stone-200',
+                    popup: isDark ? 'rounded-2xl shadow-2xl border border-[#2C2936]' : 'rounded-2xl shadow-2xl border border-stone-200',
                     confirmButton: 'rounded-xl px-4 py-2.5 font-semibold text-xs shadow-md shadow-[#964B42]/20',
                     cancelButton: 'rounded-xl px-4 py-2.5 font-semibold text-xs'
                 }
@@ -1009,8 +1574,8 @@
                         icon: 'success',
                         timer: 800,
                         showConfirmButton: false,
-                        background: '#ffffff',
-                        color: '#1c1917',
+                        background: isDark ? '#191820' : '#ffffff',
+                        color: isDark ? '#F3F4F6' : '#1c1917',
                         iconColor: '#964B42',
                         timerProgressBar: true
                     }).then(() => {

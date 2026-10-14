@@ -130,6 +130,11 @@ Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\H
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->name('admin.')->group(function () {
+    // Root Admin Redirect
+    Route::get('/', function () {
+        return redirect()->route('admin.dashboard');
+    });
+
     // Language Switcher Route
     Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\Http\Request $request) {
         if (!in_array($locale, ['en', 'de'])) {
