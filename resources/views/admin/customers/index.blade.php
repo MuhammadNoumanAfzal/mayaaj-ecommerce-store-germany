@@ -153,6 +153,36 @@
                             <!-- Actions -->
                             <td class="py-4 px-6 text-center">
                                 <div class="flex items-center justify-center gap-2">
+                                    @php
+                                        $custModalData = [
+                                            'id' => $customer->id,
+                                            'name' => $customer->name,
+                                            'email' => $customer->email,
+                                            'phone' => $customer->phone ?? '',
+                                            'address' => $customer->address ?? '',
+                                            'city' => $customer->city ?? '',
+                                            'postal_code' => $customer->postal_code ?? '',
+                                            'country' => $customer->country ?? 'DE',
+                                            'vip_tier' => $customer->vip_tier ?? 'standard',
+                                            'total_spent' => (float)($customer->total_spent ?? 0),
+                                            'total_orders' => (int)($customer->total_orders ?? 0),
+                                            'status' => $customer->status ?? 'active',
+                                            'created_at' => $customer->created_at ? $customer->created_at->format('M d, Y') : 'N/A',
+                                            'edit_url' => route('admin.customers.edit', $customer->id),
+                                        ];
+                                    @endphp
+
+                                    <!-- View Button -->
+                                    <button
+                                        type="button"
+                                        onclick='openViewCustomerModal(@json($custModalData))'
+                                        class="btn-exec-secondary rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:border-saltora-terracotta hover:text-saltora-terracotta"
+                                        title="View Customer Profile"
+                                    >
+                                        <svg class="h-3.5 w-3.5 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <span data-i18n-de="Ansehen" data-i18n-en="View">View</span>
+                                    </button>
+
                                     <!-- Edit Button -->
                                     <a
                                         href="{{ route('admin.customers.edit', $customer->id) }}"
@@ -195,7 +225,196 @@
 
 </div>
 
+<!-- Customer Quick View Executive Modal -->
+<div id="view-customer-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop-luxury hidden transition-all duration-300" onclick="closeViewCustomerModal()">
+    <div class="relative w-full max-w-lg bg-white rounded-2xl border border-stone-200/90 shadow-2xl overflow-hidden border-t-4 border-t-saltora-terracotta" onclick="event.stopPropagation()">
+        
+        <!-- Modal Top Header -->
+        <div class="px-6 py-4 bg-gradient-to-r from-stone-50 via-white to-stone-50 border-b border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-saltora-blush text-saltora-terracotta flex items-center justify-center font-bold text-sm shadow-2xs border border-saltora-terracotta/20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-stone-900 text-sm tracking-tight" data-i18n-de="Kunden-Profil" data-i18n-en="Client Profile">Client Profile</h3>
+                    <p class="text-[0.68rem] text-stone-400 font-mono" id="cust-view-id">ID: #0</p>
+                </div>
+            </div>
+            <button type="button" onclick="closeViewCustomerModal()" class="w-8 h-8 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition flex items-center justify-center cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="p-6 space-y-4 text-xs max-h-[75vh] modal-scroll-clean">
+            
+            <!-- Customer Avatar & VIP Tier Banner -->
+            <div class="flex items-center gap-4 p-4 rounded-xl bg-stone-50/70 border border-stone-200/70">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#964B42] to-[#803D35] text-white flex items-center justify-center font-serif font-black text-xl shadow-md shrink-0" id="cust-view-avatar">
+                    C
+                </div>
+
+                <div class="space-y-1 flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <h4 id="cust-view-name" class="font-extrabold text-base text-stone-900 tracking-tight leading-snug"></h4>
+                        <span id="cust-view-status-badge"></span>
+                    </div>
+
+                    <div class="flex items-center gap-2 pt-0.5">
+                        <span id="cust-view-tier-badge"></span>
+                        <span class="text-[0.68rem] text-stone-400 font-medium">Joined: <span id="cust-view-joined" class="text-stone-600 font-semibold"></span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spending & Orders Metrics -->
+            <div class="grid grid-cols-3 gap-2.5">
+                <div class="p-3 rounded-xl bg-saltora-blush/40 border border-saltora-terracotta/15 text-center">
+                    <span class="text-[0.62rem] font-bold text-stone-500 uppercase tracking-wider block" data-i18n-de="Gesamtumsatz" data-i18n-en="Lifetime Spent">Lifetime Spent</span>
+                    <span id="cust-view-total-spent" class="font-extrabold text-sm text-saltora-terracotta mt-0.5 block font-mono">€0.00</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-stone-50 border border-stone-200/80 text-center">
+                    <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block" data-i18n-de="Bestellungen" data-i18n-en="Total Orders">Total Orders</span>
+                    <span id="cust-view-total-orders" class="font-extrabold text-sm text-stone-900 mt-0.5 block font-mono">0</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-stone-50 border border-stone-200/80 text-center">
+                    <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block" data-i18n-de="Ø Bestellwert" data-i18n-en="Avg Order">Avg Order</span>
+                    <span id="cust-view-avg-order" class="font-extrabold text-sm text-stone-900 mt-0.5 block font-mono">€0.00</span>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200/70 space-y-2.5">
+                <label class="block font-bold uppercase tracking-wider text-[0.65rem] text-stone-400" data-i18n-de="Kontaktdaten" data-i18n-en="Contact Information">Contact Information</label>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-stone-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <a id="cust-view-email" href="#" class="font-semibold text-stone-800 hover:text-saltora-terracotta transition truncate"></a>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-stone-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        <a id="cust-view-phone" href="#" class="font-semibold text-stone-800 hover:text-saltora-terracotta transition truncate"></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address Information -->
+            <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200/70 space-y-1.5">
+                <label class="block font-bold uppercase tracking-wider text-[0.65rem] text-stone-400" data-i18n-de="Liefer- / Rechnungsadresse" data-i18n-en="Billing & Shipping Address">Billing & Shipping Address</label>
+                <div class="flex items-start gap-2 pt-0.5">
+                    <svg class="w-4 h-4 text-stone-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <div id="cust-view-address" class="text-stone-700 font-medium leading-relaxed"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="p-4 bg-stone-50 border-t border-stone-200/80 flex items-center justify-end gap-2">
+            <button type="button" onclick="closeViewCustomerModal()" class="px-4 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer shadow-2xs" data-i18n-de="Schließen" data-i18n-en="Close">Close</button>
+            <a id="cust-view-edit-btn" href="#" class="btn-exec-primary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs">
+                <svg class="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <span data-i18n-de="Bearbeiten" data-i18n-en="Edit Customer">Edit Customer</span>
+            </a>
+        </div>
+
+    </div>
+</div>
+
 <script>
+    function openViewCustomerModal(data) {
+        const isEn = (window.__mehaaj_lang || 'en') === 'en';
+
+        document.getElementById('cust-view-id').textContent = 'ID: #' + data.id;
+        document.getElementById('cust-view-name').textContent = data.name;
+        document.getElementById('cust-view-joined').textContent = data.created_at;
+
+        // Avatar letter
+        const firstLetter = (data.name || 'C').charAt(0).toUpperCase();
+        document.getElementById('cust-view-avatar').textContent = firstLetter;
+
+        // Status badge
+        const badgeEl = document.getElementById('cust-view-status-badge');
+        if (data.status === 'active') {
+            badgeEl.className = 'inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider badge-active';
+            badgeEl.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span><span>${isEn ? 'Active' : 'Aktiv'}</span>`;
+        } else {
+            badgeEl.className = 'inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider badge-draft';
+            badgeEl.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-stone-500"></span><span>${isEn ? 'Inactive' : 'Inaktiv'}</span>`;
+        }
+
+        // VIP Tier badge
+        const tierEl = document.getElementById('cust-view-tier-badge');
+        if (data.vip_tier === 'platinum') {
+            tierEl.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.68rem] font-black bg-stone-900 text-amber-300 border border-amber-400/40 shadow-xs';
+            tierEl.innerHTML = '👑 Platinum VIP';
+        } else if (data.vip_tier === 'gold') {
+            tierEl.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.68rem] font-bold bg-amber-50 text-amber-800 border border-amber-200 shadow-2xs';
+            tierEl.innerHTML = '⭐ Gold VIP';
+        } else if (data.vip_tier === 'silver') {
+            tierEl.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.68rem] font-bold bg-stone-100 text-stone-700 border border-stone-200';
+            tierEl.innerHTML = '✨ Silver VIP';
+        } else {
+            tierEl.className = 'inline-flex items-center px-2 py-0.5 rounded-full text-[0.68rem] font-medium bg-stone-100 text-stone-600';
+            tierEl.innerHTML = 'Standard Client';
+        }
+
+        // Spending & Orders
+        document.getElementById('cust-view-total-spent').textContent = '€' + (data.total_spent || 0).toFixed(2);
+        document.getElementById('cust-view-total-orders').textContent = data.total_orders || 0;
+        const avg = data.total_orders > 0 ? (data.total_spent / data.total_orders) : 0;
+        document.getElementById('cust-view-avg-order').textContent = '€' + avg.toFixed(2);
+
+        // Contact
+        const emailEl = document.getElementById('cust-view-email');
+        emailEl.textContent = data.email;
+        emailEl.href = 'mailto:' + data.email;
+
+        const phoneEl = document.getElementById('cust-view-phone');
+        if (data.phone && data.phone.trim()) {
+            phoneEl.textContent = data.phone;
+            phoneEl.href = 'tel:' + data.phone;
+        } else {
+            phoneEl.textContent = 'N/A';
+            phoneEl.removeAttribute('href');
+        }
+
+        // Address
+        const addrEl = document.getElementById('cust-view-address');
+        const parts = [];
+        if (data.address) parts.push(data.address);
+        if (data.postal_code || data.city) parts.push(`${data.postal_code || ''} ${data.city || ''}`.trim());
+        if (data.country) parts.push(data.country);
+
+        if (parts.length > 0) {
+            addrEl.innerHTML = parts.join('<br>');
+        } else {
+            addrEl.innerHTML = `<span class="italic text-stone-400">${isEn ? 'No address on file.' : 'Keine Adresse hinterlegt.'}</span>`;
+        }
+
+        // Edit link
+        document.getElementById('cust-view-edit-btn').href = data.edit_url;
+
+        // Show modal
+        document.body.classList.add('overflow-hidden');
+        document.getElementById('view-customer-modal').classList.remove('hidden');
+    }
+
+    function closeViewCustomerModal() {
+        document.body.classList.remove('overflow-hidden');
+        document.getElementById('view-customer-modal').classList.add('hidden');
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeViewCustomerModal();
+        }
+    });
+
     function confirmDeleteCustomer(id, name) {
         const isEn = (window.__mehaaj_lang || 'en') === 'en';
         LuxurySwal.fire({

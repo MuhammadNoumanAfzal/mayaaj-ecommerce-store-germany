@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Category::withCount('subcategories')->orderBy('order_index')->orderBy('name');
+        $query = Category::withCount(['subcategories', 'products'])->with('subcategories')->orderBy('order_index')->orderBy('name');
 
         if ($request->filled('search')) {
             $search = $request->input('search');

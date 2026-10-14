@@ -460,7 +460,7 @@
 </div>
 
 <!-- Luxury Review Detail Modal -->
-<div id="review-detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-xs hidden transition-all duration-300">
+<div id="review-detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop-luxury hidden transition-all duration-300">
     <div class="relative w-full max-w-2xl bg-white rounded-2xl border border-[#E5DED5] shadow-2xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0" id="review-detail-dialog">
         
         <!-- Modal Header -->
@@ -484,7 +484,7 @@
         </div>
 
         <!-- Modal Body Content -->
-        <div class="p-5 sm:p-6 space-y-5 max-h-[75vh] overflow-y-auto">
+        <div class="p-5 sm:p-6 space-y-5 max-h-[75vh] modal-scroll-clean">
             
             <!-- Patron & Product Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -696,6 +696,7 @@
         // Display Modal
         const modal = document.getElementById('review-detail-modal');
         const dialog = document.getElementById('review-detail-dialog');
+        document.body.classList.add('overflow-hidden');
         modal.classList.remove('hidden');
         setTimeout(() => {
             dialog.classList.remove('scale-95', 'opacity-0');
@@ -708,6 +709,7 @@
         const dialog = document.getElementById('review-detail-dialog');
         dialog.classList.remove('scale-100', 'opacity-100');
         dialog.classList.add('scale-95', 'opacity-0');
+        document.body.classList.remove('overflow-hidden');
         setTimeout(() => {
             modal.classList.add('hidden');
         }, 200);

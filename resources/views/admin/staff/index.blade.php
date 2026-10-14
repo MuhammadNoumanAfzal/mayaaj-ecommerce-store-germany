@@ -174,14 +174,17 @@
                 <tbody class="divide-y divide-[#E5DED5] text-xs">
                     @forelse($staffMembers as $member)
                         @php
+                            $isSelf = auth()->id() === $member->id;
                             $memberData = [
                                 'id'        => $member->id,
                                 'name'      => $member->name,
                                 'email'     => $member->email,
                                 'role'      => $member->role,
-                                'is_active' => $member->is_active,
+                                'role_label'=> $member->role_label,
+                                'is_active' => (bool)$member->is_active,
+                                'created_at'=> $member->created_at ? $member->created_at->format('M d, Y') : 'N/A',
+                                'is_self'   => $isSelf,
                             ];
-                            $isSelf = auth()->id() === $member->id;
                         @endphp
                         <tr class="hover:bg-stone-50/70 transition-colors {{ !$member->is_active ? 'opacity-60 bg-stone-50/30' : '' }}">
                             
@@ -253,6 +256,17 @@
                             <!-- Actions -->
                             <td class="px-4 sm:px-5 py-4 align-middle text-right whitespace-nowrap">
                                 <div class="inline-flex items-center gap-1.5 justify-end">
+                                    <!-- View Button -->
+                                    <button
+                                        type="button"
+                                        onclick='openViewStaffModal(@json($memberData))'
+                                        class="inline-flex items-center gap-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1.5 text-xs font-bold transition border border-stone-200 cursor-pointer shadow-2xs"
+                                        title="View Staff Profile & Permissions"
+                                    >
+                                        <svg class="h-3.5 w-3.5 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <span>View</span>
+                                    </button>
+
                                     <!-- Edit Button -->
                                     <button
                                         type="button"
@@ -412,8 +426,123 @@
     </div>
 </div>
 
+<!-- Modal: View Staff Member Profile -->
+<div id="view-staff-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop-luxury hidden transition-all duration-300" onclick="closeViewStaffModal()">
+    <div class="relative w-full max-w-lg bg-white rounded-2xl border border-stone-200 shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+        
+        <!-- Modal Top Header -->
+        <div class="p-5 bg-gradient-to-r from-[#964B42] to-[#803D35] text-white flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center font-bold text-sm shadow-2xs border border-white/20" id="staff-view-avatar">
+                    ST
+                </div>
+                <div>
+                    <h3 class="font-serif font-bold text-lg text-white" id="staff-view-title">Staff Profile</h3>
+                    <p class="text-xs text-rose-100 font-mono" id="staff-view-email-sub"></p>
+                </div>
+            </div>
+            <button type="button" onclick="closeViewStaffModal()" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white cursor-pointer">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="p-6 space-y-4 text-xs max-h-[75vh] modal-scroll-clean">
+            
+            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200/80 space-y-2">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-[0.65rem] font-bold text-stone-400 uppercase tracking-wider block">Staff Full Name</span>
+                        <h4 id="staff-view-name" class="font-extrabold text-base text-stone-900"></h4>
+                    </div>
+                    <div id="staff-view-status-badge"></div>
+                </div>
+
+                <div class="pt-2 border-t border-stone-200/70 grid grid-cols-2 gap-3">
+                    <div>
+                        <span class="text-[0.65rem] font-bold text-stone-400 uppercase tracking-wider block">Assigned Role</span>
+                        <div id="staff-view-role-badge" class="mt-0.5"></div>
+                    </div>
+                    <div>
+                        <span class="text-[0.65rem] font-bold text-stone-400 uppercase tracking-wider block">Account Created</span>
+                        <span id="staff-view-created" class="font-bold text-stone-700 text-xs"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Role Privileges / Scope Description -->
+            <div class="p-4 rounded-xl bg-[#FBF6F4] border border-[#E5DED5] space-y-2">
+                <span class="text-[0.65rem] font-bold text-stone-500 uppercase tracking-wider block">Role Privileges & Access Scope</span>
+                <p id="staff-view-role-desc" class="text-stone-700 leading-relaxed"></p>
+            </div>
+
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="p-4 bg-stone-50 border-t border-stone-200 flex items-center justify-end gap-2">
+            <button type="button" onclick="closeViewStaffModal()" class="px-4 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer shadow-2xs">Close</button>
+            <button type="button" id="staff-view-edit-btn" class="px-5 py-2 rounded-xl bg-[#964B42] hover:bg-[#803D35] text-white font-bold text-xs shadow-xs cursor-pointer">Edit Account</button>
+        </div>
+
+    </div>
+</div>
+
 <script>
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    let currentViewingStaffData = null;
+
+    function openViewStaffModal(data) {
+        currentViewingStaffData = data;
+        document.getElementById('staff-view-title').textContent = data.name;
+        document.getElementById('staff-view-name').textContent = data.name;
+        document.getElementById('staff-view-email-sub').textContent = data.email;
+        document.getElementById('staff-view-created').textContent = data.created_at || 'N/A';
+
+        const avatarInitials = (data.name || 'ST').substring(0, 2).toUpperCase();
+        document.getElementById('staff-view-avatar').textContent = avatarInitials;
+
+        // Status badge
+        const statusBadge = document.getElementById('staff-view-status-badge');
+        if (data.is_active) {
+            statusBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.68rem] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200';
+            statusBadge.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span> Active';
+        } else {
+            statusBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.68rem] font-bold bg-stone-100 text-stone-500 border border-stone-200';
+            statusBadge.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-stone-400"></span> Inactive';
+        }
+
+        // Role badge & description
+        const roleBadge = document.getElementById('staff-view-role-badge');
+        const roleDesc = document.getElementById('staff-view-role-desc');
+        if (data.role === 'super_admin') {
+            roleBadge.innerHTML = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-900 border border-amber-300">👑 Super Admin</span>';
+            roleDesc.textContent = 'Unrestricted administrative control across the entire MEHAAJ platform including financial reports, staff roles, settings, catalog, orders, and customer management.';
+        } else if (data.role === 'admin') {
+            roleBadge.innerHTML = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-50 text-sky-800 border border-sky-300">🛡️ Store Administrator</span>';
+            roleDesc.textContent = 'Full catalog management (categories, products, inventory), order fulfillment & processing, VIP customer moderation, and accounting insights.';
+        } else if (data.role === 'inventory_manager') {
+            roleBadge.innerHTML = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-300">📦 Inventory Manager</span>';
+            roleDesc.textContent = 'Dedicated stock & inventory oversight, product creation, catalog edits, and warehouse supply adjustment.';
+        } else {
+            roleBadge.innerHTML = '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-50 text-purple-800 border border-purple-300">⭐ Client Moderator</span>';
+            roleDesc.textContent = 'Customer inquiries & message response, review feedback moderation, and boutique customer service.';
+        }
+
+        // Edit button inside view modal
+        document.getElementById('staff-view-edit-btn').onclick = function() {
+            closeViewStaffModal();
+            openEditStaffModal(currentViewingStaffData);
+        };
+
+        document.body.classList.add('overflow-hidden');
+        document.getElementById('view-staff-modal').classList.remove('hidden');
+    }
+
+    function closeViewStaffModal() {
+        document.body.classList.remove('overflow-hidden');
+        document.getElementById('view-staff-modal').classList.add('hidden');
+    }
 
     function openAddStaffModal() {
         document.getElementById('add-staff-modal').classList.remove('hidden');

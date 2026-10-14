@@ -47,6 +47,25 @@
                 print-color-adjust: exact !important;
             }
         }
+
+        /* Modal Scroll Clean & Background Blur Utilities */
+        .modal-scroll-clean {
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            scrollbar-width: none !important; /* Firefox */
+            -ms-overflow-style: none !important; /* IE/Edge */
+        }
+        .modal-scroll-clean::-webkit-scrollbar {
+            display: none !important; /* Chrome/Safari/Brave */
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        .modal-backdrop-luxury {
+            background-color: rgba(15, 12, 11, 0.72) !important;
+            backdrop-filter: blur(14px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
+        }
     </style>
     @yield('admin-styles')
 

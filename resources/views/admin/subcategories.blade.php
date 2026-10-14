@@ -137,6 +137,33 @@
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <div class="flex items-center justify-center gap-2">
+                                    @php
+                                        $subModalData = [
+                                            'id' => $subcategory->id,
+                                            'name' => $subcategory->name,
+                                            'slug' => $subcategory->slug,
+                                            'category_name' => $subcategory->category ? $subcategory->category->name : 'N/A',
+                                            'category_slug' => $subcategory->category ? $subcategory->category->slug : '',
+                                            'description' => $subcategory->description ?? '',
+                                            'image_url' => $subcategory->image ? asset('storage/' . $subcategory->image) : null,
+                                            'status' => $subcategory->status,
+                                            'products_count' => $subcategory->products_count ?? 0,
+                                            'store_url' => route('shop', ['subcategory' => $subcategory->slug]),
+                                            'edit_url' => route('admin.subcategories.edit', $subcategory->id),
+                                        ];
+                                    @endphp
+
+                                    <!-- View Button -->
+                                    <button
+                                        type="button"
+                                        onclick='openViewSubcategoryModal(@json($subModalData))'
+                                        class="btn-exec-secondary rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs hover:border-saltora-terracotta hover:text-saltora-terracotta"
+                                        title="View Subcategory Details"
+                                    >
+                                        <svg class="h-3.5 w-3.5 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <span data-i18n-de="Ansehen" data-i18n-en="View">View</span>
+                                    </button>
+
                                     <!-- Edit Button -->
                                     <a
                                         href="{{ route('admin.subcategories.edit', $subcategory->id) }}"
@@ -179,7 +206,168 @@
 
 </div>
 
+<!-- Subcategory Quick View Executive Modal -->
+<div id="view-subcategory-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop-luxury hidden transition-all duration-300" onclick="closeViewSubcategoryModal()">
+    <div class="relative w-full max-w-lg bg-white rounded-2xl border border-stone-200/90 shadow-2xl overflow-hidden border-t-4 border-t-saltora-terracotta" onclick="event.stopPropagation()">
+        
+        <!-- Modal Top Banner / Header -->
+        <div class="px-6 py-4 bg-gradient-to-r from-stone-50 via-white to-stone-50 border-b border-stone-100 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-saltora-blush text-saltora-terracotta flex items-center justify-center font-bold text-sm shadow-2xs border border-saltora-terracotta/20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-stone-900 text-sm tracking-tight" data-i18n-de="Unterkategorie-Details" data-i18n-en="Subcategory Details">Subcategory Details</h3>
+                    <p class="text-[0.68rem] text-stone-400 font-medium font-mono" id="sub-view-slug">/slug</p>
+                </div>
+            </div>
+            <button type="button" onclick="closeViewSubcategoryModal()" class="w-8 h-8 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition flex items-center justify-center cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="p-6 space-y-4 text-xs max-h-[75vh] modal-scroll-clean">
+            
+            <!-- Subcategory Hero Info & Image -->
+            <div class="flex items-start gap-4 p-4 rounded-xl bg-stone-50/70 border border-stone-200/70">
+                <div class="w-20 h-20 min-w-[5rem] min-h-[5rem] max-w-[5rem] max-h-[5rem] rounded-xl overflow-hidden bg-white border border-stone-200 shadow-2xs shrink-0 flex items-center justify-center">
+                    <img id="sub-view-img" src="" alt="Subcategory Image" class="w-full h-full object-cover hidden" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div id="sub-view-no-img" class="text-stone-300 flex items-center justify-center w-full h-full">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                </div>
+
+                <div class="space-y-1.5 flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <h4 id="sub-view-name" class="font-extrabold text-base text-stone-900 tracking-tight leading-snug"></h4>
+                        <span id="sub-view-status-badge"></span>
+                    </div>
+                    
+                    <div class="pt-1 flex items-center gap-2">
+                        <span class="text-stone-400 font-bold uppercase tracking-wider text-[0.65rem]" data-i18n-de="Hauptkategorie:" data-i18n-en="Parent Category:">Parent Category:</span>
+                        <span id="sub-view-parent-cat" class="inline-flex items-center px-2 py-0.5 rounded-md text-[0.7rem] font-bold bg-saltora-blush text-saltora-terracotta border border-saltora-terracotta/20"></span>
+                    </div>
+
+                    <div class="text-[0.7rem] text-stone-400 font-medium">
+                        <span>ID: <strong id="sub-view-id" class="text-stone-800 font-mono">#0</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Overview Cards -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="p-3.5 rounded-xl bg-saltora-blush/40 border border-saltora-terracotta/15 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-saltora-terracotta/10 text-saltora-terracotta flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <div>
+                        <span class="text-[0.65rem] font-bold text-stone-500 uppercase tracking-wider block" data-i18n-de="Kategorie-Zuordnung" data-i18n-en="Category Binding">Category Binding</span>
+                        <span id="sub-view-cat-label" class="font-extrabold text-xs text-stone-900 leading-tight block truncate max-w-[120px]"></span>
+                    </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200/60 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    </div>
+                    <div>
+                        <span class="text-[0.65rem] font-bold text-stone-500 uppercase tracking-wider block" data-i18n-de="Produkte" data-i18n-en="Assigned Products">Assigned Products</span>
+                        <span id="sub-view-prods-count" class="font-extrabold text-base text-emerald-800 leading-none">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="block font-bold uppercase tracking-wider text-[0.65rem] text-stone-500 mb-1" data-i18n-de="Beschreibung" data-i18n-en="Description">Description</label>
+                <div id="sub-view-desc" class="p-3.5 rounded-xl bg-stone-50 border border-stone-200/70 text-stone-700 leading-relaxed min-h-[50px] whitespace-pre-line"></div>
+            </div>
+
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="p-4 bg-stone-50 border-t border-stone-200/80 flex items-center justify-between gap-3">
+            <a id="sub-view-store-btn" href="#" target="_blank" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs hover:border-saltora-terracotta hover:text-saltora-terracotta">
+                <svg class="w-3.5 h-3.5 text-saltora-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                <span data-i18n-de="Im Shop ansehen" data-i18n-en="View in Store">View in Store</span>
+            </a>
+
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="closeViewSubcategoryModal()" class="px-4 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer shadow-2xs" data-i18n-de="Schließen" data-i18n-en="Close">Close</button>
+                <a id="sub-view-edit-btn" href="#" class="btn-exec-primary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs">
+                    <svg class="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    <span data-i18n-de="Bearbeiten" data-i18n-en="Edit Subcategory">Edit Subcategory</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script>
+    function openViewSubcategoryModal(data) {
+        document.getElementById('sub-view-id').textContent = '#' + data.id;
+        document.getElementById('sub-view-name').textContent = data.name;
+        document.getElementById('sub-view-slug').textContent = '/' + data.slug;
+        document.getElementById('sub-view-parent-cat').textContent = data.category_name;
+        document.getElementById('sub-view-cat-label').textContent = data.category_name;
+        document.getElementById('sub-view-prods-count').textContent = data.products_count || 0;
+
+        // Image handling
+        const imgEl = document.getElementById('sub-view-img');
+        const noImgEl = document.getElementById('sub-view-no-img');
+        if (data.image_url) {
+            imgEl.src = data.image_url;
+            imgEl.classList.remove('hidden');
+            noImgEl.classList.add('hidden');
+        } else {
+            imgEl.src = '';
+            imgEl.classList.add('hidden');
+            noImgEl.classList.remove('hidden');
+        }
+
+        // Status badge
+        const isEn = (window.__mehaaj_lang || 'en') === 'en';
+        const badgeEl = document.getElementById('sub-view-status-badge');
+        if (data.status === 'active') {
+            badgeEl.className = 'inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider badge-active';
+            badgeEl.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span><span>${isEn ? 'Active' : 'Aktiv'}</span>`;
+        } else {
+            badgeEl.className = 'inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider badge-draft';
+            badgeEl.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-stone-500"></span><span>${isEn ? 'Draft' : 'Entwurf'}</span>`;
+        }
+
+        // Description
+        const descEl = document.getElementById('sub-view-desc');
+        if (data.description && data.description.trim()) {
+            descEl.textContent = data.description;
+            descEl.classList.remove('italic', 'text-stone-400');
+        } else {
+            descEl.textContent = isEn ? 'No description available for this subcategory.' : 'Keine Beschreibung für diese Unterkategorie verfügbar.';
+            descEl.classList.add('italic', 'text-stone-400');
+        }
+
+        // Action links
+        document.getElementById('sub-view-store-btn').href = data.store_url;
+        document.getElementById('sub-view-edit-btn').href = data.edit_url;
+
+        // Show modal
+        document.body.classList.add('overflow-hidden');
+        document.getElementById('view-subcategory-modal').classList.remove('hidden');
+    }
+
+    function closeViewSubcategoryModal() {
+        document.body.classList.remove('overflow-hidden');
+        document.getElementById('view-subcategory-modal').classList.add('hidden');
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeViewSubcategoryModal();
+        }
+    });
+
     function confirmDeleteSubcategory(id, name) {
         const isEn = (window.__mehaaj_lang || 'en') === 'en';
         LuxurySwal.fire({

@@ -212,6 +212,15 @@
                                 <div class="flex items-center justify-end gap-1.5">
                                     <button
                                         type="button"
+                                        onclick="openViewExpenseModal({{ json_encode($exp) }})"
+                                        class="p-1.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
+                                        title="View Expense Details"
+                                    >
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    </button>
+
+                                    <button
+                                        type="button"
                                         onclick="openEditExpenseModal({{ json_encode($exp) }})"
                                         class="p-1.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
                                         title="Edit Expense"
@@ -431,7 +440,108 @@
     </div>
 </div>
 
+<!-- Modal: View Expense Details -->
+<div id="viewExpenseModal" class="fixed inset-0 z-50 modal-backdrop-luxury hidden flex items-center justify-center p-4" onclick="closeViewExpenseModal()">
+    <div class="bg-white rounded-2xl border border-stone-200 shadow-2xl w-full max-w-lg overflow-hidden border-t-4 border-t-[#964B42]" onclick="event.stopPropagation()">
+        <div class="p-4 sm:p-5 bg-[#FBF6F4] border-b border-stone-200 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-saltora-blush text-saltora-terracotta flex items-center justify-center font-bold text-sm shadow-2xs border border-saltora-terracotta/20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </div>
+                <div>
+                    <h3 class="font-serif font-bold text-base text-stone-900">Expense Details</h3>
+                    <p class="text-[0.68rem] text-stone-400 font-mono" id="exp-view-ref">#---</p>
+                </div>
+            </div>
+            <button type="button" onclick="closeViewExpenseModal()" class="text-stone-400 hover:text-stone-700">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+
+        <div class="p-6 space-y-4 text-xs max-h-[75vh] modal-scroll-clean">
+            <!-- Amount & Title -->
+            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200/80 flex items-start justify-between gap-3">
+                <div class="space-y-1">
+                    <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block">Expense Title</span>
+                    <h4 id="exp-view-title" class="font-bold text-base text-stone-900 leading-snug"></h4>
+                    <span id="exp-view-category-badge" class="inline-flex items-center px-2 py-0.5 rounded-full text-[0.68rem] font-bold mt-1"></span>
+                </div>
+                <div class="text-right">
+                    <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block">Amount</span>
+                    <span id="exp-view-amount" class="font-mono font-black text-xl text-stone-900 block mt-0.5">€0.00</span>
+                </div>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="p-3 rounded-xl bg-stone-50 border border-stone-200/70">
+                    <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block">Expense Date</span>
+                    <span id="exp-view-date" class="font-bold text-stone-800 text-xs mt-0.5 block"></span>
+                </div>
+                <div class="p-3 rounded-xl bg-stone-50 border border-stone-200/70">
+                    <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block">Payment Method</span>
+                    <span id="exp-view-payment" class="font-bold text-stone-800 text-xs mt-0.5 block capitalize"></span>
+                </div>
+            </div>
+
+            <!-- Vendor / Payee -->
+            <div class="p-3 rounded-xl bg-stone-50 border border-stone-200/70">
+                <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block">Vendor / Payee</span>
+                <span id="exp-view-vendor" class="font-semibold text-stone-800 text-xs mt-0.5 block"></span>
+            </div>
+
+            <!-- Notes -->
+            <div>
+                <span class="text-[0.62rem] font-bold text-stone-400 uppercase tracking-wider block mb-1">Notes / Description</span>
+                <div id="exp-view-notes" class="p-3 rounded-xl bg-stone-50 border border-stone-200/70 text-stone-700 leading-relaxed min-h-[40px] whitespace-pre-line"></div>
+            </div>
+        </div>
+
+        <div class="p-4 bg-stone-50 border-t border-stone-200 flex items-center justify-end gap-2">
+            <button type="button" onclick="closeViewExpenseModal()" class="px-4 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer shadow-2xs">Close</button>
+            <button type="button" id="exp-view-edit-btn" class="px-5 py-2 rounded-xl bg-[#964B42] hover:bg-[#803D35] text-white font-bold text-xs shadow-xs cursor-pointer">Edit Expense</button>
+        </div>
+    </div>
+</div>
+
 <script>
+    let currentViewingExpense = null;
+
+    function openViewExpenseModal(expense) {
+        currentViewingExpense = expense;
+        document.getElementById('exp-view-title').textContent = expense.title || 'Untitled Expense';
+        document.getElementById('exp-view-ref').textContent = '#' + expense.id + (expense.reference_no ? ' • Ref: ' + expense.reference_no : '');
+        document.getElementById('exp-view-amount').textContent = '€' + parseFloat(expense.amount || 0).toFixed(2);
+        document.getElementById('exp-view-date').textContent = expense.expense_date ? expense.expense_date.substring(0, 10) : (expense.created_at ? expense.created_at.substring(0, 10) : 'N/A');
+        document.getElementById('exp-view-payment').textContent = (expense.payment_method || 'Bank Transfer').replace('_', ' ');
+        document.getElementById('exp-view-vendor').textContent = expense.vendor || 'Boutique Atelier / Store Direct';
+
+        const catBadge = document.getElementById('exp-view-category-badge');
+        catBadge.className = 'inline-flex items-center px-2 py-0.5 rounded-full text-[0.68rem] font-bold mt-1 bg-stone-100 text-stone-700 border border-stone-200';
+        catBadge.textContent = (expense.category || 'other').replace('_', ' ').toUpperCase();
+
+        const notesEl = document.getElementById('exp-view-notes');
+        if (expense.notes && expense.notes.trim()) {
+            notesEl.textContent = expense.notes;
+            notesEl.classList.remove('italic', 'text-stone-400');
+        } else {
+            notesEl.textContent = 'No additional notes provided.';
+            notesEl.classList.add('italic', 'text-stone-400');
+        }
+
+        document.getElementById('exp-view-edit-btn').onclick = function() {
+            closeViewExpenseModal();
+            openEditExpenseModal(currentViewingExpense);
+        };
+
+        document.body.classList.add('overflow-hidden');
+        document.getElementById('viewExpenseModal').classList.remove('hidden');
+    }
+
+    function closeViewExpenseModal() {
+        document.body.classList.remove('overflow-hidden');
+        document.getElementById('viewExpenseModal').classList.add('hidden');
+    }
     function openAddExpenseModal() {
         document.getElementById('addExpenseModal').classList.remove('hidden');
     }
