@@ -74,6 +74,7 @@ const slider = document.querySelector('[data-hero-slider]');
 
 if (slider) {
     const slides = [...slider.querySelectorAll('[data-hero-slide]')];
+    const dots = [...slider.querySelectorAll('[data-hero-dot]')];
     const previous = slider.querySelector('[data-hero-prev]');
     const next = slider.querySelector('[data-hero-next]');
     let activeIndex = 0;
@@ -103,6 +104,15 @@ if (slider) {
                 triggerHeroTextAnimations(slide);
             }
         });
+
+        dots.forEach((dot, dotIndex) => {
+            const isDotActive = dotIndex === activeIndex;
+            if (isDotActive) {
+                dot.className = 'hero-dot h-1.5 transition-all duration-500 rounded-full cursor-pointer w-8 bg-[#d8b45a] shadow-[0_0_10px_rgba(216,180,90,0.6)]';
+            } else {
+                dot.className = 'hero-dot h-1.5 transition-all duration-500 rounded-full cursor-pointer w-2.5 bg-white/40 hover:bg-white/80';
+            }
+        });
     };
 
     const startTimer = () => {
@@ -118,6 +128,13 @@ if (slider) {
     next?.addEventListener('click', () => {
         showSlide(activeIndex + 1);
         startTimer();
+    });
+
+    dots.forEach((dot, dotIndex) => {
+        dot.addEventListener('click', () => {
+            showSlide(dotIndex);
+            startTimer();
+        });
     });
 
     // Trigger animation immediately on first slide

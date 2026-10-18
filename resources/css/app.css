@@ -17,7 +17,15 @@
     }
 
     /* Universal Cursor Pointer for all interactive elements */
-    button, [role="button"], a, input[type="submit"], input[type="button"], label[for], select, summary, .cursor-pointer {
+    button,
+    [role="button"],
+    a,
+    input[type="submit"],
+    input[type="button"],
+    label[for],
+    select,
+    summary,
+    .cursor-pointer {
         cursor: pointer;
     }
 
@@ -27,6 +35,32 @@
 }
 
 @layer components {
+    /* Luxury Maison Translucent Frosted Glass Header */
+    [data-site-header] {
+        background: rgba(11, 9, 8, 0.65) !important;
+        backdrop-filter: blur(16px) saturate(160%) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+        border-bottom: 1px solid rgba(216, 180, 90, 0.22) !important;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3) !important;
+        transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    [data-site-header].scrolled-header {
+        background: rgba(11, 9, 8, 0.88) !important;
+        border-bottom: 1px solid rgba(216, 180, 90, 0.32) !important;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55) !important;
+    }
+
+    [data-site-header] a,
+    [data-site-header] button:not(#lang-btn-en):not(#lang-btn-de) {
+        color: #ffffff !important;
+    }
+
+    [data-site-header] a:hover,
+    [data-site-header] button:hover:not(#lang-btn-en):not(#lang-btn-de) {
+        color: #ffd45a !important;
+    }
+
     .luxury-container {
         @apply mx-auto w-full max-w-[1480px] px-4 sm:px-7 lg:px-10 xl:px-12;
     }
@@ -44,11 +78,25 @@
         transform: translateY(0);
     }
 
-    .reveal-delay-100 { transition-delay: 150ms; }
-    .reveal-delay-200 { transition-delay: 300ms; }
-    .reveal-delay-300 { transition-delay: 450ms; }
-    .reveal-delay-400 { transition-delay: 600ms; }
-    .reveal-delay-500 { transition-delay: 750ms; }
+    .reveal-delay-100 {
+        transition-delay: 150ms;
+    }
+
+    .reveal-delay-200 {
+        transition-delay: 300ms;
+    }
+
+    .reveal-delay-300 {
+        transition-delay: 450ms;
+    }
+
+    .reveal-delay-400 {
+        transition-delay: 600ms;
+    }
+
+    .reveal-delay-500 {
+        transition-delay: 750ms;
+    }
 
     /* Hero Text Slow & Smooth Cinematic Animations */
     @keyframes heroTextGlideUp {
@@ -57,6 +105,7 @@
             transform: translateY(34px);
             filter: blur(4px);
         }
+
         100% {
             opacity: 1;
             transform: translateY(0);
@@ -80,8 +129,12 @@
         animation: heroTextGlideUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
     }
 
+    .hero-slide-img {
+        transform-origin: center top !important;
+    }
+
     [data-hero-slide].opacity-100 .hero-slide-img {
-        transform: scale(1.05);
+        transform: scale(1.03);
     }
 
     /* Luxury Interactive Card Hover */
@@ -89,6 +142,7 @@
         transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
         will-change: transform, box-shadow;
     }
+
     .luxury-card-interactive:hover {
         transform: translateY(-5px);
         box-shadow: 0 20px 45px -10px rgba(120, 0, 11, 0.16), 0 0 25px rgba(216, 180, 90, 0.12);
@@ -151,12 +205,10 @@
         left: -60%;
         width: 40%;
         height: 200%;
-        background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(216, 180, 90, 0.3) 50%,
-            rgba(255, 255, 255, 0) 100%
-        );
+        background: linear-gradient(to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(216, 180, 90, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%);
         transform: rotate(25deg);
         transition: all 0.75s ease;
     }
@@ -173,9 +225,12 @@
 }
 
 @keyframes floatSlow {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0px) rotate(0deg);
     }
+
     50% {
         transform: translateY(-10px) rotate(1deg);
     }
@@ -185,15 +240,24 @@
     0% {
         box-shadow: 0 0 15px rgba(216, 180, 90, 0.2), 0 0 30px rgba(120, 0, 11, 0.3);
     }
+
     100% {
         box-shadow: 0 0 25px rgba(216, 180, 90, 0.5), 0 0 50px rgba(120, 0, 11, 0.6);
     }
 }
 
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -209,6 +273,7 @@
 }
 
 @layer utilities {
+
     .no-scrollbar::-webkit-scrollbar,
     .custom-modal-scroll::-webkit-scrollbar,
     .swal2-html-container::-webkit-scrollbar,
@@ -217,6 +282,7 @@
         width: 0 !important;
         height: 0 !important;
     }
+
     .no-scrollbar,
     .custom-modal-scroll,
     .swal2-html-container,
@@ -229,6 +295,7 @@
     .card-terracotta-hover {
         transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
     }
+
     .card-terracotta-hover:hover {
         transform: translateY(-4px);
         box-shadow: 0 16px 32px -8px rgba(150, 75, 66, 0.12);
