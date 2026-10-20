@@ -98,6 +98,7 @@
     </head>
     <body class="w-full bg-[#f7f4ee] text-[#1c1210] antialiased selection:bg-[#78000b] selection:text-white">
         <x-navbar />
+        <x-cart-drawer />
 
         <main class="w-full">
             @yield('content')
@@ -557,8 +558,10 @@
                             icon: 'success',
                             title: (data.added_product || 'Product') + ' ' + (isEn ? 'added to cart! 🛍️' : 'in den Warenkorb gelegt! 🛍️')
                         });
-                        if (typeof fetchAndUpdateCartDrawer === 'function') {
-                            fetchAndUpdateCartDrawer();
+                        if (typeof renderCartDrawerContent === 'function') {
+                            renderCartDrawerContent(data);
+                        } else if (typeof fetchAndUpdateCartDrawer === 'function') {
+                            fetchAndUpdateCartDrawer(true);
                         }
                         if (typeof openCartDrawer === 'function') {
                             openCartDrawer();

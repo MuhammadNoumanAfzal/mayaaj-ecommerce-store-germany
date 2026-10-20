@@ -24,28 +24,19 @@
             </button>
         </div>
 
-        <!-- Free German Shipping Progress Bar -->
-        @php
-            $cartItems = session('cart', []);
-            $subtotalCalc = 0;
-            foreach ($cartItems as $ci) {
-                $subtotalCalc += (($ci['price'] ?? 0) * ($ci['qty'] ?? 1));
-            }
-            $initialPct = $subtotalCalc > 0 ? min(100, (int) round(($subtotalCalc / 150) * 100)) : 0;
-        @endphp
-        <div class="mt-4 rounded border border-[#e6decb] bg-white p-3.5 shadow-xs">
-            <div class="flex items-center justify-between text-xs mb-1.5">
-                <span class="font-bold text-[#1c1210]" id="shipping-progress-text" data-i18n-de="{{ $subtotalCalc >= 150 ? 'Gratis Versand freigeschaltet! 🎉' : ($subtotalCalc > 0 ? 'Noch EUR ' . number_format(150 - $subtotalCalc, 2, ',', '.') . ' bis zum Gratis Versand!' : 'Fügen Sie Artikel hinzu für Gratis Versand!') }}" data-i18n-en="{{ $subtotalCalc >= 150 ? 'Free Shipping Unlocked! 🎉' : ($subtotalCalc > 0 ? 'Add EUR ' . number_format(150 - $subtotalCalc, 2, ',', '.') . ' for Free Shipping!' : 'Add items to unlock Free Shipping!') }}">
-                    {{ $subtotalCalc >= 150 ? 'Gratis Versand freigeschaltet! 🎉' : ($subtotalCalc > 0 ? 'Noch EUR ' . number_format(150 - $subtotalCalc, 2, ',', '.') . ' bis zum Gratis Versand!' : 'Fügen Sie Artikel hinzu für Gratis Versand!') }}
+        <!-- Maison Atelier Trust Reassurance Strip -->
+        <div class="mt-3 flex items-center justify-between rounded-lg border border-[#e6decb] bg-white px-3.5 py-2.5 shadow-2xs">
+            <div class="flex items-center gap-2 text-[0.68rem] text-[#685c54]">
+                <svg class="h-3.5 w-3.5 text-[#d8b45a] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span data-i18n-de="Versicherter Expressversand & Atelier Verpackung" data-i18n-en="Insured Express Courier & Atelier Gift Packaging">
+                    Insured Express Courier & Atelier Gift Packaging
                 </span>
-                <span id="shipping-progress-pct" class="text-[0.68rem] text-[#78000b] font-bold animate-pulse">{{ $initialPct }}%</span>
             </div>
-            <div class="h-2 w-full overflow-hidden rounded-full bg-[#f2ebdc]">
-                <div id="shipping-progress-bar" class="h-full bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b] transition-all duration-500" style="width: {{ $initialPct }}%;"></div>
-            </div>
-            <p class="mt-1 text-[0.65rem] text-[#685c54]" data-i18n-de="Kostenloser DHL Express Versand innerhalb Deutschlands ab 150 €" data-i18n-en="Free DHL Express shipping within Germany over €150">
-                Kostenloser DHL Express Versand innerhalb Deutschlands ab 150 €
-            </p>
+            <span class="inline-flex items-center rounded bg-[#78000b]/10 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-wider text-[#78000b]">
+                MAISON MEHAAJ
+            </span>
         </div>
     </div>
 
@@ -93,8 +84,8 @@
                 <span id="drawer-vat">EUR 0,00</span>
             </div>
             <div class="flex justify-between">
-                <span data-i18n-de="Versand (DHL Express)" data-i18n-en="Shipping (DHL Express)">Versand (DHL Express)</span>
-                <span class="font-bold text-[#2e683a]" data-i18n-de="KOSTENLOS" data-i18n-en="FREE">KOSTENLOS</span>
+                <span data-i18n-de="Versand" data-i18n-en="Shipping">Versand</span>
+                <span class="font-bold text-[#1c1210]" data-i18n-de="Inklusive (Express)" data-i18n-en="Complimentary (Express)">Inklusive (Express)</span>
             </div>
             <div class="flex justify-between text-base font-bold text-[#1c1210] border-t border-[#e6decb] pt-2">
                 <span data-i18n-de="Gesamtsumme" data-i18n-en="Total">Gesamtsumme</span>
@@ -105,26 +96,19 @@
         <!-- Checkout Buttons -->
         <div class="space-y-2">
             <a
-                href="{{ route('cart.index') }}"
+                href="{{ route('checkout.index') }}"
                 class="group/btn flex w-full h-11 items-center justify-center gap-2 rounded bg-[#78000b] px-4 text-xs font-bold uppercase tracking-[0.16em] text-white shadow-md transition-all duration-300 hover:bg-[#5a0309] hover:shadow-xl cursor-pointer"
             >
-                <span data-i18n-de="ZUR KASSE GEHEN" data-i18n-en="PROCEED TO CHECKOUT">ZUR KASSE GEHEN</span>
+                <span data-i18n-de="DIREKT ZUR KASSE" data-i18n-en="PROCEED TO CHECKOUT">DIREKT ZUR KASSE</span>
                 <svg class="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </a>
 
-            <!-- Express Checkout Payment Badges -->
-            <div class="grid grid-cols-3 gap-2 pt-1">
-                <button type="button" onclick="triggerExpressPayment('PayPal Express Checkout')" class="h-8 rounded bg-[#ffc439] hover:bg-[#f2b82e] flex items-center justify-center text-xs font-bold text-[#003087] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-xs" title="PayPal Express">
-                    <i>PayPal</i>
-                </button>
-                <button type="button" onclick="triggerExpressPayment('Klarna Pay Later')" class="h-8 rounded bg-[#ffb3c7] hover:bg-[#f29ebb] flex items-center justify-center text-xs font-bold text-[#111111] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-xs" title="Klarna">
-                    Klarna.
-                </button>
-                <button type="button" onclick="triggerExpressPayment('Apple Pay')" class="h-8 rounded bg-black hover:bg-neutral-800 flex items-center justify-center text-xs font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-xs" title="Apple Pay">
-                     Pay
-                </button>
+            <div class="flex items-center justify-between text-[0.65rem] text-[#685c54] pt-1 px-1">
+                <span class="flex items-center gap-1">💵 <span data-i18n-de="Nachnahme (COD)" data-i18n-en="Cash on Delivery">Nachnahme (COD)</span></span>
+                <span>•</span>
+                <span class="flex items-center gap-1">🏛️ <span data-i18n-de="Banküberweisung" data-i18n-en="Bank Transfer">Banküberweisung</span></span>
             </div>
         </div>
 
@@ -152,20 +136,24 @@
     }
 
     function openCartDrawer() {
-        fetchAndUpdateCartDrawer(true);
         const backdrop = document.getElementById('cart-drawer-backdrop');
         const panel = document.getElementById('cart-drawer-panel');
-        backdrop.classList.remove('pointer-events-none', 'opacity-0');
-        backdrop.classList.add('opacity-100');
-        panel.classList.remove('translate-x-full', 'invisible', 'pointer-events-none');
+        if (backdrop && panel) {
+            backdrop.classList.remove('pointer-events-none', 'opacity-0');
+            backdrop.classList.add('opacity-100');
+            panel.classList.remove('translate-x-full', 'invisible', 'pointer-events-none');
+        }
+        fetchAndUpdateCartDrawer(true);
     }
 
     function closeCartDrawer() {
         const backdrop = document.getElementById('cart-drawer-backdrop');
         const panel = document.getElementById('cart-drawer-panel');
-        backdrop.classList.remove('opacity-100');
-        backdrop.classList.add('opacity-0', 'pointer-events-none');
-        panel.classList.add('translate-x-full', 'invisible', 'pointer-events-none');
+        if (backdrop && panel) {
+            backdrop.classList.remove('opacity-100');
+            backdrop.classList.add('opacity-0', 'pointer-events-none');
+            panel.classList.add('translate-x-full', 'invisible', 'pointer-events-none');
+        }
     }
 
     function fetchAndUpdateCartDrawer(force = false) {
@@ -264,31 +252,14 @@
             container.innerHTML = html;
         }
 
-        // Totals & Free Shipping Calculation
+        // Totals Calculation
         rawCartTotal = data.total;
-        document.getElementById('drawer-subtotal').innerText = data.formatted_subtotal;
-        document.getElementById('drawer-vat').innerText = data.formatted_vat;
+        if (document.getElementById('drawer-subtotal')) document.getElementById('drawer-subtotal').innerText = data.formatted_subtotal;
+        if (document.getElementById('drawer-vat')) document.getElementById('drawer-vat').innerText = data.formatted_vat;
 
         let finalTotal = isVoucherApplied ? rawCartTotal * 0.9 : rawCartTotal;
-        document.getElementById('drawer-total').innerText = 'EUR ' + finalTotal.toFixed(2).replace('.', ',');
-
-        // Dynamic Shipping progress
-        const shippingPct = (data.subtotal && data.subtotal > 0) ? (data.free_shipping_progress || 0) : 0;
-        const progressBar = document.getElementById('shipping-progress-bar');
-        const progressPct = document.getElementById('shipping-progress-pct');
-        const progressText = document.getElementById('shipping-progress-text');
-
-        if (progressBar) progressBar.style.width = shippingPct + '%';
-        if (progressPct) progressPct.innerText = shippingPct + '%';
-        if (progressText) {
-            if (!data.subtotal || data.subtotal <= 0) {
-                progressText.innerText = isEn ? 'Add items to unlock Free Shipping!' : 'Fügen Sie Artikel hinzu für Gratis Versand!';
-            } else if (shippingPct >= 100) {
-                progressText.innerText = isEn ? 'Free Shipping Unlocked! 🎉' : 'Gratis Versand freigeschaltet! 🎉';
-            } else {
-                const diff = (150 - data.subtotal).toFixed(2).replace('.', ',');
-                progressText.innerText = isEn ? `Add EUR ${diff} for Free Shipping!` : `Noch EUR ${diff} bis zum Gratis Versand!`;
-            }
+        if (document.getElementById('drawer-total')) {
+            document.getElementById('drawer-total').innerText = 'EUR ' + finalTotal.toFixed(2).replace('.', ',');
         }
     }
 
@@ -388,35 +359,5 @@
                 confirmButtonText: isEn ? 'Try Again' : 'Erneut versuchen'
             });
         }
-    }
-
-    function triggerExpressPayment(provider) {
-        const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
-        if (rawCartTotal <= 0) {
-            LuxurySwal.fire({
-                icon: 'warning',
-                title: isEn ? 'Cart is Empty' : 'Warenkorb ist leer',
-                text: isEn ? 'Please add products to your cart before proceeding to express checkout.' : 'Bitte fügen Sie Produkte zu Ihrem Warenkorb hinzu, bevor Sie den Express-Checkout nutzen.',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
-
-        let paymentParam = 'paypal';
-        if (provider.toLowerCase().includes('klarna')) paymentParam = 'vorkasse';
-        if (provider.toLowerCase().includes('apple') || provider.toLowerCase().includes('pay')) paymentParam = 'credit_card';
-
-        LuxurySwal.fire({
-            icon: 'info',
-            title: provider,
-            text: isEn 
-                ? 'Connecting to ' + provider + '. Redirecting to secure express checkout...' 
-                : 'Verbindung zu ' + provider + ' wird hergestellt. Sie werden zur sicheren Express-Zahlung weitergeleitet...',
-            showConfirmButton: false,
-            timer: 1800,
-            timerProgressBar: true
-        }).then(() => {
-            window.location.href = '/warenkorb?express=' + paymentParam;
-        });
     }
 </script>

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Middleware\AdminAuthMiddleware;
 
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,20 @@ Route::get('/product/{slug}', [ShopController::class, 'show'])->name('products.d
 // Category & Subcategory Direct Routes
 Route::get('/category/{slug}', [ShopController::class, 'category'])->name('category.show');
 Route::get('/category/{catSlug}/{subcatSlug}', [ShopController::class, 'subcategory'])->name('subcategory.show');
+
+// Shopping Bag & Cart Routes
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/warenkorb', [CartController::class, 'index'])->name('cart.de');
+Route::get('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+// Dedicated Checkout Page Routes
+Route::get('/checkout', [CartController::class, 'checkoutPage'])->name('checkout.index');
+Route::get('/kasse', [CartController::class, 'checkoutPage'])->name('checkout.de');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 Route::get('/contact', function () {
     return redirect('/');

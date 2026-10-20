@@ -42,6 +42,23 @@ class CartController extends Controller
     }
 
     /**
+     * Display dedicated checkout page.
+     */
+    public function checkoutPage(Request $request)
+    {
+        $cart = session()->get('cart', []);
+        $totals = $this->calculateTotals($cart);
+
+        return view('pages.checkout', [
+            'cart' => $cart,
+            'subtotal' => $totals['subtotal'],
+            'vat' => $totals['vat'],
+            'total' => $totals['total'],
+            'count' => $totals['count'],
+        ]);
+    }
+
+    /**
      * Get JSON data for current session cart.
      */
     public function getCartData()
@@ -59,7 +76,6 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
-            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -125,7 +141,7 @@ class CartController extends Controller
                 'name' => $product->name,
                 'variation' => $variation,
                 'price' => $effectivePrice,
-                'image_url' => $product->primary_image_url,
+                'image_url' => $product->image_url,
                 'slug' => $product->slug,
                 'qty' => $quantity,
                 'sku' => $sku,
@@ -149,7 +165,6 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
-            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -197,7 +212,6 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
-            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -236,7 +250,6 @@ class CartController extends Controller
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
-            'free_shipping_progress' => $totals['free_shipping_progress'],
         ]);
     }
 
@@ -254,9 +267,7 @@ class CartController extends Controller
             'postal_code' => 'required|string|max:20',
             'city' => 'required|string|max:100',
             'country' => 'required|string|max:100',
-            'payment_method' => 'nullable|string|in:vorkasse,bank_transfer,credit_card,paypal',
-            'payer_name' => 'nullable|string|max:150',
-            'payer_iban' => 'nullable|string|max:50',
+            'payment_method' => 'required|string|in:cod,cash_on_delivery,vorkasse,bank_transfer,manual_bank_transfer',
             'voucher_code' => 'nullable|string|max:50',
         ]);
 
@@ -284,15 +295,16 @@ class CartController extends Controller
         } while (Order::where('order_number', $orderNumber)->exists());
 
         $customerName = trim($request->first_name . ' ' . $request->last_name);
-        $paymentMethod = $request->input('payment_method', 'vorkasse');
-        if ($paymentMethod === 'bank_transfer') {
+        $rawMethod = strtolower($request->input('payment_method', 'cod'));
+        
+        if (in_array($rawMethod, ['cod', 'cash_on_delivery'])) {
+            $paymentMethod = 'cod';
+            $paymentMethodLabel = 'Cash on Delivery (Barzahlung bei Lieferung / Nachnahme)';
+            $notes = "Zahlungsart: Barzahlung bei Lieferung (COD / Nachnahme) • Zahlung erfolgt direkt beim Kurier";
+        } else {
             $paymentMethod = 'vorkasse';
-        }
-
-        // Create Order Record
-        $notes = null;
-        if ($request->filled('payer_name') || $request->filled('payer_iban')) {
-            $notes = "Kontoinhaber: " . ($request->payer_name ?? 'N/A') . " | IBAN: " . ($request->payer_iban ?? 'N/A');
+            $paymentMethodLabel = 'Manual Bank Transfer (Vorkasse)';
+            $notes = "Zahlungsart: Manuelle Banküberweisung (Vorkasse) • Ref: " . $orderNumber;
         }
 
         $order = Order::create([
@@ -386,14 +398,13 @@ class CartController extends Controller
 
         $vat = round($subtotal * 0.19, 2);
         $total = round($subtotal, 2);
-        $progress = $subtotal > 0 ? min(100, (int) round(($subtotal / 150) * 100)) : 0;
 
         return [
             'count' => $count,
             'subtotal' => round($subtotal, 2),
+            'shipping' => 0.00,
             'vat' => $vat,
             'total' => $total,
-            'free_shipping_progress' => $progress,
         ];
     }
 }
