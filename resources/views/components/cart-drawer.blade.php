@@ -105,7 +105,7 @@
         <!-- Checkout Buttons -->
         <div class="space-y-2">
             <a
-                href="/warenkorb"
+                href="{{ route('cart.index') }}"
                 class="group/btn flex w-full h-11 items-center justify-center gap-2 rounded bg-[#78000b] px-4 text-xs font-bold uppercase tracking-[0.16em] text-white shadow-md transition-all duration-300 hover:bg-[#5a0309] hover:shadow-xl cursor-pointer"
             >
                 <span data-i18n-de="ZUR KASSE GEHEN" data-i18n-en="PROCEED TO CHECKOUT">ZUR KASSE GEHEN</span>
@@ -176,7 +176,7 @@
         }
 
         isFetchingCart = true;
-        fetch('/cart/data', {
+        fetch(window.mehaajUrl('/cart/data'), {
             headers: {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'
@@ -220,7 +220,7 @@
                     <p class="font-display text-base font-medium text-[#1c1210]">
                         ${isEn ? 'Your cart is currently empty.' : 'Ihr Warenkorb ist derzeit leer.'}
                     </p>
-                    <a href="/shop" onclick="closeCartDrawer()" class="inline-flex items-center justify-center rounded bg-[#78000b] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5a0309] transition">
+                    <a href="{{ route('shop') }}" onclick="closeCartDrawer()" class="inline-flex items-center justify-center rounded bg-[#78000b] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5a0309] transition">
                         ${isEn ? 'Explore Collection' : 'Kollektion Entdecken'}
                     </a>
                 </div>
@@ -295,7 +295,7 @@
     function updateDrawerQty(itemKey, newQty) {
         const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-        fetch('/cart/update', {
+        fetch(window.mehaajUrl('/cart/update'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -328,7 +328,7 @@
             if (result.isConfirmed) {
                 const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-                fetch('/cart/remove', {
+                fetch(window.mehaajUrl('/cart/remove'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

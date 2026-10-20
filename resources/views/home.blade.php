@@ -4,10 +4,4 @@
 @section('content')
     <x-hero />
     <x-featured-categories />
-    <x-featured-products />
-    <x-jewelry-section />
-    <x-brand-story />
-    <x-home-reviews />
-    <x-trust-benefits />
-    <x-vip-newsletter />
 @endsection

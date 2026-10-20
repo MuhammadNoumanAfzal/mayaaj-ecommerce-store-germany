@@ -9,10 +9,10 @@
             'text_en' => 'Handcrafted Italian leather wallets and bespoke pocket accessories, sculpted by master artisans from full-grain leather for timeless sophistication.',
             'image' => '/hero_slide1.jpg',
             'alt' => 'MEHAAJ - Luxury in your pocket handcrafted leather wallet',
-            'position' => 'center 12%',
-            'cta_url' => '/shop?category=luxury-wallets',
-            'cta_en' => 'Explore Wallets',
-            'cta_de' => 'Geldbörsen entdecken',
+            'position' => 'center top',
+            'cta_url' => route('shop'),
+            'cta_en' => 'Explore Collection',
+            'cta_de' => 'Kollektion entdecken',
         ],
         [
             'eyebrow_de' => 'Meisterkollektion 2026',
@@ -23,8 +23,8 @@
             'text_en' => 'Iconic artisan leather handbags, merging architectural silhouettes, 24k-gold hardware, and supple hand-selected Italian calfskin.',
             'image' => '/hero_slide2.jpg',
             'alt' => 'MEHAAJ - Designer Leather Handbags & Haute Maroquinerie',
-            'position' => 'center 10%',
-            'cta_url' => '/shop?category=luxury-handbags',
+            'position' => 'center top',
+            'cta_url' => route('shop'),
             'cta_en' => 'Discover Handbags',
             'cta_de' => 'Handtaschen entdecken',
         ],
@@ -37,16 +37,16 @@
             'text_en' => 'From hand-stitched leather weekenders to structured totes and signature keychains, elevate every moment with effortless luxury.',
             'image' => '/hero_slide3.jpg',
             'alt' => 'MEHAAJ - Bespoke Leather Travel Bags and Luxury Accessories',
-            'position' => 'center 8%',
-            'cta_url' => '/shop',
+            'position' => 'center top',
+            'cta_url' => route('shop'),
             'cta_en' => 'Shop Collection',
             'cta_de' => 'Kollektion ansehen',
         ],
     ];
 @endphp
 
-<!-- Hero Section: Expansive Luxury Height with Ambient Frosted Header Integration -->
-<section class="-mt-16 lg:-mt-[4.75rem] pt-16 lg:pt-[4.75rem] relative w-full overflow-hidden bg-[#0c0a09] text-ivory min-h-[520px] sm:min-h-[580px] md:min-h-[640px] lg:h-[75vh] xl:h-[82vh] lg:min-h-[680px] xl:min-h-[740px] 2xl:min-h-[820px] max-h-[920px]" data-hero-slider>
+<!-- Hero Section: Cinematic Full Screen Height with Top-Aligned Headroom & Seamless Transparent Header -->
+<section class="-mt-16 lg:-mt-[4.75rem] pt-16 lg:pt-[4.75rem] relative w-full overflow-hidden bg-[#0c0a09] text-ivory h-screen min-h-screen" data-hero-slider>
     @foreach ($slides as $index => $slide)
         <article
             class="{{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }} absolute inset-0 h-full w-full transition-opacity duration-1000 ease-out"
@@ -61,9 +61,9 @@
                 {{ $index === 0 ? 'fetchpriority=high' : 'loading=lazy' }}
             >
             
-            <!-- Refined Luxury Gradient Overlays: Subtle left vignette for crisp text, crystal clear over model and atelier -->
-            <div class="absolute inset-0 pointer-events-none z-10" style="background: linear-gradient(90deg, rgba(8, 6, 5, 0.72) 0%, rgba(8, 6, 5, 0.46) 35%, rgba(8, 6, 5, 0.12) 65%, transparent 85%) !important;"></div>
-            <div class="absolute inset-0 pointer-events-none z-10" style="background: linear-gradient(180deg, rgba(8, 6, 5, 0.35) 0%, transparent 20%, transparent 75%, rgba(8, 6, 5, 0.45) 100%) !important;"></div>
+            <!-- Refined Luxury Gradient Overlays: Subtle left vignette for text legibility, 100% transparent at top and over model -->
+            <div class="absolute inset-0 pointer-events-none z-10" style="background: linear-gradient(90deg, rgba(8, 6, 5, 0.65) 0%, rgba(8, 6, 5, 0.35) 35%, rgba(8, 6, 5, 0.08) 60%, transparent 80%) !important;"></div>
+            <div class="absolute inset-0 pointer-events-none z-10" style="background: linear-gradient(180deg, transparent 0%, transparent 70%, rgba(8, 6, 5, 0.4) 100%) !important;"></div>
 
             <div class="luxury-container relative z-20 flex h-full w-full items-center py-8 sm:py-10 lg:py-12 min-h-full">
                 <div class="max-w-xl lg:max-w-2xl">
@@ -75,8 +75,7 @@
                         {{ $slide['text_en'] }}
                     </p>
                     <div class="hero-anim hero-anim-cta mt-5 sm:mt-6 flex flex-row flex-wrap gap-3 items-center">
-                        <a href="{{ $slide['cta_url'] }}" class="button-primary cursor-pointer shadow-[0_12px_28px_rgba(120,0,11,0.5)] px-5 py-2.5 text-xs sm:text-sm text-center" data-i18n-de="{{ $slide['cta_de'] }}" data-i18n-en="{{ $slide['cta_en'] }}">{{ $slide['cta_en'] }}</a>
-                        <a href="/ueber-uns" class="button-secondary cursor-pointer border-white/70 bg-[#0c0a09]/50 text-white backdrop-blur-sm hover:border-[#d8b45a] hover:bg-[#d8b45a] hover:text-[#0c0a09] transition-all px-5 py-2.5 text-xs sm:text-sm text-center" data-i18n-de="Manufaktur ansehen" data-i18n-en="View Atelier">View Atelier</a>
+                        <a href="#brand-footer" class="button-primary cursor-pointer shadow-[0_12px_28px_rgba(120,0,11,0.5)] px-6 py-2.5 text-xs sm:text-sm text-center" data-i18n-de="{{ $slide['cta_de'] }}" data-i18n-en="{{ $slide['cta_en'] }}">{{ $slide['cta_en'] }}</a>
                     </div>
                 </div>
             </div>

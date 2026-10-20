@@ -1,47 +1,8 @@
 @php
-    $curatedReviews = [
-        [
-            'author' => 'Maximilian von Berg',
-            'location' => 'München, Deutschland',
-            'rating' => 5,
-            'title_en' => 'Uncompromising Quality & Packaging',
-            'title_de' => 'Kompromisslose Qualität & Verpackung',
-            'comment_en' => 'The Italian calfskin tote exceeded every expectation. The stitching is impeccable and the DHL Express concierge delivery was flawlessly executed.',
-            'comment_de' => 'Die Tragetasche aus italienischem Kalbsleder hat alle Erwartungen übertroffen. Die Nähte sind makellos und die Express-Lieferung war perfekt.',
-            'product_en' => 'Maison Grand Leather Tote',
-            'product_de' => 'Maison Grand Ledertasche',
-            'verified' => true,
-            'date' => 'März 2026',
-        ],
-        [
-            'author' => 'Dr. Elena Rostova',
-            'location' => 'Zürich, Schweiz',
-            'rating' => 5,
-            'title_en' => 'Sublime Watch Craftsmanship',
-            'title_de' => 'Erhabene Uhrmacherkunst',
-            'comment_en' => 'The chronograph balances quiet luxury with undeniable mechanical precision. A true heirloom piece that feels right at home in private salons.',
-            'comment_de' => 'Der Chronograph verbindet dezenten Luxus mit mechanischer Präzision. Ein echtes Erbstück für anspruchsvolle Sammler.',
-            'product_en' => 'Grand Chronograph 1928',
-            'product_de' => 'Grand Chronograph 1928',
-            'verified' => true,
-            'date' => 'Februar 2026',
-        ],
-        [
-            'author' => 'Sophie Laurent',
-            'location' => 'Wien, Österreich',
-            'rating' => 5,
-            'title_en' => 'The Epitome of European Luxury',
-            'title_de' => 'Inbegriff europäischen Luxus',
-            'comment_en' => 'From the tactile unboxing experience to the buttery leather texture, Mehaaj embodies what modern Haute Maroquinerie should be.',
-            'comment_de' => 'Vom haptischen Unboxing-Erlebnis bis hin zum samtweichen Leder verkörpert Mehaaj genau das, was moderne Haute Maroquinerie sein sollte.',
-            'product_en' => 'Bespoke Zip Leather Wallet',
-            'product_de' => 'Leder Geldbörse Premium',
-            'verified' => true,
-            'date' => 'Januar 2026',
-        ],
-    ];
+    $curatedReviews = \App\Models\Review::where('status', 'approved')->with('product')->latest()->take(3)->get();
 @endphp
 
+@if($curatedReviews->count() > 0)
 <section class="relative overflow-hidden bg-[#faf7f2] py-14 sm:py-18 lg:py-20 border-b border-[#e6decb]" aria-labelledby="home-reviews-heading">
     <!-- Subtle Ambient Glow -->
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(216,180,90,0.08),transparent_70%)]"></div>
@@ -60,11 +21,6 @@
             </div>
             
             <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <span class="font-display text-2xl font-bold text-[#1c1210]">4.9</span>
-                    <div class="flex text-[#d8b45a] text-sm tracking-wider">★★★★★</div>
-                    <span class="text-xs text-[#8a7c74]" data-i18n-en="(100+ Reviews)" data-i18n-de="(100+ Bewertungen)">(100+ Reviews)</span>
-                </div>
                 <a href="/reviews" class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#78000b] hover:text-[#5a0309] transition" data-i18n-en="Read All →" data-i18n-de="Alle ansehen →">
                     Read All →
                 </a>
@@ -79,37 +35,47 @@
                         <!-- Stars & Badge -->
                         <div class="flex items-center justify-between">
                             <div class="flex text-[#d8b45a] text-sm tracking-widest">
-                                @for($i = 0; $i < $rev['rating']; $i++)
+                                @for($i = 0; $i < $rev->rating; $i++)
                                     <span>★</span>
                                 @endfor
                             </div>
-                            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[0.58rem] font-bold text-emerald-800 border border-emerald-200">
-                                <svg class="h-2.5 w-2.5 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                                <span data-i18n-en="Verified" data-i18n-de="Verifiziert">Verified</span>
-                            </span>
+                            @if($rev->is_verified)
+                                <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[0.58rem] font-bold text-emerald-800 border border-emerald-200">
+                                    <svg class="h-2.5 w-2.5 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                    <span data-i18n-en="Verified" data-i18n-de="Verifiziert">Verified</span>
+                                </span>
+                            @endif
                         </div>
 
                         <!-- Review Title & Quote -->
-                        <h3 class="mt-4 font-display text-lg font-medium text-[#1c1210] group-hover:text-[#78000b] transition-colors" data-i18n-en="{{ $rev['title_en'] }}" data-i18n-de="{{ $rev['title_de'] }}">
-                            {{ $rev['title_en'] }}
-                        </h3>
-                        <p class="mt-2 text-xs leading-relaxed text-[#685c54] font-light italic" data-i18n-en="“{{ $rev['comment_en'] }}”" data-i18n-de="„{{ $rev['comment_de'] }}“">
-                            “{{ $rev['comment_en'] }}”
+                        @if($rev->title)
+                            <h3 class="mt-4 font-display text-lg font-medium text-[#1c1210] group-hover:text-[#78000b] transition-colors">
+                                {{ $rev->title }}
+                            </h3>
+                        @endif
+                        <p class="mt-2 text-xs leading-relaxed text-[#685c54] font-light italic">
+                            “{{ $rev->comment }}”
                         </p>
                     </div>
 
                     <!-- Author Details -->
                     <div class="mt-6 pt-4 border-t border-[#f2ebdc] flex items-center justify-between text-xs">
                         <div>
-                            <p class="font-semibold text-[#1c1210]">{{ $rev['author'] }}</p>
-                            <p class="text-[0.68rem] text-[#8a7c74]">{{ $rev['location'] }}</p>
+                            <p class="font-semibold text-[#1c1210]">{{ $rev->customer_name }}</p>
+                            @if($rev->location)
+                                <p class="text-[0.68rem] text-[#8a7c74]">{{ $rev->location }}</p>
+                            @endif
                         </div>
-                        <span class="text-[0.65rem] font-medium text-[#78000b] bg-[#78000b]/5 px-2 py-1 rounded-xs" data-i18n-en="{{ $rev['product_en'] }}" data-i18n-de="{{ $rev['product_de'] }}">
-                            {{ $rev['product_en'] }}
-                        </span>
+                        @if($rev->product)
+                            <span class="text-[0.65rem] font-medium text-[#78000b] bg-[#78000b]/5 px-2 py-1 rounded-xs">
+                                {{ $rev->product->name }}
+                            </span>
+                        @endif
                     </div>
                 </article>
             @endforeach
         </div>
     </div>
 </section>
+@endif
+

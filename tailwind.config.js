@@ -40,6 +40,9 @@ export default {
                 widest: '.2em',
                 mega: '.3em',
             },
+            scale: {
+                '108': '1.08',
+            },
         },
     },
     plugins: [],

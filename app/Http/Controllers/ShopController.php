@@ -81,14 +81,30 @@ class ShopController extends Controller
     }
 
     /**
-     * Display single product detail page.
+     * Display single product detail page with fallback for category or subcategory slugs.
      */
     public function show($slug)
     {
         $product = Product::where('slug', $slug)
             ->where('status', 'active')
             ->with(['category', 'subcategory'])
-            ->firstOrFail();
+            ->first();
+
+        if (!$product) {
+            // Graceful fallback: check if slug belongs to a category
+            $category = Category::where('slug', $slug)->first();
+            if ($category) {
+                return redirect()->route('shop', ['category' => $category->slug]);
+            }
+
+            // Graceful fallback: check if slug belongs to a subcategory
+            $subcategory = Subcategory::where('slug', $slug)->first();
+            if ($subcategory) {
+                return redirect()->route('shop', ['subcategory' => $subcategory->slug]);
+            }
+
+            abort(404);
+        }
 
         $relatedProducts = Product::where('status', 'active')
             ->where('id', '!=', $product->id)
@@ -112,5 +128,21 @@ class ShopController extends Controller
         $approvedReviews = $product->reviews()->where('status', 'approved')->latest()->get();
 
         return view('pages.product-detail', compact('product', 'relatedProducts', 'approvedReviews'));
+    }
+
+    /**
+     * Dedicated Category routing
+     */
+    public function category($slug)
+    {
+        return redirect()->route('shop', ['category' => $slug]);
+    }
+
+    /**
+     * Dedicated Subcategory routing
+     */
+    public function subcategory($catSlug, $subcatSlug)
+    {
+        return redirect()->route('shop', ['category' => $catSlug, 'subcategory' => $subcatSlug]);
     }
 }
