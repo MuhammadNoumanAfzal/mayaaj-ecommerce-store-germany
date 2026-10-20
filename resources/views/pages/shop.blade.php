@@ -281,7 +281,7 @@
                 <!-- Modern Pixel-Perfect Filter Sidebar (3 cols on lg) - GUARANTEED FIXED ON SCROLL -->
                 <aside id="filter-sidebar" class="lg:col-span-3 hidden lg:block relative">
                     <div class="sticky top-24 z-20 space-y-4">
-                        <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="max-h-[calc(100vh-7.5rem)] overflow-y-auto overscroll-contain scrollbar-thin rounded-xl border border-[#dfd6c4] bg-white p-5 shadow-[0_4px_24px_rgba(28,18,16,0.06)] space-y-5">
+                        <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="max-h-[calc(100vh-7.5rem)] overflow-y-auto overscroll-contain no-scrollbar rounded-xl border border-[#dfd6c4] bg-white p-5 shadow-[0_4px_24px_rgba(28,18,16,0.06)] space-y-5" style="scrollbar-width: none; -ms-overflow-style: none;">
                         @if(request('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">
                         @endif
@@ -307,7 +307,7 @@
                                 <span class="text-[0.62rem] text-[#8a7c74] font-mono">{{ $categoriesList->count() }} collections</span>
                             </div>
 
-                            <div class="space-y-1.5 text-xs text-[#5c4f46] max-h-72 overflow-y-auto pr-1 scrollbar-thin">
+                            <div class="space-y-1.5 text-xs text-[#5c4f46]">
                                 @forelse($categoriesList as $category)
                                     @php
                                         $catChecked = in_array($category->slug, $activeCategorySlugs);
@@ -820,5 +820,20 @@
             }
         });
     </script>
+
+    <style>
+        #shop-filter-form::-webkit-scrollbar,
+        #filter-sidebar::-webkit-scrollbar,
+        #mobile-filter-drawer *::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        #shop-filter-form,
+        #filter-sidebar {
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+        }
+    </style>
 </div>
 @endsection
