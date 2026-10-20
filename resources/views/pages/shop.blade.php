@@ -59,7 +59,7 @@
                         @endif
                     </button>
 
-                    <p class="text-xs text-[#685c54]">
+                    <p id="catalog-count-display" class="text-xs text-[#685c54]">
                         <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span> 
                         <span data-i18n-en="creations found" data-i18n-de="Meisterwerke gefunden">creations found</span>
                         @if($products->lastPage() > 1)
@@ -125,71 +125,73 @@
             </div>
 
             <!-- Active Filter Chips (if any filter is applied) -->
-            @if($hasActiveFilters)
-                <div class="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-[#dfd6c4] bg-white p-2.5 shadow-2xs">
-                    <span class="text-[0.68rem] font-bold uppercase tracking-wider text-[#685c54]">Active Filters:</span>
+            <div id="active-filters-wrap">
+                @if($hasActiveFilters)
+                    <div class="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-[#dfd6c4] bg-white p-2.5 shadow-2xs">
+                        <span class="text-[0.68rem] font-bold uppercase tracking-wider text-[#685c54]">Active Filters:</span>
 
-                    @if(request('search'))
-                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-2.5 py-0.5 text-xs text-[#78000b]">
-                            <span>Search: "{{ request('search') }}"</span>
-                            <a href="{{ route('shop', array_merge(request()->except(['search', 'page']))) }}" class="font-bold hover:text-black cursor-pointer">×</a>
-                        </span>
-                    @endif
-
-                    @if(request('category'))
-                        @foreach((array) request('category') as $catSlug)
-                            @php
-                                $catObj = $categoriesList->firstWhere('slug', $catSlug);
-                            @endphp
-                            <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
-                                <span>{{ $catObj->name ?? $catSlug }}</span>
-                                <a href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']))) }}" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
+                        @if(request('search'))
+                            <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-2.5 py-0.5 text-xs text-[#78000b]">
+                                <span>Search: "{{ request('search') }}"</span>
+                                <a href="{{ route('shop', array_merge(request()->except(['search', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold hover:text-black cursor-pointer">×</a>
                             </span>
-                        @endforeach
-                    @endif
+                        @endif
 
-                    @if(request('subcategory'))
-                        @foreach((array) request('subcategory') as $subSlug)
+                        @if(request('category'))
+                            @foreach((array) request('category') as $catSlug)
+                                @php
+                                    $catObj = $categoriesList->firstWhere('slug', $catSlug);
+                                @endphp
+                                <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
+                                    <span>{{ $catObj->name ?? $catSlug }}</span>
+                                    <a href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
+                                </span>
+                            @endforeach
+                        @endif
+
+                        @if(request('subcategory'))
+                            @foreach((array) request('subcategory') as $subSlug)
+                                <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
+                                    <span>Subcategory: {{ $subSlug }}</span>
+                                    <a href="{{ route('shop', array_merge(request()->except(['subcategory', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
+                                </span>
+                            @endforeach
+                        @endif
+
+                        @if(request('min_price'))
                             <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
-                                <span>Subcategory: {{ $subSlug }}</span>
-                                <a href="{{ route('shop', array_merge(request()->except(['subcategory', 'page']))) }}" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
+                                <span>Min: €{{ request('min_price') }}</span>
+                                <a href="{{ route('shop', array_merge(request()->except(['min_price', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
                             </span>
-                        @endforeach
-                    @endif
+                        @endif
 
-                    @if(request('min_price'))
-                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
-                            <span>Min: €{{ request('min_price') }}</span>
-                            <a href="{{ route('shop', array_merge(request()->except(['min_price', 'page']))) }}" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
-                        </span>
-                    @endif
+                        @if(request('max_price') && request('max_price') < $dbMaxPrice)
+                            <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
+                                <span>Max: €{{ request('max_price') }}</span>
+                                <a href="{{ route('shop', array_merge(request()->except(['max_price', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
+                            </span>
+                        @endif
 
-                    @if(request('max_price') && request('max_price') < $dbMaxPrice)
-                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
-                            <span>Max: €{{ request('max_price') }}</span>
-                            <a href="{{ route('shop', array_merge(request()->except(['max_price', 'page']))) }}" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
-                        </span>
-                    @endif
+                        @if(request('featured'))
+                            <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/30 bg-[#78000b]/10 px-2.5 py-0.5 text-xs text-[#78000b] font-semibold">
+                                <span>Atelier Bestsellers</span>
+                                <a href="{{ route('shop', array_merge(request()->except(['featured', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold hover:text-black cursor-pointer">×</a>
+                            </span>
+                        @endif
 
-                    @if(request('featured'))
-                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/30 bg-[#78000b]/10 px-2.5 py-0.5 text-xs text-[#78000b] font-semibold">
-                            <span>Atelier Bestsellers</span>
-                            <a href="{{ route('shop', array_merge(request()->except(['featured', 'page']))) }}" class="font-bold hover:text-black cursor-pointer">×</a>
-                        </span>
-                    @endif
+                        @if(request('in_stock'))
+                            <span class="inline-flex items-center gap-1.5 rounded-full border border-[#2e683a]/30 bg-[#2e683a]/10 px-2.5 py-0.5 text-xs text-[#2e683a] font-semibold">
+                                <span>In Stock Only</span>
+                                <a href="{{ route('shop', array_merge(request()->except(['in_stock', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold hover:text-black cursor-pointer">×</a>
+                            </span>
+                        @endif
 
-                    @if(request('in_stock'))
-                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#2e683a]/30 bg-[#2e683a]/10 px-2.5 py-0.5 text-xs text-[#2e683a] font-semibold">
-                            <span>In Stock Only</span>
-                            <a href="{{ route('shop', array_merge(request()->except(['in_stock', 'page']))) }}" class="font-bold hover:text-black cursor-pointer">×</a>
-                        </span>
-                    @endif
-
-                    <a href="{{ route('shop') }}" class="ml-auto text-xs font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] cursor-pointer">
-                        Clear All Filters
-                    </a>
-                </div>
-            @endif
+                        <a href="{{ route('shop') }}" onclick="removeActiveFilter(event, this.href)" class="ml-auto text-xs font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] cursor-pointer">
+                            Clear All Filters
+                        </a>
+                    </div>
+                @endif
+            </div>
 
             <div class="grid gap-6 lg:grid-cols-12 relative items-stretch">
 
@@ -212,7 +214,7 @@
                                 </svg>
                                 <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-[#1c1210]">Filters</h2>
                             </div>
-                            <a href="{{ route('shop') }}" class="text-[0.62rem] font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] transition cursor-pointer">Reset All</a>
+                            <a href="{{ route('shop') }}" onclick="removeActiveFilter(event, this.href)" class="text-[0.62rem] font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] transition cursor-pointer">Reset All</a>
                         </div>
 
                         <!-- 1. Categories Accordion -->
@@ -368,17 +370,13 @@
                             </label>
                         </div>
 
-                        <!-- Apply Button -->
-                        <div class="pt-2">
-                            <button
-                                type="submit"
-                                class="animate-shine-sweep w-full flex items-center justify-center gap-2 rounded-lg bg-[#78000b] py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-[#500007] active:scale-98 transition cursor-pointer"
-                            >
-                                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                                    <polyline points="20 6 9 17 4 12"/>
-                                </svg>
-                                <span>Apply Filters</span>
-                            </button>
+                        <!-- Live Filtering Active Indicator -->
+                        <div class="pt-1 flex items-center justify-center gap-2 rounded-lg border border-[#e8dfcf] bg-[#faf8f5] py-2 text-[0.62rem] text-[#685c54]">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#78000b] opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#78000b]"></span>
+                            </span>
+                            <span class="font-medium tracking-wide">Live Instant Filtering Active</span>
                         </div>
 
                         <!-- Atelier Trust Badge -->
@@ -391,7 +389,7 @@
                 </aside>
 
                 <!-- Product Grid Catalog (9 cols on lg) -->
-                <main class="lg:col-span-9">
+                <main class="lg:col-span-9" id="main-catalog-col">
                     <div id="product-container" class="grid gap-4 sm:gap-5 grid-cols-2 md:grid-cols-3">
                         @forelse($products as $index => $product)
                             @php
@@ -565,52 +563,54 @@
                     </div>
 
                     <!-- Luxury Pagination -->
-                    @if($products->hasPages())
-                        <div class="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#dfd6c4] pt-4 sm:flex-row">
-                            <p class="text-xs text-[#685c54]">
-                                Showing <span class="font-bold text-[#1c1210]">{{ $products->firstItem() }}</span> to <span class="font-bold text-[#1c1210]">{{ $products->lastItem() }}</span> of <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span> creations
-                            </p>
+                    <div id="catalog-pagination-wrap">
+                        @if($products->hasPages())
+                            <div class="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#dfd6c4] pt-4 sm:flex-row">
+                                <p class="text-xs text-[#685c54]">
+                                    Showing <span class="font-bold text-[#1c1210]">{{ $products->firstItem() }}</span> to <span class="font-bold text-[#1c1210]">{{ $products->lastItem() }}</span> of <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span> creations
+                                </p>
 
-                            <div class="flex items-center gap-1.5">
-                                {{-- Previous Page Link --}}
-                                @if ($products->onFirstPage())
-                                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white/50 text-[#c7baa7] cursor-not-allowed">
-                                        ‹
-                                    </span>
-                                @else
-                                    <a href="{{ $products->previousPageUrl() }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white text-[#1c1210] shadow-2xs transition hover:border-[#78000b] hover:text-[#78000b] cursor-pointer" rel="prev">
-                                        ‹
-                                    </a>
-                                @endif
-
-                                {{-- Pagination Elements --}}
-                                @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
-                                    @if ($page == $products->currentPage())
-                                        <span class="inline-flex h-8 min-w-8 items-center justify-center rounded-lg border border-[#78000b] bg-[#78000b] px-2.5 text-xs font-bold text-white shadow-2xs">
-                                            {{ $page }}
+                                <div class="flex items-center gap-1.5">
+                                    {{-- Previous Page Link --}}
+                                    @if ($products->onFirstPage())
+                                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white/50 text-[#c7baa7] cursor-not-allowed">
+                                            ‹
                                         </span>
-                                    @elseif ($page == 1 || $page == $products->lastPage() || abs($page - $products->currentPage()) <= 1)
-                                        <a href="{{ $url }}" class="inline-flex h-8 min-w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white px-2.5 text-xs font-medium text-[#1c1210] shadow-2xs transition hover:border-[#d8b45a] hover:text-[#78000b] cursor-pointer">
-                                            {{ $page }}
+                                    @else
+                                        <a href="{{ $products->previousPageUrl() }}" onclick="removeActiveFilter(event, this.href)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white text-[#1c1210] shadow-2xs transition hover:border-[#78000b] hover:text-[#78000b] cursor-pointer" rel="prev">
+                                            ‹
                                         </a>
-                                    @elseif (abs($page - $products->currentPage()) == 2)
-                                        <span class="inline-flex h-8 w-5 items-center justify-center text-xs text-[#8a7c74]">...</span>
                                     @endif
-                                @endforeach
 
-                                {{-- Next Page Link --}}
-                                @if ($products->hasMorePages())
-                                    <a href="{{ $products->nextPageUrl() }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white text-[#1c1210] shadow-2xs transition hover:border-[#78000b] hover:text-[#78000b] cursor-pointer" rel="next">
-                                        ›
-                                    </a>
-                                @else
-                                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white/50 text-[#c7baa7] cursor-not-allowed">
-                                        ›
-                                    </span>
-                                @endif
+                                    {{-- Pagination Elements --}}
+                                    @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                        @if ($page == $products->currentPage())
+                                            <span class="inline-flex h-8 min-w-8 items-center justify-center rounded-lg border border-[#78000b] bg-[#78000b] px-2.5 text-xs font-bold text-white shadow-2xs">
+                                                {{ $page }}
+                                            </span>
+                                        @elseif ($page == 1 || $page == $products->lastPage() || abs($page - $products->currentPage()) <= 1)
+                                            <a href="{{ $url }}" onclick="removeActiveFilter(event, this.href)" class="inline-flex h-8 min-w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white px-2.5 text-xs font-medium text-[#1c1210] shadow-2xs transition hover:border-[#d8b45a] hover:text-[#78000b] cursor-pointer">
+                                                {{ $page }}
+                                            </a>
+                                        @elseif (abs($page - $products->currentPage()) == 2)
+                                            <span class="inline-flex h-8 w-5 items-center justify-center text-xs text-[#8a7c74]">...</span>
+                                        @endif
+                                    @endforeach
+
+                                    {{-- Next Page Link --}}
+                                    @if ($products->hasMorePages())
+                                        <a href="{{ $products->nextPageUrl() }}" onclick="removeActiveFilter(event, this.href)" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white text-[#1c1210] shadow-2xs transition hover:border-[#78000b] hover:text-[#78000b] cursor-pointer" rel="next">
+                                            ›
+                                        </a>
+                                    @else
+                                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#dfd6c4] bg-white/50 text-[#c7baa7] cursor-not-allowed">
+                                            ›
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </main>
 
             </div>
@@ -666,14 +666,160 @@
             if (minInput) minInput.value = min;
             if (maxInput) maxInput.value = max;
             syncPriceDisplay();
-            document.getElementById('shop-filter-form').submit();
+            triggerFilterUpdate(true);
         }
 
         function handleSortChange(sortVal) {
-            const url = new URL(window.location.href);
-            url.searchParams.set('sort', sortVal);
-            url.searchParams.delete('page');
-            window.location.href = url.toString();
+            triggerFilterUpdate(true);
+        }
+
+        let filterDebounceTimer = null;
+        let activeFilterAbortController = null;
+
+        function triggerFilterUpdate(immediate = true) {
+            if (filterDebounceTimer) {
+                clearTimeout(filterDebounceTimer);
+            }
+            if (immediate) {
+                executeFilterFetch();
+            } else {
+                filterDebounceTimer = setTimeout(executeFilterFetch, 380);
+            }
+        }
+
+        async function executeFilterFetch(customUrl = null) {
+            const form = document.getElementById('shop-filter-form');
+            if (!form && !customUrl) return;
+
+            let targetUrl;
+            if (customUrl) {
+                targetUrl = customUrl;
+            } else {
+                const formData = new FormData(form);
+                const params = new URLSearchParams();
+
+                const sortSelect = document.getElementById('sort-select');
+                if (sortSelect && sortSelect.value) {
+                    params.set('sort', sortSelect.value);
+                }
+
+                for (const [key, val] of formData.entries()) {
+                    if (val !== '' && val !== null) {
+                        params.append(key, val);
+                    }
+                }
+                targetUrl = form.action + (params.toString() ? '?' + params.toString() : '');
+            }
+
+            if (activeFilterAbortController) {
+                activeFilterAbortController.abort();
+            }
+            activeFilterAbortController = new AbortController();
+
+            const mainCol = document.getElementById('main-catalog-col');
+            if (mainCol) {
+                mainCol.classList.add('opacity-45', 'pointer-events-none', 'transition-opacity', 'duration-200');
+            }
+
+            try {
+                const response = await fetch(targetUrl, {
+                    signal: activeFilterAbortController.signal,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'text/html'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (form) form.submit();
+                    return;
+                }
+
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // 1. Swap product container
+                const newProducts = doc.getElementById('product-container');
+                const currentProducts = document.getElementById('product-container');
+                if (newProducts && currentProducts) {
+                    currentProducts.innerHTML = newProducts.innerHTML;
+                }
+
+                // 2. Swap pagination
+                const newPagination = doc.getElementById('catalog-pagination-wrap');
+                const currentPagination = document.getElementById('catalog-pagination-wrap');
+                if (currentPagination) {
+                    currentPagination.innerHTML = newPagination ? newPagination.innerHTML : '';
+                }
+
+                // 3. Swap active filter chips
+                const newActiveFilters = doc.getElementById('active-filters-wrap');
+                const currentActiveFilters = document.getElementById('active-filters-wrap');
+                if (currentActiveFilters) {
+                    currentActiveFilters.innerHTML = newActiveFilters ? newActiveFilters.innerHTML : '';
+                }
+
+                // 4. Swap creations count
+                const newCount = doc.getElementById('catalog-count-display');
+                const currentCount = document.getElementById('catalog-count-display');
+                if (newCount && currentCount) {
+                    currentCount.innerHTML = newCount.innerHTML;
+                }
+
+                // 5. If customUrl, sync sidebar inputs
+                if (customUrl) {
+                    const urlObj = new URL(customUrl, window.location.origin);
+                    const selectedCats = urlObj.searchParams.getAll('category[]');
+                    const singleCat = urlObj.searchParams.get('category');
+                    if (singleCat && !selectedCats.includes(singleCat)) selectedCats.push(singleCat);
+
+                    const selectedSubcats = urlObj.searchParams.getAll('subcategory[]');
+                    const singleSubcat = urlObj.searchParams.get('subcategory');
+                    if (singleSubcat && !selectedSubcats.includes(singleSubcat)) selectedSubcats.push(singleSubcat);
+
+                    document.querySelectorAll('#shop-filter-form input[name="category[]"]').forEach(cb => {
+                        cb.checked = selectedCats.includes(cb.value);
+                    });
+                    document.querySelectorAll('#shop-filter-form input[name="subcategory[]"]').forEach(cb => {
+                        cb.checked = selectedSubcats.includes(cb.value);
+                    });
+                    const inStockCb = document.querySelector('#shop-filter-form input[name="in_stock"]');
+                    if (inStockCb) inStockCb.checked = urlObj.searchParams.has('in_stock');
+                    const featuredCb = document.querySelector('#shop-filter-form input[name="featured"]');
+                    if (featuredCb) featuredCb.checked = urlObj.searchParams.has('featured');
+
+                    const minInput = document.getElementById('input-min-price');
+                    const maxInput = document.getElementById('input-max-price');
+                    if (minInput && urlObj.searchParams.has('min_price')) minInput.value = urlObj.searchParams.get('min_price');
+                    if (maxInput && urlObj.searchParams.has('max_price')) maxInput.value = urlObj.searchParams.get('max_price');
+                    syncPriceDisplay();
+                }
+
+                // 6. Update URL in address bar
+                window.history.pushState(null, '', targetUrl);
+
+                // 7. Maintain view preference
+                const savedView = localStorage.getItem('mehaaj_shop_view');
+                if (savedView === 'list') {
+                    setViewMode('list');
+                }
+
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.warn('Filter fetch failed, fallback to submit:', err);
+                    if (form) form.submit();
+                }
+            } finally {
+                if (mainCol) {
+                    mainCol.classList.remove('opacity-45', 'pointer-events-none');
+                }
+            }
+        }
+
+        function removeActiveFilter(e, href) {
+            if (e) e.preventDefault();
+            executeFilterFetch(href);
         }
 
         function setViewMode(mode) {
@@ -695,10 +841,14 @@
                     const desc = card.querySelector('.card-desc');
                     if (desc) desc.classList.remove('hidden');
                 });
-                gridBtn.classList.remove('text-[#78000b]', 'bg-[#78000b]/10');
-                gridBtn.classList.add('text-[#685c54]');
-                listBtn.classList.add('text-[#78000b]', 'bg-[#78000b]/10');
-                listBtn.classList.remove('text-[#685c54]');
+                if (gridBtn) {
+                    gridBtn.classList.remove('text-[#78000b]', 'bg-[#78000b]/10');
+                    gridBtn.classList.add('text-[#685c54]');
+                }
+                if (listBtn) {
+                    listBtn.classList.add('text-[#78000b]', 'bg-[#78000b]/10');
+                    listBtn.classList.remove('text-[#685c54]');
+                }
                 localStorage.setItem('mehaaj_shop_view', 'list');
             } else {
                 container.classList.remove('grid-cols-1');
@@ -712,10 +862,14 @@
                     const desc = card.querySelector('.card-desc');
                     if (desc) desc.classList.add('hidden');
                 });
-                gridBtn.classList.add('text-[#78000b]', 'bg-[#78000b]/10');
-                gridBtn.classList.remove('text-[#685c54]');
-                listBtn.classList.remove('text-[#78000b]', 'bg-[#78000b]/10');
-                listBtn.classList.add('text-[#685c54]');
+                if (gridBtn) {
+                    gridBtn.classList.add('text-[#78000b]', 'bg-[#78000b]/10');
+                    gridBtn.classList.remove('text-[#685c54]');
+                }
+                if (listBtn) {
+                    listBtn.classList.remove('text-[#78000b]', 'bg-[#78000b]/10');
+                    listBtn.classList.add('text-[#685c54]');
+                }
                 localStorage.setItem('mehaaj_shop_view', 'grid');
             }
         }
@@ -727,8 +881,36 @@
             }
         }
 
-        // Restore user view preference
+        // Attach listeners for instant filter on any checkbox / input change
         document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('shop-filter-form');
+            if (form) {
+                form.addEventListener('change', (e) => {
+                    if (e.target.matches('input[type="checkbox"], select')) {
+                        triggerFilterUpdate(true);
+                    }
+                });
+            }
+
+            const minInput = document.getElementById('input-min-price');
+            const maxInput = document.getElementById('input-max-price');
+            if (minInput) {
+                minInput.addEventListener('input', () => {
+                    syncPriceDisplay();
+                    triggerFilterUpdate(false);
+                });
+            }
+            if (maxInput) {
+                maxInput.addEventListener('input', () => {
+                    syncPriceDisplay();
+                    triggerFilterUpdate(false);
+                });
+            }
+
+            window.addEventListener('popstate', () => {
+                executeFilterFetch(window.location.href);
+            });
+
             const savedView = localStorage.getItem('mehaaj_shop_view');
             if (savedView === 'list') {
                 setViewMode('list');
