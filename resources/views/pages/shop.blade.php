@@ -490,7 +490,7 @@
                                 <div class="pointer-events-none absolute inset-x-0 top-0 z-30 h-1 origin-left scale-x-0 bg-gradient-to-r from-[#78000b] via-[#ffd45a] to-[#78000b] transition-transform duration-500 group-hover:scale-x-100"></div>
 
                                 <!-- Visual Media Container: Dual Image Hover Swap & Soft Zoom -->
-                                <div class="card-img-wrap relative aspect-[4/4.2] overflow-hidden bg-[#f5f1e8] border-b border-[#ebdccb]">
+                                <div class="card-img-wrap relative w-full aspect-square overflow-hidden bg-[#f5f1e8] border-b border-[#ebdccb]" style="min-height: 220px;">
                                     <!-- Primary Product Photo -->
                                     <img
                                         src="{{ $pImg }}"
@@ -753,8 +753,7 @@
                     card.classList.add('md:flex-row');
                     const imgWrap = card.querySelector('.card-img-wrap');
                     if (imgWrap) {
-                        imgWrap.classList.remove('aspect-[4/4.2]');
-                        imgWrap.classList.add('md:w-64', 'md:h-auto', 'shrink-0', 'aspect-square');
+                        imgWrap.classList.add('md:w-64', 'md:h-auto', 'shrink-0');
                     }
                     const desc = card.querySelector('.card-desc');
                     if (desc) desc.classList.remove('hidden');
@@ -772,7 +771,6 @@
                     const imgWrap = card.querySelector('.card-img-wrap');
                     if (imgWrap) {
                         imgWrap.classList.remove('md:w-64', 'md:h-auto', 'shrink-0');
-                        imgWrap.classList.add('aspect-[4/4.2]');
                     }
                     const desc = card.querySelector('.card-desc');
                     if (desc) desc.classList.add('hidden');
