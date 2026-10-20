@@ -4,4 +4,5 @@
 @section('content')
     <x-hero />
     <x-featured-categories />
+    <x-featured-products />
 @endsection

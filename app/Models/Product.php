@@ -40,7 +40,7 @@ class Product extends Model
         'accordion_tabs' => 'array',
     ];
 
-    protected $appends = ['image_url'];
+    protected $appends = ['image_url', 'hover_image_url'];
 
     /**
      * Get effective unit cost price (defaults to 45% of retail price if not specified).
@@ -99,6 +99,21 @@ class Product extends Model
         }
 
         return 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=400&auto=format&fit=crop';
+    }
+
+    /**
+     * Get secondary hover image URL or null.
+     */
+    public function getHoverImageUrlAttribute(): ?string
+    {
+        if (!empty($this->gallery_images) && is_array($this->gallery_images) && count($this->gallery_images) > 0) {
+            $first = $this->gallery_images[0];
+            if (str_starts_with($first, 'http://') || str_starts_with($first, 'https://')) {
+                return $first;
+            }
+            return asset('storage/' . $first);
+        }
+        return null;
     }
 
     /**
