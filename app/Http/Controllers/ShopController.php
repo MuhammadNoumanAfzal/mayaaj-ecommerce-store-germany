@@ -80,7 +80,7 @@ class ShopController extends Controller
                 break;
         }
 
-        $products = $query->paginate(12)->withQueryString();
+        $products = $query->paginate(9)->withQueryString();
 
         [$dbMinPrice, $dbMaxPrice] = \Illuminate\Support\Facades\Cache::remember('mehaaj_shop_price_bounds', 300, function () {
             $bounds = Product::where('status', 'active')

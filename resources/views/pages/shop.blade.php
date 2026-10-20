@@ -260,7 +260,7 @@
 
                 <!-- Modern Pixel-Perfect Filter Sidebar (3 cols on lg) -->
                 <aside id="filter-sidebar" class="lg:col-span-3 hidden lg:block space-y-4">
-                    <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="sticky top-24 rounded-xl border border-[#dfd6c4] bg-white p-5 shadow-2xs space-y-5">
+                    <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain scrollbar-thin rounded-xl border border-[#dfd6c4] bg-white p-5 shadow-2xs space-y-5">
                         @if(request('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">
                         @endif
