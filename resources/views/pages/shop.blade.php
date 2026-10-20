@@ -34,16 +34,22 @@
         </div>
     </div>
 
-    <!-- Category Pills Strip (Horizontal Scroll with Clean Indicators) -->
-    <div class="border-b border-[#dfd6c4] bg-white py-2.5 shadow-2xs">
-        <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 max-w-full">
+    <!-- Atelier Categories Navigation Bar (Ultra-Luxury Maison Design) -->
+    <div class="border-b border-[#dfd6c4] bg-[#fbf9f5]/95 backdrop-blur-md py-3 shadow-2xs">
+        <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6">
+            <div class="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-0.5">
+                <!-- All Collections Chip -->
                 <a
                     href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']))) }}"
-                    class="shrink-0 rounded-full px-3.5 py-1 text-xs font-semibold tracking-wide transition cursor-pointer {{ empty($activeCategorySlugs) ? 'bg-[#78000b] text-white shadow-xs' : 'bg-[#faf7f2] text-[#685c54] border border-[#dfd6c4] hover:border-[#78000b] hover:text-[#78000b]' }}"
+                    class="group shrink-0 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-medium tracking-wide transition-all duration-200 cursor-pointer outline-none select-none {{ empty($activeCategorySlugs) ? 'bg-[#78000b] text-white shadow-md ring-1 ring-[#78000b]' : 'bg-white text-[#4a3f37] border border-[#dfd6c4] hover:border-[#c99a45] hover:text-[#78000b] hover:shadow-2xs' }}"
                 >
-                    <span data-i18n-en="All Creations" data-i18n-de="Alle Kreationen">All Creations</span>
+                    <span data-i18n-en="All Collections" data-i18n-de="Alle Kollektionen">All Collections</span>
+                    <span class="inline-flex items-center justify-center h-4.5 min-w-[18px] px-1.5 rounded-full text-[0.62rem] font-mono {{ empty($activeCategorySlugs) ? 'bg-white/20 text-white font-semibold' : 'bg-[#ede5d6] text-[#6d6056] group-hover:bg-[#78000b]/10 group-hover:text-[#78000b]' }}">
+                        {{ $products->total() }}
+                    </span>
                 </a>
+
+                <!-- Category Chips -->
                 @foreach($categoriesList as $quickCat)
                     @php
                         $isActive = in_array($quickCat->slug, $activeCategorySlugs);
@@ -51,11 +57,13 @@
                     @endphp
                     <a
                         href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']), ['category' => $quickCat->slug])) }}"
-                        class="shrink-0 rounded-full px-3.5 py-1 text-xs font-semibold tracking-wide transition cursor-pointer flex items-center gap-1.5 {{ $isActive ? 'bg-[#78000b] text-white shadow-xs' : 'bg-[#faf7f2] text-[#685c54] border border-[#dfd6c4] hover:border-[#d8b45a] hover:text-[#1c1210]' }}"
+                        class="group shrink-0 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-medium tracking-wide transition-all duration-200 cursor-pointer outline-none select-none {{ $isActive ? 'bg-[#78000b] text-white shadow-md ring-1 ring-[#78000b]' : 'bg-white text-[#4a3f37] border border-[#dfd6c4] hover:border-[#c99a45] hover:text-[#78000b] hover:shadow-2xs' }}"
                     >
                         <span>{{ $quickCat->name }}</span>
                         @if($catCount > 0)
-                            <span class="text-[0.62rem] opacity-75 font-mono">({{ $catCount }})</span>
+                            <span class="inline-flex items-center justify-center h-4.5 min-w-[18px] px-1.5 rounded-full text-[0.62rem] font-mono {{ $isActive ? 'bg-white/20 text-white font-semibold' : 'bg-[#ede5d6] text-[#6d6056] group-hover:bg-[#78000b]/10 group-hover:text-[#78000b]' }}">
+                                {{ $catCount }}
+                            </span>
                         @endif
                     </a>
                 @endforeach
@@ -63,24 +71,34 @@
         </div>
     </div>
 
-    <!-- Dynamic Subcategory Pills Bar (Shows when category is selected) -->
+    <!-- Refined Subcategory Filter Strip (Active when a Category is chosen) -->
     @if(!empty($activeCategorySlugs))
         @php
             $firstCatSlug = is_array($activeCategorySlugs) ? $activeCategorySlugs[0] : $activeCategorySlugs;
             $selectedCategory = $categoriesList->firstWhere('slug', $firstCatSlug);
         @endphp
         @if($selectedCategory && $selectedCategory->activeSubcategories && $selectedCategory->activeSubcategories->count() > 0)
-            <div class="border-b border-[#dfd6c4] bg-[#f7f2e9] py-2 text-xs">
-                <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center gap-2 overflow-x-auto no-scrollbar">
-                    <span class="text-[0.62rem] font-bold uppercase tracking-widest text-[#78000b] shrink-0">
-                        Subcategory:
-                    </span>
+            <div class="border-b border-[#dfd6c4] bg-[#f4ece0] py-2.5 text-xs">
+                <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center gap-3 overflow-x-auto no-scrollbar">
+                    <!-- Refined Atelier Silhouette Indicator -->
+                    <div class="flex items-center gap-1.5 text-[#8c6b2d] shrink-0 font-medium">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                        <span class="text-[0.62rem] font-bold uppercase tracking-[0.16em]">Silhouettes:</span>
+                    </div>
+
+                    <span class="h-3.5 w-px bg-[#d8ccb8] shrink-0"></span>
+
+                    <!-- All Subcategories for Selected Category -->
                     <a
                         href="{{ route('shop', array_merge(request()->except(['subcategory', 'page']), ['category' => $firstCatSlug])) }}"
-                        class="shrink-0 rounded-full px-3 py-1 text-[0.65rem] font-bold tracking-wide transition cursor-pointer {{ empty($activeSubcategorySlugs) ? 'bg-[#78000b] text-white shadow-xs' : 'bg-white text-[#685c54] border border-[#dfd6c4] hover:border-[#78000b]' }}"
+                        class="group shrink-0 inline-flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer select-none {{ empty($activeSubcategorySlugs) ? 'bg-[#78000b] text-white shadow-xs font-semibold' : 'bg-white text-[#4a3f37] border border-[#dfd6c4] hover:border-[#78000b] hover:text-[#78000b]' }}"
                     >
-                        All {{ $selectedCategory->name }}
+                        <span>All {{ $selectedCategory->name }}</span>
                     </a>
+
+                    <!-- Subcategory Chips with Clean Circular Badges -->
                     @foreach($selectedCategory->activeSubcategories as $subcat)
                         @php
                             $isSubActive = in_array($subcat->slug, $activeSubcategorySlugs);
@@ -88,11 +106,13 @@
                         @endphp
                         <a
                             href="{{ route('shop', array_merge(request()->except(['page']), ['category' => $firstCatSlug, 'subcategory' => $subcat->slug])) }}"
-                            class="shrink-0 rounded-full px-3 py-1 text-[0.65rem] font-bold tracking-wide transition cursor-pointer flex items-center gap-1 {{ $isSubActive ? 'bg-[#d8b45a] text-[#120807] shadow-xs' : 'bg-white text-[#685c54] border border-[#dfd6c4] hover:border-[#d8b45a]' }}"
+                            class="group shrink-0 inline-flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer select-none {{ $isSubActive ? 'bg-[#78000b] text-white shadow-xs font-semibold' : 'bg-white text-[#4a3f37] border border-[#dfd6c4] hover:border-[#78000b] hover:text-[#78000b]' }}"
                         >
                             <span>{{ $subcat->name }}</span>
                             @if($subCount > 0)
-                                <span class="text-[0.58rem] opacity-75 font-mono">({{ $subCount }})</span>
+                                <span class="inline-flex items-center justify-center h-4 min-w-[16px] px-1 rounded-full text-[0.6rem] font-mono {{ $isSubActive ? 'bg-white/20 text-white' : 'bg-[#ebdccb] text-[#685c54] group-hover:bg-[#78000b]/10 group-hover:text-[#78000b]' }}">
+                                    {{ $subCount }}
+                                </span>
                             @endif
                         </a>
                     @endforeach
@@ -256,11 +276,12 @@
                 </div>
             @endif
 
-            <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+            <div class="grid gap-6 lg:grid-cols-12 relative items-stretch">
 
-                <!-- Modern Pixel-Perfect Filter Sidebar (3 cols on lg) -->
-                <aside id="filter-sidebar" class="lg:col-span-3 hidden lg:block space-y-4">
-                    <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain scrollbar-thin rounded-xl border border-[#dfd6c4] bg-white p-5 shadow-2xs space-y-5">
+                <!-- Modern Pixel-Perfect Filter Sidebar (3 cols on lg) - GUARANTEED FIXED ON SCROLL -->
+                <aside id="filter-sidebar" class="lg:col-span-3 hidden lg:block relative">
+                    <div class="sticky top-24 z-20 space-y-4">
+                        <form action="{{ route('shop') }}" method="GET" id="shop-filter-form" class="max-h-[calc(100vh-7.5rem)] overflow-y-auto overscroll-contain scrollbar-thin rounded-xl border border-[#dfd6c4] bg-white p-5 shadow-[0_4px_24px_rgba(28,18,16,0.06)] space-y-5">
                         @if(request('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">
                         @endif
@@ -451,6 +472,7 @@
                             <p class="mt-0.5 text-[0.62rem] text-[#685c54]">Tuscan Atelier Tannery & Insured DHL Express</p>
                         </div>
                     </form>
+                    </div>
                 </aside>
 
                 <!-- Product Grid Catalog (9 cols on lg) -->
