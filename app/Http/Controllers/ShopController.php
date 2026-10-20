@@ -42,9 +42,24 @@ class ShopController extends Controller
             });
         }
 
+        // Min Price Filter
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', (float) $request->input('min_price'));
+        }
+
         // Max Price Filter
         if ($request->filled('max_price')) {
-            $query->where('price', '<=', $request->input('max_price'));
+            $query->where('price', '<=', (float) $request->input('max_price'));
+        }
+
+        // Featured / Bestseller filter
+        if ($request->boolean('featured')) {
+            $query->where('is_featured', true);
+        }
+
+        // In Stock filter
+        if ($request->boolean('in_stock')) {
+            $query->where('stock', '>', 0);
         }
 
         // Sorting
@@ -77,7 +92,19 @@ class ShopController extends Controller
             return [$min, $max > 0 ? $max : 1000];
         });
 
-        return view('pages.shop', compact('products', 'dbMinPrice', 'dbMaxPrice'));
+        $shopCategories = Category::where('status', 'active')
+            ->withCount(['products' => function ($q) {
+                $q->where('status', 'active');
+            }])
+            ->with(['activeSubcategories' => function ($q) {
+                $q->withCount(['products' => function ($sq) {
+                    $sq->where('status', 'active');
+                }]);
+            }])
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return view('pages.shop', compact('products', 'dbMinPrice', 'dbMaxPrice', 'shopCategories'));
     }
 
     /**

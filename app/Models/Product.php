@@ -113,7 +113,16 @@ class Product extends Model
             }
             return asset('storage/' . $first);
         }
-        return null;
+
+        if (!empty($this->variations) && is_array($this->variations) && count($this->variations) > 1 && !empty($this->variations[1]['image'])) {
+            $varImg = $this->variations[1]['image'];
+            if (str_starts_with($varImg, 'http://') || str_starts_with($varImg, 'https://')) {
+                return $varImg;
+            }
+            return asset('storage/' . $varImg);
+        }
+
+        return $this->image_url;
     }
 
     /**
