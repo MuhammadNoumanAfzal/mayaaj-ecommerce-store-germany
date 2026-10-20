@@ -158,25 +158,58 @@ if (siteHeader) {
     window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
-// Slow & Smooth Luxury Scroll-Reveal Animation Engine
-document.addEventListener('DOMContentLoaded', () => {
+// Reliable & Majestic Scroll-Reveal Animation Engine
+function initScrollReveal() {
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    if ('IntersectionObserver' in window && revealElements.length > 0) {
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach((entry) => {
-                // Triggers gracefully when user scrolls over the section
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-revealed');
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.12,
-            rootMargin: '0px 0px -60px 0px'
-        });
+    if (!revealElements.length) return;
 
-        revealElements.forEach((el) => observer.observe(el));
-    } else {
-        revealElements.forEach((el) => el.classList.add('is-revealed'));
+    if (!('IntersectionObserver' in window)) {
+        revealElements.forEach(el => el.classList.add('is-revealed'));
+        return;
     }
-});
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.05,
+        rootMargin: '0px 0px 80px 0px'
+    });
+
+    revealElements.forEach((el) => {
+        // Immediately reveal elements that are already within or near the viewport
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+            el.classList.add('is-revealed');
+        } else {
+            observer.observe(el);
+        }
+    });
+
+    // Safety fallback: ensure cards are always revealed
+    setTimeout(() => {
+        document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)').forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top <= window.innerHeight + 150) {
+                el.classList.add('is-revealed');
+            }
+        });
+    }, 500);
+
+    setTimeout(() => {
+        document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)').forEach(el => {
+            el.classList.add('is-revealed');
+        });
+    }, 1500);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollReveal);
+} else {
+    initScrollReveal();
+}
+window.initScrollReveal = initScrollReveal;

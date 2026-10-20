@@ -39,7 +39,7 @@
                             <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
                         </button>
 
-                        <a href="/shop" class="inline-flex items-center gap-2 rounded-sm border border-[#d8b45a]/50 bg-black/40 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-[#d8b45a] backdrop-blur-md transition-all duration-300 hover:bg-[#d8b45a] hover:text-[#0a0403] hover:shadow-[0_0_25px_rgba(216,180,90,0.4)] cursor-pointer">
+                        <a href="{{ route('shop') }}" class="inline-flex items-center gap-2 rounded-sm border border-[#d8b45a]/50 bg-black/40 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-[#d8b45a] backdrop-blur-md transition-all duration-300 hover:bg-[#d8b45a] hover:text-[#0a0403] hover:shadow-[0_0_25px_rgba(216,180,90,0.4)] cursor-pointer">
                             <span data-i18n-de="KOLLEKTION ENTDECKEN" data-i18n-en="EXPLORE COLLECTION">KOLLEKTION ENTDECKEN</span>
                         </a>
                     </div>

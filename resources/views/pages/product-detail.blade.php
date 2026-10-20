@@ -537,57 +537,20 @@
                         </div>
                     @endforeach
                 @else
-                    <!-- Review Card 1 (Curated Atelier Experience) -->
-                    <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-[#8a7c74]">
-                                <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                                <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 2 Wochen" data-i18n-en="2 weeks ago">2 weeks ago</span>
-                            </div>
-                            <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Unübertroffene Haptik und Lederqualität“" data-i18n-en="“Unrivaled leather touch and finish”">“Unrivaled leather touch and finish”</h3>
-                            <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Ich besitze Taschen von renommierten Pariser Häusern, doch die Lederqualität und Nahtpräzision von MEHAAJ übertrifft alles. Die natürliche Narbung und der Duft sind unvergleichlich." data-i18n-en="I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.">
-                                I own bags from renowned Parisian luxury houses, yet the leather grain and saddle stitch execution by MEHAAJ exceeds them all. The natural aroma is incomparable.
-                            </p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
-                            <span class="font-bold text-[#1c1210]">Dr. Maximilian v. B.</span>
-                            <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (München)" data-i18n-en="✓ Verified Buyer (Munich)">✓ Verified Buyer (Munich)</span>
-                        </div>
-                    </div>
-
-                    <!-- Review Card 2 -->
-                    <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-[#8a7c74]">
-                                <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                                <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 1 Monat" data-i18n-en="1 month ago">1 month ago</span>
-                            </div>
-                            <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Ein architektonisches Kunstwerk“" data-i18n-en="“An architectural work of art”">“An architectural work of art”</h3>
-                            <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Kantenversiegelung ist makellos. Schneller Expressversand in einer traumhaften Box. Man spürt die deutsche Detailverliebtheit in jedem Millimeter." data-i18n-en="The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.">
-                                The edge burnishing is immaculate. Swift express shipping inside a gorgeous presentation case. German engineering precision in every millimeter.
-                            </p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
-                            <span class="font-bold text-[#1c1210]">Sophie Laurent</span>
-                            <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierte Käuferin (Zürich)" data-i18n-en="✓ Verified Buyer (Zurich)">✓ Verified Buyer (Zurich)</span>
-                        </div>
-                    </div>
-
-                    <!-- Review Card 3 -->
-                    <div class="rounded-md border border-[#e6decb] bg-[#faf7f2] p-5 shadow-xs flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-[#8a7c74]">
-                                <div class="flex text-[#d8b45a] text-xs">★ ★ ★ ★ ★</div>
-                                <span class="font-mono text-[0.7rem]" data-i18n-de="Vor 6 Wochen" data-i18n-en="6 weeks ago">6 weeks ago</span>
-                            </div>
-                            <h3 class="mt-3 font-display text-base font-semibold text-[#1c1210]" data-i18n-de="„Jeden Euro absolut wert“" data-i18n-en="“Worth every single euro”">“Worth every single euro”</h3>
-                            <p class="mt-2 text-xs text-[#5c4f46] leading-relaxed" data-i18n-de="Die Beschläge haben ein substanzielles Gewicht und der Reißverschluss gleitet wie Butter. Die Patina nach den ersten Wochen des täglichen Gebrauchs ist sagenhaft schön." data-i18n-en="Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.">
-                                Solid weight hardware and the zipper glides like butter. The patina developing over weeks of daily use is simply magnificent.
-                            </p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-[#e6decb]/60 flex items-center justify-between text-[0.7rem]">
-                            <span class="font-bold text-[#1c1210]">Alexander K.</span>
-                            <span class="text-[#2e683a] font-semibold" data-i18n-de="✓ Verifizierter Käufer (Düsseldorf)" data-i18n-en="✓ Verified Buyer (Dusseldorf)">✓ Verified Buyer (Dusseldorf)</span>
+                    <div class="col-span-full py-10 px-6 text-center bg-[#faf7f2] rounded-md border border-[#e6decb] space-y-3">
+                        <svg class="mx-auto h-8 w-8 text-[#d8b45a]" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <h3 class="font-display text-base font-semibold text-[#1c1210]" data-i18n-de="Noch keine Bewertungen vorhanden" data-i18n-en="No reviews yet">
+                            No reviews yet
+                        </h3>
+                        <p class="text-xs text-[#685c54] max-w-md mx-auto" data-i18n-de="Seien Sie der Erste, der seine Erfahrungen mit diesem Meisterstück teilt." data-i18n-en="Be the first patron to share your experience with this bespoke creation.">
+                            Be the first patron to share your experience with this bespoke creation.
+                        </p>
+                        <div class="pt-2">
+                            <button type="button" onclick="openReviewModal()" class="inline-flex items-center gap-1.5 rounded-sm bg-[#78000b] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-[#5a0309] cursor-pointer">
+                                <span data-i18n-de="Erste Bewertung schreiben" data-i18n-en="Write First Review">Write First Review</span>
+                            </button>
                         </div>
                     </div>
                 @endif
@@ -617,8 +580,8 @@
                         @php
                             $relEffPrice = ($rel->sale_price && $rel->sale_price < $rel->price) ? $rel->sale_price : $rel->price;
                         @endphp
-                        <article class="group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-1.5 hover:border-[#d8b45a] hover:shadow-[0_10px_30px_rgba(216,180,90,0.2)] cursor-pointer">
-                            <div class="absolute inset-x-0 top-0 z-20 h-0.5 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
+                        <article onclick="if (!event.target.closest('button, a')) { window.location.href = '{{ route('shop.show', $rel->slug) }}'; }" class="group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-1.5 hover:border-[#d8b45a] hover:shadow-[0_10px_30px_rgba(216,180,90,0.2)] cursor-pointer">
+                            <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-0.5 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
 
                             <div class="relative h-44 sm:h-52 overflow-hidden bg-[#f7f4ee]">
                                 <a href="{{ route('shop.show', $rel->slug) }}" class="block h-full w-full">

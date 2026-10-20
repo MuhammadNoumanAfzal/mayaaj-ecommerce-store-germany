@@ -77,6 +77,14 @@
         <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600|inter:400,500,600&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script>
+            window.MEHAAJ_APP_URL = "{{ url('/') }}";
+            window.mehaajUrl = function(path) {
+                if (!path) return window.MEHAAJ_APP_URL;
+                if (path.startsWith('http://') || path.startsWith('https://')) return path;
+                return window.MEHAAJ_APP_URL.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '');
+            };
+        </script>
         <style>
             html {
                 overflow-x: clip;
@@ -88,7 +96,7 @@
             }
         </style>
     </head>
-    <body class="w-full bg-[#faf7f2] text-[#1c1210] antialiased selection:bg-[#78000b] selection:text-white">
+    <body class="w-full bg-[#f7f4ee] text-[#1c1210] antialiased selection:bg-[#78000b] selection:text-white">
         <x-navbar />
 
         <main class="w-full">
@@ -96,99 +104,6 @@
         </main>
 
         <x-footer />
-        <x-cart-drawer />
-
-        <!-- Global Slide-Over Wishlist Drawer -->
-        <div id="wishlist-drawer-backdrop" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none cursor-pointer" onclick="closeWishlistDrawer()"></div>
-
-        <div id="wishlist-drawer-panel" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transition-all duration-500 translate-x-full invisible pointer-events-none border-l border-[#e6decb] flex flex-col justify-between overflow-hidden">
-            <!-- Wishlist Header -->
-            <div class="border-b border-[#e6decb] bg-[#faf7f2] p-5">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <svg class="h-5 w-5 text-[#78000b]" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
-                        </svg>
-                        <h2 class="font-display text-lg font-medium text-[#1c1210]">
-                            <span data-i18n-en="Your Wishlist" data-i18n-de="Ihre Wunschliste">Your Wishlist</span>
-                            <span id="wishlist-drawer-count" class="text-xs text-[#78000b] font-bold ml-1">(0)</span>
-                        </h2>
-                    </div>
-                    <button type="button" onclick="closeWishlistDrawer()" class="h-8 w-8 flex items-center justify-center rounded-full text-[#1c1210] hover:bg-[#78000b] hover:text-white transition-all duration-300 hover:rotate-90 cursor-pointer" aria-label="Close wishlist">
-                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"/>
-                            <line x1="6" y1="6" x2="18" y2="18"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Wishlist Body: Items List -->
-            <div id="wishlist-items-container" class="flex-1 overflow-y-auto p-5 divide-y divide-[#f2ebdc] space-y-4">
-                <!-- Rendered dynamically via JavaScript -->
-            </div>
-
-            <!-- Wishlist Footer -->
-            <div class="border-t border-[#e6decb] bg-[#faf7f2] p-5 flex items-center justify-between">
-                <button type="button" onclick="clearWishlist()" class="text-xs font-semibold text-[#8a7c74] hover:text-[#78000b] transition" data-i18n-en="Clear Wishlist" data-i18n-de="Wunschliste leeren">Clear Wishlist</button>
-                <a href="/shop" onclick="closeWishlistDrawer()" class="rounded bg-[#78000b] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow hover:bg-[#5a0309] transition" data-i18n-en="Explore Shop" data-i18n-de="Shop entdecken">Explore Shop</a>
-            </div>
-        </div>
-
-        <!-- Global Quick View Modal -->
-        <div id="quick-view-backdrop" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none cursor-pointer" onclick="closeQuickViewModal()"></div>
-
-        <div id="quick-view-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none opacity-0 transition-all duration-300 scale-95">
-            <div class="relative w-full max-w-2xl bg-white rounded-md border border-[#d8b45a]/50 shadow-2xl overflow-hidden pointer-events-auto max-h-[90vh] flex flex-col md:flex-row">
-                <!-- Close Button -->
-                <button type="button" onclick="closeQuickViewModal()" class="absolute right-3 top-3 z-20 h-8 w-8 flex items-center justify-center rounded-full bg-black/60 text-white hover:bg-[#78000b] transition cursor-pointer shadow-md" aria-label="Close Quick View">
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
-
-                <!-- Product Image -->
-                <div class="md:w-1/2 bg-[#f7f4ee] relative min-h-[240px] md:min-h-[380px] flex items-center justify-center overflow-hidden">
-                    <img id="qv-img" src="" alt="Product" class="h-full w-full object-cover">
-                    <span id="qv-badge" class="absolute left-3 top-3 rounded-sm bg-[#78000b] px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-luxury text-white shadow-md">EXKLUSIV</span>
-                </div>
-
-                <!-- Product Details -->
-                <div class="md:w-1/2 p-6 flex flex-col justify-between overflow-y-auto">
-                    <div>
-                        <p id="qv-category" class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]"></p>
-                        <h3 id="qv-title" class="font-display text-xl sm:text-2xl font-medium text-[#1c1210] mt-1"></h3>
-                        <div class="flex items-center gap-2 mt-2">
-                            <span class="text-[#d8b45a] text-sm">★★★★★</span>
-                            <span class="text-xs text-[#8a7c74]">5.0 (Client Rating)</span>
-                        </div>
-                        <div class="mt-3 flex items-baseline gap-2">
-                            <span id="qv-price" class="text-xl font-bold text-[#1c1210]"></span>
-                            <span id="qv-sale-price" class="text-xs text-[#8a7c74] line-through"></span>
-                        </div>
-                        <p id="qv-desc" class="mt-3 text-xs leading-relaxed text-[#685c54] font-light"></p>
-                        
-                        <div class="mt-4 pt-3 border-t border-[#f2ebdc] text-[0.68rem] text-[#8a7c74] space-y-1">
-                            <p>✓ <span data-i18n-en="Complimentary Luxury Packaging" data-i18n-de="Kostenlose Luxus-Geschenkverpackung">Complimentary Luxury Packaging</span></p>
-                            <p>✓ <span data-i18n-en="Insured DHL Express Shipping" data-i18n-de="Versicherter DHL Express Versand">Insured DHL Express Shipping</span></p>
-                            <p>✓ <span data-i18n-en="Certificate of Authenticity" data-i18n-de="Echtheitszertifikat inklusive">Certificate of Authenticity</span></p>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 pt-4 border-t border-[#f2ebdc] space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="flex items-center border border-[#e6decb] rounded bg-[#faf7f2]">
-                                <button type="button" onclick="decrementQvQty()" class="px-3 py-1.5 text-sm hover:bg-[#e6decb] font-bold text-[#1c1210] cursor-pointer">-</button>
-                                <span id="qv-qty" class="px-3 py-1.5 text-xs font-bold text-[#1c1210]">1</span>
-                                <button type="button" onclick="incrementQvQty()" class="px-3 py-1.5 text-sm hover:bg-[#e6decb] font-bold text-[#1c1210] cursor-pointer">+</button>
-                            </div>
-                            <button id="qv-add-btn" type="button" onclick="addQuickViewToCart()" class="flex-1 rounded bg-[#d8b45a] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#120807] hover:bg-[#ffd45a] transition shadow cursor-pointer font-bold">
-                                <span data-i18n-en="Add to Cart" data-i18n-de="In den Warenkorb">Add to Cart</span>
-                            </button>
-                        </div>
-                        <a id="qv-view-link" href="#" class="block text-center text-xs font-bold text-[#78000b] hover:underline" data-i18n-en="View Full Masterpiece Details →" data-i18n-de="Vollständige Produktdetails ansehen →">View Full Masterpiece Details →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- SweetAlert2 Library & Luxury Theme Mixins -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -443,7 +358,7 @@
                             <p class="text-xs text-[#8a7c74] max-w-xs mx-auto leading-relaxed">
                                 ${isEn ? 'Discover our curated selection of luxury masterpieces and save your favorites here.' : 'Entdecken Sie unsere Meisterwerke und speichern Sie Ihre Favoriten hier.'}
                             </p>
-                            <a href="/shop" onclick="closeWishlistDrawer()" class="inline-block mt-2 rounded bg-[#d8b45a] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#120807] hover:bg-[#ffd45a] transition">
+                            <a href="{{ route('shop') }}" onclick="closeWishlistDrawer()" class="inline-block mt-2 rounded bg-[#d8b45a] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#120807] hover:bg-[#ffd45a] transition">
                                 ${isEn ? 'Browse Collection' : 'Kollektion ansehen'}
                             </a>
                         </div>
@@ -453,14 +368,15 @@
 
                 let html = '';
                 list.forEach(item => {
+                    const itemUrl = window.mehaajUrl('/shop/' + (item.slug || ''));
                     html += `
                         <div class="flex items-center gap-4 py-3">
-                            <a href="/shop/${item.slug || ''}" class="h-16 w-16 shrink-0 overflow-hidden rounded bg-[#f7f4ee] border border-[#e6decb]">
+                            <a href="${itemUrl}" class="h-16 w-16 shrink-0 overflow-hidden rounded bg-[#f7f4ee] border border-[#e6decb]">
                                 <img src="${item.image || '/productbag.png'}" alt="${item.name}" class="h-full w-full object-cover">
                             </a>
                             <div class="flex-1 min-w-0">
                                 <p class="text-[0.6rem] font-bold uppercase tracking-wider text-[#78000b] truncate">${item.category || 'Luxury'}</p>
-                                <a href="/shop/${item.slug || ''}" class="font-display text-sm font-medium text-[#1c1210] hover:text-[#78000b] transition truncate block">${item.name}</a>
+                                <a href="${itemUrl}" class="font-display text-sm font-medium text-[#1c1210] hover:text-[#78000b] transition truncate block">${item.name}</a>
                                 <p class="text-xs font-bold text-[#1c1210] mt-0.5">${item.price}</p>
                             </div>
                             <div class="flex flex-col items-end gap-2">
@@ -539,7 +455,7 @@
                     : 'Handgefertigt mit unvergleichlicher europäischer Meisterleistung. Unter Verwendung edelster Materialien und vollendeter Handwerkskunst.');
 
                 document.getElementById('qv-qty').textContent = currentQvQty;
-                document.getElementById('qv-view-link').href = '/shop/' + (product.slug || '');
+                document.getElementById('qv-view-link').href = window.mehaajUrl('/shop/' + (product.slug || ''));
 
                 const backdrop = document.getElementById('quick-view-backdrop');
                 const modal = document.getElementById('quick-view-modal');
@@ -625,7 +541,7 @@
                 const isEn = getCurrentLang() === 'en';
                 const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-                fetch('/cart/add', {
+                fetch(window.mehaajUrl('/cart/add'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -663,11 +579,14 @@
                 });
             }
 
-            // On DOM Ready, initialize language & wishlist badges
+            // On DOM Ready, initialize language & wishlist badges & trigger scroll reveals
             document.addEventListener('DOMContentLoaded', () => {
                 const initialLang = getCurrentLang();
                 setSiteLanguage(initialLang);
                 updateWishlistBadges();
+                if (typeof window.initScrollReveal === 'function') {
+                    window.initScrollReveal();
+                }
             });
         </script>
     </body>

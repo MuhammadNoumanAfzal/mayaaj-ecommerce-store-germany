@@ -129,7 +129,7 @@
                                 @if($rev->product->image)
                                     <img src="{{ asset('storage/' . $rev->product->image) }}" alt="{{ $rev->product->name }}" class="h-8 w-8 rounded object-cover border border-[#e6decb]">
                                 @endif
-                                <a href="/shop/{{ $rev->product->slug }}" class="text-[0.68rem] font-bold text-[#78000b] hover:underline truncate">
+                                <a href="{{ route('shop.show', $rev->product->slug) }}" class="text-[0.68rem] font-bold text-[#78000b] hover:underline truncate">
                                     {{ $rev->product->name }}
                                 </a>
                             </div>

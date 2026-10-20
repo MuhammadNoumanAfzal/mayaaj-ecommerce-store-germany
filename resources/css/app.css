@@ -35,19 +35,26 @@
 }
 
 @layer components {
-    /* Luxury Maison Translucent Frosted Glass Header */
+    /* Luxury Maison Fully Transparent Header */
     [data-site-header] {
-        background: rgba(11, 9, 8, 0.65) !important;
-        backdrop-filter: blur(16px) saturate(160%) !important;
-        -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-        border-bottom: 1px solid rgba(216, 180, 90, 0.22) !important;
-        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3) !important;
-        transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        background: transparent !important;
+        background-color: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        transition: background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
     }
 
     [data-site-header].scrolled-header {
-        background: rgba(11, 9, 8, 0.88) !important;
-        border-bottom: 1px solid rgba(216, 180, 90, 0.32) !important;
+        background: rgba(11, 9, 8, 0.9) !important;
+        background-color: rgba(11, 9, 8, 0.9) !important;
+        backdrop-filter: blur(16px) saturate(160%) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+        border-bottom: 1px solid rgba(216, 180, 90, 0.25) !important;
         box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55) !important;
     }
 
@@ -65,37 +72,37 @@
         @apply mx-auto w-full max-w-[1480px] px-4 sm:px-7 lg:px-10 xl:px-12;
     }
 
-    /* Ultra-Smooth Luxury Scroll Reveal Animation (Slow & Majestic) */
+    /* Ultra-Smooth Luxury Scroll Reveal Animation (Fast & Majestic) */
     .reveal-on-scroll {
         opacity: 0;
-        transform: translateY(40px);
-        transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(20px);
+        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         will-change: opacity, transform;
     }
 
     .reveal-on-scroll.is-revealed {
-        opacity: 1;
+        opacity: 1 !important;
         transform: translateY(0);
     }
 
     .reveal-delay-100 {
-        transition-delay: 150ms;
+        transition-delay: 100ms;
     }
 
     .reveal-delay-200 {
-        transition-delay: 300ms;
+        transition-delay: 200ms;
     }
 
     .reveal-delay-300 {
-        transition-delay: 450ms;
+        transition-delay: 300ms;
     }
 
     .reveal-delay-400 {
-        transition-delay: 600ms;
+        transition-delay: 400ms;
     }
 
     .reveal-delay-500 {
-        transition-delay: 750ms;
+        transition-delay: 500ms;
     }
 
     /* Hero Text Slow & Smooth Cinematic Animations */
@@ -130,11 +137,12 @@
     }
 
     .hero-slide-img {
+        object-position: top center !important;
         transform-origin: center top !important;
     }
 
     [data-hero-slide].opacity-100 .hero-slide-img {
-        transform: scale(1.03);
+        transform: scale(1) !important;
     }
 
     /* Luxury Interactive Card Hover */
@@ -153,7 +161,8 @@
     }
 
     .button-primary {
-        @apply inline-flex min-h-11 cursor-pointer items-center justify-center bg-burgundy px-7 py-3 text-[0.72rem] font-medium uppercase tracking-luxury text-ivory transition duration-300 hover:bg-oxblood;
+        @apply inline-flex min-h-11 cursor-pointer items-center justify-center bg-burgundy border border-[#d8b45a]/50 px-7 py-3 text-[0.72rem] font-bold uppercase tracking-luxury text-ivory transition duration-300 hover:bg-oxblood hover:border-[#ffd45a];
+        box-shadow: 0 10px 25px rgba(120, 0, 11, 0.45), 0 0 15px rgba(216, 180, 90, 0.15);
     }
 
     .button-secondary {
@@ -203,18 +212,66 @@
         position: absolute;
         top: -50%;
         left: -60%;
-        width: 40%;
+        width: 50%;
         height: 200%;
         background: linear-gradient(to right,
                 rgba(255, 255, 255, 0) 0%,
-                rgba(216, 180, 90, 0.3) 50%,
+                rgba(216, 180, 90, 0.35) 50%,
                 rgba(255, 255, 255, 0) 100%);
         transform: rotate(25deg);
-        transition: all 0.75s ease;
+        transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none !important;
+        z-index: 25;
     }
 
     .animate-shine-sweep:hover::after {
-        left: 130%;
+        left: 140%;
+    }
+
+    /* Scale 1.08 image hover helper */
+    .scale-108,
+    .group:hover .group-hover\:scale-108,
+    .group:hover img.group-hover\:scale-108 {
+        transform: scale(1.08) !important;
+    }
+
+    /* Floating Action Buttons Visibility Guarantee */
+    .card-floating-actions {
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+    }
+
+    .group:hover .card-floating-actions,
+    article:hover .card-floating-actions {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
+    }
+
+    /* Product Card Elevation Guarantee */
+    .product-card-elevate {
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+        will-change: transform, box-shadow;
+    }
+
+    .product-card-elevate:hover {
+        transform: translateY(-8px) !important;
+        box-shadow: 0 15px 35px rgba(216, 180, 90, 0.22), 0 5px 15px rgba(0, 0, 0, 0.08) !important;
+        border-color: #d8b45a !important;
+    }
+
+    /* Category Card Elevation Guarantee */
+    .cat-card-elevate {
+        transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+        will-change: transform, box-shadow;
+    }
+
+    .cat-card-elevate:hover {
+        transform: translateY(-8px) !important;
+        box-shadow: 0 18px 40px rgba(216, 180, 90, 0.28), 0 6px 16px rgba(0, 0, 0, 0.12) !important;
+        border-color: #d8b45a !important;
     }
 
     .animated-border-gradient {

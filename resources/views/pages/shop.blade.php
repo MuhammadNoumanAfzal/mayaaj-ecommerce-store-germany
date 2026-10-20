@@ -38,6 +38,40 @@
         </div>
     </div>
 
+    <!-- Dynamic Subcategory Pills Bar (Active when Category Selected) -->
+    @if(request('category'))
+        @php
+            $activeCatSlug = is_array(request('category')) ? request('category')[0] : request('category');
+            $activeCategory = ($globalCategories ?? collect())->firstWhere('slug', $activeCatSlug);
+        @endphp
+        @if($activeCategory && $activeCategory->activeSubcategories && $activeCategory->activeSubcategories->count() > 0)
+            <div class="border-b border-[#e6decb] bg-[#fbf9f5] py-2">
+                <div class="luxury-container flex items-center gap-2 overflow-x-auto no-scrollbar">
+                    <span class="text-[0.62rem] font-bold uppercase tracking-widest text-[#78000b] shrink-0" data-i18n-de="Unterkategorien:" data-i18n-en="Subcategories:">
+                        Subcategories:
+                    </span>
+                    <a
+                        href="{{ route('shop', array_merge(request()->except(['subcategory', 'page']), ['category' => $activeCatSlug])) }}"
+                        class="shrink-0 rounded-full px-3 py-1 text-[0.65rem] font-bold tracking-wide transition cursor-pointer {{ !request('subcategory') ? 'bg-[#78000b] text-white shadow-xs' : 'bg-white text-[#685c54] border border-[#e6decb] hover:border-[#78000b]' }}"
+                    >
+                        <span data-i18n-de="Alle" data-i18n-en="All">All {{ $activeCategory->name }}</span>
+                    </a>
+                    @foreach($activeCategory->activeSubcategories as $subcat)
+                        @php
+                            $isSubActive = in_array($subcat->slug, (array) request('subcategory'));
+                        @endphp
+                        <a
+                            href="{{ route('shop', array_merge(request()->except(['page']), ['category' => $activeCatSlug, 'subcategory' => $subcat->slug])) }}"
+                            class="shrink-0 rounded-full px-3 py-1 text-[0.65rem] font-bold tracking-wide transition cursor-pointer {{ $isSubActive ? 'bg-[#d8b45a] text-[#120807] shadow-xs' : 'bg-white text-[#685c54] border border-[#e6decb] hover:border-[#d8b45a]' }}"
+                        >
+                            {{ $subcat->name }}
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    @endif
+
     <!-- Main Catalog & Filtering Layout (Tightened spacing) -->
     <section class="py-3 sm:py-4">
         <div class="luxury-container">
@@ -270,18 +304,20 @@
                             @endphp
                             <!-- Uncluttered Luxury Product Card -->
                             <article
-                                class="product-card luxury-card-interactive animate-shine-sweep reveal-on-scroll {{ $delayClass }} group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs transition-all duration-500 hover:-translate-y-1.5 hover:border-[#d8b45a] hover:shadow-[0_12px_30px_rgba(216,180,90,0.18)] cursor-pointer"
+                                data-url="{{ route('shop.show', $product->slug) }}"
+                                onclick="if (!event.target.closest('button, a')) { window.location.assign(this.dataset.url); }"
+                                class="product-card product-card-elevate luxury-card-interactive animate-shine-sweep reveal-on-scroll {{ $delayClass }} group relative flex flex-col justify-between overflow-hidden rounded-md border border-[#e6decb] bg-white shadow-xs cursor-pointer"
                                 data-category="{{ $product->category->slug ?? '' }}"
                                 data-price="{{ $product->price }}"
                                 data-name="{{ $product->name }}"
                             >
                                 <!-- Gold Top Border Shimmer -->
-                                <div class="absolute inset-x-0 top-0 z-20 h-0.5 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
+                                <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-0.5 origin-left scale-x-0 bg-[#d8b45a] transition-transform duration-500 group-hover:scale-x-100"></div>
 
                                 <!-- Image Container -->
                                 <div class="card-img-wrap relative aspect-[4/3] sm:aspect-square w-full overflow-hidden bg-[#f7f4ee]">
                                     <a href="{{ route('shop.show', $product->slug) }}" class="block h-full w-full">
-                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy">
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108" loading="lazy">
                                     </a>
 
                                     @if($product->is_featured)
@@ -291,11 +327,11 @@
                                     @endif
 
                                     <!-- Floating Wishlist Heart -->
-                                    <div class="absolute right-2.5 top-2.5 z-10 opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                                    <div class="card-floating-actions absolute right-2.5 top-2.5 z-30">
                                         <button
                                             type="button"
                                             data-wishlist-btn-id="{{ $product->id }}"
-                                            onclick="toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
+                                            onclick="event.stopPropagation(); toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
                                             data-product="{{ $prodPayload }}"
                                             class="flex h-7 w-7 items-center justify-center rounded-full border border-[#d8b45a]/40 bg-white/95 text-neutral-700 shadow-sm transition hover:bg-[#78000b] hover:text-white cursor-pointer"
                                             aria-label="Add to wishlist"
@@ -335,7 +371,7 @@
                                         </div>
 
                                         <button 
-                                            onclick="quickAddToCart({{ $product->id }}, 1)" 
+                                            onclick="event.stopPropagation(); quickAddToCart({{ $product->id }}, 1)" 
                                             class="inline-flex items-center gap-1.5 rounded-sm bg-[#78000b] px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-white shadow-xs transition-all duration-300 hover:bg-[#5a0309] active:scale-95 cursor-pointer" 
                                             type="button" 
                                             title="In den Warenkorb"

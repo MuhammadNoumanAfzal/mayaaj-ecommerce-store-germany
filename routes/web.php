@@ -22,63 +22,7 @@ use App\Http\Controllers\ShopController;
 // Homepage
 Route::get('/', function () {
     return view('home');
-});
-
-// Customer Care & Service Pages
-Route::get('/ueber-uns', function () {
-    return view('pages.about');
-});
-
-Route::get('/about', function () {
-    return view('pages.about');
-});
-
-use App\Http\Controllers\ContactController;
-
-Route::get('/kontakt', [ContactController::class, 'show'])->name('contact');
-Route::get('/contact', [ContactController::class, 'show']);
-Route::post('/kontakt', [ContactController::class, 'submit'])->name('contact.submit');
-Route::post('/contact', [ContactController::class, 'submit']);
-
-Route::get('/versand', function () {
-    return view('pages.shipping');
-});
-Route::get('/shipping', function () {
-    return view('pages.shipping');
-});
-
-Route::get('/rueckgabe', function () {
-    return view('pages.returns');
-});
-Route::get('/returns', function () {
-    return view('pages.returns');
-});
-
-Route::get('/faq', function () {
-    return view('pages.faq');
-});
-
-// Mandatory German & Global Legal Pages
-Route::get('/impressum', function () {
-    return view('pages.impressum');
-});
-Route::get('/imprint', function () {
-    return view('pages.impressum');
-});
-
-Route::get('/datenschutz', function () {
-    return view('pages.privacy');
-});
-Route::get('/privacy', function () {
-    return view('pages.privacy');
-});
-
-Route::get('/agb', function () {
-    return view('pages.agb');
-});
-Route::get('/terms', function () {
-    return view('pages.agb');
-});
+})->name('home');
 
 // Shop Catalog & Collection Pages
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
@@ -90,23 +34,13 @@ Route::get('/collection', [ShopController::class, 'index'])->name('collection');
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/product/{slug}', [ShopController::class, 'show'])->name('products.detail');
 
-// Dynamic Cart & Customer Checkout Routes
-use App\Http\Controllers\CartController;
+// Category & Subcategory Direct Routes
+Route::get('/category/{slug}', [ShopController::class, 'category'])->name('category.show');
+Route::get('/category/{catSlug}/{subcatSlug}', [ShopController::class, 'subcategory'])->name('subcategory.show');
 
-Route::get('/warenkorb', [CartController::class, 'index'])->name('cart.index');
-Route::get('/cart', [CartController::class, 'index']);
-Route::get('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
-Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-
-// Reviews & Customer Testimonials Routes
-use App\Http\Controllers\ReviewController;
-
-Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-Route::get('/bewertungen', [ReviewController::class, 'index'])->name('reviews.de');
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/contact', function () {
+    return redirect('/');
+})->name('contact');
 
 // Global Frontend & System Language Switcher Route
 Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\Http\Request $request) {

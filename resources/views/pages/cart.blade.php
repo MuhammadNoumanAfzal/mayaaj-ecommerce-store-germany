@@ -7,9 +7,9 @@
     <!-- Breadcrumb Navigation -->
     <nav class="bg-[#faf7f2] border-b border-[#e6decb] py-3 text-xs text-[#685c54]">
         <div class="luxury-container flex items-center gap-2 overflow-x-auto whitespace-nowrap">
-            <a href="/" class="hover:text-[#78000b] transition" data-i18n-de="Startseite" data-i18n-en="Home">Startseite</a>
+            <a href="{{ url('/') }}" class="hover:text-[#78000b] transition" data-i18n-de="Startseite" data-i18n-en="Home">Startseite</a>
             <span>/</span>
-            <a href="/shop" class="hover:text-[#78000b] transition" data-i18n-de="Shop" data-i18n-en="Shop">Shop</a>
+            <a href="{{ route('shop') }}" class="hover:text-[#78000b] transition" data-i18n-de="Shop" data-i18n-en="Shop">Shop</a>
             <span>/</span>
             <span class="text-[#1c1210] font-medium" data-i18n-de="Warenkorb & Kasse" data-i18n-en="Cart & Checkout">Warenkorb & Kasse</span>
         </div>
@@ -169,7 +169,7 @@
                                             </svg>
                                         </div>
                                         <p class="font-display text-lg font-medium text-[#1c1210]">Ihr Warenkorb ist derzeit leer.</p>
-                                        <a href="/shop" class="inline-flex items-center justify-center rounded bg-[#78000b] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5a0309] transition shadow-md">
+                                        <a href="{{ route('shop') }}" class="inline-flex items-center justify-center rounded bg-[#78000b] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5a0309] transition shadow-md">
                                             Kollektion Entdecken & Einkaufen
                                         </a>
                                     </div>
@@ -178,7 +178,7 @@
 
                             <!-- Step 1 Actions Navigation -->
                             <div class="flex items-center justify-between pt-6 border-t border-[#f2ebdc]">
-                                <a href="/shop" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#685c54] hover:text-[#78000b] transition">
+                                <a href="{{ route('shop') }}" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#685c54] hover:text-[#78000b] transition">
                                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m6 6-6-6 6-6"/></svg>
                                     <span data-i18n-de="Einkauf fortsetzen" data-i18n-en="Continue Shopping">Einkauf fortsetzen</span>
                                 </a>
