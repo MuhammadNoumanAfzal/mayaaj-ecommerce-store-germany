@@ -359,6 +359,7 @@
     </section>
 
     <!-- Curated Recommendations Grid -->
+
     @if(isset($relatedProducts) && $relatedProducts->count() > 0)
         <section class="py-8 sm:py-10">
             <div class="w-full max-w-[1180px] mx-auto px-4 sm:px-6">
