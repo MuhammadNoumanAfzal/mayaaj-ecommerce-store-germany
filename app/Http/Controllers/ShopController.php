@@ -26,11 +26,26 @@ class ShopController extends Controller
             });
         }
 
-        // Category Filter (supports single slug or array of slugs)
+        // Category Filter (supports single slug, array of slugs, and shorthand aliases)
         if ($request->filled('category')) {
             $catInput = (array) $request->input('category');
-            $query->whereHas('category', function ($q) use ($catInput) {
-                $q->whereIn('slug', $catInput);
+            $categoryAliases = [
+                'handbags' => 'luxury-handbags',
+                'wallets' => 'leather-wallets',
+                'travel' => 'travel-luggage',
+                'briefcases' => 'executive-briefcases',
+                'watches-jewelry' => 'luxury-jewelry-watches',
+                'jewelry' => 'luxury-jewelry-watches',
+                'watches' => 'luxury-jewelry-watches',
+                'golf' => 'golf-collection',
+                'keychains' => 'signature-keychains',
+            ];
+            $normalizedCatInput = array_unique(array_map(function ($s) use ($categoryAliases) {
+                return $categoryAliases[strtolower(trim($s))] ?? $s;
+            }, $catInput));
+
+            $query->whereHas('category', function ($q) use ($normalizedCatInput) {
+                $q->whereIn('slug', $normalizedCatInput);
             });
         }
 
@@ -163,7 +178,19 @@ class ShopController extends Controller
      */
     public function category($slug)
     {
-        return redirect()->route('shop', ['category' => $slug]);
+        $categoryAliases = [
+            'handbags' => 'luxury-handbags',
+            'wallets' => 'leather-wallets',
+            'travel' => 'travel-luggage',
+            'briefcases' => 'executive-briefcases',
+            'watches-jewelry' => 'luxury-jewelry-watches',
+            'jewelry' => 'luxury-jewelry-watches',
+            'watches' => 'luxury-jewelry-watches',
+            'golf' => 'golf-collection',
+            'keychains' => 'signature-keychains',
+        ];
+        $canonical = $categoryAliases[strtolower(trim($slug))] ?? $slug;
+        return redirect()->route('shop', ['category' => $canonical]);
     }
 
     /**
@@ -171,7 +198,19 @@ class ShopController extends Controller
      */
     public function subcategory($catSlug, $subcatSlug)
     {
-        return redirect()->route('shop', ['category' => $catSlug, 'subcategory' => $subcatSlug]);
+        $categoryAliases = [
+            'handbags' => 'luxury-handbags',
+            'wallets' => 'leather-wallets',
+            'travel' => 'travel-luggage',
+            'briefcases' => 'executive-briefcases',
+            'watches-jewelry' => 'luxury-jewelry-watches',
+            'jewelry' => 'luxury-jewelry-watches',
+            'watches' => 'luxury-jewelry-watches',
+            'golf' => 'golf-collection',
+            'keychains' => 'signature-keychains',
+        ];
+        $canonicalCat = $categoryAliases[strtolower(trim($catSlug))] ?? $catSlug;
+        return redirect()->route('shop', ['category' => $canonicalCat, 'subcategory' => $subcatSlug]);
     }
 
     /**

@@ -73,7 +73,7 @@
                 </h4>
                 <ul class="space-y-1.5 text-[0.72rem] text-white/70">
                     <li>
-                        <a href="{{ route('shop', ['category' => 'handbags']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="Handbags & Totes" data-i18n-de="Handtaschen & Totes">
+                        <a href="{{ route('shop', ['category' => 'luxury-handbags']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="Handbags & Totes" data-i18n-de="Handtaschen & Totes">
                             <span class="text-[#d8b45a]">›</span> Handtaschen & Totes
                         </a>
                     </li>
@@ -83,12 +83,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('shop', ['category' => 'briefcases']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="Executive Briefcases" data-i18n-de="Business Aktentaschen">
+                        <a href="{{ route('shop', ['category' => 'executive-briefcases']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="Executive Briefcases" data-i18n-de="Business Aktentaschen">
                             <span class="text-[#d8b45a]">›</span> Business Aktentaschen
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('shop', ['category' => 'watches-jewelry']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="Timepieces & Horlogerie" data-i18n-de="Uhren & Chronographen">
+                        <a href="{{ route('shop', ['category' => 'luxury-jewelry-watches']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="Timepieces & Horlogerie" data-i18n-de="Uhren & Chronographen">
                             <span class="text-[#d8b45a]">›</span> Uhren & Chronographen
                         </a>
                     </li>

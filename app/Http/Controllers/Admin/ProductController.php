@@ -13,38 +13,130 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of products.
+     * Display a listing of products with filtering, searching, sorting & pagination.
      */
     public function index(Request $request)
     {
-        $query = Product::with(['category', 'subcategory'])->latest();
+        $query = Product::with(['category', 'subcategory']);
 
+        // Search Filter (Name, SKU, Description, Category, Subcategory)
         if ($request->filled('search')) {
-            $search = $request->input('search');
+            $search = trim($request->input('search'));
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                   ->orWhere('sku', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhereHas('category', function ($cq) use ($search) {
+                      $cq->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('subcategory', function ($sq) use ($search) {
+                      $sq->where('name', 'like', "%{$search}%");
+                  });
             });
         }
 
+        // Category Filter
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->input('category_id'));
         }
 
+        // Subcategory Filter
         if ($request->filled('subcategory_id')) {
             $query->where('subcategory_id', $request->input('subcategory_id'));
         }
 
+        // Status Filter
         if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
+            $status = $request->input('status');
+            if (in_array($status, ['active', 'draft'])) {
+                $query->where('status', $status);
+            } elseif ($status === 'out_of_stock') {
+                $query->where('stock', '<=', 0);
+            }
         }
 
-        $products = $query->get();
-        $categories = Category::orderBy('name')->get();
-        $subcategories = Subcategory::orderBy('name')->get();
+        // Stock Filter
+        if ($request->filled('stock')) {
+            if ($request->input('stock') === 'low') {
+                $query->where('stock', '>', 0)->where('stock', '<=', 5);
+            } elseif ($request->input('stock') === 'out') {
+                $query->where('stock', '<=', 0);
+            }
+        }
 
-        return view('admin.products', compact('products', 'categories', 'subcategories'));
+        // Dynamic Sorting
+        $sort = $request->input('sort', 'newest');
+        switch ($sort) {
+            case 'price_asc':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'name_asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'stock_asc':
+                $query->orderBy('stock', 'asc');
+                break;
+            case 'stock_desc':
+                $query->orderBy('stock', 'desc');
+                break;
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'newest':
+            default:
+                $query->latest();
+                break;
+        }
+
+        // Pagination (10 per page, matching Categories and Subcategories)
+        $products = $query->paginate(10)->withQueryString();
+
+        // Categories & Subcategories for filter dropdowns
+        $categories = Category::withCount('products')->orderBy('name')->get();
+        $subcategories = Subcategory::withCount('products')->orderBy('name')->get();
+
+        // KPI Counts
+        $totalCount = Product::count();
+        $activeCount = Product::where('status', 'active')->count();
+        $draftCount = Product::where('status', 'draft')->count();
+        $lowStockCount = Product::where('stock', '<=', 5)->count();
+
+        // Autocomplete live suggestion data (zero-latency instant search)
+        $allProductsForSuggestions = Product::select('id', 'name', 'slug', 'sku', 'price', 'sale_price', 'stock', 'status', 'category_id', 'image')
+            ->with('category:id,name')
+            ->latest()
+            ->get()
+            ->map(function ($p) {
+                return [
+                    'id' => $p->id,
+                    'name' => $p->name,
+                    'sku' => $p->sku,
+                    'slug' => $p->slug,
+                    'price' => (float)$p->price,
+                    'sale_price' => $p->sale_price ? (float)$p->sale_price : null,
+                    'stock' => (int)$p->stock,
+                    'status' => $p->status,
+                    'category_name' => $p->category ? $p->category->name : 'Unassigned',
+                    'image_url' => $p->image ? asset('storage/' . $p->image) : null,
+                ];
+            });
+
+        return view('admin.products', compact(
+            'products',
+            'categories',
+            'subcategories',
+            'totalCount',
+            'activeCount',
+            'draftCount',
+            'lowStockCount',
+            'allProductsForSuggestions'
+        ));
     }
 
     /**

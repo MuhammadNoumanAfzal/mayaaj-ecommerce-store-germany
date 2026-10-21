@@ -60,7 +60,7 @@
 
             <!-- Handtaschen / Handbags -->
             <a 
-                href="{{ route('shop', ['category' => 'handbags']) }}" 
+                href="{{ route('shop', ['category' => 'luxury-handbags']) }}" 
                 class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
                 <span data-i18n-en="Handbags" data-i18n-de="Handtaschen">Handtaschen</span>
@@ -78,7 +78,7 @@
 
             <!-- Aktentaschen / Briefcases -->
             <a 
-                href="{{ route('shop', ['category' => 'briefcases']) }}" 
+                href="{{ route('shop', ['category' => 'executive-briefcases']) }}" 
                 class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
                 <span data-i18n-en="Briefcases" data-i18n-de="Aktentaschen">Aktentaschen</span>
@@ -87,7 +87,7 @@
 
             <!-- Uhren & Schmuck / Watches & Jewelry -->
             <a 
-                href="{{ route('shop', ['category' => 'watches-jewelry']) }}" 
+                href="{{ route('shop', ['category' => 'luxury-jewelry-watches']) }}" 
                 class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
                 <span class="whitespace-nowrap" data-i18n-en="Watches & Jewelry" data-i18n-de="Uhren & Schmuck">Uhren & Schmuck</span>
@@ -199,7 +199,7 @@
                 <span data-i18n-en="Full Collection" data-i18n-de="Gesamte Kollektion">Gesamte Kollektion</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('shop', ['category' => 'handbags']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
+            <a href="{{ route('shop', ['category' => 'luxury-handbags']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
                 <span data-i18n-en="Handbags & Totes" data-i18n-de="Handtaschen & Totes">Handtaschen & Totes</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
@@ -207,11 +207,11 @@
                 <span data-i18n-en="Weekender & Travel Bags" data-i18n-de="Reisetaschen & Weekender">Reisetaschen & Weekender</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('shop', ['category' => 'briefcases']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
+            <a href="{{ route('shop', ['category' => 'executive-briefcases']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
                 <span data-i18n-en="Executive Briefcases" data-i18n-de="Aktentaschen">Aktentaschen</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('shop', ['category' => 'watches-jewelry']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
+            <a href="{{ route('shop', ['category' => 'luxury-jewelry-watches']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
                 <span data-i18n-en="Watches & Haute Horlogerie" data-i18n-de="Uhren & Haute Horlogerie">Uhren & Haute Horlogerie</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
