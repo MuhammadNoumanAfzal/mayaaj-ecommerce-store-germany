@@ -318,6 +318,16 @@
             box-shadow: 0 0 0 3px rgba(150, 75, 66, 0.15) !important;
         }
 
+        select.appearance-none, select.filter-select {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            background-image: none !important;
+        }
+        select.appearance-none::-ms-expand, select.filter-select::-ms-expand {
+            display: none !important;
+        }
+
         /* Pink-Salt Card Style */
         .exec-card {
             background-color: #ffffff !important;

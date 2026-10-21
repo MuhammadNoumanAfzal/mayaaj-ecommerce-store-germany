@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -17,6 +18,10 @@ class Category extends Model
         'image',
         'status',
         'order_index',
+    ];
+
+    protected $casts = [
+        'order_index' => 'integer',
     ];
 
     public static function boot()
@@ -34,6 +39,19 @@ class Category extends Model
                 $category->slug = Str::slug($category->name);
             }
         });
+
+        // Invalidate frontend cache immediately upon any change
+        static::saved(function () {
+            Cache::forget('mehaaj_active_categories_tree');
+            Cache::forget('mehaaj_featured_products');
+            Cache::forget('mehaaj_shop_categories');
+        });
+
+        static::deleted(function () {
+            Cache::forget('mehaaj_active_categories_tree');
+            Cache::forget('mehaaj_featured_products');
+            Cache::forget('mehaaj_shop_categories');
+        });
     }
 
     public function products()
@@ -48,7 +66,17 @@ class Category extends Model
 
     public function activeSubcategories()
     {
-        return $this->hasMany(Subcategory::class)->where('status', 'active');
+        return $this->hasMany(Subcategory::class)->where('status', 'active')->orderBy('name');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order_index', 'asc')->orderBy('name', 'asc');
     }
 
     public function getImageUrlAttribute()

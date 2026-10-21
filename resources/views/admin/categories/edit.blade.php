@@ -1,26 +1,51 @@
 @extends('layouts.admin')
-@section('title', 'Edit Category - MEHAAJ Admin')
+@section('title', 'Edit Category - MEHAAJ Atelier Admin')
 
 @section('admin-content')
 <div class="space-y-6 max-w-5xl mx-auto pb-16">
 
-    <!-- Form Container Card (Pink-Salt Style) -->
+    <!-- Top Breadcrumb Pill -->
+    <div class="bg-white rounded-xl shadow-2xs py-3 px-5 text-xs font-semibold text-stone-600 border border-stone-200/80 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <a href="{{ route('admin.categories') }}" class="text-stone-400 hover:text-stone-700 transition" data-i18n-de="Kategorien" data-i18n-en="Categories">Categories</a>
+            <span class="text-stone-300 font-mono">›</span> 
+            <span class="text-stone-900 font-bold">{{ $category->name }}</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('shop', ['category' => $category->slug]) }}" target="_blank" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
+                <span>↗</span> <span data-i18n-de="Im Shop Ansehen" data-i18n-en="View in Storefront">View in Storefront</span>
+            </a>
+            <span class="text-stone-300">|</span>
+            <a href="{{ route('admin.categories') }}" class="text-xs font-bold text-saltora-terracotta hover:underline">
+                ← <span data-i18n-de="Zurück zur Übersicht" data-i18n-en="Back to Directory">Back to Directory</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Form Container Card -->
     <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data" class="exec-card bg-white rounded-2xl border border-stone-200/90 shadow-md shadow-stone-900/5 overflow-hidden border-t-4 border-t-saltora-terracotta">
         @csrf
         @method('PUT')
 
-        <!-- Top Header with Actions -->
+        <!-- Top Header with Actions & Quick Stats -->
         <div class="px-6 py-4 bg-stone-50/50 flex flex-wrap items-center justify-between gap-3 border-b border-stone-200/80">
             <div class="flex items-center gap-3">
                 <div class="p-2.5 rounded-xl bg-saltora-blush text-saltora-terracotta border border-saltora-terracotta/20 shadow-2xs">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </div>
                 <div>
-                    <h2 class="font-extrabold text-base text-stone-900 tracking-tight">
-                        <span data-i18n-de="Kategorie Bearbeiten:" data-i18n-en="Edit Category:">Edit Category:</span> 
-                        <span class="text-saltora-terracotta">{{ $category->name }}</span>
-                    </h2>
-                    <p class="text-[0.7rem] text-stone-500 font-medium" data-i18n-de="Aktualisieren Sie Details, Bilder und Sichtbarkeitsstatus." data-i18n-en="Update details, images, and catalog visibility status.">Update details, images, and catalog visibility status.</p>
+                    <div class="flex items-center gap-2">
+                        <h2 class="font-extrabold text-base text-stone-900 tracking-tight">
+                            <span data-i18n-de="Kategorie Bearbeiten:" data-i18n-en="Edit Category:">Edit Category:</span> 
+                            <span class="text-saltora-terracotta">{{ $category->name }}</span>
+                        </h2>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[0.62rem] font-bold {{ $category->status === 'active' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
+                            {{ ucfirst($category->status) }}
+                        </span>
+                    </div>
+                    <p class="text-[0.7rem] text-stone-500 font-medium" data-i18n-de="Aktualisieren Sie Details, Bilder und Sichtbarkeitsstatus." data-i18n-en="Update details, ordering, and catalog visibility with real-time storefront synchronization.">
+                        Update details, ordering, and catalog visibility with real-time storefront synchronization.
+                    </p>
                 </div>
             </div>
             
@@ -65,11 +90,15 @@
                     <input 
                         type="text" 
                         name="name" 
-                        id="name" 
+                        id="catEditNameInput" 
                         value="{{ old('name', $category->name) }}" 
                         required 
                         class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
                     >
+                    <div class="flex items-center gap-1.5 text-[0.68rem] text-stone-400 mt-1 font-mono">
+                        <span>Slug:</span>
+                        <span id="slugEditPreview" class="text-saltora-terracotta font-semibold">/{{ $category->slug }}</span>
+                    </div>
                 </div>
 
                 <!-- Status Select -->
@@ -82,7 +111,7 @@
                         id="status" 
                         class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-semibold outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
                     >
-                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv (Sichtbar im Katalog)" data-i18n-en="Active (Visible in Catalog)">Active (Visible in Catalog)</option>
+                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv (Sichtbar im Katalog & Navigation)" data-i18n-en="Active (Visible in Catalog & Navigation)">Active (Visible in Catalog & Navigation)</option>
                         <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }} data-i18n-de="Entwurf (Versteckt)" data-i18n-en="Draft (Hidden)">Draft (Hidden)</option>
                     </select>
                 </div>
@@ -98,7 +127,7 @@
                     name="description" 
                     id="description" 
                     rows="4" 
-                    class="w-full p-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
+                    class="w-full p-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs leading-relaxed"
                 >{{ old('description', $category->description) }}</textarea>
             </div>
 
@@ -114,22 +143,23 @@
                         name="order_index" 
                         id="order_index" 
                         value="{{ old('order_index', $category->order_index ?? 0) }}" 
-                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
+                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs font-mono"
                     >
+                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Niedrigere Werte werden zuerst in der Navigation angezeigt." data-i18n-en="Lower numbers display first in menu and homepage slider.">Lower numbers display first in menu and homepage slider.</p>
                 </div>
 
                 <!-- Category Image Upload -->
                 <div>
-                    <label for="image" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="KATEGORIE BILD / COVER" data-i18n-en="CATEGORY IMAGE / COVER">
+                    <label for="editCatImageInput" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="KATEGORIE BILD / COVER" data-i18n-en="CATEGORY IMAGE / COVER">
                         CATEGORY IMAGE / COVER
                     </label>
                     
                     @if($category->image)
-                        <div class="mb-3 flex items-center gap-3 p-2 bg-stone-50 border border-stone-200 rounded-xl">
+                        <div class="mb-3 flex items-center gap-3 p-2.5 bg-stone-50 border border-stone-200 rounded-xl" id="currentImageDisplay">
                             <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="h-12 w-12 rounded-lg object-cover border border-stone-300">
                             <div>
                                 <p class="text-[0.68rem] font-bold text-stone-700" data-i18n-de="Aktuelles Cover-Bild" data-i18n-en="Current cover image">Current cover image</p>
-                                <p class="text-[0.62rem] text-stone-400" data-i18n-de="Laden Sie unten eine neue Datei hoch, um es zu ersetzen." data-i18n-en="Upload a new file below to replace it.">Upload a new file below to replace it.</p>
+                                <p class="text-[0.62rem] text-stone-400" data-i18n-de="Laden Sie unten eine neue Datei hoch, um es zu ersetzen." data-i18n-en="Select a new file below to replace it.">Select a new file below to replace it.</p>
                             </div>
                         </div>
                     @endif
@@ -137,10 +167,20 @@
                     <input 
                         type="file" 
                         name="image" 
-                        id="image" 
+                        id="editCatImageInput" 
                         accept="image/*"
+                        onchange="previewEditCategoryImage(this)"
                         class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-saltora-blush file:text-saltora-terracotta hover:file:bg-saltora-blush/80 h-10 px-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs cursor-pointer shadow-2xs"
                     >
+
+                    <!-- New Image Preview Container -->
+                    <div id="newImagePreviewContainer" class="mt-3 hidden items-center gap-3 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
+                        <img id="newImagePreviewImg" src="" alt="New Preview" class="h-12 w-12 object-cover rounded-lg border border-emerald-300 shadow-2xs">
+                        <div>
+                            <span class="text-[0.68rem] font-bold text-emerald-800 block">New Image Selected</span>
+                            <span class="text-[0.62rem] text-emerald-600">Will replace current cover upon saving.</span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -166,4 +206,20 @@
     </form>
 
 </div>
+
+<script>
+    function previewEditCategoryImage(input) {
+        const container = document.getElementById('newImagePreviewContainer');
+        const img = document.getElementById('newImagePreviewImg');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+                container.classList.remove('hidden');
+                container.classList.add('flex');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 @endsection

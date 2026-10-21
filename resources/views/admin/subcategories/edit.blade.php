@@ -121,31 +121,6 @@
                     </select>
                 </div>
 
-                <!-- Subcategory Image -->
-                <div>
-                    <label for="image" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="BILD / THUMBNAIL" data-i18n-en="IMAGE / THUMBNAIL">
-                        IMAGE / THUMBNAIL
-                    </label>
-
-                    @if($subcategory->image)
-                        <div class="mb-3 flex items-center gap-3 p-2 bg-stone-50 border border-stone-200 rounded-xl">
-                            <img src="{{ asset('storage/' . $subcategory->image) }}" alt="{{ $subcategory->name }}" class="h-12 w-12 rounded-lg object-cover border border-stone-300">
-                            <div>
-                                <p class="text-[0.68rem] font-bold text-stone-700" data-i18n-de="Aktuelles Bild" data-i18n-en="Current image">Current image</p>
-                                <p class="text-[0.62rem] text-stone-400" data-i18n-de="Laden Sie unten eine neue Datei hoch, um es zu ersetzen." data-i18n-en="Upload a new file below to replace it.">Upload a new file below to replace it.</p>
-                            </div>
-                        </div>
-                    @endif
-
-                    <input 
-                        type="file" 
-                        name="image" 
-                        id="image" 
-                        accept="image/*"
-                        class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-saltora-blush file:text-saltora-terracotta hover:file:bg-saltora-blush/80 h-10 px-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs cursor-pointer shadow-2xs"
-                    >
-                </div>
-
             </div>
 
         </div>

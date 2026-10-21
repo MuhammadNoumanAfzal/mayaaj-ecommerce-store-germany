@@ -12,28 +12,94 @@ use Illuminate\Support\Facades\Storage;
 class SubcategoryController extends Controller
 {
     /**
-     * Display a listing of subcategories.
+     * Display a listing of subcategories with filtering, searching, sorting & pagination.
      */
     public function index(Request $request)
     {
-        $query = Subcategory::with('category')->withCount('products')->orderBy('name');
+        $query = Subcategory::with('category')->withCount('products');
 
+        // Search Filter (Name, Description, Slug, Parent Category)
         if ($request->filled('search')) {
-            $search = $request->input('search');
+            $search = trim($request->input('search'));
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('slug', 'like', "%{$search}%")
+                  ->orWhereHas('category', function ($cq) use ($search) {
+                      $cq->where('name', 'like', "%{$search}%");
+                  });
             });
         }
 
+        // Parent Category Filter
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->input('category_id'));
         }
 
-        $subcategories = $query->get();
-        $categories = Category::where('status', 'active')->orderBy('name')->get();
+        // Status Filter
+        if ($request->filled('status') && in_array($request->status, ['active', 'draft'])) {
+            $query->where('status', $request->status);
+        }
 
-        return view('admin.subcategories', compact('subcategories', 'categories'));
+        // Dynamic Sorting
+        $sort = $request->input('sort', 'name_asc');
+        switch ($sort) {
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'products_desc':
+                $query->orderBy('products_count', 'desc');
+                break;
+            case 'newest':
+                $query->latest();
+                break;
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'name_asc':
+            default:
+                $query->orderBy('name', 'asc');
+                break;
+        }
+
+        // Pagination (10 per page, matching categories)
+        $subcategories = $query->paginate(10)->withQueryString();
+
+        // Categories for filter dropdown
+        $categories = Category::withCount('subcategories')->orderBy('name')->get();
+
+        // Compact KPI Metrics
+        $totalCount = Subcategory::count();
+        $activeCount = Subcategory::where('status', 'active')->count();
+        $draftCount = Subcategory::where('status', 'draft')->count();
+
+        // Instant autocomplete suggestions dataset
+        $allSubcategoriesForSuggestions = Subcategory::select('id', 'name', 'slug', 'image', 'status', 'category_id')
+            ->with('category:id,name')
+            ->withCount('products')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($sub) {
+                return [
+                    'id' => $sub->id,
+                    'name' => $sub->name,
+                    'slug' => $sub->slug,
+                    'category_name' => $sub->category ? $sub->category->name : 'N/A',
+                    'category_id' => $sub->category_id,
+                    'image_url' => $sub->image_url,
+                    'status' => $sub->status,
+                    'products_count' => $sub->products_count,
+                ];
+            });
+
+        return view('admin.subcategories', compact(
+            'subcategories',
+            'categories',
+            'totalCount',
+            'activeCount',
+            'draftCount',
+            'allSubcategoriesForSuggestions'
+        ));
     }
 
     /**

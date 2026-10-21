@@ -1,10 +1,22 @@
 @extends('layouts.admin')
-@section('title', 'Add New Category - MEHAAJ Admin')
+@section('title', 'Add New Category - MEHAAJ Atelier Admin')
 
 @section('admin-content')
 <div class="space-y-6 max-w-5xl mx-auto pb-16">
 
-    <!-- Form Container Card (Pink-Salt Style) -->
+    <!-- Top Breadcrumb -->
+    <div class="bg-white rounded-xl shadow-2xs py-3 px-5 text-xs font-semibold text-stone-600 border border-stone-200/80 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <a href="{{ route('admin.categories') }}" class="text-stone-400 hover:text-stone-700 transition" data-i18n-de="Kategorien" data-i18n-en="Categories">Categories</a>
+            <span class="text-stone-300 font-mono">›</span> 
+            <span class="text-stone-900 font-bold" data-i18n-de="Neue Kategorie" data-i18n-en="New Category">New Category</span>
+        </div>
+        <a href="{{ route('admin.categories') }}" class="text-xs font-bold text-saltora-terracotta hover:underline">
+            ← <span data-i18n-de="Zurück zur Übersicht" data-i18n-en="Back to Directory">Back to Directory</span>
+        </a>
+    </div>
+
+    <!-- Form Container Card -->
     <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="exec-card bg-white rounded-2xl border border-stone-200/90 shadow-md shadow-stone-900/5 overflow-hidden border-t-4 border-t-saltora-terracotta">
         @csrf
 
@@ -18,7 +30,9 @@
                     <h2 class="font-extrabold text-base text-stone-900 tracking-tight" data-i18n-de="Neue Kategorie Hinzufügen" data-i18n-en="Add New Category">
                         Add New Category
                     </h2>
-                    <p class="text-[0.7rem] text-stone-500 font-medium" data-i18n-de="Erstellen Sie eine neue Hauptkategorie für Ihren Katalog." data-i18n-en="Create a new top-level category for your catalog.">Create a new top-level category for your catalog.</p>
+                    <p class="text-[0.7rem] text-stone-500 font-medium" data-i18n-de="Erstellen Sie eine neue Hauptkategorie für Ihren Luxuskatalog." data-i18n-en="Create a top-level category with automatic storefront synchronization.">
+                        Create a top-level category with automatic storefront synchronization.
+                    </p>
                 </div>
             </div>
             
@@ -63,7 +77,7 @@
                     <input 
                         type="text" 
                         name="name" 
-                        id="name" 
+                        id="catNameInput" 
                         value="{{ old('name') }}" 
                         required 
                         placeholder="e.g. Leather Briefcases"
@@ -71,6 +85,10 @@
                         data-i18n-placeholder-en="e.g. Leather Briefcases"
                         class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
                     >
+                    <div class="flex items-center gap-1.5 text-[0.68rem] text-stone-400 mt-1 font-mono">
+                        <span>Slug:</span>
+                        <span id="slugPreview" class="text-saltora-terracotta font-semibold">/category-slug</span>
+                    </div>
                 </div>
 
                 <!-- Status Select -->
@@ -83,7 +101,7 @@
                         id="status" 
                         class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-semibold outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
                     >
-                        <option value="active" {{ old('status') === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv (Sichtbar im Katalog)" data-i18n-en="Active (Visible in Catalog)">Active (Visible in Catalog)</option>
+                        <option value="active" {{ old('status', 'active') === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv (Sichtbar im Katalog & Navigation)" data-i18n-en="Active (Visible in Catalog & Navigation)">Active (Visible in Catalog & Navigation)</option>
                         <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }} data-i18n-de="Entwurf (Versteckt)" data-i18n-en="Draft (Hidden)">Draft (Hidden)</option>
                     </select>
                 </div>
@@ -99,10 +117,10 @@
                     name="description" 
                     id="description" 
                     rows="4" 
-                    placeholder="Short summary for luxury catalog and SEO..."
+                    placeholder="Short summary for luxury catalog display and search engines..."
                     data-i18n-placeholder-de="Kurze Zusammenfassung für Luxuskatalog und SEO..."
-                    data-i18n-placeholder-en="Short summary for luxury catalog and SEO..."
-                    class="w-full p-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
+                    data-i18n-placeholder-en="Short summary for luxury catalog display and search engines..."
+                    class="w-full p-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs leading-relaxed"
                 >{{ old('description') }}</textarea>
             </div>
 
@@ -117,25 +135,31 @@
                         type="number" 
                         name="order_index" 
                         id="order_index" 
-                        value="{{ old('order_index', 0) }}" 
-                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
+                        value="{{ old('order_index', $suggestedOrder ?? 0) }}" 
+                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs font-mono"
                     >
-                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Niedrigere Werte werden zuerst in der Navigation angezeigt." data-i18n-en="Lower numbers display first in menu and catalog.">Lower numbers display first in menu and catalog.</p>
+                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Niedrigere Werte werden zuerst in der Navigation angezeigt." data-i18n-en="Lower numbers display first in menu and homepage slider.">Lower numbers display first in menu and homepage slider.</p>
                 </div>
 
                 <!-- Category Image Upload -->
                 <div>
-                    <label for="image" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="KATEGORIE BILD / COVER" data-i18n-en="CATEGORY IMAGE / COVER">
+                    <label for="catImageInput" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="KATEGORIE BILD / COVER" data-i18n-en="CATEGORY IMAGE / COVER">
                         CATEGORY IMAGE / COVER
                     </label>
                     <input 
                         type="file" 
                         name="image" 
-                        id="image" 
+                        id="catImageInput" 
                         accept="image/*"
+                        onchange="previewCategoryImage(this)"
                         class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-saltora-blush file:text-saltora-terracotta hover:file:bg-saltora-blush/80 h-10 px-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs cursor-pointer shadow-2xs"
                     >
-                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Empfohlen: 800x600px WEBP oder JPG, max 30MB." data-i18n-en="Recommended: 800x600px WEBP or JPG, max 30MB.">Recommended: 800x600px WEBP or JPG, max 30MB.</p>
+                    
+                    <!-- Live Image Preview -->
+                    <div id="imagePreviewContainer" class="mt-3 hidden items-center gap-3 p-3 rounded-xl bg-stone-50 border border-stone-200">
+                        <img id="imagePreviewImg" src="" alt="Category Preview" class="h-16 w-16 object-cover rounded-lg border border-stone-200 shadow-2xs">
+                        <span class="text-xs text-stone-500 font-medium">Selected Image Preview</span>
+                    </div>
                 </div>
 
             </div>
@@ -161,4 +185,35 @@
     </form>
 
 </div>
+
+<script>
+    // Live Slug Preview Generator
+    const nameInput = document.getElementById('catNameInput');
+    const slugPreview = document.getElementById('slugPreview');
+
+    if (nameInput && slugPreview) {
+        nameInput.addEventListener('input', function() {
+            const val = this.value.trim().toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            slugPreview.textContent = '/' + (val || 'category-slug');
+        });
+    }
+
+    // Live Image Preview
+    function previewCategoryImage(input) {
+        const container = document.getElementById('imagePreviewContainer');
+        const img = document.getElementById('imagePreviewImg');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+                container.classList.remove('hidden');
+                container.classList.add('flex');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 @endsection

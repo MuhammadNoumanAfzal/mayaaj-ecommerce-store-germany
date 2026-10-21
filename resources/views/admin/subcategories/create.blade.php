@@ -126,20 +126,6 @@
                     </select>
                 </div>
 
-                <!-- Subcategory Image -->
-                <div>
-                    <label for="image" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="BILD / THUMBNAIL" data-i18n-en="IMAGE / THUMBNAIL">
-                        IMAGE / THUMBNAIL
-                    </label>
-                    <input 
-                        type="file" 
-                        name="image" 
-                        id="image" 
-                        accept="image/*"
-                        class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-saltora-blush file:text-saltora-terracotta hover:file:bg-saltora-blush/80 h-10 px-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs cursor-pointer shadow-2xs"
-                    >
-                </div>
-
             </div>
 
         </div>

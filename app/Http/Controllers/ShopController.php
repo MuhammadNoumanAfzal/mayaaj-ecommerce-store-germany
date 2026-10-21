@@ -101,7 +101,8 @@ class ShopController extends Controller
                     $sq->where('status', 'active');
                 }]);
             }])
-            ->orderBy('id', 'asc')
+            ->orderBy('order_index', 'asc')
+            ->orderBy('name', 'asc')
             ->get();
 
         return view('pages.shop', compact('products', 'dbMinPrice', 'dbMaxPrice', 'shopCategories'));

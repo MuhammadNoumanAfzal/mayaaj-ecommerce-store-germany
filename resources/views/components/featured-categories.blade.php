@@ -1,7 +1,7 @@
 @php
     $categoriesList = (isset($globalCategories) && $globalCategories->count() > 0)
         ? $globalCategories 
-        : \App\Models\Category::with('activeSubcategories')->get();
+        : \App\Models\Category::where('status', 'active')->with('activeSubcategories')->orderBy('order_index', 'asc')->orderBy('name', 'asc')->get();
     $hasSlider = $categoriesList->count() > 0;
 
     $catTranslations = [
