@@ -102,6 +102,12 @@
                         <span data-i18n-en="{{ $product->category->name }}" data-i18n-de="{{ $catTranslations[$product->category->slug] ?? $product->category->name }}">{{ $product->category->name }}</span>
                     </a>
                 @endif
+                @if($product->subcategory)
+                    <span class="text-[#c7baa7]">/</span>
+                    <a href="{{ route('shop', ['category' => $product->category->slug ?? '', 'subcategory' => $product->subcategory->slug]) }}" class="hover:text-[#78000b] transition">
+                        <span>{{ $product->subcategory->name }}</span>
+                    </a>
+                @endif
                 <span class="text-[#c7baa7] hidden sm:inline">/</span>
                 <span class="text-[#1c1210] font-semibold truncate hidden sm:inline max-w-xs">{{ $product->name }}</span>
             </nav>
@@ -202,9 +208,13 @@
                     <div>
                         <!-- Category Eyebrow & Social Proof -->
                         <div class="flex items-center justify-between gap-3 border-b border-[#f0e7d8] pb-2.5">
-                            <span class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
+                            <span class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b] flex items-center flex-wrap gap-1">
                                 @if($product->category)
-                                    <span data-i18n-en="{{ $product->category->name }}" data-i18n-de="{{ $catTranslations[$product->category->slug] ?? $product->category->name }}">{{ $product->category->name }}</span>
+                                    <a href="{{ route('shop', ['category' => $product->category->slug]) }}" class="hover:underline hover:text-[#500007] transition" data-i18n-en="{{ $product->category->name }}" data-i18n-de="{{ $catTranslations[$product->category->slug] ?? $product->category->name }}">{{ $product->category->name }}</a>
+                                    @if($product->subcategory)
+                                        <span class="text-[#c7baa7] font-normal">/</span>
+                                        <a href="{{ route('shop', ['category' => $product->category->slug, 'subcategory' => $product->subcategory->slug]) }}" class="text-[#8a7c74] hover:text-[#78000b] hover:underline transition">{{ $product->subcategory->name }}</a>
+                                    @endif
                                 @else
                                     <span data-i18n-en="HAUTE MAROQUINERIE" data-i18n-de="HAUTE MAROQUINERIE">HAUTE MAROQUINERIE</span>
                                 @endif

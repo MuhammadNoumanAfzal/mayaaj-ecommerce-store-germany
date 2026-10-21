@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Cache;
+
 class Subcategory extends Model
 {
     use HasFactory;
@@ -33,6 +35,19 @@ class Subcategory extends Model
             if (empty($subcategory->slug)) {
                 $subcategory->slug = Str::slug($subcategory->name);
             }
+        });
+
+        // Invalidate frontend cache immediately upon any subcategory change
+        static::saved(function () {
+            Cache::forget('mehaaj_active_categories_tree');
+            Cache::forget('mehaaj_featured_products');
+            Cache::forget('mehaaj_shop_categories');
+        });
+
+        static::deleted(function () {
+            Cache::forget('mehaaj_active_categories_tree');
+            Cache::forget('mehaaj_featured_products');
+            Cache::forget('mehaaj_shop_categories');
         });
     }
 
