@@ -60,6 +60,9 @@
                     <a href="{{ route('about') }}" class="inline-flex items-center gap-1 text-[0.68rem] text-[#d8b45a] hover:text-[#ffd45a] font-medium pt-1 transition">
                         <span>›</span> <span data-i18n-en="Our 50,000-Yr Leather Heritage →" data-i18n-de="Unsere 50.000-jährige Leder-Geschichte →">Our 50,000-Yr Leather Heritage →</span>
                     </a>
+                    <a href="{{ route('reviews.index') }}" class="inline-flex items-center gap-1 text-[0.68rem] text-[#ffd45a] hover:text-white font-medium pt-0.5 transition">
+                        <span>★</span> <span data-i18n-en="Patron Guestbook & Reviews (4.98★) →" data-i18n-de="Kundenbewertungen & Gästebuch (4.98★) →">Patron Guestbook & Reviews (4.98★) →</span>
+                    </a>
                 </div>
             </div>
 

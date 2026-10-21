@@ -102,6 +102,18 @@
                 <span class="whitespace-nowrap" data-i18n-en="Heritage & Lore" data-i18n-de="Über Uns">Über Uns</span>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </a>
+
+            <!-- Client Reviews / Bewertungen -->
+            <a 
+                href="{{ route('reviews.index') }}" 
+                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
+            >
+                <span class="whitespace-nowrap flex items-center gap-1">
+                    <span class="text-[#ffd45a] text-[0.65rem]">★</span>
+                    <span data-i18n-en="Reviews" data-i18n-de="Bewertungen">Bewertungen</span>
+                </span>
+                <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
+            </a>
         </div>
 
         <!-- Right Side: Live Search, Atelier Concierge, Language & Cart -->
@@ -205,6 +217,13 @@
             </a>
             <a href="{{ route('about') }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
                 <span data-i18n-en="Heritage & Leather Lore" data-i18n-de="Leder-Erbe & Über Uns">Leder-Erbe & Über Uns</span>
+                <span class="text-[#ffd45a] text-xs">→</span>
+            </a>
+            <a href="{{ route('reviews.index') }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
+                <span class="flex items-center gap-1.5">
+                    <span class="text-[#ffd45a]">★</span>
+                    <span data-i18n-en="Client Reviews & Guestbook" data-i18n-de="Kundenbewertungen & Gästebuch">Kundenbewertungen & Gästebuch</span>
+                </span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
         </div>

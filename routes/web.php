@@ -13,6 +13,7 @@ use App\Http\Middleware\AdminAuthMiddleware;
 
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,12 @@ Route::get('/datenschutz', function() { return view('pages.privacy'); })->name('
 Route::get('/agb', function() { return view('pages.agb'); })->name('agb');
 Route::get('/versand', function() { return view('pages.shipping'); })->name('shipping');
 Route::get('/rueckgabe', function() { return view('pages.returns'); })->name('returns');
+
+// Maison Client Reviews & Patron Testimonials
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/bewertungen', [ReviewController::class, 'index'])->name('reviews.de');
+Route::get('/kundenbewertungen', [ReviewController::class, 'index'])->name('reviews.de2');
 
 // Global Frontend & System Language Switcher Route
 Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\Http\Request $request) {
