@@ -3,6 +3,19 @@
         ? $globalCategories 
         : \App\Models\Category::with('activeSubcategories')->get();
     $hasSlider = $categoriesList->count() > 0;
+
+    $catTranslations = [
+        'luxury-handbags' => ['en' => 'Luxury Handbags', 'de' => 'Luxus-Handtaschen'],
+        'leather-wallets' => ['en' => 'Leather Wallets', 'de' => 'Leder-Geldbörsen'],
+        'travel-luggage' => ['en' => 'Travel & Luggage', 'de' => 'Reisegepäck & Weekender'],
+        'executive-briefcases' => ['en' => 'Executive Briefcases', 'de' => 'Business-Aktentaschen'],
+        'luxury-jewelry-watches' => ['en' => 'Luxury Jewelry & Watches', 'de' => 'Luxus Schmuck & Uhren'],
+        'golf-collection' => ['en' => 'Golf Collection', 'de' => 'Golf-Kollektion'],
+        'signature-keychains' => ['en' => 'Signature Keychains', 'de' => 'Signatur-Schlüsselanhänger'],
+        'handbags' => ['en' => 'Luxury Handbags', 'de' => 'Luxus-Handtaschen'],
+        'briefcases' => ['en' => 'Executive Briefcases', 'de' => 'Business-Aktentaschen'],
+        'watches-jewelry' => ['en' => 'Luxury Jewelry & Watches', 'de' => 'Luxus Schmuck & Uhren'],
+    ];
 @endphp
 
 @if($categoriesList->count() > 0)
@@ -118,6 +131,8 @@
                             $catImg = $cat->image_url;
                             $catSlug = $cat->slug;
                             $catUrl = route('shop', ['category' => $catSlug]);
+                            $cEn = $catTranslations[$catSlug]['en'] ?? $catName;
+                            $cDe = $catTranslations[$catSlug]['de'] ?? $catName;
                         @endphp
                         <div class="cat-slide-item shrink-0">
                             <div
@@ -127,9 +142,11 @@
                                 <a
                                     href="{{ $catUrl }}"
                                     class="absolute inset-0 z-10 block"
-                                    aria-label="{{ $catName }}"
+                                    aria-label="{{ $cEn }}"
+                                    data-i18n-aria-en="{{ $cEn }}"
+                                    data-i18n-aria-de="{{ $cDe }}"
                                 >
-                                    <span class="sr-only">{{ $catName }} entdecken</span>
+                                    <span class="sr-only" data-i18n-en="{{ $cEn }}" data-i18n-de="{{ $cDe }}">{{ $cEn }}</span>
                                 </a>
 
                                 <!-- Top Shimmer Gold Accent Line on Hover -->
@@ -139,7 +156,7 @@
                                     <!-- Background Image with Zoom -->
                                     <img
                                         src="{{ $catImg }}"
-                                        alt="{{ $catName }} Kollektion"
+                                        alt="{{ $cEn }}"
                                         class="cat-bg-img pointer-events-none absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-109"
                                         loading="lazy"
                                     >
@@ -161,8 +178,8 @@
                                 <!-- Bottom Content (Clean - Subcategories/Products Removed as requested) -->
                                 <div class="pointer-events-none relative z-20 p-3.5 sm:p-4">
                                     <div class="cat-accent-bar mb-1.5 h-[2px] w-7 bg-[#d8b45a] transition-all duration-400 group-hover:w-12 group-hover:bg-[#ffd45a]"></div>
-                                    <h3 class="cat-title font-display text-xl sm:text-2xl font-medium text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] transition-colors duration-300 group-hover:text-[#ffd45a] leading-tight">
-                                        {{ $catName }}
+                                    <h3 class="cat-title font-display text-xl sm:text-2xl font-medium text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] transition-colors duration-300 group-hover:text-[#ffd45a] leading-tight" data-i18n-en="{{ $cEn }}" data-i18n-de="{{ $cDe }}">
+                                        {{ $cEn }}
                                     </h3>
 
                                     <div class="mt-2 flex items-center text-[0.62rem] sm:text-[0.65rem] font-bold uppercase tracking-luxury text-[#ffd45a] transition-all duration-300 group-hover:text-white">

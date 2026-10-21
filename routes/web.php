@@ -30,6 +30,7 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/shop-catalog', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/kollektion', [ShopController::class, 'index'])->name('kollektion');
 Route::get('/collection', [ShopController::class, 'index'])->name('collection');
+Route::get('/search/live', [ShopController::class, 'liveSearch'])->name('search.live');
 
 // Single Product Detail Pages (Dynamic Slug)
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
@@ -56,6 +57,16 @@ Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.c
 Route::get('/contact', function () {
     return redirect('/');
 })->name('contact');
+
+// Maison Heritage & About Page Routes
+Route::get('/about', function () { return view('pages.about'); })->name('about');
+Route::get('/ueber-uns', function () { return view('pages.about'); })->name('about.de');
+
+Route::get('/impressum', function() { return view('pages.impressum'); })->name('impressum');
+Route::get('/datenschutz', function() { return view('pages.privacy'); })->name('privacy');
+Route::get('/agb', function() { return view('pages.agb'); })->name('agb');
+Route::get('/versand', function() { return view('pages.shipping'); })->name('shipping');
+Route::get('/rueckgabe', function() { return view('pages.returns'); })->name('returns');
 
 // Global Frontend & System Language Switcher Route
 Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\Http\Request $request) {

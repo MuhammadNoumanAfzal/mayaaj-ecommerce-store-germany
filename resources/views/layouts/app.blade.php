@@ -202,6 +202,14 @@
                     }
                 });
 
+                // Update select dropdown option texts
+                document.querySelectorAll('option[data-i18n-en], option[data-i18n-de]').forEach(opt => {
+                    const optText = opt.getAttribute('data-i18n-' + lang);
+                    if (optText) {
+                        opt.textContent = optText;
+                    }
+                });
+
                 // Update all input placeholders with data-i18n-placeholder attributes
                 document.querySelectorAll('[data-i18n-placeholder-en], [data-i18n-placeholder-de]').forEach(el => {
                     const ph = el.getAttribute('data-i18n-placeholder-' + lang);
@@ -239,9 +247,19 @@
                     }
                 });
 
-                // Dispatch event so subcomponents can react
+                // Update data-language-option buttons if any
+                document.querySelectorAll('[data-language-option]').forEach(button => {
+                    const isActive = button.dataset.languageOption === lang;
+                    button.classList.toggle('bg-[#d8b45a]', isActive);
+                    button.classList.toggle('text-[#120807]', isActive);
+                    button.classList.toggle('text-[#d8b45a]', !isActive);
+                });
+
+                // Dispatch events so subcomponents can react
                 window.dispatchEvent(new CustomEvent('siteLanguageChanged', { detail: { lang: lang } }));
+                window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
             }
+            window.setSiteLanguage = setSiteLanguage;
 
             // ==========================================
             // 2. WISHLIST ENGINE (localStorage + Drawer)

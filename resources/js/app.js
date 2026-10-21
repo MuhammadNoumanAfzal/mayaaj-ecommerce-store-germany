@@ -21,10 +21,20 @@ menuToggles.forEach((menuToggle) => {
 });
 
 // Dynamic i18n Translation Engine (DE / EN)
-window.getCurrentLang = () => localStorage.getItem('mehaaj-language') || 'de';
+window.getCurrentLang = () => {
+    const matchLocale = document.cookie.match(/(?:^|;\s*)locale=([^;]+)/);
+    const matchMehaaj = document.cookie.match(/(?:^|;\s*)mehaaj_lang=([^;]+)/);
+    const cookieLocale = (matchLocale ? matchLocale[1] : null) || (matchMehaaj ? matchMehaaj[1] : null);
+    return localStorage.getItem('mehaaj_lang') || cookieLocale || 'en';
+};
 
 window.setLanguage = (language) => {
-    const selectedLanguage = language === 'en' ? 'en' : 'de';
+    if (typeof window.setSiteLanguage === 'function') {
+        window.setSiteLanguage(language);
+        return;
+    }
+
+    const selectedLanguage = language === 'de' ? 'de' : 'en';
     const languageKey = `${selectedLanguage[0].toUpperCase()}${selectedLanguage.slice(1)}`;
 
     document.documentElement.lang = selectedLanguage;
@@ -54,8 +64,11 @@ window.setLanguage = (language) => {
         button.classList.toggle('text-[#d8b45a]', !isActive);
     });
 
-    localStorage.setItem('mehaaj-language', selectedLanguage);
+    localStorage.setItem('mehaaj_lang', selectedLanguage);
+    document.cookie = 'locale=' + selectedLanguage + ';path=/;max-age=31536000;SameSite=Lax';
+    document.cookie = 'mehaaj_lang=' + selectedLanguage + ';path=/;max-age=31536000;SameSite=Lax';
     window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: selectedLanguage } }));
+    window.dispatchEvent(new CustomEvent('siteLanguageChanged', { detail: { lang: selectedLanguage } }));
 };
 
 document.addEventListener('click', (e) => {
@@ -66,7 +79,12 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.setLanguage(window.getCurrentLang());
+    const initialLang = window.getCurrentLang();
+    if (typeof window.setSiteLanguage === 'function') {
+        window.setSiteLanguage(initialLang, false);
+    } else {
+        window.setLanguage(initialLang);
+    }
 });
 
 // Hero Slider with Smooth Editorial Text Animations

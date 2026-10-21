@@ -11,6 +11,19 @@
     $currentMinPrice = request('min_price', $dbMinPrice ?? 0);
     $currentMaxPrice = request('max_price', $dbMaxPrice ?? 1000);
     $hasActiveFilters = request('category') || request('subcategory') || request('search') || request('min_price') || (request('max_price') && request('max_price') < $dbMaxPrice) || request('featured') || request('in_stock');
+
+    $catTranslations = [
+        'luxury-handbags' => ['en' => 'Luxury Handbags', 'de' => 'Luxus-Handtaschen'],
+        'leather-wallets' => ['en' => 'Leather Wallets', 'de' => 'Leder-Geldbörsen'],
+        'travel-luggage' => ['en' => 'Travel & Luggage', 'de' => 'Reisegepäck & Weekender'],
+        'executive-briefcases' => ['en' => 'Executive Briefcases', 'de' => 'Business-Aktentaschen'],
+        'luxury-jewelry-watches' => ['en' => 'Luxury Jewelry & Watches', 'de' => 'Luxus Schmuck & Uhren'],
+        'golf-collection' => ['en' => 'Golf Collection', 'de' => 'Golf-Kollektion'],
+        'signature-keychains' => ['en' => 'Signature Keychains', 'de' => 'Signatur-Schlüsselanhänger'],
+        'handbags' => ['en' => 'Luxury Handbags', 'de' => 'Luxus-Handtaschen'],
+        'briefcases' => ['en' => 'Executive Briefcases', 'de' => 'Business-Aktentaschen'],
+        'watches-jewelry' => ['en' => 'Luxury Jewelry & Watches', 'de' => 'Luxus Schmuck & Uhren'],
+    ];
 @endphp
 
 <div class="bg-[#f8f5ef] min-h-screen text-[#1c1210]">
@@ -19,12 +32,17 @@
     <div class="border-b border-[#dfd6c4] bg-[#f4efe5] py-2 text-xs">
         <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
             <nav class="flex items-center gap-2 text-[0.7rem] text-[#6b5f56] truncate">
-                <a href="{{ route('home') }}" class="hover:text-[#78000b] transition">Home</a>
+                <a href="{{ route('home') }}" class="hover:text-[#78000b] transition" data-i18n-en="Home" data-i18n-de="Startseite">Home</a>
                 <span class="text-[#c7baa7]">/</span>
-                <span class="text-[#1c1210] font-semibold">Shop & Collection</span>
+                <span class="text-[#1c1210] font-semibold" data-i18n-en="Shop & Collection" data-i18n-de="Shop & Kollektion">Shop & Collection</span>
                 @if(request('category'))
+                    @php
+                        $firstReqCat = is_array(request('category')) ? request('category')[0] : request('category');
+                        $firstCatEn = $catTranslations[$firstReqCat]['en'] ?? $firstReqCat;
+                        $firstCatDe = $catTranslations[$firstReqCat]['de'] ?? $firstReqCat;
+                    @endphp
                     <span class="text-[#c7baa7]">/</span>
-                    <span class="text-[#78000b] font-medium capitalize">{{ is_array(request('category')) ? implode(', ', request('category')) : request('category') }}</span>
+                    <span class="text-[#78000b] font-medium capitalize" data-i18n-en="{{ $firstCatEn }}" data-i18n-de="{{ $firstCatDe }}">{{ $firstCatEn }}</span>
                 @endif
             </nav>
 
@@ -71,7 +89,7 @@
                 <div class="flex items-center justify-between gap-3 md:justify-end">
                     <!-- Sort Dropdown -->
                     <div class="flex items-center gap-2">
-                        <label for="sort-select" class="text-[0.68rem] font-bold uppercase tracking-wider text-[#685c54] whitespace-nowrap cursor-pointer">
+                        <label for="sort-select" class="text-[0.68rem] font-bold uppercase tracking-wider text-[#685c54] whitespace-nowrap cursor-pointer" data-i18n-en="Sort:" data-i18n-de="Sortierung:">
                             Sort:
                         </label>
                         <select
@@ -79,10 +97,10 @@
                             onchange="handleSortChange(this.value)"
                             class="rounded-lg border border-[#dfd6c4] bg-white px-3 py-1.5 text-xs font-medium text-[#1c1210] shadow-2xs transition hover:border-[#d8b45a] focus:border-[#78000b] focus:outline-none cursor-pointer"
                         >
-                            <option value="featured" {{ request('sort') == 'featured' ? 'selected' : '' }}>Featured</option>
-                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest Arrivals</option>
-                            <option value="price-low" {{ request('sort') == 'price-low' ? 'selected' : '' }}>Price: Low to High</option>
-                            <option value="price-high" {{ request('sort') == 'price-high' ? 'selected' : '' }}>Price: High to Low</option>
+                            <option value="featured" {{ request('sort') == 'featured' ? 'selected' : '' }} data-i18n-en="Featured" data-i18n-de="Empfehlungen">Featured</option>
+                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }} data-i18n-en="Newest Arrivals" data-i18n-de="Neuheiten">Newest Arrivals</option>
+                            <option value="price-low" {{ request('sort') == 'price-low' ? 'selected' : '' }} data-i18n-en="Price: Low to High" data-i18n-de="Preis: Aufsteigend">Price: Low to High</option>
+                            <option value="price-high" {{ request('sort') == 'price-high' ? 'selected' : '' }} data-i18n-en="Price: High to Low" data-i18n-de="Preis: Absteigend">Price: High to Low</option>
                         </select>
                     </div>
 
@@ -128,11 +146,11 @@
             <div id="active-filters-wrap">
                 @if($hasActiveFilters)
                     <div class="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-[#dfd6c4] bg-white p-2.5 shadow-2xs">
-                        <span class="text-[0.68rem] font-bold uppercase tracking-wider text-[#685c54]">Active Filters:</span>
+                        <span class="text-[0.68rem] font-bold uppercase tracking-wider text-[#685c54]" data-i18n-en="Active Filters:" data-i18n-de="Aktive Filter:">Active Filters:</span>
 
                         @if(request('search'))
                             <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/20 bg-[#78000b]/5 px-2.5 py-0.5 text-xs text-[#78000b]">
-                                <span>Search: "{{ request('search') }}"</span>
+                                <span><span data-i18n-en="Search:" data-i18n-de="Suche:">Search:</span> "{{ request('search') }}"</span>
                                 <a href="{{ route('shop', array_merge(request()->except(['search', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold hover:text-black cursor-pointer">×</a>
                             </span>
                         @endif
@@ -141,9 +159,12 @@
                             @foreach((array) request('category') as $catSlug)
                                 @php
                                     $catObj = $categoriesList->firstWhere('slug', $catSlug);
+                                    $chipName = $catObj->name ?? $catSlug;
+                                    $cEnChip = $catTranslations[$catSlug]['en'] ?? $chipName;
+                                    $cDeChip = $catTranslations[$catSlug]['de'] ?? $chipName;
                                 @endphp
                                 <span class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-[#faf7f2] px-2.5 py-0.5 text-xs text-[#1c1210]">
-                                    <span>{{ $catObj->name ?? $catSlug }}</span>
+                                    <span data-i18n-en="{{ $cEnChip }}" data-i18n-de="{{ $cDeChip }}">{{ $cEnChip }}</span>
                                     <a href="{{ route('shop', array_merge(request()->except(['category', 'subcategory', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold text-[#78000b] hover:text-black cursor-pointer">×</a>
                                 </span>
                             @endforeach
@@ -174,19 +195,19 @@
 
                         @if(request('featured'))
                             <span class="inline-flex items-center gap-1.5 rounded-full border border-[#78000b]/30 bg-[#78000b]/10 px-2.5 py-0.5 text-xs text-[#78000b] font-semibold">
-                                <span>Atelier Bestsellers</span>
+                                <span data-i18n-en="Atelier Bestsellers" data-i18n-de="Atelier Bestseller">Atelier Bestsellers</span>
                                 <a href="{{ route('shop', array_merge(request()->except(['featured', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold hover:text-black cursor-pointer">×</a>
                             </span>
                         @endif
 
                         @if(request('in_stock'))
                             <span class="inline-flex items-center gap-1.5 rounded-full border border-[#2e683a]/30 bg-[#2e683a]/10 px-2.5 py-0.5 text-xs text-[#2e683a] font-semibold">
-                                <span>In Stock Only</span>
+                                <span data-i18n-en="In Stock Only" data-i18n-de="Nur auf Lager">In Stock Only</span>
                                 <a href="{{ route('shop', array_merge(request()->except(['in_stock', 'page']))) }}" onclick="removeActiveFilter(event, this.href)" class="font-bold hover:text-black cursor-pointer">×</a>
                             </span>
                         @endif
 
-                        <a href="{{ route('shop') }}" onclick="removeActiveFilter(event, this.href)" class="ml-auto text-xs font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] cursor-pointer">
+                        <a href="{{ route('shop') }}" onclick="removeActiveFilter(event, this.href)" class="ml-auto text-xs font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] cursor-pointer" data-i18n-en="Clear All Filters" data-i18n-de="Alle Filter löschen">
                             Clear All Filters
                         </a>
                     </div>
@@ -212,16 +233,16 @@
                                 <svg class="h-4 w-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
                                 </svg>
-                                <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-[#1c1210]">Filters</h2>
+                                <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-[#1c1210]" data-i18n-en="Filters" data-i18n-de="Filter">Filters</h2>
                             </div>
-                            <a href="{{ route('shop') }}" onclick="removeActiveFilter(event, this.href)" class="text-[0.62rem] font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] transition cursor-pointer">Reset All</a>
+                            <a href="{{ route('shop') }}" onclick="removeActiveFilter(event, this.href)" class="text-[0.62rem] font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007] transition cursor-pointer" data-i18n-en="Reset All" data-i18n-de="Alle zurücksetzen">Reset All</a>
                         </div>
 
                         <!-- 1. Categories Accordion -->
                         <div>
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210]">Categories</h3>
-                                <span class="text-[0.62rem] text-[#8a7c74] font-mono">{{ $categoriesList->count() }} collections</span>
+                                <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210]" data-i18n-en="Categories" data-i18n-de="Kategorien">Categories</h3>
+                                <span class="text-[0.62rem] text-[#8a7c74] font-mono">{{ $categoriesList->count() }} <span data-i18n-en="collections" data-i18n-de="Kollektionen">collections</span></span>
                             </div>
 
                             <div class="space-y-1.5 text-xs text-[#5c4f46]">
@@ -229,6 +250,8 @@
                                     @php
                                         $catChecked = in_array($category->slug, $activeCategorySlugs);
                                         $pCount = $category->products_count ?? ($category->products ? $category->products->count() : 0);
+                                        $catEn = $catTranslations[$category->slug]['en'] ?? $category->name;
+                                        $catDe = $catTranslations[$category->slug]['de'] ?? $category->name;
                                     @endphp
                                     <div class="rounded-lg border border-transparent p-1 transition hover:bg-[#faf7f2]">
                                         <label class="flex items-center justify-between gap-2 cursor-pointer select-none">
@@ -240,7 +263,7 @@
                                                     {{ $catChecked ? 'checked' : '' }}
                                                     class="h-3.5 w-3.5 rounded border-[#d9cebc] text-[#78000b] focus:ring-[#78000b]/20 cursor-pointer accent-[#78000b]"
                                                 >
-                                                <span class="font-medium text-[#1c1210] {{ $catChecked ? 'text-[#78000b] font-bold' : '' }}">{{ $category->name }}</span>
+                                                <span class="font-medium text-[#1c1210] {{ $catChecked ? 'text-[#78000b] font-bold' : '' }}" data-i18n-en="{{ $catEn }}" data-i18n-de="{{ $catDe }}">{{ $catEn }}</span>
                                             </span>
                                             <span class="rounded-full bg-[#f4efe5] px-2 py-0.5 text-[0.6rem] font-mono text-[#685c54]">{{ $pCount }}</span>
                                         </label>
@@ -271,7 +294,7 @@
                                         @endif
                                     </div>
                                 @empty
-                                    <p class="text-xs text-[#8a7c74]">No categories found.</p>
+                                    <p class="text-xs text-[#8a7c74]" data-i18n-en="No categories found." data-i18n-de="Keine Kategorien gefunden.">No categories found.</p>
                                 @endforelse
                             </div>
                         </div>
@@ -279,7 +302,7 @@
                         <!-- 2. Price Range Filter -->
                         <div class="border-t border-[#f0e7d8] pt-3.5 space-y-2.5">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210]">Price Range</h3>
+                                <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210]" data-i18n-en="Price Range" data-i18n-de="Preisbereich">Price Range</h3>
                                 <span class="text-[0.62rem] font-mono text-[#78000b] font-bold" id="price-range-label">
                                     €{{ $currentMinPrice }} – €{{ $currentMaxPrice }}
                                 </span>
@@ -297,6 +320,8 @@
                                         max="{{ $dbMaxPrice ?? 1000 }}"
                                         value="{{ request('min_price', $dbMinPrice ?? 0) }}"
                                         placeholder="Min"
+                                        data-i18n-placeholder-en="Min"
+                                        data-i18n-placeholder-de="Min"
                                         class="w-full text-xs bg-transparent text-[#1c1210] focus:outline-none font-mono"
                                         oninput="syncPriceDisplay()"
                                     >
@@ -311,6 +336,8 @@
                                         max="{{ $dbMaxPrice ?? 1000 }}"
                                         value="{{ request('max_price', $dbMaxPrice ?? 1000) }}"
                                         placeholder="Max"
+                                        data-i18n-placeholder-en="Max"
+                                        data-i18n-placeholder-de="Max"
                                         class="w-full text-xs bg-transparent text-[#1c1210] focus:outline-none font-mono"
                                         oninput="syncPriceDisplay()"
                                     >
@@ -345,7 +372,7 @@
 
                         <!-- 3. Availability & Features -->
                         <div class="border-t border-[#f0e7d8] pt-3.5 space-y-2">
-                            <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210]">Curation</h3>
+                            <h3 class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210]" data-i18n-en="Curation" data-i18n-de="Kuration">Curation</h3>
 
                             <label class="flex items-center gap-2 cursor-pointer text-xs text-[#5c4f46] select-none hover:text-[#78000b]">
                                 <input
@@ -355,7 +382,7 @@
                                     {{ request('featured') ? 'checked' : '' }}
                                     class="h-3.5 w-3.5 rounded border-[#d9cebc] text-[#78000b] focus:ring-[#78000b]/20 cursor-pointer accent-[#78000b]"
                                 >
-                                <span>Atelier Bestsellers Only</span>
+                                <span data-i18n-en="Atelier Bestsellers Only" data-i18n-de="Nur Atelier Bestseller">Atelier Bestsellers Only</span>
                             </label>
 
                             <label class="flex items-center gap-2 cursor-pointer text-xs text-[#5c4f46] select-none hover:text-[#78000b]">
@@ -366,7 +393,7 @@
                                     {{ request('in_stock') ? 'checked' : '' }}
                                     class="h-3.5 w-3.5 rounded border-[#d9cebc] text-[#78000b] focus:ring-[#78000b]/20 cursor-pointer accent-[#78000b]"
                                 >
-                                <span>In Stock (Dispatches 24h)</span>
+                                <span data-i18n-en="In Stock (Dispatches 24h)" data-i18n-de="Auf Lager (Versand 24h)">In Stock (Dispatches 24h)</span>
                             </label>
                         </div>
 
@@ -376,13 +403,13 @@
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#78000b] opacity-75"></span>
                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-[#78000b]"></span>
                             </span>
-                            <span class="font-medium tracking-wide">Live Instant Filtering Active</span>
+                            <span class="font-medium tracking-wide" data-i18n-en="Live Instant Filtering Active" data-i18n-de="Live-Filter aktiv">Live Instant Filtering Active</span>
                         </div>
 
                         <!-- Atelier Trust Badge -->
                         <div class="rounded-lg border border-[#dfd6c4] bg-[#faf8f5] p-2.5 text-center">
-                            <p class="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b]">100% Genuine Full-Grain</p>
-                            <p class="mt-0.5 text-[0.62rem] text-[#685c54]">Tuscan Atelier Tannery & Insured DHL Express</p>
+                            <p class="text-[0.58rem] font-bold uppercase tracking-[0.16em] text-[#78000b]" data-i18n-en="100% Genuine Full-Grain" data-i18n-de="100% Echtes Vollleder">100% Genuine Full-Grain</p>
+                            <p class="mt-0.5 text-[0.62rem] text-[#685c54]" data-i18n-en="Tuscan Atelier Tannery & Insured DHL Express" data-i18n-de="Toskanische Gerberei & Versicherter DHL Express">Tuscan Atelier Tannery & Insured DHL Express</p>
                         </div>
                     </form>
                     </div>
@@ -549,13 +576,13 @@
                                 <svg class="mx-auto h-12 w-12 text-[#78000b]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                                 </svg>
-                                <h3 class="font-display text-lg text-[#1c1210]">No creations match your filter criteria</h3>
-                                <p class="text-xs text-[#685c54] max-w-md mx-auto">
+                                <h3 class="font-display text-lg text-[#1c1210]" data-i18n-en="No creations match your filter criteria" data-i18n-de="Keine Meisterwerke entsprechen Ihren Kriterien">No creations match your filter criteria</h3>
+                                <p class="text-xs text-[#685c54] max-w-md mx-auto" data-i18n-en="Try adjusting your price range, clearing selected categories, or viewing the complete collection." data-i18n-de="Passen Sie Ihre Preisspanne an, heben Sie Kategoriefilter auf oder betrachten Sie die gesamte Kollektion.">
                                     Try adjusting your price range, clearing selected categories, or viewing the complete collection.
                                 </p>
                                 <div class="pt-2">
                                     <a href="{{ route('shop') }}" class="inline-flex items-center justify-center rounded-lg bg-[#78000b] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-[#500007] cursor-pointer shadow-xs">
-                                        Reset All Filters
+                                        <span data-i18n-en="Reset All Filters" data-i18n-de="Alle Filter zurücksetzen">Reset All Filters</span>
                                     </a>
                                 </div>
                             </div>
@@ -567,7 +594,7 @@
                         @if($products->hasPages())
                             <div class="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#dfd6c4] pt-4 sm:flex-row">
                                 <p class="text-xs text-[#685c54]">
-                                    Showing <span class="font-bold text-[#1c1210]">{{ $products->firstItem() }}</span> to <span class="font-bold text-[#1c1210]">{{ $products->lastItem() }}</span> of <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span> creations
+                                    <span data-i18n-en="Showing" data-i18n-de="Zeige">Showing</span> <span class="font-bold text-[#1c1210]">{{ $products->firstItem() }}</span> <span data-i18n-en="to" data-i18n-de="bis">to</span> <span class="font-bold text-[#1c1210]">{{ $products->lastItem() }}</span> <span data-i18n-en="of" data-i18n-de="von">of</span> <span class="font-bold text-[#1c1210]">{{ $products->total() }}</span> <span data-i18n-en="creations" data-i18n-de="Meisterwerken">creations</span>
                                 </p>
 
                                 <div class="flex items-center gap-1.5">
@@ -626,7 +653,7 @@
         <div class="absolute inset-y-0 left-0 w-full max-w-xs bg-white p-5 flex flex-col justify-between shadow-2xl overflow-y-auto">
             <div>
                 <div class="flex items-center justify-between border-b border-[#dfd6c4] pb-3 mb-4">
-                    <h2 class="font-display text-base font-semibold text-[#1c1210]">Filters & Curation</h2>
+                    <h2 class="font-display text-base font-semibold text-[#1c1210]" data-i18n-en="Filters & Curation" data-i18n-de="Filter & Kuration">Filters & Curation</h2>
                     <button type="button" onclick="toggleMobileFilter()" class="h-8 w-8 flex items-center justify-center rounded-full bg-[#f4efe5] text-[#1c1210] hover:bg-[#78000b] hover:text-white transition cursor-pointer">
                         ✕
                     </button>
@@ -634,18 +661,20 @@
 
                 <div id="mobile-filter-form-clone">
                     <!-- Cloned dynamic content or direct mobile form triggers -->
-                    <p class="text-xs text-[#685c54] mb-3">Adjust your preferences and click Apply.</p>
+                    <p class="text-xs text-[#685c54] mb-3" data-i18n-en="Adjust your preferences and click Apply." data-i18n-de="Passen Sie Ihre Wünsche an und klicken Sie auf Anwenden.">Adjust your preferences and click Apply.</p>
                 </div>
             </div>
 
             <div class="pt-4 border-t border-[#dfd6c4] flex gap-2">
                 <a href="{{ route('shop') }}" class="flex-1 py-2 text-center text-xs font-bold uppercase rounded-lg border border-[#dfd6c4] text-[#1c1210]">
-                    Reset
+                    <span data-i18n-en="Reset" data-i18n-de="Zurücksetzen">Reset</span>
                 </a>
                 <button type="button" onclick="document.getElementById('shop-filter-form').submit()" class="flex-1 py-2 text-center text-xs font-bold uppercase rounded-lg bg-[#78000b] text-white">
-                    Apply
+                    <span data-i18n-en="Apply" data-i18n-de="Anwenden">Apply</span>
                 </button>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 
@@ -803,6 +832,12 @@
                 const savedView = localStorage.getItem('mehaaj_shop_view');
                 if (savedView === 'list') {
                     setViewMode('list');
+                }
+
+                // 8. Re-apply site translation to newly injected DOM elements
+                if (typeof window.setSiteLanguage === 'function') {
+                    const curLang = typeof window.getCurrentLang === 'function' ? window.getCurrentLang() : (localStorage.getItem('mehaaj_lang') || 'en');
+                    window.setSiteLanguage(curLang, false);
                 }
 
             } catch (err) {

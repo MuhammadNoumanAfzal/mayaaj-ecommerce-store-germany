@@ -41,6 +41,24 @@
 @section('canonical', route('shop.show', $product->slug))
 @section('og_image', $product->image_url)
 
+@php
+    $catTranslations = [
+        'luxury-handbags' => 'Luxus-Handtaschen',
+        'leather-wallets' => 'Leder-Geldbörsen',
+        'travel-luggage' => 'Reisegepäck',
+        'executive-briefcases' => 'Business-Aktentaschen',
+        'luxury-jewelry-watches' => 'Schmuck & Uhren',
+        'golf-collection' => 'Golf-Kollektion',
+        'signature-keychains' => 'Schlüsselanhänger',
+    ];
+
+    $tabTranslations = [
+        'Description & Craft' => 'Beschreibung & Handwerk',
+        'Materials & Details' => 'Materialien & Details',
+        'Shipping & Guarantee' => 'Versand & Garantie',
+    ];
+@endphp
+
 @section('content')
 <style>
     .zoom-container {
@@ -75,13 +93,13 @@
     <div class="border-b border-[#dfd6c4] bg-[#f4efe5] py-2 text-xs">
         <div class="w-full max-w-[1180px] mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
             <nav class="flex items-center gap-2 text-[0.7rem] text-[#6b5f56] truncate">
-                <a href="{{ route('home') }}" class="hover:text-[#78000b] transition">Home</a>
+                <a href="{{ route('home') }}" class="hover:text-[#78000b] transition"><span data-i18n-en="Home" data-i18n-de="Startseite">Home</span></a>
                 <span class="text-[#c7baa7]">/</span>
-                <a href="{{ route('shop') }}" class="hover:text-[#78000b] transition">Shop</a>
+                <a href="{{ route('shop') }}" class="hover:text-[#78000b] transition"><span data-i18n-en="Shop" data-i18n-de="Boutique">Shop</span></a>
                 @if($product->category)
                     <span class="text-[#c7baa7]">/</span>
                     <a href="{{ route('shop', ['category' => $product->category->slug]) }}" class="hover:text-[#78000b] transition">
-                        {{ $product->category->name }}
+                        <span data-i18n-en="{{ $product->category->name }}" data-i18n-de="{{ $catTranslations[$product->category->slug] ?? $product->category->name }}">{{ $product->category->name }}</span>
                     </a>
                 @endif
                 <span class="text-[#c7baa7] hidden sm:inline">/</span>
@@ -109,7 +127,7 @@
                         <!-- Top Badges -->
                         <div class="absolute left-3 top-3 z-20 flex flex-col gap-1.5 pointer-events-none">
                             @if($product->is_featured)
-                                <span class="rounded bg-[#78000b] px-2 py-0.5 text-[0.56rem] font-bold uppercase tracking-[0.16em] text-white shadow-xs">
+                                <span class="rounded bg-[#78000b] px-2 py-0.5 text-[0.56rem] font-bold uppercase tracking-[0.16em] text-white shadow-xs" data-i18n-en="Atelier" data-i18n-de="Atelier">
                                     Atelier
                                 </span>
                             @endif
@@ -139,7 +157,7 @@
 
                         <!-- Fullscreen Trigger Button -->
                         <div class="absolute right-3 bottom-3 z-20 flex items-center gap-2">
-                            <span class="hidden sm:inline-block rounded-full bg-black/60 backdrop-blur-md px-2.5 py-0.5 text-[0.56rem] uppercase tracking-wider text-white/90">
+                            <span class="hidden sm:inline-block rounded-full bg-black/60 backdrop-blur-md px-2.5 py-0.5 text-[0.56rem] uppercase tracking-wider text-white/90" data-i18n-en="Hover to Zoom" data-i18n-de="Zeigen zum Zoomen">
                                 Hover to Zoom
                             </span>
                             <button
@@ -148,6 +166,10 @@
                                 class="flex h-8 w-8 items-center justify-center rounded-full bg-white/95 text-[#78000b] backdrop-blur-md border border-[#d8b45a]/60 shadow-xs transition-all duration-300 hover:bg-[#78000b] hover:text-white cursor-pointer"
                                 aria-label="Fullscreen zoom"
                                 title="Fullscreen Gallery"
+                                data-i18n-title-en="Fullscreen Gallery"
+                                data-i18n-title-de="Vollbild-Galerie"
+                                data-i18n-aria-en="Fullscreen zoom"
+                                data-i18n-aria-de="Vollbild-Zoom"
                             >
                                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                     <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -181,13 +203,17 @@
                         <!-- Category Eyebrow & Social Proof -->
                         <div class="flex items-center justify-between gap-3 border-b border-[#f0e7d8] pb-2.5">
                             <span class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
-                                {{ $product->category->name ?? 'HAUTE MAROQUINERIE' }}
+                                @if($product->category)
+                                    <span data-i18n-en="{{ $product->category->name }}" data-i18n-de="{{ $catTranslations[$product->category->slug] ?? $product->category->name }}">{{ $product->category->name }}</span>
+                                @else
+                                    <span data-i18n-en="HAUTE MAROQUINERIE" data-i18n-de="HAUTE MAROQUINERIE">HAUTE MAROQUINERIE</span>
+                                @endif
                             </span>
 
                             <div class="flex items-center gap-1.5 text-xs text-[#685c54]">
                                 <span class="text-[#d8b45a] tracking-wider text-[0.7rem]">★★★★★</span>
                                 <span class="font-bold text-[#1c1210]">4.9</span>
-                                <span class="text-[#8a7c74] text-[0.65rem]">(48 reviews)</span>
+                                <span class="text-[#8a7c74] text-[0.65rem]">(48 <span data-i18n-en="reviews" data-i18n-de="Bewertungen">reviews</span>)</span>
                             </div>
                         </div>
 
@@ -202,7 +228,7 @@
                             <span class="text-[#c7baa7]">•</span>
                             <span class="inline-flex items-center gap-1.5 font-semibold text-[#2e683a] text-xs">
                                 <span class="h-1.5 w-1.5 rounded-full bg-[#2e683a] animate-pulse"></span>
-                                <span>In Stock • Dispatches via DHL Express</span>
+                                <span data-i18n-en="In Stock • Dispatches via DHL Express" data-i18n-de="Auf Lager • Versand per DHL Express">In Stock • Dispatches via DHL Express</span>
                             </span>
                         </div>
 
@@ -216,7 +242,7 @@
                                     €{{ number_format($product->price, 2, '.', ',') }}
                                 </span>
                                 <span class="rounded bg-[#78000b] px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wider text-white">
-                                    SAVE €{{ number_format($product->price - $product->sale_price, 2, '.', ',') }}
+                                    <span data-i18n-en="SAVE" data-i18n-de="SPAREN">SAVE</span> €{{ number_format($product->price - $product->sale_price, 2, '.', ',') }}
                                 </span>
                             @endif
                         </div>
@@ -225,9 +251,9 @@
                         <div class="mt-4 pt-3.5 border-t border-[#f0e7d8]">
                             <div class="flex items-center justify-between mb-2 text-xs">
                                 <span class="text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210]">
-                                    Finish: <strong id="active-variation-name" class="text-[#78000b]">{{ $firstVar['name'] ?? 'Cognac Havana' }}</strong>
+                                    <span data-i18n-en="Finish:" data-i18n-de="Ausführung:">Finish:</span> <strong id="active-variation-name" class="text-[#78000b]">{{ $firstVar['name'] ?? 'Cognac Havana' }}</strong>
                                 </span>
-                                <span class="text-[0.62rem] text-[#8a7c74] uppercase">Tuscan Leather</span>
+                                <span class="text-[0.62rem] text-[#8a7c74] uppercase" data-i18n-en="Tuscan Leather" data-i18n-de="Toskanisches Leder">Tuscan Leather</span>
                             </div>
 
                             <div class="flex flex-wrap items-center gap-2" id="variations-container">
@@ -298,6 +324,10 @@
                                 class="h-11 w-11 flex items-center justify-center rounded-lg border border-[#d9cebc] bg-[#faf8f5] text-[#78000b] shadow-2xs transition-all duration-200 hover:bg-[#78000b] hover:text-white cursor-pointer shrink-0"
                                 title="Save to Wishlist"
                                 aria-label="Wishlist"
+                                data-i18n-title-en="Save to Wishlist"
+                                data-i18n-title-de="Auf Wunschliste speichern"
+                                data-i18n-aria-en="Wishlist"
+                                data-i18n-aria-de="Wunschliste"
                             >
                                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
@@ -308,16 +338,16 @@
                         <!-- 3 Compact Inline Trust Badges (No giant boxes!) -->
                         <div class="mt-5 grid grid-cols-3 gap-2 border-t border-[#f0e7d8] pt-4 text-center text-[0.62rem] text-[#5c4f46]">
                             <div class="flex flex-col items-center gap-0.5">
-                                <span class="font-bold text-[#1c1210]">100% Full-Grain</span>
-                                <span class="text-[0.58rem] text-[#8a7c74]">Tuscan Tannery</span>
+                                <span class="font-bold text-[#1c1210]" data-i18n-en="100% Full-Grain" data-i18n-de="100% Vollnarbenleder">100% Full-Grain</span>
+                                <span class="text-[0.58rem] text-[#8a7c74]" data-i18n-en="Tuscan Tannery" data-i18n-de="Toskanische Gerberei">Tuscan Tannery</span>
                             </div>
                             <div class="flex flex-col items-center gap-0.5 border-x border-[#dfd6c4]">
-                                <span class="font-bold text-[#1c1210]">2-Year Warranty</span>
-                                <span class="text-[0.58rem] text-[#8a7c74]">Atelier Care</span>
+                                <span class="font-bold text-[#1c1210]" data-i18n-en="2-Year Warranty" data-i18n-de="2 Jahre Garantie">2-Year Warranty</span>
+                                <span class="text-[0.58rem] text-[#8a7c74]" data-i18n-en="Atelier Care" data-i18n-de="Atelier-Pflege">Atelier Care</span>
                             </div>
                             <div class="flex flex-col items-center gap-0.5">
-                                <span class="font-bold text-[#1c1210]">Free DHL Express</span>
-                                <span class="text-[0.58rem] text-[#8a7c74]">1–3 Days Insured</span>
+                                <span class="font-bold text-[#1c1210]" data-i18n-en="Free DHL Express" data-i18n-de="Gratis DHL Express">Free DHL Express</span>
+                                <span class="text-[0.58rem] text-[#8a7c74]" data-i18n-en="1–3 Days Insured" data-i18n-de="1–3 Tage versichert">1–3 Days Insured</span>
                             </div>
                         </div>
 
@@ -340,7 +370,9 @@
                         class="detail-tab pb-3 text-xs sm:text-sm uppercase tracking-wider text-[#685c54] border-b-2 border-transparent transition-all duration-200 hover:text-[#78000b] cursor-pointer {{ $tIdx === 0 ? 'active-tab' : '' }}"
                         data-tab-index="{{ $tIdx }}"
                     >
-                        {{ $tab['title'] ?? 'Tab ' . ($tIdx + 1) }}
+                        <span data-i18n-en="{{ $tab['title'] ?? 'Tab ' . ($tIdx + 1) }}" data-i18n-de="{{ $tabTranslations[$tab['title'] ?? ''] ?? ($tab['title'] ?? 'Tab ' . ($tIdx + 1)) }}">
+                            {{ $tab['title'] ?? 'Tab ' . ($tIdx + 1) }}
+                        </span>
                     </button>
                 @endforeach
             </div>
@@ -364,11 +396,11 @@
         <section class="py-8 sm:py-10">
             <div class="w-full max-w-[1180px] mx-auto px-4 sm:px-6">
                 <div class="flex items-center justify-between border-b border-[#dfd6c4] pb-2.5 mb-5">
-                    <h2 class="font-display text-xl sm:text-2xl font-medium text-[#1c1210]">
+                    <h2 class="font-display text-xl sm:text-2xl font-medium text-[#1c1210]" data-i18n-en="You May Also Admire" data-i18n-de="Das könnte Ihnen auch gefallen">
                         You May Also Admire
                     </h2>
                     <a href="{{ route('shop') }}" class="text-xs font-bold uppercase tracking-wider text-[#78000b] hover:text-[#500007]">
-                        View Collection →
+                        <span data-i18n-en="View Collection →" data-i18n-de="Zur Kollektion →">View Collection →</span>
                     </a>
                 </div>
 
@@ -391,7 +423,11 @@
                                 @endif
                             </div>
                             <div class="p-3 flex flex-col justify-between flex-1">
-                                <p class="text-[0.6rem] font-bold uppercase tracking-wider text-[#78000b] truncate">{{ $rel->category->name ?? 'Luxury' }}</p>
+                                <p class="text-[0.6rem] font-bold uppercase tracking-wider text-[#78000b] truncate">
+                                    <span data-i18n-en="{{ $rel->category->name ?? 'Luxury' }}" data-i18n-de="{{ $catTranslations[$rel->category->slug ?? ''] ?? ($rel->category->name ?? 'Luxury') }}">
+                                        {{ $rel->category->name ?? 'Luxury' }}
+                                    </span>
+                                </p>
                                 <h3 class="font-display text-xs sm:text-sm font-medium text-[#1c1210] group-hover:text-[#78000b] transition truncate mt-0.5">{{ $rel->name }}</h3>
                                 <p class="font-sans text-xs sm:text-sm font-bold text-[#1c1210] mt-1.5">{{ $relPrice }}</p>
                             </div>
@@ -409,9 +445,11 @@
     <div class="flex items-center justify-between text-white pb-2 border-b border-white/20">
         <span class="font-display text-base text-white">{{ $product->name }}</span>
         <div class="flex items-center gap-2">
-            <button type="button" onclick="lightboxZoom(0.25)" class="h-7 w-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white hover:text-black transition cursor-pointer text-sm font-bold" title="Zoom in">+</button>
-            <button type="button" onclick="lightboxZoom(-0.25)" class="h-7 w-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white hover:text-black transition cursor-pointer text-sm font-bold" title="Zoom out">-</button>
-            <button type="button" onclick="resetLightboxZoom()" class="px-2 py-0.5 rounded bg-white/20 hover:bg-white hover:text-black transition cursor-pointer text-[0.65rem] uppercase">Reset</button>
+            <button type="button" onclick="lightboxZoom(0.25)" class="h-7 w-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white hover:text-black transition cursor-pointer text-sm font-bold" title="Zoom in" data-i18n-title-en="Zoom in" data-i18n-title-de="Vergrößern">+</button>
+            <button type="button" onclick="lightboxZoom(-0.25)" class="h-7 w-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white hover:text-black transition cursor-pointer text-sm font-bold" title="Zoom out" data-i18n-title-en="Zoom out" data-i18n-title-de="Verkleinern">-</button>
+            <button type="button" onclick="resetLightboxZoom()" class="px-2 py-0.5 rounded bg-white/20 hover:bg-white hover:text-black transition cursor-pointer text-[0.65rem] uppercase">
+                <span data-i18n-en="Reset" data-i18n-de="Zurücksetzen">Reset</span>
+            </button>
             <button type="button" onclick="closeFullscreenLightbox()" class="h-7 w-7 flex items-center justify-center rounded-full bg-[#78000b] text-white transition cursor-pointer ml-2">✕</button>
         </div>
     </div>

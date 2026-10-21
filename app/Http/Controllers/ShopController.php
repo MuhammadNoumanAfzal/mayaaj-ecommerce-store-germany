@@ -172,4 +172,45 @@ class ShopController extends Controller
     {
         return redirect()->route('shop', ['category' => $catSlug, 'subcategory' => $subcatSlug]);
     }
+
+    /**
+     * Dedicated live search autocomplete endpoint.
+     */
+    public function liveSearch(Request $request)
+    {
+        $q = trim($request->input('q', ''));
+        if (strlen($q) < 2) {
+            return response()->json(['success' => true, 'products' => []]);
+        }
+
+        $products = Product::where('status', 'active')
+            ->where(function($query) use ($q) {
+                $query->where('name', 'like', "%{$q}%")
+                      ->orWhere('sku', 'like', "%{$q}%")
+                      ->orWhere('description', 'like', "%{$q}%");
+            })
+            ->with('category')
+            ->take(6)
+            ->get();
+
+        $formatted = $products->map(function($p) {
+            return [
+                'id' => $p->id,
+                'name' => $p->name,
+                'slug' => $p->slug,
+                'url' => route('shop.show', $p->slug),
+                'price' => 'EUR ' . number_format($p->price, 2, ',', '.'),
+                'sale_price' => $p->sale_price ? 'EUR ' . number_format($p->sale_price, 2, ',', '.') : null,
+                'image_url' => $p->image_url,
+                'category_name' => $p->category->name ?? 'MEHAAJ',
+                'category_slug' => $p->category->slug ?? '',
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'count' => $formatted->count(),
+            'products' => $formatted,
+        ]);
+    }
 }

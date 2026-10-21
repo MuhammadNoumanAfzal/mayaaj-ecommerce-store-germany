@@ -82,49 +82,49 @@
                             <div class="grid gap-3 sm:grid-cols-2">
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Vorname *" data-i18n-en="First Name *">Vorname *</label>
-                                    <input type="text" id="ship-first-name" required placeholder="Maximilian" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="text" id="ship-first-name" required placeholder="Maximilian" data-i18n-placeholder-de="Maximilian" data-i18n-placeholder-en="Maximilian" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Nachname *" data-i18n-en="Last Name *">Nachname *</label>
-                                    <input type="text" id="ship-last-name" required placeholder="Mustermann" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="text" id="ship-last-name" required placeholder="Mustermann" data-i18n-placeholder-de="Mustermann" data-i18n-placeholder-en="Doe" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="E-Mail-Adresse *" data-i18n-en="Email Address *">E-Mail-Adresse *</label>
-                                    <input type="email" id="ship-email" required placeholder="maximilian@beispiel.de" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="email" id="ship-email" required placeholder="maximilian@beispiel.de" data-i18n-placeholder-de="maximilian@beispiel.de" data-i18n-placeholder-en="john.doe@example.com" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Telefonnummer *" data-i18n-en="Phone Number *">Telefonnummer *</label>
-                                    <input type="tel" id="ship-phone" required placeholder="+49 151 23456789" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="tel" id="ship-phone" required placeholder="+49 151 23456789" data-i18n-placeholder-de="+49 151 23456789" data-i18n-placeholder-en="+1 (555) 019-2834" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div class="sm:col-span-2">
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Straße und Hausnummer *" data-i18n-en="Street Address & Number *">Straße und Hausnummer *</label>
-                                    <input type="text" id="ship-street" required placeholder="Königsallee 42" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="text" id="ship-street" required placeholder="Königsallee 42" data-i18n-placeholder-de="Königsallee 42" data-i18n-placeholder-en="742 Evergreen Terrace" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Postleitzahl *" data-i18n-en="Postal Code *">Postleitzahl *</label>
-                                    <input type="text" id="ship-plz" required placeholder="40212" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="text" id="ship-plz" required placeholder="40212" data-i18n-placeholder-de="40212" data-i18n-placeholder-en="10001" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Stadt *" data-i18n-en="City *">Stadt *</label>
-                                    <input type="text" id="ship-city" required placeholder="Düsseldorf" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="text" id="ship-city" required placeholder="Düsseldorf" data-i18n-placeholder-de="Düsseldorf" data-i18n-placeholder-en="New York" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div class="sm:col-span-2">
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Land *" data-i18n-en="Country *">Land *</label>
                                     <select id="ship-country" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
-                                        <option value="Deutschland" selected>Deutschland (Germany)</option>
-                                        <option value="Österreich">Österreich (Austria)</option>
-                                        <option value="Schweiz">Schweiz (Switzerland)</option>
-                                        <option value="Frankreich">Frankreich (France)</option>
-                                        <option value="Italien">Italien (Italy)</option>
-                                        <option value="Vereinigtes Königreich">United Kingdom</option>
-                                        <option value="USA">United States</option>
+                                        <option value="Deutschland" selected data-i18n-en="Germany (Deutschland)" data-i18n-de="Deutschland (Germany)">Deutschland (Germany)</option>
+                                        <option value="Österreich" data-i18n-en="Austria (Österreich)" data-i18n-de="Österreich (Austria)">Österreich (Austria)</option>
+                                        <option value="Schweiz" data-i18n-en="Switzerland (Schweiz)" data-i18n-de="Schweiz (Switzerland)">Schweiz (Switzerland)</option>
+                                        <option value="Frankreich" data-i18n-en="France (Frankreich)" data-i18n-de="Frankreich (France)">Frankreich (France)</option>
+                                        <option value="Italien" data-i18n-en="Italy (Italien)" data-i18n-de="Italien (Italy)">Italien (Italy)</option>
+                                        <option value="Vereinigtes Königreich" data-i18n-en="United Kingdom" data-i18n-de="Vereinigtes Königreich (UK)">United Kingdom</option>
+                                        <option value="USA" data-i18n-en="United States" data-i18n-de="Vereinigte Staaten (USA)">United States</option>
                                     </select>
                                 </div>
                             </div>

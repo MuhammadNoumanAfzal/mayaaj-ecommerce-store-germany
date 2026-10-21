@@ -1,3 +1,19 @@
+@php
+    if (!isset($jewelryProducts) || empty($jewelryProducts) || (is_object($jewelryProducts) && method_exists($jewelryProducts, 'isEmpty') && $jewelryProducts->isEmpty())) {
+        $jewelryProducts = \App\Models\Product::whereHas('category', function($q) {
+            $q->where('slug', 'like', '%jewelry%')
+              ->orWhere('slug', 'like', '%schmuck%')
+              ->orWhere('slug', 'like', '%watch%')
+              ->orWhere('slug', 'like', '%uhren%');
+        })->orWhere('name', 'like', '%Tourbillon%')
+          ->orWhere('name', 'like', '%Watch%')
+          ->orWhere('name', 'like', '%Bracelet%')
+          ->take(3)->get();
+    }
+    if (!isset($jewelryProducts) || (is_object($jewelryProducts) && method_exists($jewelryProducts, 'isEmpty') && $jewelryProducts->isEmpty())) {
+        $jewelryProducts = \App\Models\Product::latest()->take(3)->get();
+    }
+@endphp
 @if(isset($jewelryProducts) && $jewelryProducts->count() > 0)
 <section class="relative overflow-hidden bg-[#0c0605] py-16 lg:py-24 text-white border-b border-[#d8b45a]/30">
     <!-- Ambient Radial Glows -->

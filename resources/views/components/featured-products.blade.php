@@ -16,7 +16,7 @@
                 <h2 id="featured-products-heading" class="font-display text-xl sm:text-2xl lg:text-3xl font-medium leading-none text-[#1c1210] tracking-tight" data-i18n-en="Featured Masterpieces" data-i18n-de="Ausgewählte Meisterwerke">
                     Featured Masterpieces
                 </h2>
-                <span class="hidden sm:inline-block text-[0.68rem] uppercase font-bold tracking-[0.2em] text-[#8c6b2d] bg-[#d8b45a]/15 px-2.5 py-0.5 rounded-full border border-[#d8b45a]/30">
+                <span class="hidden sm:inline-block text-[0.68rem] uppercase font-bold tracking-[0.2em] text-[#8c6b2d] bg-[#d8b45a]/15 px-2.5 py-0.5 rounded-full border border-[#d8b45a]/30" data-i18n-en="Maison Selection" data-i18n-de="Maison Selektion">
                     Maison Selection
                 </span>
             </div>
@@ -84,11 +84,11 @@
                         <!-- Floating Badges: Bestseller / Exclusive -->
                         <div class="pointer-events-none absolute top-2.5 left-2.5 z-20 flex flex-col gap-1">
                             @if($prod->sale_price)
-                                <span class="rounded bg-[#78000b] px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-wider text-white shadow-xs">
+                                <span class="rounded bg-[#78000b] px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-wider text-white shadow-xs" data-i18n-en="Special Offer" data-i18n-de="Sonderangebot">
                                     Special Offer
                                 </span>
                             @else
-                                <span class="rounded bg-[#120807]/85 backdrop-blur-md px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-wider text-[#ffd45a] border border-[#d8b45a]/40 shadow-xs">
+                                <span class="rounded bg-[#120807]/85 backdrop-blur-md px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-wider text-[#ffd45a] border border-[#d8b45a]/40 shadow-xs" data-i18n-en="Atelier" data-i18n-de="Atelier">
                                     Atelier
                                 </span>
                             @endif
@@ -104,6 +104,10 @@
                                 class="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full border border-[#d8b45a]/50 bg-white/95 text-neutral-700 shadow-md transition-all duration-300 hover:bg-[#78000b] hover:text-white hover:scale-110 cursor-pointer"
                                 aria-label="Add to wishlist"
                                 title="Wishlist"
+                                data-i18n-aria-en="Add to wishlist"
+                                data-i18n-aria-de="Zur Wunschliste hinzufügen"
+                                data-i18n-title-en="Wishlist"
+                                data-i18n-title-de="Wunschliste"
                             >
                                 <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
@@ -116,6 +120,10 @@
                                 class="hidden sm:flex h-8 w-8 items-center justify-center rounded-full border border-[#d8b45a]/50 bg-white/95 text-[#1c1210] shadow-md transition-all duration-300 hover:bg-[#d8b45a] hover:text-[#1c1210] hover:scale-110 cursor-pointer"
                                 aria-label="Quick View"
                                 title="Quick View"
+                                data-i18n-aria-en="Quick View"
+                                data-i18n-aria-de="Schnellansicht"
+                                data-i18n-title-en="Quick View"
+                                data-i18n-title-de="Schnellansicht"
                             >
                                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="11" cy="11" r="6.5" />
@@ -126,7 +134,7 @@
 
                         <!-- Hover Visual Banner -->
                         <div class="pointer-events-none absolute inset-x-0 bottom-0 z-10 py-1 text-center bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span class="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-white/90 drop-shadow">Alternate View</span>
+                            <span class="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-white/90 drop-shadow" data-i18n-en="Alternate View" data-i18n-de="Detailansicht">Alternate View</span>
                         </div>
                     </div>
 

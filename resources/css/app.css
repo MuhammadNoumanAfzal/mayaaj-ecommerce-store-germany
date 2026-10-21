@@ -35,37 +35,34 @@
 }
 
 @layer components {
-    /* Luxury Maison Fully Transparent Header */
-    [data-site-header] {
+    /* Luxury Maison Header Styling (Transparent at top on Home, Colorful Burgundy on Scroll) */
+    .site-luxury-header {
+        transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                    background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                    backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .site-luxury-header.header-transparent {
         background: transparent !important;
         background-color: transparent !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
         border: none !important;
         border-top: none !important;
         border-bottom: none !important;
         outline: none !important;
         box-shadow: none !important;
-        transition: background-color 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
     }
 
-    [data-site-header].scrolled-header {
-        background: rgba(11, 9, 8, 0.9) !important;
-        background-color: rgba(11, 9, 8, 0.9) !important;
-        backdrop-filter: blur(16px) saturate(160%) !important;
-        -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-        border-bottom: 1px solid rgba(216, 180, 90, 0.25) !important;
-        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55) !important;
-    }
-
-    [data-site-header] a,
-    [data-site-header] button:not(#lang-btn-en):not(#lang-btn-de) {
-        color: #ffffff !important;
-    }
-
-    [data-site-header] a:hover,
-    [data-site-header] button:hover:not(#lang-btn-en):not(#lang-btn-de) {
-        color: #ffd45a !important;
+    .site-luxury-header.header-colorful {
+        background: linear-gradient(135deg, rgba(77, 1, 7, 0.97) 0%, rgba(120, 0, 11, 0.98) 50%, rgba(77, 1, 7, 0.97) 100%) !important;
+        background-color: #78000b !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        border-bottom: 1px solid rgba(216, 180, 90, 0.35) !important;
+        box-shadow: 0 10px 35px rgba(120, 0, 11, 0.38) !important;
     }
 
     .luxury-container {

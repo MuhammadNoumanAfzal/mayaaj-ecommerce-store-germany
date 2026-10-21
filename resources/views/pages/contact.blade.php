@@ -244,11 +244,11 @@
                                     id="subject"
                                     class="w-full rounded border border-[#e6decb] bg-[#faf7f2] px-3.5 py-2.5 text-xs text-[#1c1210] transition-colors duration-200 focus:border-[#78000b] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#78000b] shadow-2xs cursor-pointer"
                                 >
-                                    <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
-                                    <option value="Bestellstatus & DHL Express Lieferung">Bestellstatus & DHL Express Lieferung</option>
-                                    <option value="Retoure & Reklamation">Retoure & Reklamation (30 Tage kostenfrei)</option>
-                                    <option value="Manufaktur & Sonderanfertigung">Manufaktur & Sonderanfertigung (Bespoke)</option>
-                                    <option value="VIP Kundenservice & Pflegehinweise">VIP Kundenservice & Lederpflege</option>
+                                    <option value="Allgemeine Anfrage" data-i18n-en="General Inquiry" data-i18n-de="Allgemeine Anfrage">Allgemeine Anfrage</option>
+                                    <option value="Bestellstatus & DHL Express Lieferung" data-i18n-en="Order Status & DHL Express Delivery" data-i18n-de="Bestellstatus & DHL Express Lieferung">Bestellstatus & DHL Express Lieferung</option>
+                                    <option value="Retoure & Reklamation" data-i18n-en="Returns & Exchanges (30 days free)" data-i18n-de="Retoure & Reklamation (30 Tage kostenfrei)">Retoure & Reklamation (30 Tage kostenfrei)</option>
+                                    <option value="Manufaktur & Sonderanfertigung" data-i18n-en="Bespoke & Custom Atelier Craft" data-i18n-de="Manufaktur & Sonderanfertigung (Bespoke)">Manufaktur & Sonderanfertigung (Bespoke)</option>
+                                    <option value="VIP Kundenservice & Pflegehinweise" data-i18n-en="VIP Care & Leather Preservation" data-i18n-de="VIP Kundenservice & Lederpflege">VIP Kundenservice & Lederpflege</option>
                                 </select>
                             </div>
 
