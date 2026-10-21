@@ -31,8 +31,8 @@ export default {
                 charcoal: '#24201E',
             },
             fontFamily: {
-                serif: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
-                display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                serif: ['"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+                display: ['"Playfair Display"', '"Cormorant Garamond"', 'Georgia', 'serif'],
                 sans: ['"Plus Jakarta Sans"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
             },
             letterSpacing: {

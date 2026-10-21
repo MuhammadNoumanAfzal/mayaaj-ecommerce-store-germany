@@ -160,9 +160,14 @@
                             The history of leather spans nearly 50,000 years. Early humans first utilized raw animal hides for essential survival. As master tanning was discovered, the hide was transformed into a supple, remarkably strong, and virtually indestructible material that protected mankind through punishing winters and blistering heat across millennia.
                         </p>
 
-                        <div class="rounded-xl border border-[#f0e7d8] bg-[#faf7f2] p-4 text-xs text-[#1c1210] space-y-2">
-                            <div class="flex items-start gap-2.5">
-                                <span class="text-[#78000b] font-bold text-sm">👑</span>
+                        <div class="rounded-xl border border-[#f0e7d8] bg-[#faf7f2] p-4 text-xs text-[#1c1210]">
+                            <div class="flex items-start gap-3">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20 mt-0.5" aria-hidden="true">
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.203a4 4 0 0 1-3.864 2.928H8.717a4 4 0 0 1-3.864-2.928L2.019 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/>
+                                        <path d="M5 21h14"/>
+                                    </svg>
+                                </span>
                                 <p class="leading-relaxed" data-i18n-en="Leather quickly transcended survival to become the ultimate emblem of nobility. Sovereign royal robes, gold-adorned footwear, and ornate travel coffers were master-crafted from it. Today, it remains the paramount international symbol of luxury—commanding haute maroquinerie, fine horological straps, sartorial jackets, and automotive interiors." data-i18n-de="Leder wandelte sich schnell zum Statussymbol des Adels: Königliche Prunkgewänder, mit Blattgold verzierte Reitstiefel und kostbare Reisetruhen wurden daraus gefertigt. Auch heute steht Leder für zeitlosen Luxus in Haute Maroquinerie und Meisteruhren.">
                                     Leather quickly transcended survival to become the ultimate emblem of nobility. Sovereign royal robes, gold-adorned footwear, and ornate travel coffers were master-crafted from it. Today, it remains the paramount international symbol of luxury—commanding haute maroquinerie, fine horological straps, sartorial jackets, and automotive interiors.
                                 </p>
@@ -254,7 +259,11 @@
 
                         <div class="border-t border-[#e2d8c3] pt-4 mt-4 space-y-3 text-xs text-[#1c1210]">
                             <div class="flex items-start gap-3">
-                                <span class="text-[#78000b] text-base">🤲</span>
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20 mt-0.5" aria-hidden="true">
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                                    </svg>
+                                </span>
                                 <p class="leading-relaxed" data-i18n-en="Behind our digital window stands the true heartbeat of Mehaaj: master artisans who dedicate days and weeks of meticulous handwork—cutting, saddle-stitching, burnishing, and sculpting each creation with genuine devotion. Each piece then undertakes a long, deliberate journey to reach your destination, crafted to be cherished by you and your loved ones for a lifetime." data-i18n-de="Hinter unserem digitalen Schaufenster schlägt das wahre Herz von Mehaaj: Meisterhandwerker, die Tage und Wochen in reiner Handarbeit verbringen – Schneiden, Sattelnähte, Kantenversiegelung und Polieren mit vollendeter Hingabe. Jedes Stück unternimmt eine weite Reise, um Generationen zu begleiten.">
                                     Behind our digital window stands the true heartbeat of Mehaaj: master artisans who dedicate days and weeks of meticulous handwork—cutting, saddle-stitching, burnishing, and sculpting each creation with genuine devotion. Each piece then undertakes a long, deliberate journey to reach your destination, crafted to be cherished by you and your loved ones for a lifetime.
                                 </p>
@@ -287,10 +296,14 @@
                             <!-- Slider Navigation Arrows -->
                             <div class="flex items-center gap-1.5">
                                 <button type="button" onclick="prevAboutSlide()" class="h-8 w-8 rounded-full border border-white/20 bg-white/10 text-white hover:bg-[#d8b45a] hover:text-[#120807] flex items-center justify-center transition cursor-pointer" aria-label="Previous Leather Creation">
-                                    ‹
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M15 19l-7-7 7-7"/>
+                                    </svg>
                                 </button>
                                 <button type="button" onclick="nextAboutSlide()" class="h-8 w-8 rounded-full border border-white/20 bg-white/10 text-white hover:bg-[#d8b45a] hover:text-[#120807] flex items-center justify-center transition cursor-pointer" aria-label="Next Leather Creation">
-                                    ›
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M9 5l7 7-7 7"/>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
@@ -857,7 +870,7 @@
         }
 
         swalInstance.fire({
-            title: isEn ? 'Private Salon Consultation 👑' : 'Private Salon-Konsultation 👑',
+            title: isEn ? 'Private Salon Consultation' : 'Private Salon-Konsultation',
             html: `
                 <div class="text-left space-y-3 mt-3 text-xs">
                     <p class="text-neutral-600">${isEn ? 'Reserve your private appointment with our master leather consultant:' : 'Buchen Sie Ihren exklusiven Beratungstermin mit unserem Leder-Experten:'}</p>
@@ -881,7 +894,7 @@
             if (result.isConfirmed) {
                 swalInstance.fire({
                     icon: 'success',
-                    title: isEn ? 'Consultation Request Received! 🍾' : 'Anfrage Erhalten! 🍾',
+                    title: isEn ? 'Consultation Request Received' : 'Anfrage Erhalten',
                     text: isEn 
                         ? 'Thank you, ' + result.value.name + '. Our VIP Concierge will confirm your private salon date within 12 hours.'
                         : 'Vielen Dank, ' + result.value.name + '. Unser Concierge-Team wird Ihren Termin binnen 12 Stunden bestätigen.',

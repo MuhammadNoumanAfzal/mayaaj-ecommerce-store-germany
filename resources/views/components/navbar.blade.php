@@ -13,10 +13,10 @@
     <!-- Soft top scrim layer for flawless text contrast when transparent over hero images -->
     <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-black/55 via-black/20 to-transparent opacity-100 transition-opacity duration-500" id="header-scrim-layer"></div>
 
-    <nav class="relative z-10 mx-auto flex h-16 w-full max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:h-[4.75rem] lg:px-10 text-white" aria-label="Main Maison navigation">
+    <nav class="relative z-10 mx-auto flex h-16 w-full max-w-[1600px] items-center justify-between px-3 sm:px-5 lg:h-[4.75rem] lg:px-6 xl:px-8 2xl:px-10 text-white" aria-label="Main Maison navigation">
         
         <!-- Left: Brand Logo & Mobile Toggle -->
-        <div class="flex items-center gap-3 sm:gap-4">
+        <div class="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
             <!-- Mobile Menu Toggle Button (Visible on mobile & tablet) -->
             <button 
                 type="button" 
@@ -42,17 +42,17 @@
                 <img 
                     src="{{ asset('logo.png') }}" 
                     alt="MEHAAJ" 
-                    class="h-9 w-auto max-w-[130px] object-contain sm:h-10 sm:max-w-[150px] lg:h-11 lg:max-w-[165px] brightness-110 drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] transition-all duration-300 group-hover:brightness-125"
+                    class="h-8.5 w-auto max-w-[125px] object-contain sm:h-9.5 sm:max-w-[145px] lg:h-10 lg:max-w-[155px] xl:h-11 xl:max-w-[165px] brightness-110 drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] transition-all duration-300 group-hover:brightness-125"
                 >
             </a>
         </div>
 
-        <!-- Center: Essential Luxury Navigation Links ("with necasy deisgn") -->
-        <div class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
+        <!-- Center: Essential Luxury Navigation Links (Strictly Single Line) -->
+        <div class="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-7 whitespace-nowrap shrink-0 flex-nowrap">
             <!-- Kollektion / Collection -->
             <a 
                 href="{{ route('shop') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.72rem] xl:text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm"
+                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
                 <span data-i18n-en="Collection" data-i18n-de="Kollektion">Kollektion</span>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
@@ -61,7 +61,7 @@
             <!-- Handtaschen / Handbags -->
             <a 
                 href="{{ route('shop', ['category' => 'handbags']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.72rem] xl:text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm"
+                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
                 <span data-i18n-en="Handbags" data-i18n-de="Handtaschen">Handtaschen</span>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
@@ -70,7 +70,7 @@
             <!-- Weekender & Travel -->
             <a 
                 href="{{ route('shop', ['category' => 'travel-luggage']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.72rem] xl:text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm"
+                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
                 <span data-i18n-en="Weekender" data-i18n-de="Reisetaschen">Reisetaschen</span>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
@@ -79,7 +79,7 @@
             <!-- Aktentaschen / Briefcases -->
             <a 
                 href="{{ route('shop', ['category' => 'briefcases']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.72rem] xl:text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm"
+                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
                 <span data-i18n-en="Briefcases" data-i18n-de="Aktentaschen">Aktentaschen</span>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
@@ -88,39 +88,39 @@
             <!-- Uhren & Schmuck / Watches & Jewelry -->
             <a 
                 href="{{ route('shop', ['category' => 'watches-jewelry']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.72rem] xl:text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm"
+                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
-                <span data-i18n-en="Watches & Jewelry" data-i18n-de="Uhren & Schmuck">Uhren & Schmuck</span>
+                <span class="whitespace-nowrap" data-i18n-en="Watches & Jewelry" data-i18n-de="Uhren & Schmuck">Uhren & Schmuck</span>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </a>
 
             <!-- Heritage & Leather History / About Us -->
             <a 
                 href="{{ route('about') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.72rem] xl:text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm"
+                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
-                <span data-i18n-en="Heritage & Lore" data-i18n-de="Leder-Erbe & Über Uns">Heritage & Lore</span>
+                <span class="whitespace-nowrap" data-i18n-en="Heritage & Lore" data-i18n-de="Über Uns">Über Uns</span>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </a>
         </div>
 
         <!-- Right Side: Live Search, Atelier Concierge, Language & Cart -->
-        <div class="flex items-center gap-2 sm:gap-3 lg:gap-3.5">
+        <div class="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 shrink-0 whitespace-nowrap">
             
-            <!-- Live Search Trigger Button ("nd serching") -->
+            <!-- Live Search Trigger Button -->
             <button 
                 type="button" 
                 onclick="openLiveSearchModal()" 
-                class="group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs text-white/95 hover:bg-white/20 hover:border-[#ffd45a]/70 hover:text-[#ffd45a] transition-all duration-300 cursor-pointer shadow-2xs backdrop-blur-xs" 
+                class="group flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-white/10 px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs text-white/95 hover:bg-white/20 hover:border-[#ffd45a]/70 hover:text-[#ffd45a] transition-all duration-300 cursor-pointer shadow-2xs backdrop-blur-xs shrink-0 whitespace-nowrap" 
                 aria-label="Open Search Catalog"
                 title="Search (Ctrl + K)"
             >
-                <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ffd45a] transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#ffd45a] transition-transform group-hover:scale-110 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="11" cy="11" r="8"/>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
-                <span class="hidden sm:inline text-[0.66rem] font-semibold uppercase tracking-wider" data-i18n-en="Search" data-i18n-de="Suche">Suche</span>
-                <kbd class="hidden md:inline-flex items-center rounded border border-white/20 bg-black/25 px-1.5 py-0.5 text-[0.56rem] font-mono font-bold text-white/80">⌘K</kbd>
+                <span class="hidden sm:inline text-[0.66rem] font-semibold uppercase tracking-wider whitespace-nowrap" data-i18n-en="Search" data-i18n-de="Suche">Suche</span>
+                <kbd class="hidden 2xl:inline-flex items-center rounded border border-white/20 bg-black/25 px-1.5 py-0.5 text-[0.56rem] font-mono font-bold text-white/80">⌘K</kbd>
             </button>
 
             <!-- Language Switcher Pill (EN | DE) -->

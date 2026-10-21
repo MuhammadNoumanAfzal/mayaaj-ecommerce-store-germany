@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,6 +14,13 @@
         @apply bg-espresso font-sans text-charcoal antialiased;
         width: 100%;
         position: relative;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Refined Typography Defaults for Luxury Breathability */
+    h1, h2, h3, h4, h5, h6, .font-display, .font-serif {
+        letter-spacing: 0.025em;
+        text-rendering: optimizeLegibility;
     }
 
     /* Universal Cursor Pointer for all interactive elements */
@@ -127,6 +134,11 @@
 
     [data-hero-slide].opacity-100 .hero-anim-desc {
         animation: heroTextGlideUp 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+    }
+
+    .hero-anim-desc {
+        letter-spacing: 0.1em !important;
+        line-height: 2.1 !important;
     }
 
     [data-hero-slide].opacity-100 .hero-anim-cta {

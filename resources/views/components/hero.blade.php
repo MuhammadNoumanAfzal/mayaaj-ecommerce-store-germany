@@ -67,15 +67,15 @@
 
             <div class="luxury-container relative z-20 flex h-full w-full items-center py-8 sm:py-10 lg:py-12 min-h-full">
                 <div class="max-w-xl lg:max-w-2xl">
-                    <p class="hero-anim hero-anim-eyebrow mb-2 sm:mb-2.5 text-[0.62rem] sm:text-[0.68rem] font-bold uppercase tracking-[0.22em]" style="color: #ffd45a !important; text-shadow: 0 2px 8px rgba(0,0,0,0.9);" data-i18n-de="{{ $slide['eyebrow_de'] }}" data-i18n-en="{{ $slide['eyebrow_en'] }}">{{ $slide['eyebrow_en'] }}</p>
-                    <h1 class="hero-anim hero-anim-title font-display text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.04] text-white" style="color: #ffffff !important; text-shadow: 0 4px 18px rgba(0,0,0,0.95), 0 2px 4px rgba(0,0,0,0.9);" data-i18n-de="{{ $slide['title_de'] }}" data-i18n-en="{{ $slide['title_en'] }}">
+                    <p class="hero-anim hero-anim-eyebrow mb-2 sm:mb-2.5 text-[0.62rem] sm:text-[0.68rem] font-bold uppercase tracking-[0.26em]" style="color: #ffd45a !important; text-shadow: 0 2px 8px rgba(0,0,0,0.9);" data-i18n-de="{{ $slide['eyebrow_de'] }}" data-i18n-en="{{ $slide['eyebrow_en'] }}">{{ $slide['eyebrow_en'] }}</p>
+                    <h1 class="hero-anim hero-anim-title font-display text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] tracking-[0.05em] text-white" style="color: #ffffff !important; text-shadow: 0 4px 18px rgba(0,0,0,0.95), 0 2px 4px rgba(0,0,0,0.9);" data-i18n-de="{{ $slide['title_de'] }}" data-i18n-en="{{ $slide['title_en'] }}">
                         {{ $slide['title_en'] }}
                     </h1>
-                    <p class="hero-anim hero-anim-desc mt-3 sm:mt-3.5 max-w-lg text-xs sm:text-sm lg:text-[0.95rem] font-normal leading-relaxed text-[#f4efe8]" style="color: #f5f0ea !important; text-shadow: 0 2px 10px rgba(0,0,0,0.95);" data-i18n-de="{{ $slide['text_de'] }}" data-i18n-en="{{ $slide['text_en'] }}">
+                    <p class="hero-anim hero-anim-desc mt-3.5 sm:mt-4 max-w-lg text-xs sm:text-sm lg:text-[0.95rem] font-normal leading-[2.1] tracking-[0.1em] text-[#f4efe8]" style="color: #f5f0ea !important; text-shadow: 0 2px 10px rgba(0,0,0,0.95); letter-spacing: 0.1em !important; line-height: 2.1 !important;" data-i18n-de="{{ $slide['text_de'] }}" data-i18n-en="{{ $slide['text_en'] }}">
                         {{ $slide['text_en'] }}
                     </p>
                     <div class="hero-anim hero-anim-cta mt-5 sm:mt-6 flex flex-row flex-wrap gap-3 items-center">
-                        <a href="#brand-footer" class="button-primary cursor-pointer shadow-[0_12px_28px_rgba(120,0,11,0.5)] px-6 py-2.5 text-xs sm:text-sm text-center" data-i18n-de="{{ $slide['cta_de'] }}" data-i18n-en="{{ $slide['cta_en'] }}">{{ $slide['cta_en'] }}</a>
+                        <a href="#brand-footer" class="button-primary cursor-pointer shadow-[0_12px_28px_rgba(120,0,11,0.5)] px-6 py-2.5 text-xs sm:text-sm tracking-[0.22em] text-center" data-i18n-de="{{ $slide['cta_de'] }}" data-i18n-en="{{ $slide['cta_en'] }}">{{ $slide['cta_en'] }}</a>
                     </div>
                 </div>
             </div>
