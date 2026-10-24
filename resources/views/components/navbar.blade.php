@@ -40,7 +40,7 @@
             <!-- Brand Maison Logo -->
             <a href="{{ route('home') }}" class="group flex shrink-0 items-center transition-transform hover:scale-105 duration-300" aria-label="MEHAAJ Official Home">
                 <img 
-                    src="{{ asset('logo.png') }}" 
+                    src="{{ asset('logo.png') }}?v={{ file_exists(public_path('logo.png')) ? filemtime(public_path('logo.png')) : 1 }}" 
                     alt="MEHAAJ" 
                     class="h-8.5 w-auto max-w-[125px] object-contain sm:h-9.5 sm:max-w-[145px] lg:h-10 lg:max-w-[155px] xl:h-11 xl:max-w-[165px] brightness-110 drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] transition-all duration-300 group-hover:brightness-125"
                 >
@@ -103,17 +103,6 @@
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </a>
 
-            <!-- Client Reviews / Bewertungen -->
-            <a 
-                href="{{ route('reviews.index') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span class="whitespace-nowrap flex items-center gap-1">
-                    <span class="text-[#ffd45a] text-[0.65rem]">★</span>
-                    <span data-i18n-en="Reviews" data-i18n-de="Bewertungen">Bewertungen</span>
-                </span>
-                <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
-            </a>
         </div>
 
         <!-- Right Side: Live Search, Atelier Concierge, Language & Cart -->
@@ -217,13 +206,6 @@
             </a>
             <a href="{{ route('about') }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
                 <span data-i18n-en="Heritage & Leather Lore" data-i18n-de="Leder-Erbe & Über Uns">Leder-Erbe & Über Uns</span>
-                <span class="text-[#ffd45a] text-xs">→</span>
-            </a>
-            <a href="{{ route('reviews.index') }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
-                <span class="flex items-center gap-1.5">
-                    <span class="text-[#ffd45a]">★</span>
-                    <span data-i18n-en="Client Reviews & Guestbook" data-i18n-de="Kundenbewertungen & Gästebuch">Kundenbewertungen & Gästebuch</span>
-                </span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
         </div>

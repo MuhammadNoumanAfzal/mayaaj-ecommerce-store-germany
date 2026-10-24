@@ -11,7 +11,7 @@
             <!-- Brand Logo & Motto -->
             <div class="flex items-center gap-3.5">
                 <a href="{{ route('home') }}" class="inline-block transition-transform hover:scale-105 duration-200" aria-label="MEHAAJ Official Home">
-                    <img src="{{ asset('logo.png') }}" alt="MEHAAJ" class="h-8 w-auto object-contain brightness-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                    <img src="{{ asset('logo.png') }}?v={{ file_exists(public_path('logo.png')) ? filemtime(public_path('logo.png')) : 1 }}" alt="MEHAAJ" class="h-8 w-auto object-contain brightness-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 </a>
                 <span class="hidden sm:inline-block h-4 w-[1px] bg-white/20"></span>
                 <span class="hidden sm:inline-block text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#d8b45a]" data-i18n-en="Haute Maroquinerie • Est. 2026" data-i18n-de="Haute Maroquinerie • Est. 2026">

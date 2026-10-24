@@ -16,18 +16,30 @@ class InventoryController extends Controller
     {
         $query = Product::with(['category', 'subcategory']);
 
-        // Search filter (Name or SKU)
+        // Search Filter (Name, SKU, Description, Category, Subcategory)
         if ($request->filled('search')) {
             $search = trim($request->input('search'));
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('sku', 'like', "%{$search}%");
+                  ->orWhere('sku', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhereHas('category', function ($cq) use ($search) {
+                      $cq->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('subcategory', function ($sq) use ($search) {
+                      $sq->where('name', 'like', "%{$search}%");
+                  });
             });
         }
 
         // Category filter
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->input('category_id'));
+        }
+
+        // Subcategory filter
+        if ($request->filled('subcategory_id')) {
+            $query->where('subcategory_id', $request->input('subcategory_id'));
         }
 
         // Stock status filter tab
@@ -40,23 +52,40 @@ class InventoryController extends Controller
             $query->where('stock', '>', 5);
         }
 
-        // Sorting
+        // Dynamic Sorting
         $sortBy = $request->input('sort', 'stock_asc');
-        if ($sortBy === 'stock_asc') {
-            $query->orderBy('stock', 'asc');
-        } elseif ($sortBy === 'stock_desc') {
-            $query->orderBy('stock', 'desc');
-        } elseif ($sortBy === 'name_asc') {
-            $query->orderBy('name', 'asc');
-        } else {
-            $query->latest();
+        switch ($sortBy) {
+            case 'stock_desc':
+                $query->orderBy('stock', 'desc');
+                break;
+            case 'name_asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'price_desc':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'price_asc':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'newest':
+                $query->latest();
+                break;
+            case 'stock_asc':
+            default:
+                $query->orderBy('stock', 'asc');
+                break;
         }
 
-        $products = $query->paginate(15)->withQueryString();
+        // Consistent 10 per page pagination with query string
+        $products = $query->paginate(10)->withQueryString();
 
         // Calculate KPI Metrics across entire inventory
         $totalProducts = Product::count();
         $totalUnits = (int) Product::sum('stock');
+        $inStockCount = Product::where('stock', '>', 5)->count();
         $lowStockCount = Product::where('stock', '<=', 5)->where('stock', '>', 0)->count();
         $outOfStockCount = Product::where('stock', '<=', 0)->count();
         
@@ -64,17 +93,40 @@ class InventoryController extends Controller
             return ($p->sale_price ?? $p->price) * max(0, (int)$p->stock);
         });
 
-        $categories = Category::orderBy('name')->get();
+        // Categories & Subcategories with counts
+        $categories = Category::withCount('products')->orderBy('name')->get();
+        $subcategories = \App\Models\Subcategory::withCount('products')->orderBy('name')->get();
+
+        // Autocomplete live suggestion data (zero-latency instant search)
+        $allProductsForSuggestions = Product::select('id', 'name', 'slug', 'sku', 'price', 'sale_price', 'stock', 'status', 'category_id', 'image')
+            ->with('category:id,name')
+            ->orderBy('stock', 'asc')
+            ->get()
+            ->map(function ($p) {
+                return [
+                    'id' => $p->id,
+                    'name' => $p->name,
+                    'sku' => $p->sku,
+                    'slug' => $p->slug,
+                    'price' => (float)($p->sale_price ?? $p->price),
+                    'stock' => (int)$p->stock,
+                    'category' => $p->category->name ?? 'Unassigned',
+                    'image_url' => $p->image ? asset('storage/' . $p->image) : null,
+                ];
+            });
 
         return view('admin.inventory.index', compact(
             'products',
             'categories',
+            'subcategories',
             'totalProducts',
             'totalUnits',
+            'inStockCount',
             'lowStockCount',
             'outOfStockCount',
             'totalValuation',
-            'filter'
+            'filter',
+            'allProductsForSuggestions'
         ));
     }
 

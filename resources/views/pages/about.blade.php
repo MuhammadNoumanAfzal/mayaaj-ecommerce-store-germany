@@ -116,9 +116,7 @@
             </div>
 
         </div>
-
     </section>
-
 
     <!-- ========================================================================= -->
     <!-- 2. SPLIT-SCREEN CHRONICLE: LEATHER HISTORY & DYNAMIC PRODUCT SLIDER -->
@@ -128,7 +126,7 @@
             
             <!-- Section Header -->
             <div class="mb-12 max-w-3xl">
-                <p class="text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[#78000b]" data-i18n-en="HISTORICAL CHRONICLE & ARTISAN PROVENANCE" data-i18n-de="HISTORISCHE CHRONIK & MEISTERLICHE HERKUNFT">HISTORICAL CHRONICLE & ARTISAN PROVENANCE</p>
+                <p class="text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[#78000b]" data-i18n-en="Part I: The 4 Historical Leather Chapters • HISTORY • PROVENANCE • CRAFT" data-i18n-de="Teil I: Die 4 historischen Lederkapitel • GESCHICHTE • HERKUNFT • HANDWERK">Part I: The 4 Historical Leather Chapters • HISTORY • PROVENANCE • CRAFT</p>
                 <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-[#1c1210] mt-1.5" data-i18n-en="How Fifty Millennia of Craft Reside in Your Pocket" data-i18n-de="Wie fünfzig Jahrtausende Handwerk in Ihrer Tasche ruhen">
                     How Fifty Millennia of Craft Reside in Your Pocket
                 </h2>
@@ -138,10 +136,10 @@
             <!-- Splitscreen Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
                 
-                <!-- Left Column (7 Cols): The 4 Illustrated Historical Chapters (Translated from Urdu) -->
+                <!-- Left Column (7 Cols): The 4 Illustrated Historical Chapters (Verbatim from PDF) -->
                 <div class="lg:col-span-7 space-y-8">
                     
-                    <!-- Chapter 1: 50,000 BC - The First Shield & Royal Luxury -->
+                    <!-- Chapter 1: 50,000-Year Legacy: From Shield to Crown -->
                     <div class="rounded-2xl border border-[#e6decb] bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                         <span class="absolute top-4 right-6 font-display text-5xl font-bold text-[#f2eade] select-none pointer-events-none">01</span>
                         <div class="flex items-center gap-3 mb-4">
@@ -150,13 +148,15 @@
                             </span>
                             <div>
                                 <span class="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-en="ORIGINS & ROYAL EMBLEMS" data-i18n-de="URSPRÜNGE & KÖNIGLICHE SYMBOLE">ORIGINS & ROYAL EMBLEMS</span>
-                                <h3 class="font-display text-xl sm:text-2xl font-medium text-[#1c1210]" data-i18n-en="The 50,000-Year Legacy: From Shield to Crown" data-i18n-de="50.000 Jahre Tradition: Vom Schutzschild zur Krone">
+                                <h3 class="font-display text-xl sm:text-2xl font-medium text-[#1c1210]" data-i18n-en="The 50,000-Year Legacy: From Shield to Crown" data-i18n-de="50.000 Jahre Tradition: Vom Schild zur Krone">
                                     The 50,000-Year Legacy: From Shield to Crown
                                 </h3>
                             </div>
                         </div>
 
-                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4" data-i18n-en="The history of leather spans nearly 50,000 years. Early humans first utilized raw animal hides for essential survival. As master tanning was discovered, the hide was transformed into a supple, remarkably strong, and virtually indestructible material that protected mankind through punishing winters and blistering heat across millennia." data-i18n-de="Die Geschichte des Leders reicht fast 50.000 Jahre zurück. Zunächst nutzten die frühen Menschen rohe Tierfelle zum Schutz. Mit der Entdeckung der Gerbkunst wurde Leder zu einem geschmeidigen, unzerstörbaren Material, das die Menschheit durch eisige Winter und glühende Hitze schützte.">
+                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4 font-serif" 
+                           data-i18n-en="The history of leather spans nearly 50,000 years. Early humans first utilized raw animal hides for essential survival. As master tanning was discovered, the hide was transformed into a supple, remarkably strong, and virtually indestructible material that protected mankind through punishing winters and blistering heat across millennia." 
+                           data-i18n-de="Die Geschichte des Leders reicht fast 50.000 Jahre zurück. Zunächst nutzten die frühen Menschen rohe Tierfelle zum Schutz vor der Natur. Mit der Entdeckung der Gerbkunst wurde Leder zu einem geschmeidigen, resistenten Material, das die Menschheit durch eisige Winter und glühende Hitze brachte und ihr Überleben sicherte.">
                             The history of leather spans nearly 50,000 years. Early humans first utilized raw animal hides for essential survival. As master tanning was discovered, the hide was transformed into a supple, remarkably strong, and virtually indestructible material that protected mankind through punishing winters and blistering heat across millennia.
                         </p>
 
@@ -168,14 +168,16 @@
                                         <path d="M5 21h14"/>
                                     </svg>
                                 </span>
-                                <p class="leading-relaxed" data-i18n-en="Leather quickly transcended survival to become the ultimate emblem of nobility. Sovereign royal robes, gold-adorned footwear, and ornate travel coffers were master-crafted from it. Today, it remains the paramount international symbol of luxury—commanding haute maroquinerie, fine horological straps, sartorial jackets, and automotive interiors." data-i18n-de="Leder wandelte sich schnell zum Statussymbol des Adels: Königliche Prunkgewänder, mit Blattgold verzierte Reitstiefel und kostbare Reisetruhen wurden daraus gefertigt. Auch heute steht Leder für zeitlosen Luxus in Haute Maroquinerie und Meisteruhren.">
-                                    Leather quickly transcended survival to become the ultimate emblem of nobility. Sovereign royal robes, gold-adorned footwear, and ornate travel coffers were master-crafted from it. Today, it remains the paramount international symbol of luxury—commanding haute maroquinerie, fine horological straps, sartorial jackets, and automotive interiors.
+                                <p class="leading-relaxed font-serif" 
+                                   data-i18n-en="<strong>Royal & Nobility Lore:</strong> Leather quickly transcended survival to become the ultimate emblem of nobility. Sovereign royal robes, gold-adorned footwear, and ornate travel coffers were master-crafted from it. Today, it remains the paramount international symbol of luxury—commanding leather article hauto mor cur, fine horological straps, and bespoke sartorial jackets." 
+                                   data-i18n-de="<strong>Königlicher & adliger Zusammenhang:</strong> Leder wuchs rasch über das bloße Überleben hinaus und wurde zum ultimativen Symbol des Adels. Königliche Gewänder, goldverzierte Schuhe und prunkvolle Reisetruhen wurden meisterhaft daraus gefertigt. Bis heute ist es das höchste internationale Symbol für Luxus – es prägt die Haute Maroquinerie (feine Lederwaren), edle Uhrenarmbänder und maßgeschneiderte Jacketts.">
+                                    <strong>Royal & Nobility Lore:</strong> Leather quickly transcended survival to become the ultimate emblem of nobility. Sovereign royal robes, gold-adorned footwear, and ornate travel coffers were master-crafted from it. Today, it remains the paramount international symbol of luxury—commanding leather article hauto mor cur, fine horological straps, and bespoke sartorial jackets.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Chapter 2: The Terroir of Unrivaled Strength - Bovine & Buffalo Hides -->
+                    <!-- Chapter 2: The World's Most Resilient Hides: Buffalo & Cowhide -->
                     <div class="rounded-2xl border border-[#e6decb] bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                         <span class="absolute top-4 right-6 font-display text-5xl font-bold text-[#f2eade] select-none pointer-events-none">02</span>
                         <div class="flex items-center gap-3 mb-4">
@@ -190,23 +192,22 @@
                             </div>
                         </div>
 
-                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4" data-i18n-en="Among connoisseurs, full-grain water buffalo and bovine cowhide are celebrated as the strongest leather fibers on earth. Their high-density grain structure makes them irreplaceable for heirloom travel bags, diplomatic briefcases, and master footwear that withstand decades of rigorous use without compromising their sculptural poise." data-i18n-de="Unter Kennern gelten Vollnarben-Wasserbüffel und Premium-Rindleder als die stärksten Lederfasern der Welt. Ihre dichte Faserstruktur macht sie unersetzlich für zeitlose Reisetaschen und edle Aktentaschen, die Generationen überdauern.">
+                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4 font-serif" 
+                           data-i18n-en="Among connoisseurs, full-grain water buffalo and bovine cowhide are celebrated as the strongest leather fibers on earth. Their high-density grain structure makes them irreplaceable for heirloom travel bags, diplomatic briefcases, and master footwear that withstand decades of rigorous use without compromising their sculptural poise." 
+                           data-i18n-de="Unter Kennern gelten Wasserbüffel-und Rindleder als die stärksten Lederfasern der Welt. Ihre dichte Faserstruktur macht sie unersetzlich für zeitlose Reisetaschen und edle Aktentaschen, die Generationen überdauern ohne ihrer Funktion nicht gerecht zu werden.">
                             Among connoisseurs, full-grain water buffalo and bovine cowhide are celebrated as the strongest leather fibers on earth. Their high-density grain structure makes them irreplaceable for heirloom travel bags, diplomatic briefcases, and master footwear that withstand decades of rigorous use without compromising their sculptural poise.
                         </p>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                            <div class="rounded-lg border border-[#f0e7d8] bg-[#faf7f2] p-3">
-                                <span class="font-bold text-[#78000b] block mb-0.5" data-i18n-en="Sheep & Goat Nappa" data-i18n-de="Schaf- & Ziegen-Nappa">Sheep & Goat Nappa</span>
-                                <span class="text-[#685c54] text-[0.7rem]" data-i18n-en="Silky, featherlight touch perfected for soft linings, fine pocket cardholders, and bespoke gloves." data-i18n-de="Seidig-weiche Haptik, perfekt für Innenfutter, edle Kartenetuis und zarte Handschuhe.">Silky, featherlight touch perfected for soft linings, fine pocket cardholders, and bespoke gloves.</span>
-                            </div>
-                            <div class="rounded-lg border border-[#f0e7d8] bg-[#faf7f2] p-3">
-                                <span class="font-bold text-[#78000b] block mb-0.5" data-i18n-en="Coastal Rare Exotics" data-i18n-de="Seltene Küstenleder">Coastal Rare Exotics</span>
-                                <span class="text-[#685c54] text-[0.7rem]" data-i18n-en="Rare grain textures sourced along coastal maritime artisanal hubs, sought-after for limited bespoke editions." data-i18n-de="Seltene Ledersorten maritimer Küstengebiete, hochgeschätzt für exklusive limitierte Sammlerstücke.">Rare grain textures sourced along coastal maritime artisanal hubs, sought-after for limited bespoke editions.</span>
-                            </div>
+                        <div class="rounded-xl border border-[#f0e7d8] bg-[#faf7f2] p-4 text-xs text-[#1c1210]">
+                            <p class="leading-relaxed font-serif" 
+                               data-i18n-en="<strong>Specialty Hides:</strong> Sheep & Goat Nappa provides a silky, featherlight touch for linings and fine pocket cardholders, while Rare Coastal Exotics offer exclusive grain textures sourced for limited bespoke commissions." 
+                               data-i18n-de="<strong>Spezialleder:</strong> Schaf- & Ziegen-Nappa bietet eine seidige, federleichte Haptik für Futter und feine Kartenetuis, während seltene Küstenexoten exklusive Narbenstrukturen für limitierte Maßanfertigungen bieten.">
+                                <strong>Specialty Hides:</strong> Sheep & Goat Nappa provides a silky, featherlight touch for linings and fine pocket cardholders, while Rare Coastal Exotics offer exclusive grain textures sourced for limited bespoke commissions.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Chapter 3: Tannery Alchemy - Crazy Horse, Pull-Up & LWG Certification -->
+                    <!-- Chapter 3: Crazy Horse, Pull-Up & LWG European Certified Tanneries -->
                     <div class="rounded-2xl border border-[#e6decb] bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                         <span class="absolute top-4 right-6 font-display text-5xl font-bold text-[#f2eade] select-none pointer-events-none">03</span>
                         <div class="flex items-center gap-3 mb-4">
@@ -221,24 +222,34 @@
                             </div>
                         </div>
 
-                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4" data-i18n-en="Centuries of tanning refinement in Sialkot and Karachi have earned international prestige, standing second only to Italy in worldwide leather tanning renown. Equipped with gold-rated Leather Working Group (LWG) environmental certifications, these master tanneries produce leathers to exacting European luxury standards for the world's most distinguished fashion houses." data-i18n-de="Jahrhundertealte Gerbtraditionen in Sialkot und Karachi genießen Weltruf und rangieren direkt nach Italien. Ausgestattet mit LWG-Zertifizierungen (Leather Working Group) erfüllen diese Meistergerbereien höchste europäische Umwelt- und Qualitätsstandards.">
+                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4 font-serif" 
+                           data-i18n-en="Centuries of tanning refinement in Sialkot and Karachi have earned international prestige, standing second only to Italy in worldwide leather tanning renown. Equipped with gold-rated Leather Working Group (LWG) environmental certifications, these master tanneries produce leathers to exacting European luxury standards for the world's most distinguished fashion houses." 
+                           data-i18n-de="Jahrhundertealte Gerbtraditionen in Sialkot und Karachi genießen Weltruf und rangieren direkt nach Italien in Lederqualität. Ausgestattet mit LWG-Zertifizierungen (Leather Working Group) erfüllen diese Meistergerbereien höchste europäische Umwelt- und Qualitätsstandards.">
                             Centuries of tanning refinement in Sialkot and Karachi have earned international prestige, standing second only to Italy in worldwide leather tanning renown. Equipped with gold-rated Leather Working Group (LWG) environmental certifications, these master tanneries produce leathers to exacting European luxury standards for the world's most distinguished fashion houses.
                         </p>
 
                         <!-- Leather Finish Highlights -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-serif">
                             <div class="border-l-2 border-[#d8b45a] pl-3 py-1">
-                                <h4 class="font-bold text-[#1c1210]" data-i18n-en="Crazy Horse Full-Grain:" data-i18n-de="Crazy Horse Vollleder:">Crazy Horse Full-Grain:</h4>
-                                <p class="text-[0.72rem] text-[#685c54]" data-i18n-en="Infused with natural organic waxes and oils. It self-heals scratches and evolves an opulent, living vintage patina that grows more mesmerizing with every year." data-i18n-de="Mit natürlichen Wachsen und Ölen veredelt. Kratzer heilen durch Polieren von selbst aus und entwickeln eine atemberaubende Patina.">Infused with natural organic waxes and oils. It self-heals scratches and evolves an opulent, living vintage patina that grows more mesmerizing with every year.</p>
+                                <h4 class="font-bold text-[#1c1210]" data-i18n-en="Crazy Horse Full-Grain:" data-i18n-de="Crazy Horse Vollnarbenleder:">Crazy Horse Full-Grain:</h4>
+                                <p class="text-[0.72rem] text-[#685c54]" 
+                                   data-i18n-en="Infused with natural carnauba wax and organic oils. Scratches rub out naturally under palm warmth, evolving a living vintage patina." 
+                                   data-i18n-de="Mit natürlichem Carnaubawachs und organischen Ölen durchtränkt. Kratzer verschwinden durch die Wärme der Hand und entwickeln eine lebendige Vintage -Patina.">
+                                    Infused with natural carnauba wax and organic oils. Scratches rub out naturally under palm warmth, evolving a living vintage patina.
+                                </p>
                             </div>
                             <div class="border-l-2 border-[#78000b] pl-3 py-1">
-                                <h4 class="font-bold text-[#1c1210]" data-i18n-en="Pull-Up Aniline Leather:" data-i18n-de="Pull-Up Anilinleder:">Pull-Up Aniline Leather:</h4>
-                                <p class="text-[0.72rem] text-[#685c54]" data-i18n-en="Features a dramatic two-tone chromatic shift when folded or handled, revealing rich lighter tones underneath its supple exterior." data-i18n-de="Zeigt beim Biegen faszinierende zweifarbige Farbwechsel und offenbart eine samtig-weiche, lebendige Tiefe.">Features a dramatic two-tone chromatic shift when folded or handled, revealing rich lighter tones underneath its supple exterior.</p>
+                                <h4 class="font-bold text-[#1c1210]" data-i18n-en="Pull-Up Aniline:" data-i18n-de="Pull-Up-Anilinleder:">Pull-Up Aniline:</h4>
+                                <p class="text-[0.72rem] text-[#685c54]" 
+                                   data-i18n-en="Features a dramatic two-tone chromatic shift when folded, revealing lighter undertones beneath." 
+                                   data-i18n-de="Zeigt beim Biegen einen dramatischen zweifarbigen Wechsel und legt hellere Untertöne darunter frei.">
+                                    Features a dramatic two-tone chromatic shift when folded, revealing lighter undertones beneath.
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Chapter 4: Maison MEHAAJ 2026 - Human Devotion & Luxury In Your Pocket -->
+                    <!-- Chapter 4: Maison MEHAAJ: Love, Handcraft & The Long Journey -->
                     <div class="rounded-2xl border border-[#d8b45a]/50 bg-gradient-to-br from-white via-[#faf7f2] to-[#f4ebe1] p-6 sm:p-8 shadow-md relative overflow-hidden">
                         <span class="absolute top-4 right-6 font-display text-5xl font-bold text-[#ebdcc9] select-none pointer-events-none">04</span>
                         <div class="flex items-center gap-3 mb-4">
@@ -247,13 +258,15 @@
                             </span>
                             <div>
                                 <span class="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#78000b]" data-i18n-en="THE 2026 FOUNDING CONVICTION" data-i18n-de="DIE GRÜNDUNGSVISION 2026">THE 2026 FOUNDING CONVICTION</span>
-                                <h3 class="font-display text-xl sm:text-2xl font-medium text-[#1c1210]" data-i18n-en="Maison MEHAAJ: Love, Handcraft & The Long Journey" data-i18n-de="Maison MEHAAJ: Hingabe, Handwerk & Die weite Reise">
+                                <h3 class="font-display text-xl sm:text-2xl font-medium text-[#1c1210]" data-i18n-en="Maison MEHAAJ: Love, Handcraft & The Long Journey" data-i18n-de="Maison MEHAAJ: Liebe, handgefertigt & die lange Reise">
                                     Maison MEHAAJ: Love, Handcraft & The Long Journey
                                 </h3>
                             </div>
                         </div>
 
-                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4" data-i18n-en="While MEHAAJ as an official maison is established in 2026, the concept behind it has been refined over decades. We are driven by a steadfast vision: to intertwine 50,000 years of leather history with present-day European sophistication. We design each piece around human emotion, personal aspirations, and the tactile romance of heirloom materials." data-i18n-de="Obwohl MEHAAJ im Jahr 2026 offiziell gegründet wird, reift die Vision dahinter seit Jahrzehnten: 50.000 Jahre Ledergeschichte mit moderner europäischer Raffinesse zu verbinden. Jedes Meisterstück entsteht im Einklang mit menschlichen Emotionen und zeitlosem Wert.">
+                        <p class="text-xs sm:text-sm text-[#5c4f46] leading-relaxed font-light mb-4 font-serif" 
+                           data-i18n-en="While MEHAAJ as an official maison is established in 2026, the concept behind it has been refined over decades. We are driven by a steadfast vision: to intertwine 50,000 years of leather history with present-day European sophistication. We design each piece around human emotion, personal aspirations, and the tactile romance of heirloom materials." 
+                           data-i18n-de="Obwohl MEHAAJ im Jahr 2026 offiziell gegründet wurde, reicht die Vision dahinter seit Jahrzehnten: 50.000 Jahre Ledergeschichte mit moderner europäischer Raffinesse zu verbinden. Jedes einzigartige Stück entsteht im Einklang mit menschlichen Emotionen und zeitlosem Wert.">
                             While MEHAAJ as an official maison is established in 2026, the concept behind it has been refined over decades. We are driven by a steadfast vision: to intertwine 50,000 years of leather history with present-day European sophistication. We design each piece around human emotion, personal aspirations, and the tactile romance of heirloom materials.
                         </p>
 
@@ -264,17 +277,19 @@
                                         <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
                                     </svg>
                                 </span>
-                                <p class="leading-relaxed" data-i18n-en="Behind our digital window stands the true heartbeat of Mehaaj: master artisans who dedicate days and weeks of meticulous handwork—cutting, saddle-stitching, burnishing, and sculpting each creation with genuine devotion. Each piece then undertakes a long, deliberate journey to reach your destination, crafted to be cherished by you and your loved ones for a lifetime." data-i18n-de="Hinter unserem digitalen Schaufenster schlägt das wahre Herz von Mehaaj: Meisterhandwerker, die Tage und Wochen in reiner Handarbeit verbringen – Schneiden, Sattelnähte, Kantenversiegelung und Polieren mit vollendeter Hingabe. Jedes Stück unternimmt eine weite Reise, um Generationen zu begleiten.">
-                                    Behind our digital window stands the true heartbeat of Mehaaj: master artisans who dedicate days and weeks of meticulous handwork—cutting, saddle-stitching, burnishing, and sculpting each creation with genuine devotion. Each piece then undertakes a long, deliberate journey to reach your destination, crafted to be cherished by you and your loved ones for a lifetime.
+                                <p class="leading-relaxed font-serif" 
+                                   data-i18n-en="<strong>The Atelier Devotion:</strong> Behind our digital window stands the true heartbeat of Mehaaj: master artisans who dedicate days and weeks of meticulous handwork—cutting, saddle-stitching, burnishing, and sculpting each creation with genuine devotion. Each piece then undertakes a long, deliberate journey to reach your destination, crafted to be cherished by you and your loved ones for a lifetime." 
+                                   data-i18n-de="<strong>Die Hingabe des Ateliers:</strong> Hinter unserem digitalen Schaufenster schlägt das wahre Herz von Mehaaj: ausgebildete Handwerker, die Tage und Wochen sorgfältiger Handarbeit aufwenden – Zuschneiden, Sattlernaht, Polieren und Formen jedes Stücks kann nur mit echter Hingabe vollbracht werden. Danach tritt jedes Stück eine lange Reise zu Ihnen an, gefertigt, um von Ihnen und Ihren Liebsten ein Leben lang geschätzt zu werden.">
+                                    <strong>The Atelier Devotion:</strong> Behind our digital window stands the true heartbeat of Mehaaj: master artisans who dedicate days and weeks of meticulous handwork—cutting, saddle-stitching, burnishing, and sculpting each creation with genuine devotion. Each piece then undertakes a long, deliberate journey to reach your destination, crafted to be cherished by you and your loved ones for a lifetime.
                                 </p>
                             </div>
 
                             <div class="mt-4 rounded-xl border border-[#d8b45a]/60 bg-white p-4 text-center">
-                                <p class="text-[0.62rem] uppercase tracking-[0.2em] text-[#78000b] font-bold" data-i18n-en="OUR GUIDING MAISON SLOGAN" data-i18n-de="UNSER MAISON LEITMOTIV">OUR GUIDING MAISON SLOGAN</p>
+                                <p class="text-[0.62rem] uppercase tracking-[0.2em] text-[#78000b] font-bold" data-i18n-en="OUR GUIDING MAISON SLOGAN" data-i18n-de="LEITSPRUCH DES HAUSES">OUR GUIDING MAISON SLOGAN</p>
                                 <p class="font-display text-2xl sm:text-3xl text-[#1c1210] font-normal italic mt-1 text-center" data-i18n-en="“Luxury In Your Pocket.”" data-i18n-de="„Luxus in Ihrer Tasche.“">
                                     “Luxury In Your Pocket.”
                                 </p>
-                                <p class="text-[0.68rem] text-[#8a7c74] mt-1" data-i18n-en="Crafted with gratitude, devotion, and uncompromising European excellence." data-i18n-de="Gefertigt mit Dankbarkeit, Hingabe und kompromissloser europäischer Exzellenz.">Crafted with gratitude, devotion, and uncompromising European excellence.</p>
+                                <p class="text-[0.68rem] text-[#8a7c74] mt-1" data-i18n-en="Handcrafted with gratitude and European excellence." data-i18n-de="Mit Präzision und europäischer Exzellenz handgefertigt.">Handcrafted with gratitude and European excellence.</p>
                             </div>
                         </div>
                     </div>
@@ -324,7 +339,7 @@
                                 </div>
                                 <span class="text-[0.62rem] font-bold uppercase tracking-widest text-[#ffd45a]">FULL-GRAIN TUSCAN BOVINE</span>
                                 <h5 class="font-display text-xl font-medium text-white mt-0.5">Grand Atelier Leather Weekender</h5>
-                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed">
+                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed font-serif">
                                     Tanned with natural mimosa bark and hand-buffed for heavy travel endurance. Designed to gain rich character with every journey.
                                 </p>
                                 <div class="mt-4 flex items-center justify-between pt-3 border-t border-white/10">
@@ -348,7 +363,7 @@
                                 </div>
                                 <span class="text-[0.62rem] font-bold uppercase tracking-widest text-[#ffd45a]">SUPREME TENSILE DENSITY</span>
                                 <h5 class="font-display text-xl font-medium text-white mt-0.5">Chancellor Diplomatic Briefcase</h5>
-                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed">
+                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed font-serif">
                                     Water buffalo grain with dual combination locks and solid brass hardware. Built for heads of state and generational heirloom status.
                                 </p>
                                 <div class="mt-4 flex items-center justify-between pt-3 border-t border-white/10">
@@ -372,7 +387,7 @@
                                 </div>
                                 <span class="text-[0.62rem] font-bold uppercase tracking-widest text-[#ffd45a]">CRAZY HORSE & WAX INFUSION</span>
                                 <h5 class="font-display text-xl font-medium text-white mt-0.5">Classic Full-Grain Bifold</h5>
-                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed">
+                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed font-serif">
                                     Hot-stuffed with carnauba waxes and oils. Fits seamlessly into your breast pocket, deepening to a rich amber luster over time.
                                 </p>
                                 <div class="mt-4 flex items-center justify-between pt-3 border-t border-white/10">
@@ -396,7 +411,7 @@
                                 </div>
                                 <span class="text-[0.62rem] font-bold uppercase tracking-widest text-[#ffd45a]">ARCHITECTURAL SILHOUETTE</span>
                                 <h5 class="font-display text-xl font-medium text-white mt-0.5">Aurelia Structured City Tote</h5>
-                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed">
+                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed font-serif">
                                     Fine-grain calfskin paired with suede interior compartments and hand-beveled edges sealed with 4 coats of lacquer.
                                 </p>
                                 <div class="mt-4 flex items-center justify-between pt-3 border-t border-white/10">
@@ -420,7 +435,7 @@
                                 </div>
                                 <span class="text-[0.62rem] font-bold uppercase tracking-widest text-[#ffd45a]">ALLIGATOR-GRAIN CALFSKIN</span>
                                 <h5 class="font-display text-xl font-medium text-white mt-0.5">Grand Royal Tourbillon Automatic</h5>
-                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed">
+                                <p class="text-xs text-white/75 font-light mt-1.5 leading-relaxed font-serif">
                                     Open-heart mechanical movement framed in sapphire glass, matched with an artisan hand-stitched leather wristband.
                                 </p>
                                 <div class="mt-4 flex items-center justify-between pt-3 border-t border-white/10">
@@ -443,7 +458,6 @@
                         </div>
 
                     </div>
-
                 </div>
 
             </div>
@@ -463,17 +477,17 @@
         <div class="luxury-container relative z-10">
             
             <div class="max-w-3xl mx-auto text-center space-y-3 mb-14">
-                <span class="text-[0.65rem] font-bold uppercase tracking-[0.26em] text-[#ffd45a]" data-i18n-en="CURATED LEATHER TAXONOMY" data-i18n-de="KURATIERTE LEDER-TAXONOMIE">CURATED LEATHER TAXONOMY</span>
-                <h2 class="font-display text-3xl sm:text-5xl font-normal text-white" data-i18n-en="The Six Pillars of Maison Leathercraft" data-i18n-de="Die sechs Säulen der Maison Lederkunst">
+                <span class="text-[0.65rem] font-bold uppercase tracking-[0.26em] text-[#ffd45a]" data-i18n-en="Part II: TAXONOMY & MATERIAL SCIENCE" data-i18n-de="Teil II: SYSTEMATIK & MATERIALKUNDE">Part II: TAXONOMY & MATERIAL SCIENCE</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-normal text-white" data-i18n-en="The Six Pillars of Maison Leathercraft" data-i18n-de="Die sechs Säulen der Maison-Lederkunst">
                     The Six Pillars of Maison Leathercraft
                 </h2>
                 <div class="h-0.5 w-16 bg-[#d8b45a] mx-auto mt-2"></div>
-                <p class="text-xs sm:text-sm text-white/70 max-w-xl mx-auto font-light leading-relaxed pt-2" data-i18n-en="As documented in our master heritage notes: explore each hide's distinct grain density, tactile temper, and timeless aging characteristics." data-i18n-de="Wie in unseren Meister-Notizen dokumentiert: Entdecken Sie die Faserstruktur, Haptik und Patina-Entwicklung jedes exklusiven Leders.">
-                    As documented in our master heritage notes: explore each hide's distinct grain density, tactile temper, and timeless aging characteristics.
+                <p class="text-xs sm:text-sm text-white/70 max-w-xl mx-auto font-light leading-relaxed pt-2" data-i18n-en="As documented in our master leather taxonomy: explore each hide's distinct grain density, tactile temper, and timeless aging characteristics." data-i18n-de="Wie in unserer Meister-Leder-Taxonomie dokumentiert: Entdecken Sie die Faserstruktur, Haptik und Patina-Entwicklung jedes exklusiven Leders.">
+                    As documented in our master leather taxonomy: explore each hide's distinct grain density, tactile temper, and timeless aging characteristics.
                 </p>
             </div>
 
-            <!-- 6 Visual Illustrated Leather Cards with Actual Images -->
+            <!-- 6 Visual Illustrated Leather Cards with Actual Images (PDF Verbatim Data) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 
                 <!-- Card 1: Cowhide Leather -->
@@ -481,21 +495,21 @@
                     <div class="relative h-48 w-full overflow-hidden">
                         <img src="/storage/products/grand-atelier-leather-weekender.jpg" alt="Cowhide Leather" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#140b0b] via-[#140b0b]/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm">
+                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm" data-i18n-en="01 • BOVINE" data-i18n-de="01 • RIND">
                             01 • BOVINE
                         </span>
-                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider">
+                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider" data-i18n-en="Full-Grain" data-i18n-de="Vollnarbig">
                             Full-Grain
                         </span>
                     </div>
                     <div class="p-6 pt-2 space-y-3">
-                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition">Cowhide Leather</h3>
-                        <p class="text-xs text-white/70 leading-relaxed font-light">
+                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition" data-i18n-en="Cowhide Leather" data-i18n-de="Kuhleder · Vollnarbiges Rindleder">Cowhide Leather</h3>
+                        <p class="text-xs text-white/70 leading-relaxed font-light font-serif" data-i18n-en="Light, supple, and exceptionally tear-resistant. Conditioned with organic beeswax and oils, it ripens gracefully into an amber, lustrous glow." data-i18n-de="Leicht, geschmeidig und extrem reißfest. Mit Bienenwachs und Ölen veredelt, reift es zu einem angenehmen bernsteinfarbenen Glanz heran.">
                             Light, supple, and exceptionally tear-resistant. Conditioned with organic beeswax and oils, it ripens gracefully into an amber, lustrous glow.
                         </p>
                         <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[0.68rem] text-white/60">
-                            <span>Tempering: <strong class="text-white">Medium Firm</strong></span>
-                            <span class="text-[#ffd45a] font-bold">10/10 Longevity</span>
+                            <span><span data-i18n-en="Tempering:" data-i18n-de="Haptik:">Tempering:</span> <strong class="text-white" data-i18n-en="Medium Firm" data-i18n-de="Mittelfest">Medium Firm</strong></span>
+                            <span class="text-[#ffd45a] font-bold" data-i18n-en="10/10 Longevity" data-i18n-de="10/10 Haltbarkeit">10/10 Longevity</span>
                         </div>
                     </div>
                 </div>
@@ -505,21 +519,21 @@
                     <div class="relative h-48 w-full overflow-hidden">
                         <img src="/storage/products/atelier-leather-zip-portfolio.jpg" alt="Pull-Up Leather" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#140b0b] via-[#140b0b]/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm">
+                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm" data-i18n-en="02 • ANILINE" data-i18n-de="02 • ANILIN">
                             02 • ANILINE
                         </span>
-                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider">
+                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider" data-i18n-en="Two-Tone" data-i18n-de="Zweifarbig">
                             Two-Tone
                         </span>
                     </div>
                     <div class="p-6 pt-2 space-y-3">
-                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition">Pull-Up Leather</h3>
-                        <p class="text-xs text-white/70 leading-relaxed font-light">
+                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition" data-i18n-en="Pull-Up Leather" data-i18n-de="Pull-Up-Leder · Anilin, zweifarbig">Pull-Up Leather</h3>
+                        <p class="text-xs text-white/70 leading-relaxed font-light font-serif" data-i18n-en="Saturated with liquid oils and translucent dyes. When folded or handled, migrating oils reveal lighter tones underneath, creating a living chromatic burst." data-i18n-de="Gesättigt mit Ölen und Anilinfarben. Beim Biegen wandern die Öle und erzeugen einen faszinierenden zweifarbigen Farbkontrast.">
                             Saturated with liquid oils and translucent dyes. When folded or handled, migrating oils reveal lighter tones underneath, creating a living chromatic burst.
                         </p>
                         <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[0.68rem] text-white/60">
-                            <span>Effect: <strong class="text-white">Color Migration</strong></span>
-                            <span class="text-[#ffd45a] font-bold">Silky Waxy Grip</span>
+                            <span><span data-i18n-en="Effect:" data-i18n-de="Effekt:">Effect:</span> <strong class="text-white" data-i18n-en="Color Migration" data-i18n-de="Farbwanderung">Color Migration</strong></span>
+                            <span class="text-[#ffd45a] font-bold" data-i18n-en="Silky Waxy Grip" data-i18n-de="Seidig-wachsiger Griff">Silky Waxy Grip</span>
                         </div>
                     </div>
                 </div>
@@ -529,21 +543,21 @@
                     <div class="relative h-48 w-full overflow-hidden">
                         <img src="/storage/products/wallet-open-detail.jpg" alt="Crazy Horse Leather" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#140b0b] via-[#140b0b]/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-[#ffd45a]/40 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm">
+                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-[#ffd45a]/40 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm" data-i18n-en="03 • SIGNATURE" data-i18n-de="03 • SIGNATUR">
                             03 • SIGNATURE
                         </span>
-                        <span class="absolute top-3 right-3 rounded-full bg-[#ffd45a] px-2.5 py-0.5 text-[0.58rem] font-bold text-[#120807] uppercase tracking-wider">
+                        <span class="absolute top-3 right-3 rounded-full bg-[#ffd45a] px-2.5 py-0.5 text-[0.58rem] font-bold text-[#120807] uppercase tracking-wider" data-i18n-en="Living Patina" data-i18n-de="Lebendige Patina">
                             Living Patina
                         </span>
                     </div>
                     <div class="p-6 pt-2 space-y-3">
-                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition">Crazy Horse Leather</h3>
-                        <p class="text-xs text-white/75 leading-relaxed font-light">
+                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition" data-i18n-en="Crazy Horse Leather" data-i18n-de="Crazy Horse · Wachsgetränkte lebendige Patina">Crazy Horse Leather</h3>
+                        <p class="text-xs text-white/75 leading-relaxed font-light font-serif" data-i18n-en="Top full-grain hide treated with hot carnauba wax. Scratches rub out naturally under palm warmth, maturing into a storied vintage aesthetic." data-i18n-de="Hochwertiges Vollleder, mit Carnaubawachs heiß versiegelt. Kratzer heilen durch Handwärme und entwickeln eine unverwechselbare Patina.">
                             Top full-grain hide treated with hot carnauba wax. Scratches rub out naturally under palm warmth, maturing into a storied vintage aesthetic.
                         </p>
                         <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[0.68rem] text-white/60">
-                            <span>Feature: <strong class="text-[#ffd45a]">Self-Healing</strong></span>
-                            <span class="text-[#ffd45a] font-bold">Lifetime Patina</span>
+                            <span><span data-i18n-en="Feature:" data-i18n-de="Merkmal:">Feature:</span> <strong class="text-[#ffd45a]" data-i18n-en="Self-Healing" data-i18n-de="Selbstheilend">Self-Healing</strong></span>
+                            <span class="text-[#ffd45a] font-bold" data-i18n-en="Lifetime Patina" data-i18n-de="Lebenslange Patina">Lifetime Patina</span>
                         </div>
                     </div>
                 </div>
@@ -553,21 +567,21 @@
                     <div class="relative h-48 w-full overflow-hidden">
                         <img src="/storage/products/briefcase-detail.jpg" alt="Buffalo Leather" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#140b0b] via-[#140b0b]/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm">
+                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm" data-i18n-en="04 • INDESTRUCTIBLE" data-i18n-de="04 • UNZERSTÖRBAR">
                             04 • INDESTRUCTIBLE
                         </span>
-                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider">
+                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider" data-i18n-en="High Density" data-i18n-de="Unzerstörbare Dichte">
                             High Density
                         </span>
                     </div>
                     <div class="p-6 pt-2 space-y-3">
-                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition">Buffalo Leather</h3>
-                        <p class="text-xs text-white/70 leading-relaxed font-light">
+                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition" data-i18n-en="Water Buffalo Leather" data-i18n-de="Wasserbüffel · Unzerstörbare Dichte">Water Buffalo Leather</h3>
+                        <p class="text-xs text-white/70 leading-relaxed font-light font-serif" data-i18n-en="World-renowned as the toughest hide in existence. Prominent dermal grain resists puncture and heavy friction for generational briefcase and luggage integrity." data-i18n-de="Gilt weltweit als das widerstandsfähigste Leder. Die dichte Faserstruktur schützt vor Abrieb und garantiert generationenlange Haltbarkeit.">
                             World-renowned as the toughest hide in existence. Prominent dermal grain resists puncture and heavy friction for generational briefcase and luggage integrity.
                         </p>
                         <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[0.68rem] text-white/60">
-                            <span>Density: <strong class="text-white">3x Standard Hide</strong></span>
-                            <span class="text-[#ffd45a] font-bold">Armor Strength</span>
+                            <span><span data-i18n-en="Density:" data-i18n-de="Dichte:">Density:</span> <strong class="text-white" data-i18n-en="3x Standard Hide" data-i18n-de="3x Standard-Haut">3x Standard Hide</strong></span>
+                            <span class="text-[#ffd45a] font-bold" data-i18n-en="Armor Strength" data-i18n-de="Panzerstärke">Armor Strength</span>
                         </div>
                     </div>
                 </div>
@@ -577,45 +591,45 @@
                     <div class="relative h-48 w-full overflow-hidden">
                         <img src="/storage/products/tote-interior-detail.jpg" alt="Sheep & Lamb Nappa" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#140b0b] via-[#140b0b]/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm">
+                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm" data-i18n-en="05 • SOFT TOUCH" data-i18n-de="05 • WEICHE HAPTIK">
                             05 • SOFT TOUCH
                         </span>
-                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider">
+                        <span class="absolute top-3 right-3 rounded-full bg-[#78000b] px-2.5 py-0.5 text-[0.58rem] font-bold text-white uppercase tracking-wider" data-i18n-en="Silky Nappa" data-i18n-de="Seidenweich">
                             Silky Nappa
                         </span>
                     </div>
                     <div class="p-6 pt-2 space-y-3">
-                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition">Sheep & Lamb Nappa</h3>
-                        <p class="text-xs text-white/70 leading-relaxed font-light">
+                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition" data-i18n-en="Sheep & Lamb Nappa" data-i18n-de="Schaf & Lamm · Seidenweiches Nappa">Sheep & Lamb Nappa</h3>
+                        <p class="text-xs text-white/70 leading-relaxed font-light font-serif" data-i18n-en="Velvety, pliable, and cashmere-soft. Ideal for delicate pocket wallet linings, cardholder gussets, and tactile accessories that feel sublime against the skin." data-i18n-de="Samtig, anschmiegsam und kaschmirweich. Perfekt für edle Futterstoffe, zarte Kartenetuis und handschmeichelnde Accessoires.">
                             Velvety, pliable, and cashmere-soft. Ideal for delicate pocket wallet linings, cardholder gussets, and tactile accessories that feel sublime against the skin.
                         </p>
                         <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[0.68rem] text-white/60">
-                            <span>Weight: <strong class="text-white">Featherlight</strong></span>
-                            <span class="text-[#ffd45a] font-bold">Cashmere Soft</span>
+                            <span><span data-i18n-en="Weight:" data-i18n-de="Gewicht:">Weight:</span> <strong class="text-white" data-i18n-en="Featherlight" data-i18n-de="Federleicht">Featherlight</strong></span>
+                            <span class="text-[#ffd45a] font-bold" data-i18n-en="Cashmere Soft" data-i18n-de="Kaschmirweich">Cashmere Soft</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 6: Hair-On & Coastal Exotic -->
+                <!-- Card 6: Coastal & Exotic Grain -->
                 <div class="group relative rounded-2xl overflow-hidden border border-white/15 bg-[#140b0b] shadow-xl hover:border-[#ffd45a] transition-all duration-500 hover:-translate-y-1">
                     <div class="relative h-48 w-full overflow-hidden">
-                        <img src="/storage/products/watch-wrist-detail.jpg" alt="Hair-On & Coastal Exotic" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="/storage/products/watch-wrist-detail.jpg" alt="Coastal & Exotic Grain" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#140b0b] via-[#140b0b]/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm">
+                        <span class="absolute top-3 left-3 rounded-full bg-black/75 border border-white/20 px-3 py-0.5 text-[0.6rem] font-bold text-[#ffd45a] uppercase tracking-wider backdrop-blur-sm" data-i18n-en="06 • EXOTIC" data-i18n-de="06 • EXOTISCH">
                             06 • EXOTIC
                         </span>
-                        <span class="absolute top-3 right-3 rounded-full bg-[#d8b45a] px-2.5 py-0.5 text-[0.58rem] font-bold text-[#120807] uppercase tracking-wider">
+                        <span class="absolute top-3 right-3 rounded-full bg-[#d8b45a] px-2.5 py-0.5 text-[0.58rem] font-bold text-[#120807] uppercase tracking-wider" data-i18n-en="Bespoke" data-i18n-de="Maßgeschneidert">
                             Bespoke
                         </span>
                     </div>
                     <div class="p-6 pt-2 space-y-3">
-                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition">Coastal & Exotic Grain</h3>
-                        <p class="text-xs text-white/70 leading-relaxed font-light">
+                        <h3 class="font-display text-2xl font-medium text-white group-hover:text-[#ffd45a] transition" data-i18n-en="Coastal & Exotic Grain" data-i18n-de="Küste & Exoten · Maßgeschneiderte Zuteilung">Coastal & Exotic Grain</h3>
+                        <p class="text-xs text-white/70 leading-relaxed font-light font-serif" data-i18n-en="Curated strictly in limited allocations along maritime artisan trading posts. Crafted for bespoke horological straps and private commissions." data-i18n-de="Streng limitierte Zuteilungen aus maritimen Handwerkszentren. Gefertigt für exklusive Uhrenarmbänder und maßgeschneiderte Unikate.">
                             Curated strictly in limited allocations along maritime artisan trading posts. Crafted for bespoke horological straps and private commissions.
                         </p>
                         <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[0.68rem] text-white/60">
-                            <span>Availability: <strong class="text-white">Strict Allocation</strong></span>
-                            <span class="text-[#ffd45a] font-bold">Collector Rank</span>
+                            <span><span data-i18n-en="Availability:" data-i18n-de="Verfügbarkeit:">Availability:</span> <strong class="text-white" data-i18n-en="Strict Allocation" data-i18n-de="Streng limitiert">Strict Allocation</strong></span>
+                            <span class="text-[#ffd45a] font-bold" data-i18n-en="Collector Rank" data-i18n-de="Sammler-Status">Collector Rank</span>
                         </div>
                     </div>
                 </div>
@@ -623,9 +637,7 @@
             </div>
 
         </div>
-
     </section>
-
 
     <!-- ========================================================================= -->
     <!-- 4. BOTTOM INTERACTIVE CATALOG MARQUEE CAROUSEL -->
