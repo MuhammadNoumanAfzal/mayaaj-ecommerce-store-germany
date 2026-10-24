@@ -73,13 +73,23 @@
         -webkit-backdrop-filter: none !important;
     }
 
-    .site-luxury-header.header-colorful {
-        background: linear-gradient(135deg, rgba(77, 1, 7, 0.97) 0%, rgba(120, 0, 11, 0.98) 50%, rgba(77, 1, 7, 0.97) 100%) !important;
+    .site-luxury-header.header-colorful,
+    .site-luxury-header.has-mega-open,
+    .site-luxury-header.has-mega-open.header-transparent {
+        background: linear-gradient(135deg, rgba(77, 1, 7, 0.99) 0%, rgba(120, 0, 11, 1) 50%, rgba(77, 1, 7, 0.99) 100%) !important;
         background-color: #78000b !important;
         backdrop-filter: blur(20px) saturate(180%) !important;
         -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
         border-bottom: 1px solid rgba(216, 180, 90, 0.35) !important;
         box-shadow: 0 10px 35px rgba(120, 0, 11, 0.38) !important;
+    }
+
+    #collection-mega-menu {
+        background: #170406 !important;
+        background-color: #170406 !important;
+        background: linear-gradient(180deg, #240407 0%, #150204 100%) !important;
+        opacity: 1 !important;
+        color: #ffffff !important;
     }
 
     .luxury-container {
