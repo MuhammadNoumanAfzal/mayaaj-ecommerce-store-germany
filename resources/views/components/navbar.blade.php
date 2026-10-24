@@ -49,14 +49,22 @@
 
         <!-- Center: Essential Luxury Navigation Links (Strictly Single Line) -->
         <div class="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-7 whitespace-nowrap shrink-0 flex-nowrap">
-            <!-- Kollektion / Collection -->
-            <a 
-                href="{{ route('shop') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
+            <!-- Kollektion / Collection with Mega Menu Toggle -->
+            <button 
+                type="button" 
+                id="collection-nav-trigger"
+                onclick="toggleCollectionMegaMenu(event)" 
+                class="group relative inline-flex items-center gap-1.5 py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls="collection-mega-menu"
             >
                 <span data-i18n-en="Collection" data-i18n-de="Kollektion">Kollektion</span>
+                <svg id="collection-chevron-icon" class="h-3 w-3 text-white/60 transition-transform duration-300 group-hover:text-[#ffd45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
-            </a>
+            </button>
 
             <!-- Handtaschen / Handbags -->
             <a 
@@ -158,6 +166,304 @@
             </button>
         </div>
     </nav>
+
+    <!-- ========================================================================= -->
+    <!-- LUXURY E-COMMERCE COLLECTION MEGA-MENU DROPDOWN -->
+    <!-- ========================================================================= -->
+    <div 
+        id="collection-mega-menu" 
+        class="hidden w-full border-t border-[#d8b45a]/40 text-white transition-all duration-300 ease-out origin-top animate-in fade-in slide-in-from-top-2"
+        style="background: #170406 !important; background-color: #170406 !important; background-image: linear-gradient(180deg, #240407 0%, #150204 100%) !important; color: #ffffff !important; box-shadow: 0 45px 100px rgba(0,0,0,0.98) !important;"
+        role="region"
+        aria-label="Maison Collection Catalog"
+        onclick="event.stopPropagation()"
+    >
+        <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+            
+            <!-- Top Header Strip inside Mega-Menu -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex h-2 w-2 rounded-full bg-[#d8b45a] animate-pulse"></span>
+                    <span class="text-[0.68rem] font-bold uppercase tracking-[0.22em] text-[#ffd45a]" data-i18n-en="MAISON COLLECTION • 2026 EDITION" data-i18n-de="MAISON KOLLEKTION • EDITION 2026">MAISON COLLECTION • 2026 EDITION</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a 
+                        href="{{ route('shop') }}" 
+                        class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#ffd45a] hover:text-white transition group"
+                    >
+                        <span data-i18n-en="View All 54 Creations" data-i18n-de="Alle 54 Meisterwerke ansehen">View All 54 Creations</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+
+                    <!-- Close Mega Menu Button (X) -->
+                    <button 
+                        type="button" 
+                        onclick="closeCollectionMegaMenu()" 
+                        class="inline-flex items-center gap-2 rounded-full border border-[#d8b45a] bg-[#78000b] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#ffd45a] hover:bg-[#92000e] hover:text-white hover:border-[#ffd45a] transition-all duration-200 cursor-pointer shadow-lg group shrink-0"
+                        aria-label="Close collection menu"
+                        title="Close Collection Menu (Esc)"
+                    >
+                        <span class="text-[0.68rem] tracking-[0.14em]" data-i18n-en="Close" data-i18n-de="Schließen">Close</span>
+                        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-black/40 group-hover:bg-[#ffd45a] group-hover:text-[#120807] transition-all">
+                            <svg class="h-3.5 w-3.5 transition-transform group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content Grid: 4 E-Commerce Category Columns + 1 Featured Product Showcase Column -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left 8 Cols: Structured Categories with Subcategories -->
+                <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    
+                    <!-- Column 1: Handbags & Travel -->
+                    <div class="space-y-6">
+                        <!-- Category: Handbags -->
+                        <div>
+                            <a href="{{ route('shop', ['category' => 'luxury-handbags']) }}" class="group block mb-2.5">
+                                <h3 class="font-display text-base font-bold text-white group-hover:text-[#ffd45a] transition flex items-center justify-between">
+                                    <span data-i18n-en="Luxury Handbags" data-i18n-de="Luxus-Handtaschen">Luxury Handbags</span>
+                                    <span class="text-xs text-[#ffd45a] opacity-0 group-hover:opacity-100 transition">↗</span>
+                                </h3>
+                                <p class="text-[0.7rem] text-[#d5c7b3] font-normal" data-i18n-en="Tuscan full-grain calfskin & signature totes" data-i18n-de="Toskanisches Vollrindleder & Signature Totes">Tuscan full-grain calfskin & signature totes</p>
+                            </a>
+                            <ul class="space-y-1.5 border-l-2 border-[#d8b45a]/40 pl-3 text-xs text-[#f4eee6]">
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'luxury-handbags', 'subcategory' => 'tote-bags']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Tote Bags & Shoppers" data-i18n-de="Totes & Shopper">Tote Bags & Shoppers</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'luxury-handbags', 'subcategory' => 'crossbody-shoulder-bags']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Crossbody & Shoulder Bags" data-i18n-de="Crossbody & Umhängetaschen">Crossbody & Shoulder Bags</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Category: Travel & Luggage -->
+                        <div class="pt-3 border-t border-white/15">
+                            <a href="{{ route('shop', ['category' => 'travel-luggage']) }}" class="group block mb-2.5">
+                                <h3 class="font-display text-base font-bold text-white group-hover:text-[#ffd45a] transition flex items-center justify-between">
+                                    <span data-i18n-en="Travel & Luggage" data-i18n-de="Reisegepäck & Weekender">Travel & Luggage</span>
+                                    <span class="text-xs text-[#ffd45a] opacity-0 group-hover:opacity-100 transition">↗</span>
+                                </h3>
+                                <p class="text-[0.7rem] text-[#d5c7b3] font-normal" data-i18n-en="Voyage trunks, duffels & weekender bags" data-i18n-de="Reisekoffer, Reisetaschen & Weekender">Voyage trunks, duffels & weekender bags</p>
+                            </a>
+                            <ul class="space-y-1.5 border-l-2 border-[#d8b45a]/40 pl-3 text-xs text-[#f4eee6]">
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'travel-luggage', 'subcategory' => 'weekenders-duffle-bags']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Weekenders & Duffle Bags" data-i18n-de="Weekender & Reisetaschen">Weekenders & Duffle Bags</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'travel-luggage', 'subcategory' => 'passport-cases-travel-folios']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Passport Folios & Travel Sets" data-i18n-de="Passhüllen & Reise-Sets">Passport Folios & Travel Sets</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Executive Briefcases & Watches -->
+                    <div class="space-y-6">
+                        <!-- Category: Briefcases -->
+                        <div>
+                            <a href="{{ route('shop', ['category' => 'executive-briefcases']) }}" class="group block mb-2.5">
+                                <h3 class="font-display text-base font-bold text-white group-hover:text-[#ffd45a] transition flex items-center justify-between">
+                                    <span data-i18n-en="Executive Briefcases" data-i18n-de="Business-Aktentaschen">Executive Briefcases</span>
+                                    <span class="text-xs text-[#ffd45a] opacity-0 group-hover:opacity-100 transition">↗</span>
+                                </h3>
+                                <p class="text-[0.7rem] text-[#d5c7b3] font-normal" data-i18n-en="Diplomatic lock cases & laptop folios" data-i18n-de="Diplomatenkoffer & Laptop-Taschen">Diplomatic lock cases & laptop folios</p>
+                            </a>
+                            <ul class="space-y-1.5 border-l-2 border-[#d8b45a]/40 pl-3 text-xs text-[#f4eee6]">
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'executive-briefcases', 'subcategory' => 'structured-leather-briefcases']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Structured Briefcases" data-i18n-de="Strukturierte Aktentaschen">Structured Briefcases</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'executive-briefcases', 'subcategory' => 'tech-document-folios']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Tech & Document Folios" data-i18n-de="Dokumenten- & Tech-Mappen">Tech & Document Folios</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Category: Watches & Jewelry -->
+                        <div class="pt-3 border-t border-white/15">
+                            <a href="{{ route('shop', ['category' => 'luxury-jewelry-watches']) }}" class="group block mb-2.5">
+                                <h3 class="font-display text-base font-bold text-white group-hover:text-[#ffd45a] transition flex items-center justify-between">
+                                    <span data-i18n-en="Watches & Jewelry" data-i18n-de="Uhren & Schmuck">Watches & Jewelry</span>
+                                    <span class="text-xs text-[#ffd45a] opacity-0 group-hover:opacity-100 transition">↗</span>
+                                </h3>
+                                <p class="text-[0.7rem] text-[#d5c7b3] font-normal" data-i18n-en="Precision chronographs & haute horlogerie" data-i18n-de="Präzisionschronographen & Feinschmuck">Precision chronographs & haute horlogerie</p>
+                            </a>
+                            <ul class="space-y-1.5 border-l-2 border-[#d8b45a]/40 pl-3 text-xs text-[#f4eee6]">
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'luxury-jewelry-watches', 'subcategory' => 'precision-chronographs']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Tourbillons & Chronographs" data-i18n-de="Tourbillons & Chronographen">Tourbillons & Chronographs</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'luxury-jewelry-watches', 'subcategory' => 'fine-jewelry-bracelets']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Fine Jewelry & Cufflinks" data-i18n-de="Edelschmuck & Manschettenknöpfe">Fine Jewelry & Cufflinks</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Wallets & Lifestyle Accessories -->
+                    <div class="space-y-6">
+                        <!-- Category: Wallets -->
+                        <div>
+                            <a href="{{ route('shop', ['category' => 'leather-wallets']) }}" class="group block mb-2.5">
+                                <h3 class="font-display text-base font-bold text-white group-hover:text-[#ffd45a] transition flex items-center justify-between">
+                                    <span data-i18n-en="Leather Wallets" data-i18n-de="Leder-Geldbörsen">Leather Wallets</span>
+                                    <span class="text-xs text-[#ffd45a] opacity-0 group-hover:opacity-100 transition">↗</span>
+                                </h3>
+                                <p class="text-[0.7rem] text-[#d5c7b3] font-normal" data-i18n-en="RFID-shielded bifold & cardholders" data-i18n-de="RFID-geschützte Bifolds & Kartenetuis">RFID-shielded bifold & cardholders</p>
+                            </a>
+                            <ul class="space-y-1.5 border-l-2 border-[#d8b45a]/40 pl-3 text-xs text-[#f4eee6]">
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'leather-wallets', 'subcategory' => 'bifold-wallets']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Classic Bifold Wallets" data-i18n-de="Klassische Faltbörsen">Classic Bifold Wallets</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'leather-wallets', 'subcategory' => 'cardholders-zip-purses']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Slim Cardholders & Zip Wallets" data-i18n-de="Schlanke Kartenetuis & Reißverschlussbörsen">Slim Cardholders & Zip Wallets</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Category: Golf & Signature Accessories -->
+                        <div class="pt-3 border-t border-white/15">
+                            <a href="{{ route('shop', ['category' => 'golf-collection']) }}" class="group block mb-2.5">
+                                <h3 class="font-display text-base font-bold text-white group-hover:text-[#ffd45a] transition flex items-center justify-between">
+                                    <span data-i18n-en="Golf & Signature Accessories" data-i18n-de="Golf & Signatur-Accessoires">Golf & Signature Accessories</span>
+                                    <span class="text-xs text-[#ffd45a] opacity-0 group-hover:opacity-100 transition">↗</span>
+                                </h3>
+                                <p class="text-[0.7rem] text-[#d5c7b3] font-normal" data-i18n-en="Augusta Tour bags & braided fobs" data-i18n-de="Turnier-Golftaschen & geflochtene Anhänger">Augusta Tour bags & braided fobs</p>
+                            </a>
+                            <ul class="space-y-1.5 border-l-2 border-[#d8b45a]/40 pl-3 text-xs text-[#f4eee6]">
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'golf-collection']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Golf Bags & Accessories" data-i18n-de="Golftaschen & Zubehör">Golf Bags & Accessories</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('shop', ['category' => 'signature-keychains']) }}" class="hover:text-[#ffd45a] transition flex items-center gap-1.5 py-0.5">
+                                        <span class="text-[#ffd45a] text-[0.6rem]">▸</span>
+                                        <span data-i18n-en="Belts & Keychains" data-i18n-de="Gürtel & Schlüsselanhänger">Belts & Keychains</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right 4 Cols: Featured Products Showcase (E-commerce Style Preview) -->
+                <div class="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 pl-0 lg:pl-8 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#ffd45a]" data-i18n-en="FEATURED CREATIONS" data-i18n-de="MEISTERWERK-HIGHLIGHTS">FEATURED CREATIONS</span>
+                        <span class="text-[0.62rem] text-white/40 font-mono">Bestsellers</span>
+                    </div>
+
+                    <!-- 2 Featured Product Mini Cards -->
+                    <div class="grid grid-cols-2 gap-3">
+                        @if(isset($globalFeaturedProducts) && $globalFeaturedProducts->count() > 0)
+                            @foreach($globalFeaturedProducts->take(2) as $fProd)
+                                <a href="{{ route('shop.show', $fProd->slug) }}" class="group block rounded-xl border border-[#d8b45a]/35 bg-[#25080c] p-3 shadow-lg transition hover:bg-[#350a10] hover:border-[#ffd45a]">
+                                    <div class="aspect-square w-full rounded-lg overflow-hidden bg-black mb-2 relative">
+                                        <img src="{{ $fProd->image_url }}" alt="{{ $fProd->name }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108">
+                                        <span class="absolute top-1.5 left-1.5 rounded-full bg-[#78000b] px-2 py-0.5 text-[0.55rem] font-bold text-white uppercase tracking-wider">Atelier</span>
+                                    </div>
+                                    <h4 class="font-display text-xs font-semibold text-white truncate group-hover:text-[#ffd45a] transition">{{ $fProd->name }}</h4>
+                                    <div class="mt-1 flex items-center justify-between text-xs">
+                                        <span class="font-bold text-[#ffd45a] font-mono">€{{ number_format($fProd->sale_price ?: $fProd->price, 2) }}</span>
+                                        <span class="text-xs text-[#ffd45a] group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </a>
+                            @endforeach
+                        @else
+                            <a href="/shop" class="group block rounded-xl border border-[#d8b45a]/35 bg-[#25080c] p-3">
+                                <div class="aspect-square w-full rounded-lg overflow-hidden bg-black mb-2">
+                                    <img src="/craftsmanship_detail.png" alt="Handcrafted Luxury" class="h-full w-full object-cover">
+                                </div>
+                                <h4 class="font-display text-xs font-semibold text-white">Grand Atelier Weekender</h4>
+                                <span class="font-bold text-[#ffd45a] text-xs font-mono">€420.00</span>
+                            </a>
+                            <a href="/shop" class="group block rounded-xl border border-[#d8b45a]/35 bg-[#25080c] p-3">
+                                <div class="aspect-square w-full rounded-lg overflow-hidden bg-black mb-2">
+                                    <img src="/accessories.webp" alt="Handcrafted Luxury" class="h-full w-full object-cover">
+                                </div>
+                                <h4 class="font-display text-xs font-semibold text-white">Classic Full-Grain Bifold</h4>
+                                <span class="font-bold text-[#ffd45a] text-xs font-mono">€145.00</span>
+                            </a>
+                        @endif
+                    </div>
+
+                    <!-- Direct Boutique Banner CTA inside Mega-Menu -->
+                    <a 
+                        href="{{ route('shop') }}" 
+                        class="flex items-center justify-between rounded-xl border border-[#d8b45a]/50 bg-gradient-to-r from-[#78000b] to-[#450106] p-3 text-white transition hover:border-[#ffd45a] group shadow-md"
+                    >
+                        <div class="min-w-0">
+                            <span class="text-[0.58rem] font-bold uppercase tracking-widest text-[#ffd45a] block" data-i18n-en="COMPLETE CATALOG" data-i18n-de="KOMPLETTER KATALOG">COMPLETE CATALOG</span>
+                            <span class="font-display text-xs font-medium text-white truncate block" data-i18n-en="Explore All Categories" data-i18n-de="Alle Kategorien durchstöbern">Explore All Categories</span>
+                        </div>
+                        <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#d8b45a] text-[#120807] font-bold text-xs group-hover:scale-110 transition-transform">→</span>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Mega-Menu Bottom Hallmark Guarantee Strip -->
+            <div class="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-[0.68rem] text-white/60">
+                <div class="flex items-center gap-2">
+                    <span class="text-[#ffd45a]">✦</span>
+                    <span data-i18n-en="100% Full-Grain European Leather" data-i18n-de="100% Echtes Europäisches Vollleder">100% Full-Grain European Leather</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[#ffd45a]">✦</span>
+                    <span data-i18n-en="Insured DHL Express Shipping Across Europe" data-i18n-de="Versicherter DHL Express Versand europaweit">Insured DHL Express Shipping Across Europe</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[#ffd45a]">✦</span>
+                    <span data-i18n-en="Lifetime Atelier Craftsmanship Promise" data-i18n-de="Lebenslanges Atelier-Handwerksversprechen">Lifetime Atelier Craftsmanship Promise</span>
+                </div>
+                <button 
+                    type="button" 
+                    onclick="closeCollectionMegaMenu()" 
+                    class="inline-flex items-center gap-1.5 rounded-full border border-[#d8b45a]/40 bg-black/40 px-3 py-1 text-[0.68rem] font-semibold text-[#ffd45a] hover:bg-[#78000b] hover:text-white hover:border-[#ffd45a] transition cursor-pointer"
+                    aria-label="Close collection catalog"
+                >
+                    <span data-i18n-en="Close Catalog" data-i18n-de="Katalog schließen">Close Catalog</span>
+                    <span class="text-xs font-bold">✕</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Mobile Navigation Drawer (Slide Down Accordion for mobile devices) -->
     <div 
@@ -638,4 +944,66 @@
             if (spinner) spinner.classList.add('hidden');
         });
     }
+
+    // Collection Mega Menu Controller
+    function toggleCollectionMegaMenu(event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        const header = document.getElementById('main-site-header');
+        const mega = document.getElementById('collection-mega-menu');
+        const chevron = document.getElementById('collection-chevron-icon');
+        const trigger = document.getElementById('collection-nav-trigger');
+        if (!mega) return;
+
+        const isClosed = mega.classList.contains('hidden');
+        if (isClosed) {
+            mega.classList.remove('hidden');
+            if (chevron) chevron.classList.add('rotate-180');
+            if (trigger) trigger.setAttribute('aria-expanded', 'true');
+            if (header) {
+                header.classList.add('has-mega-open');
+                header.classList.remove('header-transparent');
+                header.classList.add('header-colorful');
+            }
+        } else {
+            closeCollectionMegaMenu();
+        }
+    }
+
+    function closeCollectionMegaMenu() {
+        const header = document.getElementById('main-site-header');
+        const mega = document.getElementById('collection-mega-menu');
+        const chevron = document.getElementById('collection-chevron-icon');
+        const trigger = document.getElementById('collection-nav-trigger');
+        if (mega && !mega.classList.contains('hidden')) {
+            mega.classList.add('hidden');
+            if (chevron) chevron.classList.remove('rotate-180');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+
+            if (header) {
+                header.classList.remove('has-mega-open');
+                const isHome = header.getAttribute('data-is-home') === '1';
+                const isScrolled = (window.scrollY || window.pageYOffset || 0) > 25;
+                if (isHome && !isScrolled) {
+                    header.classList.add('header-transparent');
+                    header.classList.remove('header-colorful');
+                }
+            }
+        }
+    }
+
+    // Close Mega Menu when clicking outside or pressing Escape
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#collection-mega-menu') && !e.target.closest('#collection-nav-trigger')) {
+            closeCollectionMegaMenu();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeCollectionMegaMenu();
+        }
+    });
 </script>
