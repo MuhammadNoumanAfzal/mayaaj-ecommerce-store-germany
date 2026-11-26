@@ -1,6 +1,25 @@
 @extends('layouts.admin')
 @section('title', 'Categories Management - MEHAAJ Atelier Admin')
 
+@section('admin-styles')
+<style>
+    /* Full Page Modal Blur & Hide Scrollbars Across All Browsers */
+    .modal-scroll-clean {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+    .modal-scroll-clean::-webkit-scrollbar,
+    #view-category-modal .modal-scroll-clean::-webkit-scrollbar,
+    #add-category-modal .modal-scroll-clean::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+</style>
+@endsection
+
 @section('admin-content')
 <div class="space-y-4 pb-8">
 
@@ -422,9 +441,17 @@
 
 </div>
 
-<!-- Category Quick View Executive Modal (Ultra-Clean, Elegant Atelier Design) -->
-<div id="view-category-modal" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 hidden transition-all duration-300" style="z-index: 9999 !important; background-color: rgba(24, 18, 16, 0.65) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important;" onclick="closeViewCategoryModal()">
-    <div class="relative w-full max-w-lg bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+<!-- Category Quick View Executive Modal (100% Full Page Blur, Wide Luxury Card, No Scrollbar) -->
+<div 
+    id="view-category-modal" 
+    class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 hidden transition-all duration-300" 
+    style="z-index: 99999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.72) !important; backdrop-filter: blur(12px) saturate(180%) !important; -webkit-backdrop-filter: blur(12px) saturate(180%) !important;" 
+    onclick="closeViewCategoryModal()"
+>
+    <div 
+        class="relative w-full max-w-2xl bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden my-auto transform transition-all" 
+        onclick="event.stopPropagation()"
+    >
         
         <!-- Luxury Gold & Wine Top Accent Strip -->
         <div class="h-1.5 w-full bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b]"></div>
@@ -432,11 +459,11 @@
         <!-- Modal Header -->
         <div class="px-6 py-4 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-b border-[#ebdccb] flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-xs" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
                     <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                 </div>
                 <div>
-                    <h3 class="font-serif text-base font-bold text-[#1c1210] tracking-tight leading-tight">Category Details</h3>
+                    <h3 class="font-serif text-base sm:text-lg font-bold text-[#1c1210] tracking-tight leading-tight">Category Details</h3>
                     <p class="text-[0.68rem] text-stone-500 font-mono" id="cat-view-slug">/slug</p>
                 </div>
             </div>
@@ -445,8 +472,8 @@
             </button>
         </div>
 
-        <!-- Modal Body Content -->
-        <div class="p-6 space-y-4 text-xs max-h-[75vh] overflow-y-auto">
+        <!-- Modal Body Content (Scrollbar Hidden Across All Browsers) -->
+        <div class="p-6 space-y-4 text-xs max-h-[82vh] overflow-y-auto modal-scroll-clean" style="scrollbar-width: none !important; -ms-overflow-style: none !important;">
             
             <!-- Hero Info & Image -->
             <div class="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb]">
@@ -458,16 +485,16 @@
                 </div>
 
                 <div class="space-y-1.5 flex-1 min-w-0">
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <h4 id="cat-view-name" class="font-serif font-bold text-lg text-[#1c1210] tracking-tight leading-snug"></h4>
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <h4 id="cat-view-name" class="font-serif font-bold text-xl text-[#1c1210] tracking-tight leading-snug"></h4>
                         <span id="cat-view-status-badge"></span>
                     </div>
 
                     <div class="flex items-center gap-2 text-[0.7rem] text-stone-500 font-medium pt-0.5">
-                        <span class="inline-flex items-center gap-1 font-mono text-[0.68rem] font-bold text-stone-700 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                        <span class="inline-flex items-center gap-1 font-mono text-[0.68rem] font-bold text-stone-700 bg-[#FAF7F2] px-2.5 py-0.5 rounded-lg border border-[#ebdccb]">
                             Order: <strong id="cat-view-order" class="text-[#78000b]">0</strong>
                         </span>
-                        <span class="inline-flex items-center gap-1 font-mono text-[0.68rem] font-bold text-stone-700 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                        <span class="inline-flex items-center gap-1 font-mono text-[0.68rem] font-bold text-stone-700 bg-[#FAF7F2] px-2.5 py-0.5 rounded-lg border border-[#ebdccb]">
                             ID: <strong id="cat-view-id" class="text-stone-900">#0</strong>
                         </span>
                     </div>
@@ -481,7 +508,7 @@
                         <span class="text-[0.65rem] font-bold text-[#8a7267] uppercase tracking-wider block">Subcategories</span>
                         <span id="cat-view-subs-count" class="font-bold text-lg text-[#78000b] leading-tight">0</span>
                     </div>
-                    <div class="w-8 h-8 rounded-lg bg-[#78000b]/10 text-[#78000b] flex items-center justify-center shrink-0">
+                    <div class="w-9 h-9 rounded-xl bg-[#78000b]/10 text-[#78000b] flex items-center justify-center shrink-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                     </div>
                 </div>
@@ -491,7 +518,7 @@
                         <span class="text-[0.65rem] font-bold text-emerald-800 uppercase tracking-wider block">Assigned Products</span>
                         <span id="cat-view-prods-count" class="font-bold text-lg text-emerald-900 leading-tight">0</span>
                     </div>
-                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                     </div>
                 </div>
@@ -533,9 +560,17 @@
     </div>
 </div>
 
-<!-- Add Collection Category Popup Modal Dialog -->
-<div id="add-category-modal" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 hidden transition-all duration-300" style="z-index: 9999 !important; background-color: rgba(24, 18, 16, 0.65) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important;" onclick="closeAddCategoryModal()">
-    <div class="relative w-full max-w-lg bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden p-6 sm:p-7 space-y-4" onclick="event.stopPropagation()">
+<!-- Add Collection Category Popup Modal Dialog (100% Full Page Blur, Wide Luxury Card) -->
+<div 
+    id="add-category-modal" 
+    class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 hidden transition-all duration-300" 
+    style="z-index: 99999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.75) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important;" 
+    onclick="closeAddCategoryModal()"
+>
+    <div 
+        class="relative w-full max-w-xl bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden p-6 sm:p-7 space-y-4 my-auto transform transition-all" 
+        onclick="event.stopPropagation()"
+    >
         
         <!-- Header -->
         <div class="flex items-center justify-between border-b border-[#f0e8de] pb-3.5">
@@ -626,7 +661,16 @@
 </div>
 
 <script>
+    // Teleport modals to document.body so fixed overlay covers 100% of screen without container clipping
+    function ensureModalTeleported(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal && modal.parentNode !== document.body) {
+            document.body.appendChild(modal);
+        }
+    }
+
     function openViewCategoryModal(data) {
+        ensureModalTeleported('view-category-modal');
         document.getElementById('cat-view-id').textContent = '#' + data.id;
         document.getElementById('cat-view-name').textContent = data.name;
         document.getElementById('cat-view-slug').textContent = '/' + data.slug;
@@ -706,6 +750,7 @@
     }
 
     function openAddCategoryModal() {
+        ensureModalTeleported('add-category-modal');
         document.body.classList.add('overflow-hidden');
         document.getElementById('add-category-modal').classList.remove('hidden');
         setTimeout(() => document.getElementById('modal_cat_name')?.focus(), 50);
@@ -738,8 +783,10 @@
         }
     }
 
-    // Auto-open if #add-category in URL
+    // Auto-open if #add-category in URL & Ensure modals are attached to body immediately
     window.addEventListener('DOMContentLoaded', function() {
+        ensureModalTeleported('view-category-modal');
+        ensureModalTeleported('add-category-modal');
         if (window.location.hash === '#add-category' || window.location.hash === '#add') {
             openAddCategoryModal();
         }
