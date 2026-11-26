@@ -1000,9 +1000,9 @@
 
         // Update step panels visibility
         for (let i = 1; i <= totalSteps; i++) {
-            const pane = document.getElementById('wizardStepPane-' i);
-            const tab = document.getElementById('stepTab-' i);
-            const dot = document.getElementById('stepDot-' i);
+            const pane = document.getElementById('wizardStepPane-' + i);
+            const tab = document.getElementById('stepTab-' + i);
+            const dot = document.getElementById('stepDot-' + i);
 
             if (pane) pane.classList.toggle('hidden', i !== currentStep);
             
@@ -1016,17 +1016,24 @@
                 const sub = tab.querySelector('.step-sub');
                 if (i === currentStep) {
                     tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs';
-                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]';
+                    if (num) {
+                        num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]';
+                        num.textContent = i;
+                    }
                     if (title) title.className = 'step-title block font-bold text-xs text-[#1c1210] truncate';
                 } else if (i < currentStep) {
                     tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
-                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-emerald-600 text-white';
-                    if (num) num.innerHTML = '✓';
+                    if (num) {
+                        num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-emerald-600 text-white';
+                        num.innerHTML = '✓';
+                    }
                     if (title) title.className = 'step-title block font-bold text-xs text-stone-700 truncate';
                 } else {
                     tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
-                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600';
-                    if (num) num.textContent = i;
+                    if (num) {
+                        num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600';
+                        num.textContent = i;
+                    }
                     if (title) title.className = 'step-title block font-bold text-xs text-stone-500 truncate';
                 }
             }
