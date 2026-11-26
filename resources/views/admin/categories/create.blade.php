@@ -2,12 +2,12 @@
 @section('title', 'Add New Category - MEHAAJ Atelier Admin')
 
 @section('admin-content')
-<div class="space-y-4 w-full pb-12 text-[#1c1210]">
+<div class="space-y-3.5 w-full pb-10 text-[#1c1210]">
 
     <!-- 1. Clean Breadcrumb Pill -->
-    <div class="bg-gradient-to-r from-white via-[#FAF7F2] to-white rounded-xl py-3 px-5 text-xs font-semibold text-stone-600 border border-[#ebdccb] shadow-2xs flex items-center justify-between">
+    <div class="bg-gradient-to-r from-white via-[#FAF7F2] to-white rounded-xl py-2.5 px-4 text-xs font-semibold text-stone-600 border border-[#ebdccb] shadow-2xs flex items-center justify-between">
         <div class="flex items-center gap-2">
-            <a href="{{ route('admin.categories') }}" class="text-[#8a7c74] hover:text-[#78000b] transition flex items-center gap-1 font-bold" data-i18n-de="Kategorien" data-i18n-en="Categories">
+            <a href="{{ route('admin.categories') }}" class="text-[#8a7c74] hover:text-[#78000b] transition flex items-center gap-1.5 font-bold" data-i18n-de="Kategorien" data-i18n-en="Categories">
                 <svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                 <span>Categories</span>
             </a>
@@ -17,39 +17,35 @@
     </div>
 
     <!-- 2. Colorful Form Card Container -->
-    <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#ebdccb] shadow-xs overflow-hidden">
-        @csrf
+    <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#ebdccb] shadow-xs overflow-hidden border-t-4 border-t-[#78000b]">
 
-        <!-- Decorative Top Accent Ribbon -->
-        <div class="h-1.5 bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b]"></div>
-
-        <!-- Header with Warm Sunset Atelier Gradient -->
-        <div class="px-6 py-4.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] flex items-center justify-between gap-3 border-b border-[#ebdccb]">
-            <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+        <!-- Header with Balanced Spacing & Warm Atelier Gradient -->
+        <div class="px-5 py-3.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] flex items-center justify-between gap-3 border-b border-[#ebdccb]">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
                     <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h2 class="font-serif text-lg font-bold text-[#1c1210] tracking-tight" data-i18n-de="Neue Kategorie Hinzufügen" data-i18n-en="Add New Category">
+                        <h2 class="font-serif text-base sm:text-lg font-bold text-[#1c1210] tracking-tight leading-tight" data-i18n-de="Neue Kategorie Hinzufügen" data-i18n-en="Add New Category">
                             Add New Category
                         </h2>
                         <span class="px-2 py-0.5 rounded-md text-[0.6rem] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
                             Collection Ready
                         </span>
                     </div>
-                    <p class="text-[0.72rem] text-[#8a7c74] mt-0.5" data-i18n-de="Erstellen Sie eine neue Hauptkategorie für Ihren Luxuskatalog." data-i18n-en="Create a top-level category with automatic storefront synchronization.">
+                    <p class="text-[0.68rem] text-[#8a7c74] mt-0.5" data-i18n-de="Erstellen Sie eine neue Hauptkategorie für Ihren Luxuskatalog." data-i18n-en="Create a top-level category with automatic storefront synchronization.">
                         Create a top-level category with automatic storefront synchronization.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- Form Body -->
-        <div class="p-6 sm:p-7 text-xs space-y-5">
+        <!-- Form Body with Clean Compact Spacing -->
+        <div class="p-5 sm:p-6 text-xs space-y-4">
             
             @if ($errors->any())
-                <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
+                <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
                     <p class="font-bold text-xs flex items-center gap-1.5">
                         <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         <span>Please correct the errors below:</span>
@@ -63,11 +59,11 @@
             @endif
 
             <!-- Row 1: Category Name & Status -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 <!-- Category Name -->
                 <div>
-                    <label for="catNameInput" class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                    <label for="catNameInput" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#78000b]"></span>
                         <span>Category Name</span>
                         <span class="text-[#78000b] font-bold">*</span>
@@ -79,13 +75,13 @@
                         value="{{ old('name') }}" 
                         required 
                         placeholder="e.g. Leather Briefcases"
-                        class="w-full h-11 px-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
                 </div>
 
                 <!-- Status Select -->
                 <div>
-                    <label for="status" class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                    <label for="status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                         <span>Catalog Status</span>
                         <span class="text-[#78000b] font-bold">*</span>
@@ -93,7 +89,7 @@
                     <select 
                         name="status" 
                         id="status" 
-                        class="w-full h-11 px-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
                         <option value="active" {{ old('status', 'active') === 'active' ? 'selected' : '' }}>● Active (Visible in Storefront & Menu)</option>
                         <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }}>○ Draft (Hidden from Storefront)</option>
@@ -104,7 +100,7 @@
 
             <!-- Row 2: Description -->
             <div>
-                <label for="description" class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                <label for="description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#b45309]"></span>
                     <span>Description & Tagline</span>
                 </label>
@@ -113,28 +109,28 @@
                     id="description" 
                     rows="3" 
                     placeholder="Brief poetic description of the collection for luxury catalog display and Google SEO..."
-                    class="w-full p-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition leading-relaxed shadow-2xs"
+                    class="w-full p-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition leading-relaxed shadow-2xs"
                 >{{ old('description') }}</textarea>
             </div>
 
             <!-- Row 3: Banner Image Upload (Clean, Only Upload from Computer) -->
             <div>
-                <label class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"></span>
                     <span>Banner Image</span>
                 </label>
                 
-                <div class="rounded-2xl border border-[#ebdccb] p-5 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
+                <div class="rounded-xl border border-[#ebdccb] p-4 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
                     
-                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div class="flex flex-col sm:flex-row items-center gap-3.5">
                         <!-- Thumbnail / Placeholder Frame -->
-                        <div id="full_banner_preview_box" class="w-16 h-16 rounded-xl bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shrink-0 overflow-hidden shadow-xs">
+                        <div id="full_banner_preview_box" class="w-14 h-14 rounded-xl bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shrink-0 overflow-hidden shadow-xs">
                             <img id="full_banner_preview_img" src="" class="hidden w-full h-full object-cover">
-                            <svg id="full_banner_placeholder_svg" class="w-8 h-8 text-[#78000b]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <svg id="full_banner_placeholder_svg" class="w-7 h-7 text-[#78000b]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
 
                         <!-- Upload Button & Clear Visibility Hint -->
-                        <div class="flex-1 text-center sm:text-left space-y-1.5">
+                        <div class="flex-1 text-center sm:text-left space-y-1">
                             <input 
                                 type="file" 
                                 name="image" 
@@ -143,19 +139,19 @@
                                 onchange="previewFullCategoryImage(this)"
                                 class="hidden"
                             >
-                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
                                 <button 
                                     type="button" 
                                     onclick="document.getElementById('catImageInput').click()" 
-                                    class="h-10 px-5 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm cursor-pointer active:scale-95"
+                                    class="h-9 px-4 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer active:scale-95"
                                     style="background: #181210 !important; color: #ffffff !important;"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #ffffff !important;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #ffffff !important;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
                                     <span style="color: #ffffff !important;">Upload from Computer</span>
                                 </button>
-                                <span id="full_banner_filename" class="text-xs font-semibold text-[#685c54]">PNG, JPG, WEBP up to 10MB</span>
+                                <span id="full_banner_filename" class="text-[0.7rem] font-semibold text-[#685c54]">PNG, JPG, WEBP up to 10MB</span>
                             </div>
-                            <p class="text-[0.68rem] text-[#8a7c74]">Recommended: 800×800px (Square) or 1200×800px (Landscape)</p>
+                            <p class="text-[0.65rem] text-[#8a7c74]">Recommended: 800×800px (Square) or 1200×800px (Landscape)</p>
                         </div>
                     </div>
 
@@ -165,14 +161,14 @@
         </div>
 
         <!-- 3. Colorful Footer Actions Bar -->
-        <div class="px-6 py-4 bg-[#FAF7F2] border-t border-[#ebdccb] flex items-center justify-between">
-            <a href="{{ route('admin.categories') }}" class="h-9 px-4 rounded-xl text-xs font-semibold text-[#685c54] bg-white border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5 shadow-2xs">
+        <div class="px-5 py-3.5 bg-[#FAF7F2] border-t border-[#ebdccb] flex items-center justify-between">
+            <a href="{{ route('admin.categories') }}" class="h-8.5 px-4 rounded-lg text-xs font-semibold text-[#685c54] bg-white border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5 shadow-2xs">
                 <span>Cancel</span>
             </a>
 
             <button 
                 type="submit" 
-                class="h-9 px-6 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md transition active:scale-95 cursor-pointer flex items-center gap-2"
+                class="h-8.5 px-5 rounded-lg text-xs font-bold uppercase tracking-wider text-white shadow-sm transition active:scale-95 cursor-pointer flex items-center gap-2"
                 style="background: linear-gradient(135deg, #78000b 0%, #9e1422 100%) !important;"
             >
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
