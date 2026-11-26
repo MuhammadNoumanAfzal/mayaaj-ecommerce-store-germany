@@ -65,10 +65,10 @@ class CategoryController extends Controller
                 break;
         }
 
-        // Pagination Per Page (10, 25, 50)
-        $perPage = (int) $request->input('per_page', 10);
-        if (!in_array($perPage, [10, 25, 50, 100])) {
-            $perPage = 10;
+        // Pagination Per Page (5, 10, 25, 50)
+        $perPage = (int) $request->input('per_page', 5);
+        if (!in_array($perPage, [5, 10, 25, 50, 100])) {
+            $perPage = 5;
         }
 
         $categories = $query->paginate($perPage)->withQueryString();

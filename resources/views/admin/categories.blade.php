@@ -207,6 +207,23 @@
                         </div>
                     </div>
 
+                    <!-- Per Page Filter -->
+                    <div class="relative">
+                        <select 
+                            name="per_page" 
+                            onchange="this.form.submit()" 
+                            style="-webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-image: none !important;"
+                            class="filter-select h-10 pl-3.5 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                        >
+                            <option value="5" {{ request('per_page', 5) == 5 ? 'selected' : '' }}>5 / page</option>
+                            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10 / page</option>
+                            <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 / page</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        </div>
+                    </div>
+
                     <!-- Reset Filters Button -->
                     @if(request()->anyFilled(['search', 'status', 'sort']))
                         <a href="{{ route('admin.categories') }}" class="h-10 px-3.5 rounded-xl text-xs font-bold text-stone-600 hover:text-rose-600 bg-white hover:bg-rose-50 border border-[#ebdccb] hover:border-rose-200 transition shadow-2xs inline-flex items-center gap-1.5" title="Reset all filters">
@@ -220,17 +237,17 @@
             </form>
         </div>
 
-        <!-- Table Container -->
-        <div class="w-full overflow-x-auto">
+        <!-- Table Container (Fluid, Zero Horizontal Scrollbar) -->
+        <div class="w-full overflow-x-auto lg:overflow-x-visible">
             <table class="w-full text-left text-xs">
                 <thead>
                     <tr class="bg-gradient-to-r from-[#fbf8f4] via-[#f7eee3] to-[#fbf8f4] text-[#483732] font-black uppercase tracking-wider text-[0.68rem] border-y border-[#ebdccb]">
-                        <th class="py-3 px-4 font-black w-14 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
-                        <th class="py-3 px-4 font-black" data-i18n-de="Kategorie" data-i18n-en="Category">Category</th>
-                        <th class="py-3 px-3 font-black text-center w-32" data-i18n-de="Unterkategorien" data-i18n-en="Subcategories">Subcategories</th>
-                        <th class="py-3 px-3 font-black text-center w-28" data-i18n-de="Produkte" data-i18n-en="Products">Products</th>
-                        <th class="py-3 px-3 font-black text-center w-28" data-i18n-de="Status" data-i18n-en="Status">Status</th>
-                        <th class="py-3 px-4 font-black text-center w-52" data-i18n-de="Aktionen" data-i18n-en="Actions">Actions</th>
+                        <th class="py-3 px-3 font-black w-12 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
+                        <th class="py-3 px-3 font-black" data-i18n-de="Kategorie" data-i18n-en="Category">Category</th>
+                        <th class="py-3 px-2 font-black text-center w-28" data-i18n-de="Unterkategorien" data-i18n-en="Subcategories">Subcategories</th>
+                        <th class="py-3 px-2 font-black text-center w-24" data-i18n-de="Produkte" data-i18n-en="Products">Products</th>
+                        <th class="py-3 px-2 font-black text-center w-24" data-i18n-de="Status" data-i18n-en="Status">Status</th>
+                        <th class="py-3 px-3 font-black text-center w-40" data-i18n-de="Aktionen" data-i18n-en="Actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#f1e6da] font-medium bg-white">
@@ -238,16 +255,16 @@
                         <tr class="hover:bg-[#faf7f2] transition-colors duration-150" id="category-row-{{ $category->id }}">
                             
                             <!-- 1. Order Index Pill -->
-                            <td class="py-3.5 px-4 text-center">
-                                <span class="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-[#FAF7F2] font-mono font-bold text-[#78000b] text-xs border border-[#ebdccb] shadow-2xs">
+                            <td class="py-3 px-3 text-center">
+                                <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg bg-[#FAF7F2] font-mono font-bold text-[#78000b] text-xs border border-[#ebdccb] shadow-2xs">
                                     {{ $category->order_index }}
                                 </span>
                             </td>
 
-                            <!-- 2. Image & Name & Description -->
-                            <td class="py-3.5 px-4">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="h-11 w-11 rounded-xl overflow-hidden bg-[#F8F5EF] border border-[#ebdccb] shadow-2xs flex items-center justify-center shrink-0 group relative">
+                            <!-- 2. Image & Category Name (No Description) -->
+                            <td class="py-3 px-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 rounded-xl overflow-hidden bg-[#F8F5EF] border border-[#ebdccb] shadow-2xs flex items-center justify-center shrink-0 group relative">
                                         @if($category->image)
                                             <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
                                             <div class="hidden text-stone-400 flex items-center justify-center w-full h-full bg-[#FAF7F2]">
@@ -264,18 +281,13 @@
                                         <span class="font-bold text-[#1c1210] text-sm tracking-tight truncate block group-hover:text-[#78000b] transition-colors">
                                             {{ $category->name }}
                                         </span>
-                                        @if($category->description)
-                                            <p class="text-[0.68rem] text-stone-500 font-normal truncate max-w-sm sm:max-w-md">
-                                                {{ $category->description }}
-                                            </p>
-                                        @endif
                                     </div>
                                 </div>
                             </td>
 
                             <!-- 3. Subcategories Count Badge -->
-                            <td class="py-3.5 px-3 text-center">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200/90 shadow-2xs">
+                            <td class="py-3 px-2 text-center">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200/90 shadow-2xs">
                                     <svg class="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                                     <span>{{ $category->subcategories_count }}</span>
                                     <span class="text-[0.62rem] font-medium opacity-75">subs</span>
@@ -283,20 +295,20 @@
                             </td>
 
                             <!-- 4. Products Count Badge -->
-                            <td class="py-3.5 px-3 text-center">
-                                <a href="{{ route('admin.products', ['category_id' => $category->id]) }}" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-extrabold bg-[#fcf4ec] text-[#78000b] border border-[#ebdccb] hover:bg-[#78000b] hover:text-white transition shadow-2xs group/prod" title="Filter products by this category">
+                            <td class="py-3 px-2 text-center">
+                                <a href="{{ route('admin.products', ['category_id' => $category->id]) }}" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-[#fcf4ec] text-[#78000b] border border-[#ebdccb] hover:bg-[#78000b] hover:text-white transition shadow-2xs group/prod" title="Filter products by this category">
                                     <svg class="w-3 h-3 text-[#78000b] group-hover/prod:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                                     <span>{{ $category->products_count }}</span>
-                                    <span class="text-[0.65rem] font-normal opacity-80">items</span>
+                                    <span class="text-[0.62rem] font-normal opacity-80">items</span>
                                 </a>
                             </td>
 
                             <!-- 5. Status Toggle Badge -->
-                            <td class="py-3.5 px-3 text-center">
+                            <td class="py-3 px-2 text-center">
                                 <button 
                                     type="button" 
                                     onclick="toggleCategoryStatus({{ $category->id }}, this)" 
-                                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer {{ $category->status === 'active' ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100' : 'bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100' }}"
+                                    class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer {{ $category->status === 'active' ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100' : 'bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100' }}"
                                     title="Click to toggle status (Active / Draft)"
                                 >
                                     <span class="h-1.5 w-1.5 rounded-full {{ $category->status === 'active' ? 'bg-emerald-600 animate-pulse' : 'bg-amber-500' }}"></span>
@@ -304,9 +316,9 @@
                                 </button>
                             </td>
 
-                            <!-- 6. Actions (View, Edit, Delete) -->
-                            <td class="py-3.5 px-4 text-center whitespace-nowrap">
-                                <div class="flex items-center justify-center gap-1.5">
+                            <!-- 6. Actions (View, Edit, Delete) - Sleek, Compact -->
+                            <td class="py-3 px-3 text-center whitespace-nowrap">
+                                <div class="flex items-center justify-center gap-1">
                                     @php
                                         $catModalData = [
                                              'id' => $category->id,
@@ -330,33 +342,41 @@
                                     <button
                                         type="button"
                                         onclick='openViewCategoryModal(@json($catModalData))'
-                                        class="h-8 px-2.5 rounded-xl border border-stone-200 bg-white text-stone-700 hover:text-[#78000b] hover:border-[#78000b] hover:bg-[#FAF7F2] text-xs font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
-                                        title="View Category Details"
+                                        class="h-7 px-2 rounded-lg border border-stone-200 bg-white text-stone-700 hover:text-[#78000b] hover:border-[#78000b] hover:bg-[#FAF7F2] text-[0.7rem] font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
+                                        title="View Details"
                                     >
-                                        <svg class="h-3.5 w-3.5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                        <span data-i18n-de="Ansehen" data-i18n-en="View">View</span>
+                                        <svg class="h-3 w-3 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <span>View</span>
                                     </button>
 
                                     <!-- Edit Button -->
                                     <a
                                         href="{{ route('admin.categories.edit', $category->id) }}"
-                                        class="h-8 px-2.5 rounded-xl border border-blue-200 bg-blue-50/70 text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 text-xs font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
-                                        title="Edit Category"
+                                        class="h-7 px-2 rounded-lg border border-blue-200 bg-blue-50/70 text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 text-[0.7rem] font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
+                                        title="Edit"
                                     >
-                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                        <span data-i18n-de="Bearbeiten" data-i18n-en="Edit">Edit</span>
+                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                        <span>Edit</span>
                                     </a>
 
                                     <!-- Delete Button -->
                                     <button
                                         type="button"
                                         onclick="confirmDeleteCategory({{ $category->id }}, '{{ addslashes($category->name) }}', {{ $category->products_count }}, {{ $category->subcategories_count }})"
-                                        class="h-8 px-2.5 rounded-xl border border-rose-200 bg-rose-50/70 text-rose-700 hover:bg-rose-600 hover:text-white hover:border-rose-600 text-xs font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
-                                        title="Delete Category"
+                                        class="h-7 px-2 rounded-lg border border-rose-200 bg-rose-50/70 text-rose-700 hover:bg-rose-600 hover:text-white hover:border-rose-600 text-[0.7rem] font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
+                                        title="Delete"
                                     >
-                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                        <span data-i18n-de="Löschen" data-i18n-en="Delete">Delete</span>
+                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        <span>Delete</span>
                                     </button>
+
+                                    <form id="delete-category-form-{{ $category->id }}" action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="hidden">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
 
                                     <form id="delete-category-form-{{ $category->id }}" action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="hidden">
                                         @csrf
@@ -414,116 +434,110 @@
 
 </div>
 
-<!-- Category Quick View Executive Modal (Full-Screen Soft Blur Background Covering Header) -->
-<div id="view-category-modal" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 hidden transition-all duration-300" style="z-index: 9999 !important; background-color: rgba(28, 25, 23, 0.15) !important; backdrop-filter: blur(3px) !important; -webkit-backdrop-filter: blur(3px) !important;" onclick="closeViewCategoryModal()">
-    <div class="relative w-full max-w-lg bg-white rounded-2xl border border-stone-200/90 shadow-2xl overflow-hidden border-t-4 border-t-saltora-terracotta" onclick="event.stopPropagation()">
+<!-- Category Quick View Executive Modal (Ultra-Clean, Elegant Atelier Design) -->
+<div id="view-category-modal" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 hidden transition-all duration-300" style="z-index: 9999 !important; background-color: rgba(24, 18, 16, 0.65) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important;" onclick="closeViewCategoryModal()">
+    <div class="relative w-full max-w-lg bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
         
-        <!-- Modal Top Banner / Header -->
-        <div class="px-6 py-4 bg-gradient-to-r from-stone-50 via-white to-stone-50 border-b border-stone-100 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-saltora-blush text-saltora-terracotta flex items-center justify-center font-bold text-sm shadow-2xs border border-saltora-terracotta/20">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <!-- Luxury Gold & Wine Top Accent Strip -->
+        <div class="h-1.5 w-full bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b]"></div>
+
+        <!-- Modal Header -->
+        <div class="px-6 py-4 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-b border-[#ebdccb] flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                    <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                 </div>
                 <div>
-                    <h3 class="font-extrabold text-stone-900 text-sm tracking-tight" data-i18n-de="Kategorie-Details" data-i18n-en="Category Details">Category Details</h3>
-                    <p class="text-[0.68rem] text-stone-400 font-medium font-mono" id="cat-view-slug">/slug</p>
+                    <h3 class="font-serif text-base font-bold text-[#1c1210] tracking-tight leading-tight">Category Details</h3>
+                    <p class="text-[0.68rem] text-stone-500 font-mono" id="cat-view-slug">/slug</p>
                 </div>
             </div>
-            <button type="button" onclick="closeViewCategoryModal()" class="w-8 h-8 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition flex items-center justify-center cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <button type="button" onclick="closeViewCategoryModal()" class="w-8 h-8 rounded-xl bg-white hover:bg-stone-100 text-stone-500 hover:text-stone-900 border border-[#ebdccb] transition flex items-center justify-center cursor-pointer text-xs font-bold shadow-2xs">
+                ✕
             </button>
         </div>
 
         <!-- Modal Body Content -->
-        <div class="p-6 space-y-4 text-xs max-h-[75vh] modal-scroll-clean">
+        <div class="p-6 space-y-4 text-xs max-h-[75vh] overflow-y-auto">
             
-            <!-- Category Hero Info & Image -->
-            <div class="flex items-start gap-4 p-4 rounded-xl bg-stone-50/70 border border-stone-200/70">
-                <div class="w-20 h-20 min-w-[5rem] min-h-[5rem] max-w-[5rem] max-h-[5rem] rounded-xl overflow-hidden bg-white border border-stone-200 shadow-2xs shrink-0 flex items-center justify-center">
+            <!-- Hero Info & Image -->
+            <div class="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb]">
+                <div class="w-20 h-20 rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] shadow-xs shrink-0 flex items-center justify-center">
                     <img id="cat-view-img" src="" alt="Category Image" class="w-full h-full object-cover hidden">
-                    <div id="cat-view-no-img" class="text-stone-300 flex items-center justify-center w-full h-full font-display font-bold text-2xl text-stone-400">
+                    <div id="cat-view-no-img" class="text-[#78000b] flex items-center justify-center w-full h-full font-serif font-bold text-2xl">
                         M
                     </div>
                 </div>
 
-                <div class="space-y-2 flex-1 min-w-0">
+                <div class="space-y-1.5 flex-1 min-w-0">
                     <div class="flex items-center gap-2 flex-wrap">
-                        <h4 id="cat-view-name" class="font-extrabold text-base text-stone-900 tracking-tight leading-snug"></h4>
+                        <h4 id="cat-view-name" class="font-serif font-bold text-lg text-[#1c1210] tracking-tight leading-snug"></h4>
                         <span id="cat-view-status-badge"></span>
                     </div>
 
-                    <!-- Direct Slug & Storefront Link in Detail -->
-                    <div class="flex items-center gap-2 pt-0.5 flex-wrap">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-stone-100 border border-stone-200 font-mono text-stone-800 text-[0.72rem] font-bold">
-                            <span class="text-stone-400 font-sans font-extrabold text-[0.62rem] uppercase tracking-wider">Slug:</span>
-                            <span id="cat-view-slug-badge">/slug</span>
+                    <div class="flex items-center gap-2 text-[0.7rem] text-stone-500 font-medium pt-0.5">
+                        <span class="inline-flex items-center gap-1 font-mono text-[0.68rem] font-bold text-stone-700 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                            Order: <strong id="cat-view-order" class="text-[#78000b]">0</strong>
                         </span>
-                        <a id="cat-view-store-inline" href="#" target="_blank" class="inline-flex items-center gap-1 text-[0.72rem] font-bold text-saltora-terracotta hover:underline bg-saltora-blush/60 px-2.5 py-1 rounded-lg border border-saltora-terracotta/20 transition hover:bg-saltora-blush" title="Open this category live on storefront">
-                            <span data-i18n-de="Im Shop ansehen" data-i18n-en="Storefront Link">Storefront Link</span>
-                            <span>↗</span>
-                        </a>
-                    </div>
-
-                    <div class="flex items-center gap-3 text-[0.7rem] text-stone-500 font-medium pt-0.5">
-                        <span><span class="text-stone-400 font-bold uppercase tracking-wider" data-i18n-de="Sortierung:" data-i18n-en="Sort Order:">Sort Order:</span> <strong id="cat-view-order" class="text-stone-800 font-mono">0</strong></span>
-                        <span>•</span>
-                        <span><span class="text-stone-400 font-bold uppercase tracking-wider" data-i18n-de="ID:" data-i18n-en="ID:">ID:</span> <strong id="cat-view-id" class="text-stone-800 font-mono">#0</strong></span>
+                        <span class="inline-flex items-center gap-1 font-mono text-[0.68rem] font-bold text-stone-700 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                            ID: <strong id="cat-view-id" class="text-stone-900">#0</strong>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Stats Overview Cards -->
+            <!-- Stats Overview Cards (Compact 2-Tile Strip) -->
             <div class="grid grid-cols-2 gap-3">
-                <div class="p-3.5 rounded-xl bg-saltora-blush/40 border border-saltora-terracotta/15 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-saltora-terracotta/10 text-saltora-terracotta flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    </div>
+                <div class="p-3.5 rounded-xl bg-gradient-to-br from-[#FAF8F5] to-[#F5ECE1] border border-[#ebdccb] flex items-center justify-between">
                     <div>
-                        <span class="text-[0.65rem] font-bold text-stone-500 uppercase tracking-wider block" data-i18n-de="Unterkategorien" data-i18n-en="Subcategories">Subcategories</span>
-                        <span id="cat-view-subs-count" class="font-extrabold text-base text-stone-900 leading-none">0</span>
+                        <span class="text-[0.65rem] font-bold text-[#8a7267] uppercase tracking-wider block">Subcategories</span>
+                        <span id="cat-view-subs-count" class="font-bold text-lg text-[#78000b] leading-tight">0</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-lg bg-[#78000b]/10 text-[#78000b] flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                     </div>
                 </div>
 
-                <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200/60 flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                    </div>
+                <div class="p-3.5 rounded-xl bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/80 flex items-center justify-between">
                     <div>
-                        <span class="text-[0.65rem] font-bold text-stone-500 uppercase tracking-wider block" data-i18n-de="Produkte" data-i18n-en="Assigned Products">Assigned Products</span>
-                        <span id="cat-view-prods-count" class="font-extrabold text-base text-emerald-800 leading-none">0</span>
+                        <span class="text-[0.65rem] font-bold text-emerald-800 uppercase tracking-wider block">Assigned Products</span>
+                        <span id="cat-view-prods-count" class="font-bold text-lg text-emerald-900 leading-tight">0</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                     </div>
                 </div>
             </div>
 
-            <!-- Full Description Section -->
+            <!-- Description -->
+            <div class="space-y-1">
+                <span class="block font-bold uppercase tracking-wider text-[0.65rem] text-[#8a7267]">Description</span>
+                <div id="cat-view-desc" class="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] text-stone-700 leading-relaxed text-xs"></div>
+            </div>
+
+            <!-- Attached Subcategories -->
             <div class="space-y-1.5">
-                <div class="flex items-center justify-between">
-                    <label class="block font-bold uppercase tracking-wider text-[0.65rem] text-stone-500" data-i18n-de="Beschreibung" data-i18n-en="Description">Description</label>
-                </div>
-                <div id="cat-view-desc" class="p-4 rounded-xl bg-stone-50/80 border border-stone-200/80 text-stone-700 leading-relaxed min-h-[60px] whitespace-pre-line text-xs font-normal"></div>
-            </div>
-
-            <!-- Subcategories Listing -->
-            <div>
-                <label class="block font-bold uppercase tracking-wider text-[0.65rem] text-stone-500 mb-2" data-i18n-de="Zugehörige Unterkategorien" data-i18n-en="Attached Subcategories">Attached Subcategories</label>
-                <div id="cat-view-subs-list" class="flex flex-wrap gap-1.5 p-3 rounded-xl bg-stone-50 border border-stone-200/70 min-h-[42px] items-center">
+                <span class="block font-bold uppercase tracking-wider text-[0.65rem] text-[#8a7267]">Attached Subcategories</span>
+                <div id="cat-view-subs-list" class="flex flex-wrap gap-2 p-3 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] min-h-[42px] items-center">
                 </div>
             </div>
 
         </div>
 
         <!-- Modal Footer Actions -->
-        <div class="p-4 bg-stone-50 border-t border-stone-200/80 flex items-center justify-between gap-3">
-            <a id="cat-view-store-btn" href="#" target="_blank" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs hover:border-saltora-terracotta hover:text-saltora-terracotta">
-                <svg class="w-3.5 h-3.5 text-saltora-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                <span data-i18n-de="Im Shop ansehen" data-i18n-en="View in Store">View in Store</span>
+        <div class="px-6 py-4 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-t border-[#ebdccb] flex items-center justify-between gap-3">
+            <a id="cat-view-store-btn" href="#" target="_blank" class="text-xs font-bold text-[#78000b] hover:underline inline-flex items-center gap-1 transition">
+                <span>View in Live Store</span>
+                <span>↗</span>
             </a>
 
             <div class="flex items-center gap-2">
-                <button type="button" onclick="closeViewCategoryModal()" class="px-4 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 font-bold text-xs hover:bg-stone-100 cursor-pointer shadow-2xs" data-i18n-de="Schließen" data-i18n-en="Close">Close</button>
-                <a id="cat-view-edit-btn" href="#" class="btn-exec-primary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs">
+                <button type="button" onclick="closeViewCategoryModal()" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition cursor-pointer shadow-2xs">
+                    Close
+                </button>
+                <a id="cat-view-edit-btn" href="#" class="btn-exec-primary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95">
                     <svg class="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                    <span data-i18n-de="Bearbeiten" data-i18n-en="Edit Category">Edit Category</span>
+                    <span>Edit Category</span>
                 </a>
             </div>
         </div>
@@ -681,8 +695,8 @@
         if (data.subcategories && data.subcategories.length > 0) {
             data.subcategories.forEach(sub => {
                 const tag = document.createElement('span');
-                tag.className = 'inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-white text-stone-800 border border-stone-200 shadow-2xs';
-                tag.innerHTML = `<span class="text-saltora-terracotta">↳</span> ${sub.name}`;
+                tag.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-white text-stone-800 border border-[#ebdccb] shadow-2xs hover:border-[#78000b] hover:text-[#78000b] transition';
+                tag.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-[#78000b]"></span> <span>${sub.name}</span>`;
                 subsList.appendChild(tag);
             });
         } else {
