@@ -62,16 +62,21 @@ class SubcategoryController extends Controller
                 break;
         }
 
-        // Pagination (10 per page, matching categories)
-        $subcategories = $query->paginate(10)->withQueryString();
+        // Pagination (Dynamic per page, default 10)
+        $perPage = (int) $request->input('per_page', 10);
+        if (!in_array($perPage, [5, 10, 25, 50])) {
+            $perPage = 10;
+        }
+        $subcategories = $query->paginate($perPage)->withQueryString();
 
         // Categories for filter dropdown
         $categories = Category::withCount('subcategories')->orderBy('name')->get();
 
-        // Compact KPI Metrics
+        // 4 Colorful Executive KPI Metrics
         $totalCount = Subcategory::count();
         $activeCount = Subcategory::where('status', 'active')->count();
         $draftCount = Subcategory::where('status', 'draft')->count();
+        $totalProducts = \App\Models\Product::whereNotNull('subcategory_id')->count();
 
         // Instant autocomplete suggestions dataset
         $allSubcategoriesForSuggestions = Subcategory::select('id', 'name', 'slug', 'image', 'status', 'category_id')
@@ -98,8 +103,33 @@ class SubcategoryController extends Controller
             'totalCount',
             'activeCount',
             'draftCount',
+            'totalProducts',
             'allSubcategoriesForSuggestions'
         ));
+    }
+
+    /**
+     * Toggle status (active/draft) quickly via AJAX or form.
+     */
+    public function updateStatus(Request $request, Subcategory $subcategory)
+    {
+        $newStatus = $subcategory->status === 'active' ? 'draft' : 'active';
+        $subcategory->status = $newStatus;
+        $subcategory->save();
+
+        $message = $newStatus === 'active'
+            ? 'Subcategory is now LIVE and active on storefront.'
+            : 'Subcategory is now HIDDEN as draft from storefront.';
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'status' => $newStatus,
+                'message' => $message
+            ]);
+        }
+
+        return redirect()->back()->with('success', $message);
     }
 
     /**

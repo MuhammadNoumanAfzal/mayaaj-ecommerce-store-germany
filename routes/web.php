@@ -205,6 +205,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/subcategories', [SubcategoryController::class, 'index'])->name('subcategories');
             Route::get('/subcategories/create', [SubcategoryController::class, 'create'])->name('subcategories.create');
             Route::post('/subcategories', [SubcategoryController::class, 'store'])->name('subcategories.store');
+            Route::patch('/subcategories/{subcategory}/status', [SubcategoryController::class, 'updateStatus'])->name('subcategories.status');
             Route::get('/subcategories/{subcategory}/edit', [SubcategoryController::class, 'edit'])->name('subcategories.edit');
             Route::put('/subcategories/{subcategory}', [SubcategoryController::class, 'update'])->name('subcategories.update');
             Route::delete('/subcategories/{subcategory}', [SubcategoryController::class, 'destroy'])->name('subcategories.destroy');

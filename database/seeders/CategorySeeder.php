@@ -20,10 +20,10 @@ class CategorySeeder extends Seeder
                 'status' => 'active',
                 'order_index' => 1,
                 'subcategories' => [
-                    ['name' => 'Klassische Handtaschen', 'description' => 'Elegante Damen-Handtaschen mit Echtgold-Beschlägen.'],
-                    ['name' => 'Shopper & City Totes', 'description' => 'Geräumige Luxus-Shopper für den stilvollen Alltag.'],
-                    ['name' => 'Abendtaschen & Clutches', 'description' => 'Kompakte Clutches für exklusive Abendanlässe.'],
-                    ['name' => 'Crossbody & Saddle Bags', 'description' => 'Vielseitige Umhängetaschen aus weichem Kalbsleder.'],
+                    ['name' => 'Klassische Handtaschen', 'image' => 'products/aurelia-structured-city-tote.png', 'description' => 'Elegante Damen-Handtaschen mit Echtgold-Beschlägen.'],
+                    ['name' => 'Shopper & City Totes', 'image' => 'products/aurelia-structured-city-tote.png', 'description' => 'Geräumige Luxus-Shopper für den stilvollen Alltag.'],
+                    ['name' => 'Abendtaschen & Clutches', 'image' => 'products/belle-epoque-evening-clutch.png', 'description' => 'Kompakte Clutches für exklusive Abendanlässe.'],
+                    ['name' => 'Crossbody & Saddle Bags', 'image' => 'categories/luxury-handbags.png', 'description' => 'Vielseitige Umhängetaschen aus weichem Kalbsleder.'],
                 ]
             ],
             [
@@ -34,9 +34,9 @@ class CategorySeeder extends Seeder
                 'status' => 'active',
                 'order_index' => 2,
                 'subcategories' => [
-                    ['name' => 'Diplomaten-Aktentaschen', 'description' => 'Strukturierte Hartschalen- und Rahmentaschen mit Zahlenschloss.'],
-                    ['name' => 'Leder-Dokumentenmappen', 'description' => 'Flache Zip-Portfolios für Verträge und iPads.'],
-                    ['name' => 'Business-Messenger', 'description' => 'Moderne Schulter-Aktentaschen mit Laptop-Dämpfung.'],
+                    ['name' => 'Diplomaten-Aktentaschen', 'image' => 'categories/executive-briefcases.jpg', 'description' => 'Strukturierte Hartschalen- und Rahmentaschen mit Zahlenschloss.'],
+                    ['name' => 'Leder-Dokumentenmappen', 'image' => 'products/atelier-leather-zip-portfolio.jpg', 'description' => 'Flache Zip-Portfolios für Verträge und iPads.'],
+                    ['name' => 'Business-Messenger', 'image' => 'categories/executive-briefcases.jpg', 'description' => 'Moderne Schulter-Aktentaschen mit Laptop-Dämpfung.'],
                 ]
             ],
             [
@@ -47,10 +47,10 @@ class CategorySeeder extends Seeder
                 'status' => 'active',
                 'order_index' => 3,
                 'subcategories' => [
-                    ['name' => 'Klassische Bifold Wallets', 'description' => 'Kompakte Herren-Bifolds aus Boxcalf-Leder.'],
-                    ['name' => 'Reißverschluss-Geldbörsen', 'description' => 'Große Damen-Portemonnaies mit vielen Fächern.'],
-                    ['name' => 'Kartenetuis & MagSafe', 'description' => 'Schlanke MagSafe- und Visitenkartenetuis.'],
-                    ['name' => 'Münzbörsen & Key Pouches', 'description' => 'Kompakte Etuis für Schlüssel und Kleingeld.'],
+                    ['name' => 'Klassische Bifold Wallets', 'image' => 'categories/wallets.png', 'description' => 'Kompakte Herren-Bifolds aus Boxcalf-Leder.'],
+                    ['name' => 'Reißverschluss-Geldbörsen', 'image' => 'products/atelier-zip-card-coin-purse.png', 'description' => 'Große Damen-Portemonnaies mit vielen Fächern.'],
+                    ['name' => 'Kartenetuis & MagSafe', 'image' => 'categories/wallets.png', 'description' => 'Schlanke MagSafe- und Visitenkartenetuis.'],
+                    ['name' => 'Münzbörsen & Key Pouches', 'image' => 'products/atelier-brass-medallion-leather-fob.png', 'description' => 'Kompakte Etuis für Schlüssel und Kleingeld.'],
                 ]
             ],
             [
@@ -61,9 +61,9 @@ class CategorySeeder extends Seeder
                 'status' => 'active',
                 'order_index' => 4,
                 'subcategories' => [
-                    ['name' => 'Chronographen & Automatikuhrwerke', 'description' => 'Präzisions-Armbanduhren mit Saphirglas.'],
-                    ['name' => 'Lederarmbänder & Manschetten', 'description' => 'Handgeflochtene Armbänder mit Schließe.'],
-                    ['name' => 'Manschettenknöpfe & Broschen', 'description' => 'Gold- und Onyx-inlaid Manschettenknöpfe.'],
+                    ['name' => 'Chronographen & Automatikuhrwerke', 'image' => 'categories/watches-jewelry.png', 'description' => 'Präzisions-Armbanduhren mit Saphirglas.'],
+                    ['name' => 'Lederarmbänder & Manschetten', 'image' => 'categories/watches-jewelry.png', 'description' => 'Handgeflochtene Armbänder mit Schließe.'],
+                    ['name' => 'Manschettenknöpfe & Broschen', 'image' => 'categories/watches-jewelry.png', 'description' => 'Gold- und Onyx-inlaid Manschettenknöpfe.'],
                 ]
             ],
             [
@@ -74,9 +74,9 @@ class CategorySeeder extends Seeder
                 'status' => 'active',
                 'order_index' => 5,
                 'subcategories' => [
-                    ['name' => 'Leder-Weekender & Duffles', 'description' => 'Geräumige Reisetaschen für 2-4 Tage Trips.'],
-                    ['name' => 'Kulturbeutel & Waschsets', 'description' => 'Wasserabweisend gefütterte Leder-Toiletry Bags.'],
-                    ['name' => 'Passhüllen & Kofferanhänger', 'description' => 'Personalisierte Leder-Reiseaccessoires.'],
+                    ['name' => 'Leder-Weekender & Duffles', 'image' => 'categories/travel-luggage.jpg', 'description' => 'Geräumige Reisetaschen für 2-4 Tage Trips.'],
+                    ['name' => 'Kulturbeutel & Waschsets', 'image' => 'categories/travel-luggage.webp', 'description' => 'Wasserabweisend gefütterte Leder-Toiletry Bags.'],
+                    ['name' => 'Passhüllen & Kofferanhänger', 'image' => 'products/atelier-brass-medallion-leather-fob.png', 'description' => 'Personalisierte Leder-Reiseaccessoires.'],
                 ]
             ],
             [
@@ -87,9 +87,9 @@ class CategorySeeder extends Seeder
                 'status' => 'active',
                 'order_index' => 6,
                 'subcategories' => [
-                    ['name' => 'Klassische Herren-Ledergürtel', 'description' => '35mm breite Wendegürtel mit Massivmessingschließe.'],
-                    ['name' => 'Luxus-Schlüsselanhänger', 'description' => 'Geflochtene Lederanhänger mit Schnellverschluss.'],
-                    ['name' => 'Lederpflege & Bienenwachs', 'description' => 'Atelier-Pflegebalsame für langanhaltenden Glanz.'],
+                    ['name' => 'Klassische Herren-Ledergürtel', 'image' => 'categories/accessories.png', 'description' => '35mm breite Wendegürtel mit Massivmessingschließe.'],
+                    ['name' => 'Luxus-Schlüsselanhänger', 'image' => 'products/atelier-brass-medallion-leather-fob.png', 'description' => 'Geflochtene Lederanhänger mit Schnellverschluss.'],
+                    ['name' => 'Lederpflege & Bienenwachs', 'image' => 'categories/accessories.png', 'description' => 'Atelier-Pflegebalsame für langanhaltenden Glanz.'],
                 ]
             ],
             [
@@ -100,8 +100,8 @@ class CategorySeeder extends Seeder
                 'status' => 'active',
                 'order_index' => 7,
                 'subcategories' => [
-                    ['name' => 'Leder Stand- & Cartbags', 'description' => 'Vollleder-Golftaschen für den Court.'],
-                    ['name' => 'Scorekarten- & Tees-Etuis', 'description' => 'Handgenähte Lederhüllen für Scorecards.'],
+                    ['name' => 'Leder Stand- & Cartbags', 'image' => 'products/augusta-tour-pro-leather-golf-bag.png', 'description' => 'Vollleder-Golftaschen für den Court.'],
+                    ['name' => 'Scorekarten- & Tees-Etuis', 'image' => 'categories/golf.png', 'description' => 'Handgenähte Lederhüllen für Scorecards.'],
                 ]
             ],
             [
@@ -112,7 +112,7 @@ class CategorySeeder extends Seeder
                 'status' => 'draft',
                 'order_index' => 8,
                 'subcategories' => [
-                    ['name' => 'Winter Capsule 2026', 'description' => 'Exklusive Kombinationen aus Nubuk und Shearling.'],
+                    ['name' => 'Winter Capsule 2026', 'image' => 'categories/travel-luggage.jpg', 'description' => 'Exklusive Kombinationen aus Nubuk und Shearling.'],
                 ]
             ],
         ];
@@ -138,6 +138,7 @@ class CategorySeeder extends Seeder
                         'category_id' => $category->id,
                         'name' => $subData['name'],
                         'description' => $subData['description'],
+                        'image' => $subData['image'] ?? null,
                         'status' => 'active',
                     ]
                 );
