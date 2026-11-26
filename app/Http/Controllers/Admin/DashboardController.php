@@ -10,6 +10,10 @@ use App\Models\Expense;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\ReturnRequest;
+use App\Models\StockNotification;
+use App\Models\Wishlist;
+use App\Models\AbandonedCart;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -74,6 +78,21 @@ class DashboardController extends Controller
 
         $reviewsCount = Review::count();
         $pendingReviewsCount = Review::where('status', 'pending')->count();
+
+        // 4b. New Luxury E-Commerce Modules (RMA Returns, Waitlist Demand, Wishlists & Abandoned Carts)
+        $pendingReturnsCount = ReturnRequest::where('status', 'pending')->count();
+        $totalReturnsCount = ReturnRequest::count();
+        $totalRefundedAmount = (float)ReturnRequest::where('status', 'refunded')->sum('refund_amount');
+        $openRmaRefundVolume = (float)ReturnRequest::whereIn('status', ['pending', 'approved', 'received'])->sum('refund_amount');
+
+        $pendingWaitlistCount = StockNotification::where('status', 'pending')->count();
+        $latentRevenueDemand = StockNotification::with('product')->where('status', 'pending')->get()->sum(function ($n) {
+            return (float)($n->product?->sale_price ?? $n->product?->price ?? 0);
+        });
+
+        $wishlistItemsCount = Wishlist::count();
+        $pendingAbandonedCartsCount = AbandonedCart::where('recovery_status', 'pending')->count();
+        $recoverableCartAmount = (float)AbandonedCart::where('recovery_status', 'pending')->sum('cart_total');
 
         // 5. Recent Orders Stream
         $recentOrders = Order::latest()->take(6)->get();
@@ -194,6 +213,15 @@ class DashboardController extends Controller
             'contactMessagesThisMonth',
             'reviewsCount',
             'pendingReviewsCount',
+            'pendingReturnsCount',
+            'totalReturnsCount',
+            'totalRefundedAmount',
+            'openRmaRefundVolume',
+            'pendingWaitlistCount',
+            'latentRevenueDemand',
+            'wishlistItemsCount',
+            'pendingAbandonedCartsCount',
+            'recoverableCartAmount',
             'recentOrders',
             'monthlyMonths',
             'monthlyRevenue',

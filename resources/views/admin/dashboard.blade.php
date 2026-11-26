@@ -29,9 +29,9 @@
         </div>
 
         <div class="relative z-10 flex items-center gap-3">
-            <div class="bg-[#291f1c] rounded-xl px-4 py-2 border border-[#483732] text-right">
-                <span class="text-[0.62rem] uppercase font-bold tracking-wider text-[#a8988e] block" data-i18n-en="Total Revenue" data-i18n-de="Gesamtumsatz">TOTAL REVENUE</span>
-                <span class="text-lg font-serif font-bold text-white">€{{ number_format($grossRevenue, 2) }}</span>
+            <div class="bg-[#1f1614] rounded-xl px-4 py-2 border border-[#d8b45a]/40 text-right shadow-sm">
+                <span class="text-[0.62rem] uppercase font-bold tracking-wider text-[#d8b45a] block" data-i18n-en="Total Revenue" data-i18n-de="Gesamtumsatz">TOTAL REVENUE</span>
+                <span class="text-lg font-serif font-bold text-white tracking-wide">€{{ number_format($grossRevenue, 2) }}</span>
             </div>
             <a href="{{ route('admin.products.create') }}" class="h-10 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 bg-[#78000b] hover:bg-[#5a0309] text-white shadow-sm transition active:scale-95 cursor-pointer whitespace-nowrap">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -151,21 +151,33 @@
                 <p class="mt-2 text-[0.68rem] text-[#8a7c74]">With Courier (DHL / UPS / Hermes)</p>
             </div>
 
-            <!-- Card 4: RETURNS & FAILED -->
-            <div class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#b91c1c]/40 hover:shadow-xs transition">
+            <!-- Card 4: RETURNS & RMA -->
+            <a href="{{ route('admin.returns') }}" class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#b91c1c]/40 hover:shadow-xs transition group">
                 <div>
                     <div class="flex items-center justify-between">
-                        <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#991b1b]">RETURNS & FAILED</span>
-                        <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#fee2e2] text-[#991b1b] border border-[#fecaca]">
-                            {{ $returnRate }}% RETURN RATE
-                        </span>
+                        <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#991b1b]">RETURNS & RMA (§ 355)</span>
+                        @if($pendingReturnsCount > 0)
+                            <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#fee2e2] text-[#991b1b] border border-[#fecaca] animate-pulse">
+                                {{ $pendingReturnsCount }} IN PRÜFUNG
+                            </span>
+                        @else
+                            <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#f3f4f6] text-stone-600 border border-stone-200">
+                                0 OFFEN
+                            </span>
+                        @endif
                     </div>
                     <div class="mt-2 flex items-baseline gap-2">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">{{ $cancelledCount }}</span>
+                        <span class="font-serif text-2xl font-bold text-[#1c1210]">{{ $totalReturnsCount }}</span>
+                        @if($openRmaRefundVolume > 0)
+                            <span class="text-[0.68rem] text-[#991b1b] font-mono font-bold">€{{ number_format($openRmaRefundVolume, 2) }}</span>
+                        @endif
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74]">Loss / Erstattungen: €{{ number_format($refundedAmount, 2) }}</p>
-            </div>
+                <p class="mt-2 text-[0.68rem] text-[#8a7c74] group-hover:text-[#78000b] flex items-center justify-between">
+                    <span>14-Tage Widerrufsanträge</span>
+                    <span class="font-bold text-[0.65rem] text-[#991b1b]">Verwalten →</span>
+                </p>
+            </a>
 
             <!-- Row 2: Financial Audit & True Profit -->
 
@@ -220,51 +232,73 @@
 
         </div>
 
-        <!-- 4. Four Micro Velocity Badges (Single Compact Line) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-[#f0e8de]">
-            <div class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between">
+        <!-- 4. Six Micro Velocity Badges (High-Density Executive Pulse) -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 pt-2 border-t border-[#f0e8de]">
+            <a href="{{ route('admin.products') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
                 <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">TOTAL CREATIONS</span>
+                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">CREATIONS</span>
                     <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $productsCount }}</span>
                     <span class="text-[0.62rem] text-[#2e683a] block font-semibold">● {{ $activeProductsCount }} Active</span>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b]">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
+                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
                 </div>
-            </div>
+            </a>
 
-            <div class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between">
+            <a href="{{ route('admin.orders') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#b45309]/40 hover:shadow-xs transition group">
                 <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">STORE ORDERS</span>
+                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">ORDERS</span>
                     <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $ordersCount }}</span>
                     <span class="text-[0.62rem] text-[#b45309] block font-semibold">● {{ $ordersThisMonth }} This Month</span>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#b45309]">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#b45309] group-hover:bg-[#b45309] group-hover:text-white transition">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                 </div>
-            </div>
+            </a>
 
-            <div class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between">
+            <a href="{{ route('admin.returns') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#991b1b]/40 hover:shadow-xs transition group">
                 <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">CLIENT INQUIRIES</span>
+                    <span class="text-[0.62rem] uppercase font-bold text-[#991b1b] block">RETOUREN / RMA</span>
+                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $totalReturnsCount }}</span>
+                    <span class="text-[0.62rem] text-[#991b1b] block font-semibold">● {{ $pendingReturnsCount }} In Prüfung</span>
+                </div>
+                <div class="w-7 h-7 rounded-lg bg-rose-50 border border-rose-200 flex items-center justify-center text-[#991b1b] group-hover:bg-[#991b1b] group-hover:text-white transition">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </div>
+            </a>
+
+            <a href="{{ route('admin.waitlist') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
+                <div>
+                    <span class="text-[0.62rem] uppercase font-bold text-[#78000b] block">WARTELISTE</span>
+                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $pendingWaitlistCount }}</span>
+                    <span class="text-[0.62rem] text-[#78000b] block font-semibold">● €{{ number_format($latentRevenueDemand, 0) }} Demand</span>
+                </div>
+                <div class="w-7 h-7 rounded-lg bg-[#78000b]/10 border border-[#78000b]/20 flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+            </a>
+
+            <a href="{{ route('admin.messages') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
+                <div>
+                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">INQUIRIES</span>
                     <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $contactMessagesCount }}</span>
                     <span class="text-[0.62rem] text-[#78000b] block font-semibold">● {{ $contactMessagesCount }} Concierge</span>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b]">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 </div>
-            </div>
+            </a>
 
-            <div class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between">
+            <a href="{{ route('admin.customers') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#2e683a]/40 hover:shadow-xs transition group">
                 <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">TOTAL PATRONS</span>
+                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">PATRONS</span>
                     <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $customersCount }}</span>
-                    <span class="text-[0.62rem] text-[#2e683a] block font-semibold">● Avg Ticket: €{{ number_format($aov, 0) }}</span>
+                    <span class="text-[0.62rem] text-[#2e683a] block font-semibold">● AOV: €{{ number_format($aov, 0) }}</span>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#2e683a]">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#2e683a] group-hover:bg-[#2e683a] group-hover:text-white transition">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                 </div>
-            </div>
+            </a>
         </div>
 
     </div>
@@ -337,6 +371,20 @@
                     </div>
                     <a href="{{ route('admin.products') }}" class="px-2.5 py-1 rounded-lg text-[0.68rem] font-bold bg-white text-[#78000b] border border-[#d9cebc] hover:bg-[#78000b] hover:text-white transition">
                         Restock
+                    </a>
+                </div>
+
+                <!-- Back-in-Stock Waitlist Demand Alert Box -->
+                <div class="mt-2.5 rounded-xl border border-[#ebdccb] bg-[#faf7f2] p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-[#78000b]/15 text-[#78000b] flex items-center justify-center font-bold text-xs shrink-0">🔔</div>
+                        <div>
+                            <p class="text-xs font-bold text-[#1c1210]">{{ $pendingWaitlistCount }} Wartelisten-Anfragen</p>
+                            <p class="text-[0.65rem] text-[#8a7c74]">Latente Nachfrage: <strong class="text-[#78000b]">€{{ number_format($latentRevenueDemand, 2, ',', '.') }}</strong></p>
+                        </div>
+                    </div>
+                    <a href="{{ route('admin.waitlist') }}" class="px-2.5 py-1 rounded-lg text-[0.68rem] font-bold bg-white text-[#78000b] border border-[#d9cebc] hover:bg-[#78000b] hover:text-white transition whitespace-nowrap">
+                        Warteliste
                     </a>
                 </div>
 
