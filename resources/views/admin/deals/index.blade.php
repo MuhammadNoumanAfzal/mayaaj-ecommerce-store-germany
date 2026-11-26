@@ -4,6 +4,10 @@
 @section('admin-styles')
 <style>
     /* Full Page Modal Blur & Hide Scrollbars Across All Browsers */
+    html.modal-open, body.modal-open {
+        overflow: hidden !important;
+        height: 100vh !important;
+    }
     .modal-scroll-clean {
         overflow-y: auto !important;
         overflow-x: hidden !important;
@@ -110,7 +114,7 @@
             <form action="{{ route('admin.deals') }}" method="GET" id="dealsFilterForm" class="flex flex-wrap lg:flex-nowrap items-center gap-2 text-xs font-semibold text-stone-700 w-full">
                 
                 <!-- Left: Search Box with Live Auto-Suggestions -->
-                <div class="relative flex-1 min-w-[200px]">
+                <div class="relative flex-1 min-w-[180px]">
                     <div class="relative">
                         <input
                             type="text"
@@ -161,7 +165,7 @@
                 </div>
 
                 <!-- Right: Sleek, Unified Filter Pills with Leading Icons (In Same Line) -->
-                <div class="flex flex-wrap items-center gap-2">
+                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     
                     <!-- Discount Type Filter -->
                     <div class="relative">
@@ -171,10 +175,10 @@
                             onchange="this.form.submit()" 
                             class="filter-select h-10 pl-8 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
-                            <option value="">Type: All Types</option>
-                            <option value="percentage_discount" {{ request('discount_type') === 'percentage_discount' ? 'selected' : '' }}>Type: Percentage (%)</option>
-                            <option value="fixed_discount" {{ request('discount_type') === 'fixed_discount' ? 'selected' : '' }}>Type: Fixed Euro (€)</option>
-                            <option value="bundle_fixed_price" {{ request('discount_type') === 'bundle_fixed_price' ? 'selected' : '' }}>Type: Fixed Package Price (€)</option>
+                            <option value="">Type: All</option>
+                            <option value="percentage_discount" {{ request('discount_type') === 'percentage_discount' ? 'selected' : '' }}>Percentage (%)</option>
+                            <option value="fixed_discount" {{ request('discount_type') === 'fixed_discount' ? 'selected' : '' }}>Fixed Euro (€)</option>
+                            <option value="bundle_fixed_price" {{ request('discount_type') === 'bundle_fixed_price' ? 'selected' : '' }}>Fixed Price (€)</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
                             <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -190,10 +194,10 @@
                             class="filter-select h-10 pl-8 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="all" {{ request('status') === 'all' || !request('status') ? 'selected' : '' }}>Status: All ({{ $stats['total'] }})</option>
-                            <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Status: Active ({{ $stats['active'] }})</option>
-                            <option value="flash" {{ request('status') === 'flash' ? 'selected' : '' }}>Status: Flash Timer ({{ $stats['flash'] }})</option>
-                            <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Status: Inactive</option>
-                            <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Status: Expired</option>
+                            <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active ({{ $stats['active'] }})</option>
+                            <option value="flash" {{ request('status') === 'flash' ? 'selected' : '' }}>Flash Timer ({{ $stats['flash'] }})</option>
+                            <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                            <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
                             <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -208,11 +212,11 @@
                             onchange="this.form.submit()" 
                             class="filter-select h-10 pl-8 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
-                            <option value="order_asc" {{ request('sort', 'order_asc') === 'order_asc' ? 'selected' : '' }}>Sort: Default Order</option>
-                            <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Sort: Newest First</option>
-                            <option value="discount_desc" {{ request('sort') === 'discount_desc' ? 'selected' : '' }}>Sort: Highest Discount</option>
-                            <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Sort: Name (A → Z)</option>
-                            <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Sort: Oldest First</option>
+                            <option value="order_asc" {{ request('sort', 'order_asc') === 'order_asc' ? 'selected' : '' }}>Sort: Default</option>
+                            <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Newest</option>
+                            <option value="discount_desc" {{ request('sort') === 'discount_desc' ? 'selected' : '' }}>Top Discount</option>
+                            <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Name A→Z</option>
+                            <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Oldest</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
                             <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -238,7 +242,7 @@
 
                     <!-- Reset Filters Button -->
                     @if(request()->anyFilled(['search', 'q', 'discount_type', 'status', 'sort']))
-                        <a href="{{ route('admin.deals') }}" class="h-10 px-3.5 rounded-xl text-xs font-bold text-stone-600 hover:text-rose-600 bg-white hover:bg-rose-50 border border-[#ebdccb] hover:border-rose-200 transition shadow-2xs inline-flex items-center gap-1.5 cursor-pointer" title="Reset all filters">
+                        <a href="{{ route('admin.deals') }}" class="h-10 px-3 rounded-xl text-xs font-bold text-stone-600 hover:text-rose-600 bg-white hover:bg-rose-50 border border-[#ebdccb] hover:border-rose-200 transition shadow-2xs inline-flex items-center gap-1 cursor-pointer shrink-0" title="Reset all filters">
                             <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             <span data-i18n-de="Zurücksetzen" data-i18n-en="Reset">Reset</span>
                         </a>
@@ -249,18 +253,18 @@
             </form>
         </div>
 
-        <!-- Table Container (Clean, Modern, Fully Responsive) -->
+        <!-- Table Container (Fully Responsive, Fluid, ZERO Horizontal Scrollbar) -->
         <div class="w-full overflow-x-auto lg:overflow-x-visible">
-            <table class="w-full text-left text-xs">
+            <table class="w-full text-left text-xs table-auto">
                 <thead>
                     <tr class="bg-gradient-to-r from-[#fbf8f4] via-[#f7eee3] to-[#fbf8f4] text-[#483732] font-black uppercase tracking-wider text-[0.68rem] border-y border-[#ebdccb]">
-                        <th class="py-3 px-3 font-black w-12 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
-                        <th class="py-3 px-3 font-black" data-i18n-de="Bundle Name & Badge" data-i18n-en="Bundle Name & Badge">Bundle Name & Badge</th>
-                        <th class="py-3 px-2 font-black text-center w-44" data-i18n-de="Kombinierte Artikel" data-i18n-en="Bundled Items">Bundled Items</th>
-                        <th class="py-3 px-2 font-black text-center w-36" data-i18n-de="Preise & Ersparnis" data-i18n-en="Pricing & Savings">Pricing & Savings</th>
-                        <th class="py-3 px-2 font-black text-center w-36" data-i18n-de="Flash Countdown" data-i18n-en="Timeline / Flash">Timeline / Flash</th>
-                        <th class="py-3 px-2 font-black text-center w-24" data-i18n-de="Status" data-i18n-en="Status">Status</th>
-                        <th class="py-3 px-3 font-black text-center w-36" data-i18n-de="Aktionen" data-i18n-en="Actions">Actions</th>
+                        <th class="py-2.5 px-2 font-black w-10 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
+                        <th class="py-2.5 px-2.5 font-black min-w-[170px]" data-i18n-de="Bundle Name & Badge" data-i18n-en="Bundle Name & Badge">Bundle Name & Badge</th>
+                        <th class="py-2.5 px-1.5 font-black text-center w-24" data-i18n-de="Artikel" data-i18n-en="Items">Items</th>
+                        <th class="py-2.5 px-1.5 font-black text-center w-28" data-i18n-de="Preise & Ersparnis" data-i18n-en="Pricing & Savings">Pricing & Savings</th>
+                        <th class="py-2.5 px-1.5 font-black text-center w-28" data-i18n-de="Flash Countdown" data-i18n-en="Timeline / Flash">Timeline / Flash</th>
+                        <th class="py-2.5 px-1 font-black text-center w-20" data-i18n-de="Status" data-i18n-en="Status">Status</th>
+                        <th class="py-2.5 px-2 font-black text-center w-28" data-i18n-de="Aktionen" data-i18n-en="Actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#f1e6da] font-medium bg-white">
@@ -287,7 +291,7 @@
                                 'is_expired' => (bool)$deal->is_expired,
                                 'starts_at' => $deal->starts_at ? $deal->starts_at->format('d.m.Y H:i') : null,
                                 'ends_at' => $deal->ends_at ? $deal->ends_at->format('d.m.Y H:i') : null,
-                                'time_remaining' => $deal->ends_at && !$deal->is_expired ? $deal->ends_at->diffForHumans(['parts' => 2]) : null,
+                                'time_remaining' => $deal->ends_at && !$deal->is_expired ? $deal->ends_at->diffForHumans(['parts' => 1]) : null,
                                 'products_count' => (int)$deal->products_count,
                                 'products' => $deal->products->map(function ($p) {
                                     $effective = ($p->sale_price && $p->sale_price < $p->price) ? (float)$p->sale_price : (float)$p->price;
@@ -308,69 +312,66 @@
                         <tr class="hover:bg-[#faf7f2] transition-colors duration-150" id="deal-row-{{ $deal->id }}">
                             
                             <!-- 1. Row Index -->
-                            <td class="py-3 px-3 text-center">
+                            <td class="py-2.5 px-2 text-center">
                                 <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg bg-[#FAF7F2] font-mono font-bold text-[#78000b] text-xs border border-[#ebdccb] shadow-2xs">
                                     {{ $loop->iteration + ($deals->firstItem() - 1) }}
                                 </span>
                             </td>
 
                             <!-- 2. Bundle Title, Badge & Slug (Clickable to View Modal) -->
-                            <td class="py-3 px-3">
-                                <div class="cursor-pointer group space-y-1" onclick='openViewDealModal(@json($dealModalData))' title="Click to view bundle details">
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <span class="font-bold text-[#1c1210] text-sm tracking-tight group-hover:text-[#78000b] transition-colors">
+                            <td class="py-2.5 px-2.5">
+                                <div class="cursor-pointer group space-y-0.5" onclick='openViewDealModal(@json($dealModalData))' title="Click to view bundle details">
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        <span class="font-bold text-[#1c1210] text-xs sm:text-sm tracking-tight group-hover:text-[#78000b] transition-colors">
                                             {{ $deal->title }}
                                         </span>
                                         @if($deal->badge_text)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[0.6rem] font-black uppercase tracking-wider bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20">
+                                            <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[0.58rem] font-black uppercase tracking-wider bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20">
                                                 {{ $deal->badge_text }}
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="flex items-center gap-2 text-[0.65rem] text-stone-500 font-mono">
+                                    <div class="text-[0.62rem] text-stone-500 font-mono truncate max-w-[240px]">
                                         <span>/deals#{{ $deal->slug }}</span>
-                                        @if($deal->title_en && $deal->title_de && $deal->title_de !== $deal->title_en)
-                                            <span class="text-stone-400 font-sans italic truncate max-w-[200px]">({{ $deal->title_en }})</span>
-                                        @endif
                                     </div>
                                 </div>
                             </td>
 
                             <!-- 3. Bundled Products Preview (Avatars & Count) -->
-                            <td class="py-3 px-2 text-center">
-                                <div class="inline-flex items-center gap-2 justify-center cursor-pointer group/prods" onclick='openViewDealModal(@json($dealModalData))'>
+                            <td class="py-2.5 px-1.5 text-center">
+                                <div class="inline-flex items-center gap-1 justify-center cursor-pointer group/prods" onclick='openViewDealModal(@json($dealModalData))'>
                                     <div class="flex items-center -space-x-2 shrink-0">
-                                        @foreach($deal->products->take(3) as $product)
-                                            <div class="w-8 h-8 rounded-xl border-2 border-white shadow-2xs overflow-hidden bg-[#FAF7F2] relative shrink-0 transition-transform duration-200 group-hover/prods:scale-105" title="{{ $product->name }}">
+                                        @foreach($deal->products->take(2) as $product)
+                                            <div class="w-7 h-7 rounded-lg border-2 border-white shadow-2xs overflow-hidden bg-[#FAF7F2] relative shrink-0 transition-transform duration-200 group-hover/prods:scale-105" title="{{ $product->name }}">
                                                 @if($product->image)
                                                     <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                                                 @else
-                                                    <div class="w-full h-full flex items-center justify-center font-serif font-bold text-xs text-[#78000b] bg-[#FAF7F2]">
+                                                    <div class="w-full h-full flex items-center justify-center font-serif font-bold text-[0.65rem] text-[#78000b] bg-[#FAF7F2]">
                                                         {{ mb_substr($product->name, 0, 1) }}
                                                     </div>
                                                 @endif
                                             </div>
                                         @endforeach
                                     </div>
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs font-bold bg-[#FAF7F2] text-[#78000b] border border-[#ebdccb] shadow-2xs">
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[0.65rem] font-bold bg-[#FAF7F2] text-[#78000b] border border-[#ebdccb] shadow-2xs">
                                         {{ $deal->products_count }} items
                                     </span>
                                 </div>
                             </td>
 
                             <!-- 4. Pricing & Savings -->
-                            <td class="py-3 px-2 text-center whitespace-nowrap">
-                                <div class="inline-flex flex-col items-center gap-0.5">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="font-extrabold text-sm text-[#78000b]">
+                            <td class="py-2.5 px-1.5 text-center whitespace-nowrap">
+                                <div class="inline-flex flex-col items-center leading-tight">
+                                    <div class="flex items-center gap-1">
+                                        <span class="font-extrabold text-xs sm:text-sm text-[#78000b]">
                                             €{{ number_format($deal->bundle_price, 2) }}
                                         </span>
-                                        <span class="text-[0.68rem] text-stone-400 line-through">
+                                        <span class="text-[0.62rem] text-stone-400 line-through">
                                             €{{ number_format($deal->regular_total, 2) }}
                                         </span>
                                     </div>
                                     @if($deal->savings_amount > 0)
-                                        <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[0.6rem] font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-300">
+                                        <span class="inline-flex items-center px-1 py-0.2 rounded text-[0.58rem] font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-300 mt-0.5">
                                             Save €{{ number_format($deal->savings_amount, 2) }} ({{ $deal->savings_percentage }}%)
                                         </span>
                                     @endif
@@ -378,24 +379,24 @@
                             </td>
 
                             <!-- 5. Timeline / Flash Countdown -->
-                            <td class="py-3 px-2 text-center whitespace-nowrap">
+                            <td class="py-2.5 px-1.5 text-center whitespace-nowrap">
                                 @if($deal->ends_at)
                                     @if($deal->is_expired)
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold bg-rose-50 text-rose-800 border border-rose-300 shadow-2xs">
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-rose-50 text-rose-800 border border-rose-300 shadow-2xs">
                                             <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
                                             <span>Expired</span>
                                         </span>
                                     @else
-                                        <div class="inline-flex flex-col items-center">
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs">
+                                        <div class="inline-flex flex-col items-center leading-tight">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs">
                                                 <svg class="w-3 h-3 text-amber-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                                 <span>Ends in {{ $deal->ends_at->diffForHumans(['parts' => 1]) }}</span>
                                             </span>
-                                            <span class="text-[0.6rem] text-stone-400 font-mono mt-0.5">{{ $deal->ends_at->format('d.m.Y H:i') }}</span>
+                                            <span class="text-[0.58rem] text-stone-400 font-mono mt-0.5">{{ $deal->ends_at->format('d.m.Y H:i') }}</span>
                                         </div>
                                     @endif
                                 @else
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[0.65rem] font-semibold bg-stone-50 text-stone-600 border border-stone-200">
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-semibold bg-stone-50 text-stone-600 border border-stone-200">
                                         <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                                         <span>Always Active</span>
                                     </span>
@@ -403,11 +404,11 @@
                             </td>
 
                             <!-- 6. Status Toggle Badge (Interactive AJAX Toggle) -->
-                            <td class="py-3 px-2 text-center">
+                            <td class="py-2.5 px-1 text-center">
                                 <button 
                                     type="button" 
                                     onclick="toggleDealStatus({{ $deal->id }}, this)" 
-                                    class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 {{ $deal->is_active ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100' : 'bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100' }}"
+                                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 {{ $deal->is_active ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100' : 'bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100' }}"
                                     title="Click to toggle status (Active / Inactive)"
                                 >
                                     <span class="h-1.5 w-1.5 rounded-full {{ $deal->is_active ? 'bg-emerald-600 animate-pulse' : 'bg-amber-500' }}"></span>
@@ -415,14 +416,14 @@
                                 </button>
                             </td>
 
-                            <!-- 7. Actions (View, Edit, Delete with Cursors) - Sleek, Compact -->
-                            <td class="py-3 px-3 text-center whitespace-nowrap">
+                            <!-- 7. Actions (View, Edit, Delete with Cursors) - Compact, Never Overflowing -->
+                            <td class="py-2.5 px-2 text-center whitespace-nowrap">
                                 <div class="flex items-center justify-center gap-1">
                                     <!-- Quick View Button -->
                                     <button
                                         type="button"
                                         onclick='openViewDealModal(@json($dealModalData))'
-                                        class="h-7 px-2.5 rounded-lg border border-stone-200 bg-white text-stone-700 hover:text-[#78000b] hover:border-[#78000b] hover:bg-[#FAF7F2] text-[0.7rem] font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer active:scale-95"
+                                        class="h-6 px-1.5 rounded-lg border border-stone-200 bg-white text-stone-700 hover:text-[#78000b] hover:border-[#78000b] hover:bg-[#FAF7F2] text-[0.68rem] font-bold transition shadow-2xs inline-flex items-center gap-0.5 cursor-pointer active:scale-95"
                                         title="View Details"
                                     >
                                         <svg class="h-3 w-3 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -432,7 +433,7 @@
                                     <!-- Edit Button -->
                                     <a
                                         href="{{ route('admin.deals.edit', $deal->id) }}"
-                                        class="h-7 px-2 rounded-lg border border-blue-200 bg-blue-50/70 text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 text-[0.7rem] font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
+                                        class="h-6 px-1.5 rounded-lg border border-blue-200 bg-blue-50/70 text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 text-[0.68rem] font-bold transition shadow-2xs inline-flex items-center gap-0.5 cursor-pointer"
                                         title="Edit Bundle"
                                     >
                                         <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -443,7 +444,7 @@
                                     <button
                                         type="button"
                                         onclick="confirmDeleteDeal({{ $deal->id }}, '{{ addslashes($deal->title) }}')"
-                                        class="h-7 px-2 rounded-lg border border-rose-200 bg-rose-50/70 text-rose-700 hover:bg-rose-600 hover:text-white hover:border-rose-600 text-[0.7rem] font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
+                                        class="h-6 px-1.5 rounded-lg border border-rose-200 bg-rose-50/70 text-rose-700 hover:bg-rose-600 hover:text-white hover:border-rose-600 text-[0.68rem] font-bold transition shadow-2xs inline-flex items-center gap-0.5 cursor-pointer"
                                         title="Delete Bundle"
                                     >
                                         <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
@@ -482,7 +483,7 @@
         </div>
 
         <!-- Proper Production Pagination Footer (Matching Categories & Products) -->
-        <div class="p-4 sm:p-5 bg-gradient-to-r from-[#faf7f2] via-[#f7eee3] to-[#faf7f2] border-t border-[#ebdccb] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-stone-600">
+        <div class="p-3.5 sm:p-4 bg-gradient-to-r from-[#faf7f2] via-[#f7eee3] to-[#faf7f2] border-t border-[#ebdccb] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-semibold text-stone-600">
             <div>
                 @if($deals->total() > 0)
                     <span data-i18n-de="Zeige" data-i18n-en="Showing">Showing</span> 
@@ -506,129 +507,127 @@
 
 </div>
 
-<!-- Bundle Quick View Executive Modal (100% Full Page Blur, Wide Luxury Card, Teleported to Body) -->
+<!-- Compact Luxury Bundle Quick View Modal (Less Height, Clean, No Scrollbar) -->
 <div 
     id="view-deal-modal" 
-    class="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-5 hidden transition-all duration-300" 
+    class="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 hidden transition-all duration-300" 
     style="z-index: 99999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.72) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important;" 
     onclick="closeViewDealModal()"
 >
     <div 
-        class="relative w-full max-w-2xl bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden my-auto transform transition-all" 
+        class="relative w-full max-w-lg bg-white rounded-2xl border border-[#ebdccb] shadow-2xl overflow-hidden my-auto transform transition-all" 
         onclick="event.stopPropagation()"
     >
         <!-- Luxury Gold & Wine Top Accent Strip -->
         <div class="h-1.5 w-full bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b]"></div>
 
         <!-- Modal Header (Compact) -->
-        <div class="px-5 py-3 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-b border-[#ebdccb] flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
-                    <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+        <div class="px-4 py-2.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-b border-[#ebdccb] flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 shadow-xs" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                    <svg class="w-3.5 h-3.5 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                 </div>
                 <div>
-                    <h3 class="font-serif text-base font-bold text-[#1c1210] tracking-tight leading-tight">Bundle & Deal Details</h3>
-                    <p class="text-[0.65rem] text-stone-500 font-mono" id="deal-view-slug">/deals#slug</p>
+                    <h3 class="font-serif text-sm font-bold text-[#1c1210] tracking-tight leading-tight">Bundle Details</h3>
+                    <p class="text-[0.62rem] text-stone-500 font-mono leading-none" id="deal-view-slug">/deals#slug</p>
                 </div>
             </div>
-            <button type="button" onclick="closeViewDealModal()" class="w-7 h-7 rounded-lg bg-white hover:bg-stone-100 text-stone-500 hover:text-stone-900 border border-[#ebdccb] transition flex items-center justify-center cursor-pointer text-xs font-bold shadow-2xs active:scale-95" title="Close">
+            <button type="button" onclick="closeViewDealModal()" class="w-6 h-6 rounded-lg bg-white hover:bg-stone-100 text-stone-500 hover:text-stone-900 border border-[#ebdccb] transition flex items-center justify-center cursor-pointer text-xs font-bold shadow-2xs active:scale-95" title="Close">
                 ✕
             </button>
         </div>
 
-        <!-- Modal Body Content (Compact Height, Hidden Scrollbar) -->
-        <div class="p-4 sm:p-5 space-y-3 text-xs max-h-[72vh] overflow-y-auto modal-scroll-clean">
+        <!-- Modal Body Content (Compact, Less Height, Hide Scrollbar) -->
+        <div class="p-3.5 space-y-2.5 text-xs max-h-[76vh] overflow-y-auto modal-scroll-clean">
             
-            <!-- Hero Info & Badge -->
-            <div class="flex items-center gap-3.5 p-3 rounded-2xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb]">
-                <div class="w-14 h-14 rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] shadow-xs shrink-0 flex items-center justify-center">
-                    <div class="text-[#78000b] flex items-center justify-center w-full h-full font-serif font-bold text-2xl">
-                        🎁
-                    </div>
+            <!-- Hero Info & Badge (Compact Strip) -->
+            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb]">
+                <div class="w-10 h-10 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] shadow-xs shrink-0 flex items-center justify-center text-lg">
+                    🎁
                 </div>
 
-                <div class="space-y-1 flex-1 min-w-0">
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <h4 id="deal-view-title" class="font-serif font-bold text-lg text-[#1c1210] tracking-tight leading-snug"></h4>
+                <div class="space-y-0.5 flex-1 min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <h4 id="deal-view-title" class="font-serif font-bold text-sm text-[#1c1210] tracking-tight truncate"></h4>
                         <span id="deal-view-status-badge"></span>
-                        <span id="deal-view-badge-text" class="hidden inline-flex items-center px-2 py-0.5 rounded-md text-[0.62rem] font-black uppercase tracking-wider bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20"></span>
+                        <span id="deal-view-badge-text" class="hidden inline-flex items-center px-1.5 py-0.2 rounded text-[0.58rem] font-black uppercase tracking-wider bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20"></span>
                     </div>
 
-                    <div class="flex items-center gap-2 text-[0.68rem] text-stone-500 font-medium">
-                        <span class="inline-flex items-center gap-1 font-mono text-[0.65rem] font-bold text-stone-700 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                    <div class="flex items-center gap-2 text-[0.62rem] text-stone-500 font-medium">
+                        <span class="inline-flex items-center gap-1 font-mono text-[0.62rem] font-bold text-stone-700 bg-[#FAF7F2] px-1.5 py-0.2 rounded border border-[#ebdccb]">
                             ID: <strong id="deal-view-id" class="text-stone-900">#0</strong>
                         </span>
-                        <span class="inline-flex items-center gap-1 font-mono text-[0.65rem] font-bold text-stone-700 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                        <span class="inline-flex items-center gap-1 font-mono text-[0.62rem] font-bold text-stone-700 bg-[#FAF7F2] px-1.5 py-0.2 rounded border border-[#ebdccb]">
                             Items: <strong id="deal-view-items-count" class="text-[#78000b]">0</strong>
                         </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Pricing & Financial Metrics Grid (4-Tile Strip) -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#FAF8F5] to-[#F5ECE1] border border-[#ebdccb]">
-                    <span class="text-[0.62rem] font-bold text-[#8a7267] uppercase tracking-wider block">Regular Total</span>
-                    <span id="deal-view-regular-total" class="font-extrabold text-sm text-[#1c1210] mt-0.5 block">€0.00</span>
+            <!-- Pricing & Financial Metrics Grid (4-Tile Compact Strip) -->
+            <div class="grid grid-cols-4 gap-1.5">
+                <div class="p-2 rounded-lg bg-gradient-to-br from-[#FAF8F5] to-[#F5ECE1] border border-[#ebdccb] text-center">
+                    <span class="text-[0.58rem] font-bold text-[#8a7267] uppercase tracking-wider block">Regular</span>
+                    <span id="deal-view-regular-total" class="font-extrabold text-xs text-[#1c1210] block mt-0.5">€0.00</span>
                 </div>
 
-                <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#fff5f5] to-[#fde8e8] border border-rose-200/90">
-                    <span class="text-[0.62rem] font-bold text-rose-800 uppercase tracking-wider block">Bundle Price</span>
-                    <span id="deal-view-bundle-price" class="font-extrabold text-sm text-[#78000b] mt-0.5 block">€0.00</span>
+                <div class="p-2 rounded-lg bg-gradient-to-br from-[#fff5f5] to-[#fde8e8] border border-rose-200/90 text-center">
+                    <span class="text-[0.58rem] font-bold text-rose-800 uppercase tracking-wider block">Bundle Price</span>
+                    <span id="deal-view-bundle-price" class="font-extrabold text-xs text-[#78000b] block mt-0.5">€0.00</span>
                 </div>
 
-                <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90">
-                    <span class="text-[0.62rem] font-bold text-emerald-800 uppercase tracking-wider block">Total Savings</span>
-                    <span id="deal-view-savings-amount" class="font-extrabold text-sm text-emerald-900 mt-0.5 block">€0.00</span>
+                <div class="p-2 rounded-lg bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90 text-center">
+                    <span class="text-[0.58rem] font-bold text-emerald-800 uppercase tracking-wider block">Savings</span>
+                    <span id="deal-view-savings-amount" class="font-extrabold text-xs text-emerald-900 block mt-0.5">€0.00</span>
                 </div>
 
-                <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90">
-                    <span class="text-[0.62rem] font-bold text-emerald-800 uppercase tracking-wider block">Discount %</span>
-                    <span id="deal-view-savings-pct" class="font-extrabold text-sm text-emerald-900 mt-0.5 block">0%</span>
+                <div class="p-2 rounded-lg bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90 text-center">
+                    <span class="text-[0.58rem] font-bold text-emerald-800 uppercase tracking-wider block">Discount</span>
+                    <span id="deal-view-savings-pct" class="font-extrabold text-xs text-emerald-900 block mt-0.5">0%</span>
                 </div>
             </div>
 
             <!-- Flash Sale Countdown Bar (if set) -->
-            <div id="deal-view-timer-section" class="hidden p-3 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div id="deal-view-timer-section" class="hidden p-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <div>
-                        <span class="font-bold text-xs text-amber-900 block" id="deal-view-timer-status">Active Flash Sale</span>
-                        <span class="text-[0.65rem] text-amber-700 font-mono" id="deal-view-timer-range"></span>
+                        <span class="font-bold text-[0.68rem] text-amber-900 block leading-tight" id="deal-view-timer-status">Active Flash Sale</span>
+                        <span class="text-[0.58rem] text-amber-700 font-mono leading-none" id="deal-view-timer-range"></span>
                     </div>
                 </div>
-                <span id="deal-view-timer-countdown" class="px-2 py-0.5 rounded-md text-xs font-extrabold bg-amber-500 text-white shadow-2xs"></span>
+                <span id="deal-view-timer-countdown" class="px-2 py-0.5 rounded text-[0.62rem] font-extrabold bg-amber-500 text-white shadow-2xs shrink-0"></span>
             </div>
 
-            <!-- Bundled Items List -->
-            <div class="space-y-1.5">
-                <span class="block font-bold uppercase tracking-wider text-[0.62rem] text-[#8a7267]">Items Included in Bundle</span>
-                <div id="deal-view-products-list" class="divide-y divide-stone-100 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] overflow-hidden">
+            <!-- Bundled Items List (Compact Rows) -->
+            <div class="space-y-1">
+                <span class="block font-bold uppercase tracking-wider text-[0.6rem] text-[#8a7267]">Items in this Bundle</span>
+                <div id="deal-view-products-list" class="divide-y divide-stone-100 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] overflow-hidden max-h-44 overflow-y-auto modal-scroll-clean">
                     <!-- Populated dynamically via JS -->
                 </div>
             </div>
 
-            <!-- Description -->
-            <div class="space-y-1">
-                <span class="block font-bold uppercase tracking-wider text-[0.62rem] text-[#8a7267]">Description</span>
-                <div id="deal-view-desc" class="p-2.5 sm:p-3 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] text-stone-700 leading-relaxed text-xs"></div>
+            <!-- Description (Only visible if non-empty!) -->
+            <div id="deal-view-desc-wrapper" class="hidden space-y-1">
+                <span class="block font-bold uppercase tracking-wider text-[0.6rem] text-[#8a7267]">Description</span>
+                <div id="deal-view-desc" class="p-2 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] text-stone-700 leading-relaxed text-[0.7rem] max-h-20 overflow-y-auto modal-scroll-clean"></div>
             </div>
 
         </div>
 
         <!-- Modal Footer Actions (Compact) -->
-        <div class="px-5 py-2.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-t border-[#ebdccb] flex items-center justify-between gap-3">
+        <div class="px-4 py-2 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-t border-[#ebdccb] flex items-center justify-between gap-3">
             <a id="deal-view-store-btn" href="#" target="_blank" class="text-xs font-bold text-[#78000b] hover:underline inline-flex items-center gap-1 transition cursor-pointer">
                 <span>View on Storefront</span>
                 <span>↗</span>
             </a>
 
             <div class="flex items-center gap-2">
-                <button type="button" onclick="closeViewDealModal()" class="btn-exec-secondary rounded-xl px-3.5 py-1.5 text-xs font-bold transition cursor-pointer shadow-2xs active:scale-95">
+                <button type="button" onclick="closeViewDealModal()" class="btn-exec-secondary rounded-lg px-3 py-1.5 text-xs font-bold transition cursor-pointer shadow-2xs active:scale-95">
                     Close
                 </button>
-                <a id="deal-view-edit-btn" href="#" class="btn-exec-primary rounded-xl px-3.5 py-1.5 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95">
-                    <svg class="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <a id="deal-view-edit-btn" href="#" class="btn-exec-primary rounded-lg px-3 py-1.5 text-xs font-bold transition flex items-center gap-1 cursor-pointer shadow-md active:scale-95">
+                    <svg class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     <span>Edit Bundle</span>
                 </a>
             </div>
@@ -732,20 +731,20 @@
 
                 html += `
                     <div 
-                        class="suggestion-item px-3.5 py-2.5 hover:bg-[#FAF7F2] cursor-pointer flex items-center justify-between gap-3 transition" 
+                        class="suggestion-item px-3.5 py-2 hover:bg-[#FAF7F2] cursor-pointer flex items-center justify-between gap-3 transition" 
                         data-index="${idx}"
                         data-name="${escapeHtml(d.title)}"
                         data-id="${d.id}"
                     >
-                        <div class="flex items-center gap-2.5 min-w-0">
-                            <div class="h-8 w-8 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] flex items-center justify-center shrink-0">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <div class="h-7 w-7 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] flex items-center justify-center shrink-0">
                                 ${imgHtml}
                             </div>
                             <div class="min-w-0">
                                 <div class="text-xs font-bold text-[#1c1210] truncate">
                                     ${highlightMatch(d.title, trimmed)}
                                 </div>
-                                <div class="text-[0.65rem] text-stone-500 font-medium truncate flex items-center gap-1.5">
+                                <div class="text-[0.62rem] text-stone-500 font-medium truncate flex items-center gap-1.5">
                                     <span class="text-[#78000b] font-semibold">${escapeHtml(d.badge_text)}</span>
                                     <span>•</span>
                                     <span>${d.products_count} items</span>
@@ -828,7 +827,7 @@
         });
     }
 
-    // Modal Handling with ensureModalTeleported
+    // Modal Handling with ensureModalTeleported & Body Scroll Lock
     function openViewDealModal(data) {
         ensureModalTeleported('view-deal-modal');
         const isEn = (window.__mehaaj_lang || 'en') === 'en';
@@ -850,10 +849,10 @@
         // Status Badge
         const statusBadgeEl = document.getElementById('deal-view-status-badge');
         if (data.is_active) {
-            statusBadgeEl.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-300';
+            statusBadgeEl.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-300';
             statusBadgeEl.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse"></span><span>${isEn ? 'ACTIVE' : 'AKTIV'}</span>`;
         } else {
-            statusBadgeEl.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-300';
+            statusBadgeEl.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-300';
             statusBadgeEl.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span><span>${isEn ? 'DRAFT' : 'ENTWURF'}</span>`;
         }
 
@@ -875,62 +874,64 @@
                 timerStatus.textContent = isEn ? 'Expired Flash Deal' : 'Abgelaufener Flash Deal';
                 timerRange.textContent = 'Ended: ' + data.ends_at;
                 timerCountdown.textContent = isEn ? 'Expired' : 'Beendet';
-                timerCountdown.className = 'px-2 py-0.5 rounded-md text-xs font-extrabold bg-rose-600 text-white';
+                timerCountdown.className = 'px-2 py-0.5 rounded text-[0.62rem] font-extrabold bg-rose-600 text-white';
             } else {
-                timerStatus.textContent = isEn ? 'Active Flash Sale Deal' : 'Aktives zeitlimitiertes Angebot';
+                timerStatus.textContent = isEn ? 'Active Flash Sale Deal' : 'Aktives Flash-Angebot';
                 timerRange.textContent = (data.starts_at ? data.starts_at + ' → ' : '') + data.ends_at;
                 timerCountdown.textContent = data.time_remaining ? 'Ends in ' + data.time_remaining : 'Active';
-                timerCountdown.className = 'px-2 py-0.5 rounded-md text-xs font-extrabold bg-amber-500 text-white shadow-2xs';
+                timerCountdown.className = 'px-2 py-0.5 rounded text-[0.62rem] font-extrabold bg-amber-500 text-white shadow-2xs';
             }
         } else {
             timerSec.classList.add('hidden');
         }
 
-        // Bundled Products List
+        // Bundled Products List (Compact Rows)
         const productsList = document.getElementById('deal-view-products-list');
         productsList.innerHTML = '';
         if (data.products && data.products.length > 0) {
             data.products.forEach(p => {
                 const itemDiv = document.createElement('div');
-                itemDiv.className = 'p-2.5 flex items-center justify-between gap-3 bg-white hover:bg-[#FAF8F5] transition';
+                itemDiv.className = 'p-2 flex items-center justify-between gap-2.5 bg-white hover:bg-[#FAF8F5] transition';
                 itemDiv.innerHTML = `
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <img src="${p.image_url}" alt="${p.name}" class="w-10 h-10 rounded-lg object-cover border border-[#ebdccb] shrink-0">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <img src="${p.image_url}" alt="${p.name}" class="w-8 h-8 rounded-lg object-cover border border-[#ebdccb] shrink-0">
                         <div class="min-w-0">
-                            <span class="font-bold text-xs text-[#1c1210] truncate block">${p.name}</span>
-                            <span class="text-[0.62rem] text-stone-400 font-mono">SKU: ${p.sku}</span>
+                            <span class="font-bold text-[0.72rem] text-[#1c1210] truncate block">${p.name}</span>
+                            <span class="text-[0.6rem] text-stone-400 font-mono">SKU: ${p.sku}</span>
                         </div>
                     </div>
                     <div class="text-right shrink-0">
-                        <span class="font-extrabold text-xs text-[#78000b] block">€${p.effective_price.toFixed(2)}</span>
-                        <a href="${p.edit_url}" target="_blank" class="text-[0.65rem] text-stone-500 hover:text-[#78000b] underline">Edit Item</a>
+                        <span class="font-extrabold text-[0.72rem] text-[#78000b] block">€${p.effective_price.toFixed(2)}</span>
+                        <a href="${p.edit_url}" target="_blank" class="text-[0.6rem] text-stone-500 hover:text-[#78000b] underline">Edit</a>
                     </div>
                 `;
                 productsList.appendChild(itemDiv);
             });
         }
 
-        // Description
+        // Description (Hide if empty)
+        const descWrap = document.getElementById('deal-view-desc-wrapper');
         const descEl = document.getElementById('deal-view-desc');
         if (data.description && data.description.trim()) {
             descEl.textContent = data.description;
-            descEl.classList.remove('italic', 'text-stone-400');
+            descWrap.classList.remove('hidden');
         } else {
-            descEl.textContent = isEn ? 'No description provided for this curated bundle.' : 'Keine Beschreibung für dieses Bundle hinterlegt.';
-            descEl.classList.add('italic', 'text-stone-400');
+            descWrap.classList.add('hidden');
         }
 
         // Action links
         document.getElementById('deal-view-store-btn').href = data.store_url;
         document.getElementById('deal-view-edit-btn').href = data.edit_url;
 
-        // Show modal
-        document.body.classList.add('overflow-hidden');
+        // Show modal and lock body scroll completely
+        document.documentElement.classList.add('modal-open');
+        document.body.classList.add('modal-open');
         document.getElementById('view-deal-modal').classList.remove('hidden');
     }
 
     function closeViewDealModal() {
-        document.body.classList.remove('overflow-hidden');
+        document.documentElement.classList.remove('modal-open');
+        document.body.classList.remove('modal-open');
         const modal = document.getElementById('view-deal-modal');
         if (modal) modal.classList.add('hidden');
     }
@@ -965,10 +966,10 @@
 
             if (data.success) {
                 if (data.is_active) {
-                    buttonElement.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100';
+                    buttonElement.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100';
                     buttonElement.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse"></span><span>Active</span>';
                 } else {
-                    buttonElement.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100';
+                    buttonElement.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100';
                     buttonElement.innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span><span>Draft</span>';
                 }
 
