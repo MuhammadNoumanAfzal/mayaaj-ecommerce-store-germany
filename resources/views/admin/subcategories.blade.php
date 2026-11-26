@@ -95,11 +95,11 @@
         </div>
 
         <!-- Filter, Sort & Search Toolbar Form -->
-        <div class="p-3.5 sm:p-4 bg-gradient-to-r from-[#faf7f2] via-[#f5ede2] to-[#faf7f2] border-b border-[#ebdccb] relative z-30">
-            <form action="{{ route('admin.subcategories') }}" method="GET" id="subcategoriesFilterForm" class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 text-xs font-semibold text-stone-700">
+        <div class="p-3 bg-gradient-to-r from-[#faf7f2] via-[#f5ede2] to-[#faf7f2] border-b border-[#ebdccb] relative z-30">
+            <form action="{{ route('admin.subcategories') }}" method="GET" id="subcategoriesFilterForm" class="flex items-center gap-2 text-xs font-semibold text-stone-700 w-full overflow-x-auto lg:overflow-x-visible">
                 
                 <!-- Left: Search Box with Live Auto-Suggestions -->
-                <div class="relative flex-1 min-w-[280px] max-w-md">
+                <div class="relative flex-1 min-w-[180px]">
                     <div class="relative">
                         <input
                             type="text"
@@ -108,12 +108,12 @@
                             value="{{ request('search') }}"
                             autocomplete="off"
                             placeholder="Search subcategory by name, slug or parent..."
-                            data-i18n-placeholder-de="Unterkategorie nach Name, Slug oder Hauptkategorie suchen..."
+                            data-i18n-placeholder-de="Unterkategorie suchen..."
                             data-i18n-placeholder-en="Search subcategory by name, slug or parent..."
-                            class="h-10 w-full pl-9 pr-9 rounded-xl border border-[#ebdccb] bg-white text-xs font-semibold text-stone-900 outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs placeholder:text-stone-400 placeholder:font-normal transition"
+                            class="h-9 w-full pl-8 pr-7 rounded-xl border border-[#ebdccb] bg-white text-xs font-semibold text-stone-900 outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs placeholder:text-stone-400 placeholder:font-normal transition"
                         >
                         <!-- Search Icon -->
-                        <div class="absolute left-3 top-3 text-stone-400 pointer-events-none">
+                        <div class="absolute left-2.5 top-2.5 text-stone-400 pointer-events-none">
                             <svg class="h-4 w-4 text-[#8a7267]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         </div>
                         
@@ -122,7 +122,7 @@
                             type="button" 
                             id="subcategorySearchClearBtn" 
                             onclick="clearSubcategorySearch()" 
-                            class="absolute right-2.5 top-2.5 h-5 w-5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-400 hover:text-stone-700 transition flex items-center justify-center text-[0.65rem] cursor-pointer {{ request('search') ? '' : 'hidden' }}"
+                            class="absolute right-2 top-2 h-5 w-5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-400 hover:text-stone-700 transition flex items-center justify-center text-[0.65rem] cursor-pointer {{ request('search') ? '' : 'hidden' }}"
                             title="Clear search"
                         >✕</button>
                     </div>
@@ -132,7 +132,7 @@
                         id="subcategorySuggestionsPanel" 
                         class="hidden absolute left-0 right-0 top-full mt-2 z-50 bg-white rounded-2xl border border-[#ebdccb] shadow-2xl overflow-hidden"
                     >
-                        <div class="px-4 py-2.5 bg-gradient-to-r from-stone-50 via-white to-stone-50 border-b border-[#ebdccb] flex items-center justify-between text-[0.68rem] font-bold text-stone-400 uppercase tracking-wider">
+                        <div class="px-4 py-2 bg-gradient-to-r from-stone-50 via-white to-stone-50 border-b border-[#ebdccb] flex items-center justify-between text-[0.68rem] font-bold text-stone-400 uppercase tracking-wider">
                             <span class="flex items-center gap-1.5 text-stone-700">
                                 <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
                                 <span>Suggested Subcategories</span>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
 
-                <!-- Right: Sleek, Unified Filter Pills with Leading Icons -->
+                <!-- Right: Sleek, Unified Filter Pills with Leading Icons (In Same Line) -->
                 <style>
                     select.filter-select,
                     select.appearance-none {
@@ -163,52 +163,52 @@
                         display: none !important;
                     }
                 </style>
-                <div class="flex flex-wrap items-center gap-2.5">
+                <div class="flex items-center gap-2 shrink-0">
                     
                     <!-- Parent Category Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                         <select 
                             name="category_id" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-10 pl-8 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
-                            <option value="">Category: All Categories</option>
+                            <option value="">Category: All</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
                                     Category: {{ $cat->name }} ({{ $cat->subcategories_count }})
                                 </option>
                             @endforeach
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
-                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
+                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Status Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
                         <select 
                             name="status" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-10 pl-8 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="">Status: All ({{ $totalCount }})</option>
                             <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Status: Active ({{ $activeCount }})</option>
                             <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Status: Draft ({{ $draftCount }})</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
-                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
+                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Sort Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/></svg>
                         <select 
                             name="sort" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-10 pl-8 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="name_asc" {{ request('sort', 'name_asc') === 'name_asc' ? 'selected' : '' }}>Sort: Name (A → Z)</option>
                             <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>Sort: Name (Z → A)</option>
@@ -216,31 +216,31 @@
                             <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Sort: Newest First</option>
                             <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Sort: Oldest First</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
-                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
+                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Per Page Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                         <select 
                             name="per_page" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-10 pl-8 pr-7 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 / page</option>
                             <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10 / page</option>
                             <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 / page</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-stone-400">
-                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
+                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Reset Filters Button -->
                     @if(request()->anyFilled(['search', 'category_id', 'status', 'sort']))
-                        <a href="{{ route('admin.subcategories') }}" class="h-10 px-3.5 rounded-xl text-xs font-bold text-stone-600 hover:text-rose-600 bg-white hover:bg-rose-50 border border-[#ebdccb] hover:border-rose-200 transition shadow-2xs inline-flex items-center gap-1.5" title="Reset all filters">
+                        <a href="{{ route('admin.subcategories') }}" class="h-9 px-3 rounded-xl text-xs font-bold text-stone-600 hover:text-rose-600 bg-white hover:bg-rose-50 border border-[#ebdccb] hover:border-rose-200 transition shadow-2xs inline-flex items-center gap-1 shrink-0" title="Reset all filters">
                             <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             <span data-i18n-de="Zurücksetzen" data-i18n-en="Reset">Reset</span>
                         </a>
@@ -296,27 +296,12 @@
                                 </span>
                             </td>
 
-                            <!-- 2. Image & Subcategory Name (Clickable opens Quick View) -->
-                            <td class="py-3 px-3">
-                                <div class="flex items-center gap-3 cursor-pointer group" onclick='openViewSubcategoryModal(@json($subModalData))' title="Click to view details">
-                                    <div class="h-10 w-10 rounded-xl overflow-hidden bg-[#F8F5EF] border border-[#ebdccb] shadow-2xs flex items-center justify-center shrink-0 relative transition-transform duration-200 group-hover:scale-105 group-hover:border-[#78000b]">
-                                        @if($subcategory->image_url)
-                                            <img src="{{ $subcategory->image_url }}" alt="{{ $subcategory->name }}" class="h-full w-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
-                                            <div class="hidden text-stone-400 flex items-center justify-center w-full h-full bg-[#FAF7F2]">
-                                                <span class="font-serif font-bold text-[#78000b] text-sm">{{ mb_substr($subcategory->name, 0, 1) }}</span>
-                                            </div>
-                                        @else
-                                            <div class="text-[#78000b] flex items-center justify-center w-full h-full bg-[#FAF7F2] font-serif font-bold text-base">
-                                                {{ mb_substr($subcategory->name, 0, 1) }}
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="min-w-0">
-                                        <span class="font-bold text-[#1c1210] text-sm tracking-tight truncate block group-hover:text-[#78000b] transition-colors cursor-pointer">
-                                            {{ $subcategory->name }}
-                                        </span>
-                                    </div>
+                            <!-- 2. Subcategory Name (Clean, Clickable opens Quick View) -->
+                            <td class="py-3.5 px-3">
+                                <div class="cursor-pointer group inline-flex items-center gap-2" onclick='openViewSubcategoryModal(@json($subModalData))' title="Click to view details">
+                                    <span class="font-bold text-[#1c1210] text-xs sm:text-sm tracking-tight group-hover:text-[#78000b] transition-colors cursor-pointer">
+                                        {{ $subcategory->name }}
+                                    </span>
                                 </div>
                             </td>
 
@@ -478,16 +463,9 @@
         <!-- Modal Body Content (Compact Height, Hidden Scrollbar) -->
         <div class="p-4 sm:p-5 space-y-3 text-xs max-h-[72vh] overflow-y-auto modal-scroll-clean" style="scrollbar-width: none !important; -ms-overflow-style: none !important;">
             
-            <!-- Hero Info & Image -->
-            <div class="flex items-center gap-3.5 p-3 rounded-2xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb]">
-                <div class="w-14 h-14 rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] shadow-xs shrink-0 flex items-center justify-center">
-                    <img id="sub-view-img" src="" alt="Subcategory Image" class="w-full h-full object-cover hidden">
-                    <div id="sub-view-no-img" class="text-[#78000b] flex items-center justify-center w-full h-full font-serif font-bold text-xl">
-                        S
-                    </div>
-                </div>
-
-                <div class="space-y-1 flex-1 min-w-0">
+            <!-- Hero Info (No Image) -->
+            <div class="p-3.5 rounded-2xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb]">
+                <div class="space-y-1 min-w-0">
                     <div class="flex items-center gap-2 flex-wrap">
                         <h4 id="sub-view-name" class="font-serif font-bold text-lg text-[#1c1210] tracking-tight leading-snug"></h4>
                         <span id="sub-view-status-badge"></span>
@@ -637,36 +615,6 @@
                 >
             </div>
 
-            <!-- Banner Image Box -->
-            <div>
-                <label class="block font-bold text-[0.7rem] text-[#685c54] uppercase tracking-wider mb-1 cursor-pointer">
-                    Image (Optional)
-                </label>
-                
-                <div class="rounded-2xl border border-[#ebdccb] bg-[#FAF7F2] p-3 flex items-center gap-3">
-                    <!-- Image Icon / Preview Thumbnail -->
-                    <div id="modal_sub_banner_preview_box" class="w-11 h-11 rounded-xl bg-stone-200/70 border border-stone-300 flex items-center justify-center text-stone-400 shrink-0 overflow-hidden shadow-2xs">
-                        <img id="modal_sub_banner_preview_img" src="" class="hidden w-full h-full object-cover">
-                        <svg id="modal_sub_banner_placeholder_svg" class="w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    </div>
-
-                    <!-- Upload Button & Hint -->
-                    <div class="space-y-0.5">
-                        <input type="file" name="image" id="modal_sub_file" accept="image/*" class="hidden" onchange="previewModalSubBanner(this)">
-                        <button 
-                            type="button" 
-                            onclick="document.getElementById('modal_sub_file').click()" 
-                            class="h-8 px-3.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
-                            style="background: #181210 !important; color: #ffffff !important;"
-                        >
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #ffffff !important;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                            <span style="color: #ffffff !important;">Upload from Computer</span>
-                        </button>
-                        <p id="modal_sub_banner_filename" class="text-[0.65rem] text-[#8a7c74]">PNG, JPG, WEBP up to 10MB</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Footer Buttons -->
             <div class="flex items-center justify-end gap-2.5 pt-1.5">
                 <button type="button" onclick="closeAddSubcategoryModal()" class="text-xs font-semibold text-[#8a7c74] hover:text-[#1c1210] px-3 py-1.5 transition cursor-pointer active:scale-95">
@@ -698,20 +646,6 @@
         document.getElementById('sub-view-parent-cat').textContent = data.category_name;
         document.getElementById('sub-view-parent-cat-name').textContent = data.category_name;
         document.getElementById('sub-view-prods-count').textContent = data.products_count || 0;
-
-        // Image handling
-        const imgEl = document.getElementById('sub-view-img');
-        const noImgEl = document.getElementById('sub-view-no-img');
-        if (data.image_url) {
-            imgEl.src = data.image_url;
-            imgEl.classList.remove('hidden');
-            noImgEl.classList.add('hidden');
-        } else {
-            imgEl.src = '';
-            imgEl.classList.add('hidden');
-            noImgEl.classList.remove('hidden');
-            noImgEl.textContent = data.name ? data.name.charAt(0) : 'S';
-        }
 
         // Status badge
         const isEn = (window.__mehaaj_lang || 'en') === 'en';
@@ -760,25 +694,6 @@
         document.getElementById('add-subcategory-modal').classList.add('hidden');
         if (window.location.hash === '#add-subcategory' || window.location.hash === '#add') {
             history.replaceState(null, null, ' ');
-        }
-    }
-
-    function previewModalSubBanner(input) {
-        if (input.files && input.files[0]) {
-            const file = input.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.getElementById('modal_sub_banner_preview_img');
-                const svg = document.getElementById('modal_sub_banner_placeholder_svg');
-                const fn = document.getElementById('modal_sub_banner_filename');
-                if (img) { img.src = e.target.result; img.classList.remove('hidden'); }
-                if (svg) { svg.classList.add('hidden'); }
-                if (fn) {
-                    fn.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
-                    fn.className = 'text-[0.65rem] text-emerald-700 font-bold';
-                }
-            };
-            reader.readAsDataURL(file);
         }
     }
 
@@ -911,8 +826,8 @@
             subSuggestionsList.innerHTML = matched.map(sub => `
                 <div class="px-4 py-2.5 hover:bg-[#FAF7F2] transition flex items-center justify-between cursor-pointer group" onclick="selectSubcategorySuggestion('${sub.name.replace(/'/g, "\\'")}')">
                     <div class="flex items-center gap-2.5 min-w-0">
-                        <div class="w-7 h-7 rounded-lg bg-stone-100 border border-[#ebdccb] flex items-center justify-center shrink-0 overflow-hidden text-[0.65rem] font-bold text-[#78000b]">
-                            ${sub.image_url ? `<img src="${sub.image_url}" class="w-full h-full object-cover">` : sub.name.charAt(0)}
+                        <div class="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#ebdccb] flex items-center justify-center shrink-0 text-[#78000b]">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                         </div>
                         <div class="truncate">
                             <span class="font-bold text-[#1c1210] group-hover:text-[#78000b] transition block leading-tight text-xs">${sub.name}</span>
