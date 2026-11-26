@@ -1,681 +1,1151 @@
 @extends('layouts.admin')
-@section('title', 'Add New Product - MEHAAJ Admin')
+@section('title', 'Create Atelier Product - MEHAAJ Admin')
 
 @section('admin-content')
-<div class="space-y-6 max-w-5xl mx-auto pb-16">
+<div class="space-y-4 w-full pb-16 text-[#1c1210]">
 
-    <!-- Form Container Card (Pink-Salt Style) -->
-    <div class="exec-card bg-white rounded-2xl border border-stone-200/90 shadow-md shadow-stone-900/5 overflow-hidden border-t-4 border-t-saltora-terracotta">
-        
-        <!-- Header -->
-        <div class="px-6 py-4 bg-stone-50/50 flex flex-wrap items-center justify-between gap-3 border-b border-stone-200/80">
+    <!-- 1. Breadcrumb Navigation Pill -->
+    <div class="bg-gradient-to-r from-white via-[#FAF7F2] to-white rounded-xl py-2.5 px-4 text-xs font-semibold text-stone-600 border border-[#ebdccb] shadow-2xs flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <a href="{{ route('admin.products') }}" class="text-[#8a7c74] hover:text-[#78000b] transition flex items-center gap-1.5 font-bold" data-i18n-de="Produkte" data-i18n-en="Products">
+                <svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                <span>Products</span>
+            </a>
+            <span class="text-stone-300 font-mono">›</span> 
+            <span class="text-[#78000b] font-bold" data-i18n-de="Neues Atelier Produkt" data-i18n-en="New Atelier Product">New Atelier Product</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-[0.68rem] text-stone-500 font-medium">Multi-Step Atelier Wizard</span>
+            <span id="wizardStepIndicatorBadge" class="px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20">Step 1 of 5</span>
+        </div>
+    </div>
+
+    <!-- 2. Main Wizard Form Container Card -->
+    <form id="productWizardForm" action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#ebdccb] shadow-sm overflow-hidden border-t-4 border-t-[#78000b]">
+        @csrf
+
+        <!-- Wizard Header Bar -->
+        <div class="px-5 sm:px-6 py-4 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-b border-[#ebdccb] flex items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-                <div class="p-2.5 rounded-xl bg-saltora-blush text-saltora-terracotta border border-saltora-terracotta/20 shadow-2xs">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                    <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                 </div>
                 <div>
-                    <h2 class="font-extrabold text-base text-stone-900 tracking-tight" data-i18n-de="Neues Produkt Hinzufügen" data-i18n-en="Add New Product">
-                        Add New Product
+                    <h2 class="font-serif text-base sm:text-lg font-bold text-[#1c1210] tracking-tight leading-tight" data-i18n-de="Neues Atelier Produkt Erstellen" data-i18n-en="Create Atelier Product">
+                        Create Atelier Product
                     </h2>
-                    <p class="text-[0.7rem] text-stone-500 font-medium" data-i18n-de="Erstellen Sie einen neuen Artikel für Ihren Online-Shop." data-i18n-en="Create a new luxury item for your online store.">Create a new luxury item for your online store.</p>
+                    <p class="text-[0.68rem] text-[#8a7267]">Comprehensive 5-step master configuration for bespoke luxury catalog</p>
                 </div>
             </div>
-            
-            <div class="flex items-center gap-2.5">
-                <a href="{{ route('admin.products') }}" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs">
+
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin.products') }}" class="btn-exec-secondary rounded-xl px-3.5 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    <span data-i18n-de="Zurück" data-i18n-en="Back">Back</span>
+                    <span>Back</span>
                 </a>
             </div>
         </div>
 
-        <!-- Form Body -->
-        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-6 text-xs">
-            @csrf
-
-            @if ($errors->any())
-                <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
-                    <p class="font-bold text-sm flex items-center gap-2">
-                        <svg class="w-4 h-4 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span data-i18n-de="Bitte korrigieren Sie die folgenden Fehler:" data-i18n-en="Please correct the following errors:">Please correct the following errors:</span>
-                    </p>
-                    <ul class="list-disc list-inside text-xs pl-6">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 3. Luxury Interactive Stepper Tabs (5 Steps) -->
+        <div class="bg-[#FAF8F5] border-b border-[#ebdccb] px-3 sm:px-6 py-2.5 overflow-x-auto">
+            <nav class="flex items-center justify-between min-w-[620px] gap-2" aria-label="Product Wizard Steps">
                 
-                <!-- Product Name -->
+                <!-- Tab 1: Core Catalog -->
+                <button type="button" onclick="goToStep(1)" id="stepTab-1" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs">
+                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]">1</span>
+                    <div class="min-w-0">
+                        <span class="step-title block font-bold text-xs text-[#1c1210] truncate">Core Catalog</span>
+                        <span class="step-sub block text-[0.62rem] text-[#8a7267] truncate">Pricing & SKU</span>
+                    </div>
+                </button>
+
+                <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
+
+                <!-- Tab 2: Craft & Specs -->
+                <button type="button" onclick="goToStep(2)" id="stepTab-2" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">2</span>
+                    <div class="min-w-0">
+                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Craft & Specs</span>
+                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Materials & Size</span>
+                    </div>
+                </button>
+
+                <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
+
+                <!-- Tab 3: Bespoke & Delivery -->
+                <button type="button" onclick="goToStep(3)" id="stepTab-3" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">3</span>
+                    <div class="min-w-0">
+                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Bespoke & Time</span>
+                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Made-to-Order</span>
+                    </div>
+                </button>
+
+                <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
+
+                <!-- Tab 4: Variations Matrix -->
+                <button type="button" onclick="goToStep(4)" id="stepTab-4" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">4</span>
+                    <div class="min-w-0">
+                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Variations</span>
+                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Color & Matrix</span>
+                    </div>
+                </button>
+
+                <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
+
+                <!-- Tab 5: Media & Payments -->
+                <button type="button" onclick="goToStep(5)" id="stepTab-5" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">5</span>
+                    <div class="min-w-0">
+                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Media & Pay</span>
+                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Gallery & COD</span>
+                    </div>
+                </button>
+
+            </nav>
+        </div>
+
+        <!-- 4. Error Notifications -->
+        @if ($errors->any())
+            <div class="mx-5 sm:mx-6 mt-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
+                <p class="font-bold text-xs flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>Please review and correct the marked errors:</span>
+                </p>
+                <ul class="list-disc list-inside text-[0.7rem] pl-5 space-y-0.5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- 5. Wizard Steps Content Body -->
+        <div class="p-5 sm:p-7 text-xs">
+
+            <!-- ============================================================== -->
+            <!-- STEP 1: Core Catalog & Pricing                                 -->
+            <!-- ============================================================== -->
+            <div id="wizardStepPane-1" class="wizard-pane space-y-5">
+                
+                <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-[#1c1210]">1. Essential Catalog & Pricing</h3>
+                        <p class="text-[0.7rem] text-[#8a7267]">Set master naming, catalog categorization, SKU identity, and retail pricing.</p>
+                    </div>
+                    <span class="text-[0.65rem] font-bold text-[#78000b] bg-[#FAF7F2] px-2.5 py-1 rounded-lg border border-[#ebdccb]">Required Fields (*)</span>
+                </div>
+
+                <!-- Row 1: Product Name & SKU -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="prod_name" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Product Title <span class="text-[#78000b]">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            id="prod_name" 
+                            value="{{ old('name') }}" 
+                            required 
+                            placeholder="e.g. Meisterstück Grand Briefcase 42" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="prod_sku" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732]">
+                                Master SKU Code <span class="text-stone-400 font-normal">(Optional)</span>
+                            </label>
+                            <button type="button" onclick="generateRandomSku()" class="text-[0.65rem] font-bold text-[#78000b] hover:underline cursor-pointer">
+                                ⚡ Auto-Generate
+                            </button>
+                        </div>
+                        <input 
+                            type="text" 
+                            name="sku" 
+                            id="prod_sku" 
+                            value="{{ old('sku') }}" 
+                            placeholder="e.g. MHJ-BC-8902" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold font-mono outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+                </div>
+
+                <!-- Row 2: Category & Subcategory -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="category_id" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Primary Category <span class="text-[#78000b]">*</span>
+                        </label>
+                        <select 
+                            name="category_id" 
+                            id="category_id" 
+                            onchange="filterSubcategories(this.value)" 
+                            required 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs cursor-pointer"
+                        >
+                            <option value="">-- Select Category --</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="subcategory_id" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Subcategory <span class="text-stone-400 font-normal">(Optional)</span>
+                        </label>
+                        <select 
+                            name="subcategory_id" 
+                            id="subcategory_id" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs cursor-pointer"
+                        >
+                            <option value="">-- Select Subcategory --</option>
+                            @foreach($subcategories as $sub)
+                                <option value="{{ $sub->id }}" data-category="{{ $sub->category_id }}" {{ old('subcategory_id') == $sub->id ? 'selected' : '' }}>
+                                    {{ $sub->name }} ({{ $sub->category ? $sub->category->name : 'N/A' }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Row 3: Pricing Matrix (Retail, Sale, Unit Cost) -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5]">
+                    <div>
+                        <label for="prod_price" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Retail Price (€) <span class="text-[#78000b]">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-stone-500">€</span>
+                            <input 
+                                type="number" 
+                                step="0.01" 
+                                name="price" 
+                                id="prod_price" 
+                                value="{{ old('price') }}" 
+                                required 
+                                placeholder="480.00" 
+                                class="w-full h-10 pl-8 pr-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-bold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            >
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="prod_sale_price" class="block font-bold text-[0.68rem] uppercase tracking-wider text-stone-500 mb-1.5">
+                            Luxury Sale Price (€) <span class="text-stone-400 font-normal">(Optional)</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-stone-500">€</span>
+                            <input 
+                                type="number" 
+                                step="0.01" 
+                                name="sale_price" 
+                                id="prod_sale_price" 
+                                value="{{ old('sale_price') }}" 
+                                placeholder="395.00" 
+                                class="w-full h-10 pl-8 pr-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            >
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="prod_cost_price" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#8a7267] mb-1.5">
+                            Unit Cost Price (€) <span class="text-[0.6rem] text-stone-400 font-normal">(Private ROI)</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-stone-500">€</span>
+                            <input 
+                                type="number" 
+                                step="0.01" 
+                                name="cost_price" 
+                                id="prod_cost_price" 
+                                value="{{ old('cost_price') }}" 
+                                placeholder="160.00" 
+                                class="w-full h-10 pl-8 pr-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4: Stock, Visibility & Featured Badge -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                    <div>
+                        <label for="prod_stock" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Master Stock Quantity <span class="text-[#78000b]">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            name="stock" 
+                            id="prod_stock" 
+                            value="{{ old('stock', 15) }}" 
+                            required 
+                            min="0" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="prod_status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Catalog Visibility <span class="text-[#78000b]">*</span>
+                        </label>
+                        <select 
+                            name="status" 
+                            id="prod_status" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs cursor-pointer"
+                        >
+                            <option value="active" {{ old('status', 'active') === 'active' ? 'selected' : '' }}>• Active (Live in Storefront)</option>
+                            <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }}>• Draft (Hidden from Store)</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4 sm:pt-6">
+                        <label class="flex items-center gap-2.5 p-2 rounded-xl border border-[#ebdccb] bg-[#FAF8F5] hover:bg-white transition cursor-pointer shadow-2xs">
+                            <input 
+                                type="checkbox" 
+                                name="is_featured" 
+                                value="1" 
+                                {{ old('is_featured') ? 'checked' : '' }} 
+                                class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer"
+                            >
+                            <div>
+                                <span class="font-bold text-xs text-[#1c1210] block">Featured Atelier Piece</span>
+                                <span class="text-[0.62rem] text-stone-500 block">Highlight in home showcase</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- STEP 2: Atelier Craftsmanship & Physical Specs                 -->
+            <!-- ============================================================== -->
+            <div id="wizardStepPane-2" class="wizard-pane hidden space-y-5">
+                
+                <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-[#1c1210]">2. Atelier Craftsmanship & Specifications</h3>
+                        <p class="text-[0.7rem] text-[#8a7267]">Poetic storytelling, certified leather origin, premium materials, and physical measurements.</p>
+                    </div>
+                    <span class="text-[0.65rem] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">German Quality Standards</span>
+                </div>
+
+                <!-- Poetic Short Tagline -->
                 <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="PRODUKT NAME *" data-i18n-en="PRODUCT NAME *">PRODUCT NAME <span class="text-saltora-terracotta">*</span></label>
+                    <label for="prod_tagline" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        Poetic Short Tagline
+                    </label>
                     <input 
                         type="text" 
-                        name="name" 
-                        value="{{ old('name') }}" 
-                        required 
-                        placeholder="e.g. Maison Leather Briefcase..." 
-                        data-i18n-placeholder-de="z. B. Maison Leder Aktentasche..."
-                        data-i18n-placeholder-en="e.g. Maison Leather Briefcase..."
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
+                        name="tagline" 
+                        id="prod_tagline" 
+                        value="{{ old('tagline') }}" 
+                        placeholder="e.g. Sculpted in full-grain Vachetta, designed for timeless executive journeys." 
+                        class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
-                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Voller Produktname wie auf der Produktseite dargestellt." data-i18n-en="Full product title displayed on the store page.">Full product title displayed on the store page.</p>
                 </div>
 
-                <!-- SKU Code -->
+                <!-- Storytelling & Description -->
                 <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="ARTIKELNUMMER (SKU)" data-i18n-en="SKU CODE">SKU CODE</label>
-                    <input 
-                        type="text" 
-                        name="sku" 
-                        value="{{ old('sku') }}" 
-                        placeholder="e.g. MHJ-LT-001 (Auto if empty)" 
-                        data-i18n-placeholder-de="z. B. MHJ-LT-001 (Automatisch wenn leer)"
-                        data-i18n-placeholder-en="e.g. MHJ-LT-001 (Auto if empty)"
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Eindeutige Artikelnummer für Lagerverwaltung." data-i18n-en="Unique identifier code for inventory tracking.">Unique identifier code for inventory tracking.</p>
-                </div>
-
-                <!-- Category Select -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="HAUPTKATEGORIE" data-i18n-en="PRIMARY CATEGORY">PRIMARY CATEGORY</label>
-                    <select 
-                        name="category_id" 
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                        <option value="" data-i18n-de="— Keine Kategorie —" data-i18n-en="— No Category —">— No Category —</option>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Subcategory Select -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="UNTERKATEGORIE" data-i18n-en="SUBCATEGORY">SUBCATEGORY</label>
-                    <select 
-                        name="subcategory_id" 
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                        <option value="" data-i18n-de="— Keine Unterkategorie —" data-i18n-en="— No Subcategory —">— No Subcategory —</option>
-                        @foreach($subcategories as $sub)
-                            <option value="{{ $sub->id }}" {{ old('subcategory_id') == $sub->id ? 'selected' : '' }}>{{ $sub->name }} ({{ $sub->category->name ?? '' }})</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Regular Price (€) -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="REGULÄRER PREIS (€) *" data-i18n-en="REGULAR PRICE (€) *">REGULAR PRICE (€) <span class="text-saltora-terracotta">*</span></label>
-                    <input 
-                        type="number" 
-                        step="0.01" 
-                        name="price" 
-                        value="{{ old('price') }}" 
-                        required 
-                        placeholder="0.00" 
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                </div>
-
-                <!-- Sale Price (€) -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="ANGEBOTSPREIS (€)" data-i18n-en="SALE PRICE (€)">SALE PRICE (€)</label>
-                    <input 
-                        type="number" 
-                        step="0.01" 
-                        name="sale_price" 
-                        value="{{ old('sale_price') }}" 
-                        placeholder="0.00 (Optional)" 
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                </div>
-
-                <!-- Production Cost Price (€) -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="HERSTELLKOSTEN / EK (€)" data-i18n-en="COST / PURCHASE PRICE (€)">COST PRICE (€)</label>
-                    <input 
-                        type="number" 
-                        step="0.01" 
-                        name="cost_price" 
-                        value="{{ old('cost_price') }}" 
-                        placeholder="0.00 (For P&L Margin)" 
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                </div>
-
-                <!-- Stock Quantity -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="LAGERBESTAND *" data-i18n-en="STOCK QUANTITY *">STOCK QUANTITY <span class="text-saltora-terracotta">*</span></label>
-                    <input 
-                        type="number" 
-                        name="stock" 
-                        value="{{ old('stock', 10) }}" 
-                        required 
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                </div>
-
-                <!-- Status Select -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="STATUS *" data-i18n-en="STATUS *">STATUS <span class="text-saltora-terracotta">*</span></label>
-                    <select 
-                        name="status" 
-                        required 
-                        class="w-full h-11 rounded-xl px-4 text-stone-900 text-sm outline-none transition shadow-2xs border border-stone-200 bg-stone-50 focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20"
-                    >
-                        <option value="active" {{ old('status') === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv (Öffentlich)" data-i18n-en="Active (Public)">Active (Public)</option>
-                        <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }} data-i18n-de="Entwurf (Versteckt)" data-i18n-en="Draft (Hidden)">Draft (Hidden)</option>
-                    </select>
-                </div>
-
-                <!-- Primary Image Upload -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="HAUPTBILD" data-i18n-en="PRIMARY IMAGE">PRIMARY IMAGE</label>
-                    <input 
-                        type="file" 
-                        name="image" 
-                        accept="image/*" 
-                        class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-saltora-blush file:text-saltora-terracotta hover:file:bg-saltora-blush/80 h-11 px-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs cursor-pointer shadow-2xs"
-                    >
-                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Empfohlen: PNG, WebP oder JPG bis 30MB." data-i18n-en="Recommended: PNG, WebP or JPG up to 30MB.">Recommended: PNG, WebP or JPG up to 30MB.</p>
-                </div>
-
-                <!-- Gallery Upload -->
-                <div>
-                    <label class="block font-bold text-stone-900 mb-1.5 uppercase tracking-wider" data-i18n-de="GALERIE-BILDER (MEHRFACH)" data-i18n-en="GALLERY IMAGES (MULTIPLE)">GALLERY IMAGES (MULTIPLE)</label>
-                    <input 
-                        type="file" 
-                        name="gallery[]" 
-                        multiple 
-                        accept="image/*" 
-                        class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-saltora-blush file:text-saltora-terracotta hover:file:bg-saltora-blush/80 h-11 px-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs cursor-pointer shadow-2xs"
-                    >
-                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Zusätzliche Detailansichten hochladen." data-i18n-en="Upload additional detail photos.">Upload additional detail photos.</p>
-                </div>
-
-            </div>
-
-            <!-- Featured Product Option -->
-            <div class="flex items-center gap-2.5 pt-2 p-3.5 bg-saltora-blush-light rounded-xl border border-saltora-terracotta/20">
-                <input type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }} class="h-4 w-4 rounded border-stone-300 text-saltora-terracotta focus:ring-saltora-terracotta/30 accent-saltora-terracotta cursor-pointer">
-                <label for="is_featured" class="font-bold text-stone-900 text-xs cursor-pointer" data-i18n-de="Als Highlight / Featured Produkt auf der Startseite markieren" data-i18n-en="Mark as Featured Product on Homepage">Mark as Featured Product on Homepage</label>
-            </div>
-
-            <!-- Description with Rich Text Editor -->
-            <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <label class="block font-bold text-stone-900 uppercase tracking-wider" data-i18n-de="PRODUKTBESCHREIBUNG (RICH TEXT EDITOR)" data-i18n-en="PRODUCT DESCRIPTION (RICH TEXT EDITOR)">
-                        PRODUCT DESCRIPTION (RICH TEXT EDITOR)
+                    <label for="prod_description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        Storytelling & Atelier Description
                     </label>
-                    <span class="text-[0.65rem] text-stone-400 font-medium">Supports bold, lists, headings & links</span>
+                    <textarea 
+                        name="description" 
+                        id="prod_description" 
+                        rows="4" 
+                        placeholder="Detailed poetic description of the product silhouette, sensory leather feel, and artisanal legacy..." 
+                        class="w-full p-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition leading-relaxed shadow-2xs"
+                    >{{ old('description') }}</textarea>
                 </div>
-                <div id="quill-description" class="bg-white rounded-xl border border-stone-200 min-h-[140px] text-stone-800 text-sm">{!! old('description') !!}</div>
-                <textarea name="description" id="textarea-description" class="hidden">{{ old('description') }}</textarea>
+
+                <!-- Material Composition (3 Columns) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="prod_materials" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Outer Leather & Material
+                        </label>
+                        <input 
+                            type="text" 
+                            name="materials" 
+                            id="prod_materials" 
+                            value="{{ old('materials', '100% Full-Grain Italian Vachetta Leather') }}" 
+                            placeholder="e.g. 100% Italian Vachetta Leather" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="prod_lining" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Interior Lining
+                        </label>
+                        <input 
+                            type="text" 
+                            name="lining" 
+                            id="prod_lining" 
+                            value="{{ old('lining', 'Hand-finished Micro-Suede & Organic Cotton') }}" 
+                            placeholder="e.g. Micro-Suede / Velvet" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="prod_hardware" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Hardware / Metal Finish
+                        </label>
+                        <input 
+                            type="text" 
+                            name="hardware" 
+                            id="prod_hardware" 
+                            value="{{ old('hardware', 'Solid Brass with 24k Champagne Gold plating') }}" 
+                            placeholder="e.g. Brushed Gold / Palladium" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+                </div>
+
+                <!-- Physical Dimensions & Origin (4 Columns) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-xl border border-[#ebdccb] bg-[#FAF8F5]">
+                    <div>
+                        <label for="prod_dimensions" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Dimensions (L × W × H)
+                        </label>
+                        <input 
+                            type="text" 
+                            name="dimensions" 
+                            id="prod_dimensions" 
+                            value="{{ old('dimensions', '40 × 29 × 10 cm') }}" 
+                            placeholder="e.g. 40 × 29 × 10 cm" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="prod_weight" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Weight
+                        </label>
+                        <input 
+                            type="text" 
+                            name="weight" 
+                            id="prod_weight" 
+                            value="{{ old('weight', '950 g') }}" 
+                            placeholder="e.g. 950 g" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="prod_strap" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Handle / Strap Drop
+                        </label>
+                        <input 
+                            type="text" 
+                            name="strap_drop" 
+                            id="prod_strap" 
+                            value="{{ old('strap_drop', '48 - 58 cm (Adjustable)') }}" 
+                            placeholder="e.g. 48 - 58 cm" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="prod_origin" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            Atelier Origin Badge
+                        </label>
+                        <input 
+                            type="text" 
+                            name="origin" 
+                            id="prod_origin" 
+                            value="{{ old('origin', 'Handcrafted in Germany') }}" 
+                            placeholder="e.g. Handcrafted in Germany" 
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        >
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Craftsmanship Details with Rich Text Editor -->
-            <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <label class="block font-bold text-stone-900 uppercase tracking-wider" data-i18n-de="FEINSATTLER-HANDWERK & DETAILS (RICH TEXT EDITOR)" data-i18n-en="CRAFTSMANSHIP & ATELIER DETAILS (RICH TEXT EDITOR)">
-                        CRAFTSMANSHIP & ATELIER DETAILS (RICH TEXT EDITOR)
+            <!-- ============================================================== -->
+            <!-- STEP 3: Bespoke "Made to Order" & Personalization Controls    -->
+            <!-- ============================================================== -->
+            <div id="wizardStepPane-3" class="wizard-pane hidden space-y-5">
+                
+                <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-[#1c1210]">3. Bespoke Commission & Delivery Controls</h3>
+                        <p class="text-[0.7rem] text-[#8a7267]">Fulfillment mode (In-Stock vs Made-to-Order), custom monogramming, and lead times.</p>
+                    </div>
+                    <span class="text-[0.65rem] font-bold text-[#d8b45a] bg-[#1c1210] px-2.5 py-1 rounded-lg">Atelier Bespoke System</span>
+                </div>
+
+                <!-- 1. Fulfillment Mode: In-Stock vs Made-to-Order -->
+                <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-[#78000b]/10 text-[#78000b] flex items-center justify-center font-bold">
+                                ✂️
+                            </div>
+                            <div>
+                                <h4 class="font-serif font-bold text-sm text-[#1c1210]">Made to Order (Artisanal Commission)</h4>
+                                <p class="text-[0.68rem] text-[#8a7267]">Crafted on demand upon client order instead of holding pre-made stock.</p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input 
+                                type="checkbox" 
+                                name="is_made_to_order" 
+                                id="is_made_to_order" 
+                                value="1" 
+                                onchange="toggleMadeToOrderFields(this.checked)"
+                                {{ old('is_made_to_order') ? 'checked' : '' }} 
+                                class="sr-only peer"
+                            >
+                            <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#78000b]"></div>
+                        </label>
+                    </div>
+
+                    <!-- Lead Time & Delivery Windows (Dynamic) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-[#f1e6da]">
+                        <div id="lead_time_container" class="{{ old('is_made_to_order') ? '' : 'opacity-60 pointer-events-none' }}">
+                            <label for="lead_time_days" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                                Handcrafting Lead Time (Days)
+                            </label>
+                            <input 
+                                type="number" 
+                                name="lead_time_days" 
+                                id="lead_time_days" 
+                                value="{{ old('lead_time_days', 6) }}" 
+                                min="0" 
+                                placeholder="5 to 7 days" 
+                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            >
+                            <p class="text-[0.62rem] text-stone-400 mt-1">Days required by craftsmen before courier handover.</p>
+                        </div>
+
+                        <div>
+                            <label for="delivery_days_min" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                                Min Transit Delivery Days
+                            </label>
+                            <input 
+                                type="number" 
+                                name="delivery_days_min" 
+                                id="delivery_days_min" 
+                                value="{{ old('delivery_days_min', 2) }}" 
+                                min="1" 
+                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            >
+                            <p class="text-[0.62rem] text-stone-400 mt-1">e.g. 2 days within Germany / DHL Express.</p>
+                        </div>
+
+                        <div>
+                            <label for="delivery_days_max" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                                Max Transit Delivery Days
+                            </label>
+                            <input 
+                                type="number" 
+                                name="delivery_days_max" 
+                                id="delivery_days_max" 
+                                value="{{ old('delivery_days_max', 4) }}" 
+                                min="1" 
+                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            >
+                            <p class="text-[0.62rem] text-stone-400 mt-1">e.g. 4 days across Europe / Standard.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Personalization & Custom Monogramming -->
+                <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-[#d8b45a]/20 text-[#78000b] flex items-center justify-center font-bold">
+                                🔤
+                            </div>
+                            <div>
+                                <h4 class="font-serif font-bold text-sm text-[#1c1210]">Hot-Stamping & Custom Monogramming</h4>
+                                <p class="text-[0.68rem] text-[#8a7267]">Allow clients to customize this piece with their initials or custom name engraving.</p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input 
+                                type="checkbox" 
+                                name="allow_personalization" 
+                                id="allow_personalization" 
+                                value="1" 
+                                onchange="togglePersonalizationFields(this.checked)"
+                                {{ old('allow_personalization') ? 'checked' : '' }} 
+                                class="sr-only peer"
+                            >
+                            <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#78000b]"></div>
+                        </label>
+                    </div>
+
+                    <!-- Personalization Config Options -->
+                    <div id="personalization_config_container" class="{{ old('allow_personalization') ? '' : 'hidden' }} space-y-4 pt-2 border-t border-[#f1e6da]">
+                        
+                        <div>
+                            <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-2">
+                                Allowed Foil Stamping Types
+                            </label>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
+                                    <input type="checkbox" name="personalization_types[]" value="gold_foil" checked class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="font-bold text-xs text-amber-700">✦ 24k Gold Foil</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
+                                    <input type="checkbox" name="personalization_types[]" value="silver_foil" checked class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="font-bold text-xs text-stone-600">✦ Silver Palladium Foil</span>
+                                </label>
+                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
+                                    <input type="checkbox" name="personalization_types[]" value="blind_deboss" checked class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="font-bold text-xs text-[#78000b]">✦ Blind Deboss (Tone-on-Tone)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="personalization_max_chars" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                                    Max Characters Limit
+                                </label>
+                                <input 
+                                    type="number" 
+                                    name="personalization_max_chars" 
+                                    id="personalization_max_chars" 
+                                    value="{{ old('personalization_max_chars', 5) }}" 
+                                    min="1" 
+                                    max="20" 
+                                    class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                                >
+                                <p class="text-[0.62rem] text-stone-400 mt-1">Recommended: 3 to 5 characters for luxury monogramming.</p>
+                            </div>
+
+                            <div>
+                                <label for="personalization_fee" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                                    Personalization Surcharge (€)
+                                </label>
+                                <div class="relative">
+                                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-stone-500">€</span>
+                                    <input 
+                                        type="number" 
+                                        step="0.01" 
+                                        name="personalization_fee" 
+                                        id="personalization_fee" 
+                                        value="{{ old('personalization_fee', '0.00') }}" 
+                                        class="w-full h-10 pl-8 pr-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-bold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                                    >
+                                </div>
+                                <p class="text-[0.62rem] text-stone-400 mt-1">Set 0.00 for complimentary artisanal monogramming.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- STEP 4: Real-World Variations Matrix                           -->
+            <!-- ============================================================== -->
+            <div id="wizardStepPane-4" class="wizard-pane hidden space-y-5">
+                
+                <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-[#1c1210]">4. Real-World Variations Matrix</h3>
+                        <p class="text-[0.7rem] text-[#8a7267]">Configure color swatches, leather textures, sizes, and per-variant SKU/stock controls.</p>
+                    </div>
+                    <button type="button" onclick="addNewVariantRow()" class="btn-exec-primary rounded-xl px-3 py-1.5 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95">
+                        <span>+ Add Variant</span>
+                    </button>
+                </div>
+
+                <!-- Hidden JSON string input for full fidelity submit -->
+                <input type="hidden" name="variations_json" id="variations_json_input">
+
+                <!-- Quick Preset Swatches Helper -->
+                <div class="p-3 rounded-xl border border-[#ebdccb] bg-[#FAF8F5] flex flex-wrap items-center justify-between gap-2.5">
+                    <span class="text-[0.68rem] font-bold text-[#483732] uppercase tracking-wider">Atelier Leather Swatch Presets:</span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button" onclick="addPresetVariant('Noir Deep Black', '#141414', 'Smooth Calfskin', 'Standard', 0)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
+                            <span class="w-3 h-3 rounded-full bg-[#141414] border border-stone-300"></span>
+                            <span>Noir Black</span>
+                        </button>
+                        <button type="button" onclick="addPresetVariant('Cognac Amber', '#9E471A', 'Vachetta Pull-up', 'Standard', 0)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
+                            <span class="w-3 h-3 rounded-full bg-[#9E471A] border border-stone-300"></span>
+                            <span>Cognac</span>
+                        </button>
+                        <button type="button" onclick="addPresetVariant('Chocolat Espresso', '#3A1E14', 'Grained Togo', 'Standard', 0)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
+                            <span class="w-3 h-3 rounded-full bg-[#3A1E14] border border-stone-300"></span>
+                            <span>Chocolat</span>
+                        </button>
+                        <button type="button" onclick="addPresetVariant('Burgundy Saltora', '#78000B', 'Fine Saffiano', 'Large 42', 30)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
+                            <span class="w-3 h-3 rounded-full bg-[#78000B] border border-stone-300"></span>
+                            <span>Burgundy</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Variations Dynamic Matrix Table -->
+                <div class="rounded-xl border border-[#ebdccb] overflow-hidden shadow-2xs">
+                    <table class="w-full text-left text-xs" id="variantsMatrixTable">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-[#fbf8f4] via-[#f7eee3] to-[#fbf8f4] text-[#483732] font-black uppercase tracking-wider text-[0.65rem] border-b border-[#ebdccb]">
+                                <th class="py-2.5 px-3 w-10 text-center">Swatch</th>
+                                <th class="py-2.5 px-3">Variant / Color Name</th>
+                                <th class="py-2.5 px-3">Texture / Leather</th>
+                                <th class="py-2.5 px-3 w-28">Size / Model</th>
+                                <th class="py-2.5 px-3 w-32">Variant SKU</th>
+                                <th class="py-2.5 px-3 w-28 text-right">Price Adj (€)</th>
+                                <th class="py-2.5 px-3 w-20 text-center">Stock</th>
+                                <th class="py-2.5 px-3 w-14 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="variantsTableBody" class="divide-y divide-[#f1e6da] bg-white">
+                            <!-- Populated via JavaScript dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- STEP 5: Media Gallery & Payment Method Rules                  -->
+            <!-- ============================================================== -->
+            <div id="wizardStepPane-5" class="wizard-pane hidden space-y-6">
+                
+                <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-serif text-base font-bold text-[#1c1210]">5. Media Showcase & Payment Rules</h3>
+                        <p class="text-[0.7rem] text-[#8a7267]">Showcase imagery and selective payment gateway eligibility per item.</p>
+                    </div>
+                    <span class="text-[0.65rem] font-bold text-[#78000b] bg-[#FAF7F2] px-2.5 py-1 rounded-lg border border-[#ebdccb]">Final Launch Step</span>
+                </div>
+
+                <!-- 1. Main Cover Image Upload -->
+                <div>
+                    <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        Primary Atelier Cover Image <span class="text-[#78000b]">*</span>
                     </label>
-                    <span class="text-[0.65rem] text-stone-400 font-medium">Atelier craftsmanship summary</span>
-                </div>
-                <div id="quill-craftsmanship" class="bg-white rounded-xl border border-stone-200 min-h-[100px] text-stone-800 text-sm">{!! old('craftsmanship') !!}</div>
-                <textarea name="craftsmanship" id="textarea-craftsmanship" class="hidden">{{ old('craftsmanship') }}</textarea>
-            </div>
-
-            <!-- ======================================================== -->
-            <!-- PRODUCT VARIATIONS (FINISHES / COLORS / SIZES) -->
-            <!-- ======================================================== -->
-            <div class="pt-6 border-t border-stone-200 space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-3 bg-stone-50 p-4 rounded-xl border border-stone-200/80">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="h-2.5 w-2.5 rounded-full bg-saltora-terracotta"></span>
-                            <h3 class="font-bold text-sm text-stone-900 uppercase tracking-wider" data-i18n-de="PRODUKT VARIANTEN (LEDER-FINISHES / FARBEN)" data-i18n-en="PRODUCT VARIATIONS (LEATHER FINISHES / COLORS)">
-                                PRODUCT VARIATIONS (LEATHER FINISHES / COLORS)
-                            </h3>
+                    <div class="rounded-xl border border-[#ebdccb] p-4 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
+                        <div class="flex flex-col sm:flex-row items-center gap-4">
+                            <div id="main_cover_preview_box" class="w-20 h-20 rounded-xl bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shrink-0 overflow-hidden shadow-xs">
+                                <img id="main_cover_preview_img" src="" class="hidden w-full h-full object-cover">
+                                <svg id="main_cover_placeholder_svg" class="w-8 h-8 text-[#78000b]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            </div>
+                            <div class="flex-1 text-center sm:text-left space-y-1">
+                                <input type="file" name="image" id="prod_main_image" accept="image/*" onchange="previewMainImage(this)" class="hidden">
+                                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                                    <button type="button" onclick="document.getElementById('prod_main_image').click()" class="h-9 px-4 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer active:scale-95 bg-[#181210] text-white">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                        <span>Select Primary Cover</span>
+                                    </button>
+                                    <span id="main_cover_filename" class="text-[0.7rem] font-semibold text-[#685c54]">PNG, JPG, WEBP up to 30MB</span>
+                                </div>
+                                <p class="text-[0.65rem] text-[#8a7c74]">Recommended ratio: 1:1 Square (1200×1200px) on pure off-white background.</p>
+                            </div>
                         </div>
-                        <p class="text-[0.7rem] text-stone-500 mt-0.5" data-i18n-de="Definieren Sie interaktive Ausführungen für die Produktseite (z. B. Burnished Mahogany, Noir Profond, Cognac Vintage)." data-i18n-en="Define interactive swatches and finishes displayed as selectable pills on the product page.">
-                            Define interactive swatches and finishes displayed as selectable pills on the product page.
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button type="button" onclick="loadDefaultVariations()" class="btn-exec-secondary text-[0.68rem] px-3 py-1.5 rounded-lg border border-stone-300 bg-white hover:bg-stone-100 flex items-center gap-1.5 cursor-pointer shadow-2xs font-semibold text-stone-700">
-                            <i class="fa-solid fa-wand-magic-sparkles text-saltora-terracotta"></i>
-                            <span data-i18n-de="Standard Leder-Finishes Laden" data-i18n-en="Load Default Leather Finishes">Load Default Leather Finishes</span>
-                        </button>
-                        <button type="button" onclick="addVariationRow()" class="btn-exec-primary text-[0.68rem] px-3 py-1.5 rounded-lg flex items-center gap-1.5 cursor-pointer shadow-2xs font-bold text-white bg-saltora-terracotta hover:bg-saltora-terracotta-dark">
-                            <i class="fa-solid fa-plus"></i>
-                            <span data-i18n-de="Variante Hinzufügen" data-i18n-en="Add Variation">Add Variation</span>
-                        </button>
                     </div>
                 </div>
 
-                <!-- Variations Table / List Container -->
-                <input type="hidden" name="variations_json" id="variations_json" value="{{ old('variations_json', '[]') }}">
-                <div id="variations-container" class="space-y-2.5">
-                    <!-- Populated dynamically by JavaScript -->
-                </div>
-            </div>
-
-            <!-- ======================================================== -->
-            <!-- PRODUCT DETAILS, FAQS & ACCORDION TABS -->
-            <!-- ======================================================== -->
-            <div class="pt-6 border-t border-stone-200 space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-3 bg-stone-50 p-4 rounded-xl border border-stone-200/80">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="h-2.5 w-2.5 rounded-full bg-amber-600"></span>
-                            <h3 class="font-bold text-sm text-stone-900 uppercase tracking-wider" data-i18n-de="DETAILS, MATERIAL & ACCORDION TABS / FAQS" data-i18n-en="DETAILS, MATERIAL & ACCORDION TABS / FAQS">
-                                DETAILS, MATERIAL & ACCORDION TABS / FAQS
-                            </h3>
+                <!-- 2. Multi-Angle High-Res Gallery -->
+                <div>
+                    <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        High-Res Detail Gallery Slides <span class="text-stone-400 font-normal">(Multi-Select)</span>
+                    </label>
+                    <div class="rounded-xl border border-dashed border-[#ebdccb] p-5 text-center bg-[#FAF8F5] hover:bg-white transition cursor-pointer" onclick="document.getElementById('prod_gallery_input').click()">
+                        <input type="file" name="gallery[]" id="prod_gallery_input" accept="image/*" multiple onchange="previewGalleryImages(this)" class="hidden">
+                        <div class="space-y-2">
+                            <div class="w-10 h-10 rounded-full bg-white border border-[#ebdccb] mx-auto flex items-center justify-center text-[#78000b] shadow-2xs">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            </div>
+                            <div>
+                                <span class="font-bold text-xs text-[#1c1210]">Click to choose multi-angle gallery photos</span>
+                                <p class="text-[0.65rem] text-stone-400">Exterior profile, interior lining, hardware macro, scale on model</p>
+                            </div>
                         </div>
-                        <p class="text-[0.7rem] text-stone-500 mt-0.5" data-i18n-de="Erstellen Sie die aufklappbaren Sektionen unter dem Produkt (Feinsattler-Verarbeitung, Pflanzengerbung, Pflege, Versand, etc.)." data-i18n-en="Manage the collapsible accordion sections beneath the product (Craftsmanship, Materials, Care, Shipping, FAQs).">
-                            Manage the collapsible accordion sections beneath the product (Craftsmanship, Materials, Care, Shipping, FAQs).
-                        </p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button type="button" onclick="loadDefaultTabs()" class="btn-exec-secondary text-[0.68rem] px-3 py-1.5 rounded-lg border border-stone-300 bg-white hover:bg-stone-100 flex items-center gap-1.5 cursor-pointer shadow-2xs font-semibold text-stone-700">
-                            <i class="fa-solid fa-layer-group text-amber-600"></i>
-                            <span data-i18n-de="4 Luxus-Standard-Tabs Laden" data-i18n-en="Load 4 Luxury Default Tabs">Load 4 Luxury Default Tabs</span>
-                        </button>
-                        <button type="button" onclick="addAccordionTab()" class="btn-exec-primary text-[0.68rem] px-3 py-1.5 rounded-lg flex items-center gap-1.5 cursor-pointer shadow-2xs font-bold text-white bg-amber-600 hover:bg-amber-700">
-                            <i class="fa-solid fa-plus"></i>
-                            <span data-i18n-de="Tab / FAQ Hinzufügen" data-i18n-en="Add Tab / FAQ">Add Tab / FAQ</span>
-                        </button>
+                    <div id="gallery_preview_container" class="flex flex-wrap gap-2.5 mt-3"></div>
+                </div>
+
+                <!-- 3. Product-Level Payment Gateway Eligibility -->
+                <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-3.5">
+                    <div>
+                        <h4 class="font-serif font-bold text-sm text-[#1c1210]">Product-Level Payment Gateway Control</h4>
+                        <p class="text-[0.68rem] text-[#8a7267]">Configure allowed payment options. Uncheck Cash on Delivery (COD) for high-ticket or personalized bespoke pieces.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+                        <!-- COD Option -->
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                            <input type="checkbox" name="payment_methods[]" value="cod" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
+                            <div>
+                                <span class="font-bold text-xs text-[#1c1210] block">Cash on Delivery</span>
+                                <span class="text-[0.62rem] text-stone-500 block">Pay cash at doorstep</span>
+                            </div>
+                        </label>
+
+                        <!-- Stripe / Cards -->
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                            <input type="checkbox" name="payment_methods[]" value="stripe" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
+                            <div>
+                                <span class="font-bold text-xs text-[#1c1210] block">Credit / Debit Card</span>
+                                <span class="text-[0.62rem] text-stone-500 block">Visa, Mastercard, Amex</span>
+                            </div>
+                        </label>
+
+                        <!-- Klarna -->
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                            <input type="checkbox" name="payment_methods[]" value="klarna" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
+                            <div>
+                                <span class="font-bold text-xs text-[#1c1210] block">Klarna Pay Later</span>
+                                <span class="text-[0.62rem] text-stone-500 block">Slice in 30 days</span>
+                            </div>
+                        </label>
+
+                        <!-- Bank Transfer -->
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                            <input type="checkbox" name="payment_methods[]" value="bank_transfer" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
+                            <div>
+                                <span class="font-bold text-xs text-[#1c1210] block">SEPA Bank Transfer</span>
+                                <span class="text-[0.62rem] text-stone-500 block">Advance wire payment</span>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
-                <!-- Tabs Container -->
-                <input type="hidden" name="accordion_tabs_json" id="accordion_tabs_json" value="{{ old('accordion_tabs_json', '[]') }}">
-                <div id="tabs-container" class="space-y-6">
-                    <!-- Populated dynamically by JavaScript -->
-                </div>
             </div>
 
-            <!-- Bottom Action Button Row -->
-            <div class="pt-6 mt-8 border-t border-stone-200 flex items-center justify-end gap-3">
-                <a href="{{ route('admin.products') }}" class="btn-exec-secondary px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-2xs cursor-pointer" data-i18n-de="Abbrechen" data-i18n-en="Cancel">
-                    Cancel
-                </a>
+        </div>
+
+        <!-- 6. Sticky Bottom Action Controls Bar -->
+        <div class="px-6 py-4 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-t border-[#ebdccb] flex items-center justify-between">
+            <button 
+                type="button" 
+                id="wizardPrevBtn" 
+                onclick="wizardStepPrev()" 
+                class="btn-exec-secondary rounded-xl px-5 py-2.5 text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-2xs disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled
+            >
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <span>Previous Step</span>
+            </button>
+
+            <!-- Stepper Progress Dots -->
+            <div class="hidden sm:flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#78000b]" id="stepDot-1"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-stone-300" id="stepDot-2"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-stone-300" id="stepDot-3"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-stone-300" id="stepDot-4"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-stone-300" id="stepDot-5"></span>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+                <button 
+                    type="button" 
+                    onclick="saveAsDraft()" 
+                    class="rounded-xl px-4 py-2.5 text-xs font-bold text-stone-700 hover:text-stone-900 bg-white border border-[#ebdccb] hover:bg-stone-50 transition shadow-2xs cursor-pointer"
+                >
+                    Save as Draft
+                </button>
+
+                <button 
+                    type="button" 
+                    id="wizardNextBtn" 
+                    onclick="wizardStepNext()" 
+                    class="btn-exec-primary rounded-xl px-6 py-2.5 text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-md active:scale-95"
+                >
+                    <span>Next Step →</span>
+                </button>
+
                 <button 
                     type="submit" 
-                    id="product-submit-btn"
-                    class="btn-exec-primary rounded-xl px-6 py-2.5 text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer font-bold text-white bg-saltora-terracotta hover:bg-saltora-terracotta-dark"
+                    id="wizardSubmitBtn" 
+                    class="btn-exec-primary rounded-xl px-7 py-2.5 text-xs font-bold transition hidden items-center gap-2 cursor-pointer shadow-md active:scale-95"
                 >
-                    <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                    <span data-i18n-de="Produkt Speichern" data-i18n-en="Save Product">Save Product</span>
+                    <svg class="h-4 w-4 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <span>Publish Atelier Product</span>
                 </button>
             </div>
+        </div>
 
-        </form>
-    </div>
+    </form>
 
 </div>
 
-<!-- Interactive Engine for Quill Editors, Variations & Accordion Tabs Builder -->
 <script>
-    // 1. Initialize Quill Editors for Description & Craftsmanship
-    let quillDesc = null;
-    let quillCraft = null;
-    const tabQuillInstances = {};
+    let currentStep = 1;
+    const totalSteps = 5;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const toolbarOptions = [
-            [{ 'header': [2, 3, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['link', 'clean']
-        ];
+    // In-memory variations list
+    let variationsList = [
+        {
+            name: 'Noir Deep Black',
+            color: '#141414',
+            color_name: 'Noir Deep Black',
+            material: 'Smooth Calfskin',
+            size: 'Standard',
+            sku: '',
+            price: 0,
+            stock: 10,
+            active: true
+        }
+    ];
 
-        if (document.getElementById('quill-description')) {
-            quillDesc = new Quill('#quill-description', {
-                theme: 'snow',
-                placeholder: 'Enter rich product description...',
-                modules: { toolbar: toolbarOptions }
-            });
+    function renderVariationsTable() {
+        const tbody = document.getElementById('variantsTableBody');
+        if (!tbody) return;
+
+        if (variationsList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="py-6 text-center text-stone-400 italic text-xs">No variations added yet. Click "+ Add Variant" or choose a preset above.</td></tr>`;
+            document.getElementById('variations_json_input').value = '[]';
+            return;
         }
 
-        if (document.getElementById('quill-craftsmanship')) {
-            quillCraft = new Quill('#quill-craftsmanship', {
-                theme: 'snow',
-                placeholder: 'Enter craftsmanship and atelier details...',
-                modules: { toolbar: toolbarOptions }
-            });
-        }
+        tbody.innerHTML = variationsList.map((v, idx) => `
+            <tr class="hover:bg-[#FAF8F5] transition">
+                <td class="py-2.5 px-3 text-center">
+                    <input type="color" value="${v.color}" onchange="updateVariantField(${idx}, 'color', this.value)" class="w-6 h-6 rounded-md border border-[#ebdccb] cursor-pointer p-0">
+                </td>
+                <td class="py-2.5 px-3">
+                    <input type="text" value="${v.name}" onchange="updateVariantField(${idx}, 'name', this.value)" placeholder="Variant name" class="w-full h-8 px-2.5 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs font-semibold">
+                </td>
+                <td class="py-2.5 px-3">
+                    <input type="text" value="${v.material || ''}" onchange="updateVariantField(${idx}, 'material', this.value)" placeholder="Leather texture" class="w-full h-8 px-2.5 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs">
+                </td>
+                <td class="py-2.5 px-3">
+                    <input type="text" value="${v.size || ''}" onchange="updateVariantField(${idx}, 'size', this.value)" placeholder="Size / Model" class="w-full h-8 px-2.5 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs">
+                </td>
+                <td class="py-2.5 px-3">
+                    <input type="text" value="${v.sku || ''}" onchange="updateVariantField(${idx}, 'sku', this.value)" placeholder="Optional SKU" class="w-full h-8 px-2.5 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs font-mono">
+                </td>
+                <td class="py-2.5 px-3 text-right">
+                    <input type="number" step="0.01" value="${v.price || 0}" onchange="updateVariantField(${idx}, 'price', parseFloat(this.value) || 0)" placeholder="+/- €" class="w-20 h-8 px-2 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs font-bold text-right">
+                </td>
+                <td class="py-2.5 px-3 text-center">
+                    <input type="number" value="${v.stock !== null ? v.stock : 10}" onchange="updateVariantField(${idx}, 'stock', parseInt(this.value) || 0)" class="w-16 h-8 px-1.5 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs font-bold text-center">
+                </td>
+                <td class="py-2.5 px-3 text-center">
+                    <button type="button" onclick="removeVariantRow(${idx})" class="w-6 h-6 rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition flex items-center justify-center mx-auto text-xs font-bold" title="Remove">✕</button>
+                </td>
+            </tr>
+        `).join('');
 
-        // Initialize Variations only if existing old input is present
-        try {
-            const rawVar = document.getElementById('variations_json').value;
-            const vars = JSON.parse(rawVar || '[]');
-            if (Array.isArray(vars) && vars.length > 0) {
-                vars.forEach(v => renderVariationRow(v));
-            } else {
-                renderEmptyVariationsState();
+        document.getElementById('variations_json_input').value = JSON.stringify(variationsList);
+    }
+
+    function updateVariantField(idx, field, value) {
+        if (variationsList[idx]) {
+            variationsList[idx][field] = value;
+            document.getElementById('variations_json_input').value = JSON.stringify(variationsList);
+        }
+    }
+
+    function addNewVariantRow() {
+        const baseSku = document.getElementById('prod_sku')?.value || 'MHJ';
+        variationsList.push({
+            name: 'New Swatch Variant',
+            color: '#78000b',
+            color_name: 'Custom Atelier Color',
+            material: 'Full-Grain Vachetta',
+            size: 'Standard',
+            sku: baseSku ? `${baseSku}-V${variationsList.length + 1}` : '',
+            price: 0,
+            stock: 10,
+            active: true
+        });
+        renderVariationsTable();
+    }
+
+    function addPresetVariant(name, color, material, size, price) {
+        const baseSku = document.getElementById('prod_sku')?.value || 'MHJ';
+        variationsList.push({
+            name: name,
+            color: color,
+            color_name: name,
+            material: material,
+            size: size,
+            sku: baseSku ? `${baseSku}-${name.substring(0, 3).toUpperCase()}` : '',
+            price: price,
+            stock: 10,
+            active: true
+        });
+        renderVariationsTable();
+    }
+
+    function removeVariantRow(idx) {
+        variationsList.splice(idx, 1);
+        renderVariationsTable();
+    }
+
+    // Wizard Navigation
+    function goToStep(step) {
+        if (step < 1 || step > totalSteps) return;
+
+        // Basic validation before advancing from Step 1
+        if (step > 1 && currentStep === 1) {
+            const nameEl = document.getElementById('prod_name');
+            const priceEl = document.getElementById('prod_price');
+            const catEl = document.getElementById('category_id');
+            if (!nameEl.value.trim() || !priceEl.value || !catEl.value) {
+                alert('Please complete the required Step 1 fields (Product Title, Category, and Retail Price).');
+                return;
             }
-        } catch(e) {
-            renderEmptyVariationsState();
         }
 
-        // Initialize Accordion Tabs only if existing old input is present
-        try {
-            const rawTabs = document.getElementById('accordion_tabs_json').value;
-            const tabs = JSON.parse(rawTabs || '[]');
-            if (Array.isArray(tabs) && tabs.length > 0) {
-                tabs.forEach(t => renderAccordionTab(t));
-            } else {
-                renderEmptyTabsState();
+        currentStep = step;
+
+        // Update step panels visibility
+        for (let i = 1; i <= totalSteps; i++) {
+            const pane = document.getElementById('wizardStepPane-' i);
+            const tab = document.getElementById('stepTab-' i);
+            const dot = document.getElementById('stepDot-' i);
+
+            if (pane) pane.classList.toggle('hidden', i !== currentStep);
+            
+            if (dot) {
+                dot.className = i <= currentStep ? 'w-2.5 h-2.5 rounded-full bg-[#78000b]' : 'w-2.5 h-2.5 rounded-full bg-stone-300';
             }
-        } catch(e) {
-            renderEmptyTabsState();
+
+            if (tab) {
+                const num = tab.querySelector('.step-num');
+                const title = tab.querySelector('.step-title');
+                const sub = tab.querySelector('.step-sub');
+                if (i === currentStep) {
+                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs';
+                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]';
+                    if (title) title.className = 'step-title block font-bold text-xs text-[#1c1210] truncate';
+                } else if (i < currentStep) {
+                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
+                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-emerald-600 text-white';
+                    if (num) num.innerHTML = '✓';
+                    if (title) title.className = 'step-title block font-bold text-xs text-stone-700 truncate';
+                } else {
+                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
+                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600';
+                    if (num) num.textContent = i;
+                    if (title) title.className = 'step-title block font-bold text-xs text-stone-500 truncate';
+                }
+            }
         }
 
-        // Sync all Quills and dynamic repeaters on form submit
-        const form = document.querySelector('form[action*="admin/products"]');
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                // Sync Description & Craftsmanship
-                if (quillDesc) {
-                    document.getElementById('textarea-description').value = quillDesc.root.innerHTML === '<p><br></p>' ? '' : quillDesc.root.innerHTML;
-                }
-                if (quillCraft) {
-                    document.getElementById('textarea-craftsmanship').value = quillCraft.root.innerHTML === '<p><br></p>' ? '' : quillCraft.root.innerHTML;
-                }
+        // Update Bottom Bar controls
+        const prevBtn = document.getElementById('wizardPrevBtn');
+        const nextBtn = document.getElementById('wizardNextBtn');
+        const submitBtn = document.getElementById('wizardSubmitBtn');
+        const badge = document.getElementById('wizardStepIndicatorBadge');
 
-                // Sync Variations
-                syncVariationsJSON();
+        if (prevBtn) prevBtn.disabled = currentStep === 1;
+        if (badge) badge.textContent = `Step ${currentStep} of ${totalSteps}`;
 
-                // Sync Tabs
-                syncTabsJSON();
+        if (currentStep === totalSteps) {
+            if (nextBtn) nextBtn.classList.add('hidden');
+            if (submitBtn) { submitBtn.classList.remove('hidden'); submitBtn.classList.add('inline-flex'); }
+        } else {
+            if (nextBtn) nextBtn.classList.remove('hidden');
+            if (submitBtn) { submitBtn.classList.add('hidden'); submitBtn.classList.remove('inline-flex'); }
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function wizardStepPrev() {
+        if (currentStep > 1) goToStep(currentStep - 1);
+    }
+
+    function wizardStepNext() {
+        if (currentStep < totalSteps) goToStep(currentStep + 1);
+    }
+
+    function saveAsDraft() {
+        const statusSelect = document.getElementById('prod_status');
+        if (statusSelect) statusSelect.value = 'draft';
+        document.getElementById('productWizardForm').submit();
+    }
+
+    function generateRandomSku() {
+        const rand = Math.floor(1000 + Math.random() * 9000);
+        const nameVal = document.getElementById('prod_name')?.value || 'AT';
+        const prefix = nameVal.trim().substring(0, 3).toUpperCase().replace(/[^A-Z]/g, 'MHJ') || 'MHJ';
+        document.getElementById('prod_sku').value = `MHJ-${prefix}-${rand}`;
+    }
+
+    function filterSubcategories(catId) {
+        const subSelect = document.getElementById('subcategory_id');
+        if (!subSelect) return;
+        const options = subSelect.querySelectorAll('option');
+        options.forEach(opt => {
+            if (!opt.value) return; // Keep "Select Subcategory"
+            if (!catId || opt.getAttribute('data-category') == catId) {
+                opt.style.display = '';
+            } else {
+                opt.style.display = 'none';
+            }
+        });
+        subSelect.value = '';
+    }
+
+    function toggleMadeToOrderFields(isChecked) {
+        const container = document.getElementById('lead_time_container');
+        if (container) {
+            container.classList.toggle('opacity-60', !isChecked);
+            container.classList.toggle('pointer-events-none', !isChecked);
+        }
+    }
+
+    function togglePersonalizationFields(isChecked) {
+        const container = document.getElementById('personalization_config_container');
+        if (container) {
+            container.classList.toggle('hidden', !isChecked);
+        }
+    }
+
+    // Media Preview Handlers
+    function previewMainImage(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('main_cover_preview_img');
+                const svg = document.getElementById('main_cover_placeholder_svg');
+                const fn = document.getElementById('main_cover_filename');
+                if (img) { img.src = e.target.result; img.classList.remove('hidden'); }
+                if (svg) { svg.classList.add('hidden'); }
+                if (fn) {
+                    fn.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
+                    fn.className = 'text-xs text-emerald-700 font-bold';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function previewGalleryImages(input) {
+        const container = document.getElementById('gallery_preview_container');
+        if (!container) return;
+        container.innerHTML = '';
+        if (input.files) {
+            Array.from(input.files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const card = document.createElement('div');
+                    card.className = 'w-16 h-16 rounded-xl overflow-hidden border border-[#ebdccb] bg-white shadow-2xs relative group';
+                    card.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                    container.appendChild(card);
+                };
+                reader.readAsDataURL(file);
             });
         }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', function() {
+        renderVariationsTable();
+        const initialCat = document.getElementById('category_id')?.value;
+        if (initialCat) filterSubcategories(initialCat);
     });
-
-    // ========================================================
-    // VARIATIONS BUILDER
-    // ========================================================
-    function renderEmptyVariationsState() {
-        const container = document.getElementById('variations-container');
-        if (!container.querySelector('.variation-row')) {
-            container.innerHTML = `
-                <div id="empty-variations-notice" class="p-6 rounded-xl border border-dashed border-stone-200 bg-stone-50/40 text-center text-xs text-stone-500">
-                    <i class="fa-solid fa-swatchbook text-stone-300 text-xl mb-1.5 block"></i>
-                    <p class="font-medium text-stone-600">No variations added yet.</p>
-                    <p class="text-[0.68rem] text-stone-400 mt-0.5">Click <strong class="text-saltora-terracotta cursor-pointer hover:underline" onclick="addVariationRow()">+ Add Variation</strong> to add custom leather swatches, or click <strong>Load Default Leather Finishes</strong> if desired.</p>
-                </div>
-            `;
-        }
-    }
-
-    function loadDefaultVariations() {
-        const container = document.getElementById('variations-container');
-        container.innerHTML = '';
-        const defaults = [
-            { name: 'Burnished Mahogany', color: '#5a2e1e', sku: '', price: '', stock: 10 },
-            { name: 'Noir Profond', color: '#1c1210', sku: '', price: '', stock: 8 },
-            { name: 'Cognac Vintage', color: '#8c5836', sku: '', price: '', stock: 5 }
-        ];
-        defaults.forEach(v => renderVariationRow(v));
-        syncVariationsJSON();
-    }
-
-    function addVariationRow() {
-        renderVariationRow({ name: '', color: '#78000b', sku: '', price: '', stock: '' });
-        syncVariationsJSON();
-    }
-
-    function renderVariationRow(data) {
-        const container = document.getElementById('variations-container');
-        const emptyNotice = document.getElementById('empty-variations-notice');
-        if (emptyNotice) emptyNotice.remove();
-
-        const id = 'var_' + Math.random().toString(36).substr(2, 9);
-
-        const card = document.createElement('div');
-        card.id = id;
-        card.className = 'variation-row bg-white rounded-xl border border-stone-200 p-3 sm:p-3.5 shadow-2xs flex flex-wrap items-center gap-3 transition-all hover:border-saltora-terracotta/40';
-
-        card.innerHTML = `
-            <div class="flex items-center gap-2">
-                <input type="color" value="${data.color || '#1c1210'}" class="h-9 w-9 rounded-lg border border-stone-300 p-0.5 cursor-pointer var-color-picker" onchange="this.nextElementSibling.value = this.value; syncVariationsJSON();">
-                <input type="text" value="${data.color || '#1c1210'}" placeholder="#HEX" class="w-20 h-9 rounded-lg px-2.5 text-xs font-mono uppercase text-stone-700 border border-stone-200 bg-stone-50 outline-none var-color-hex" oninput="this.previousElementSibling.value = this.value; syncVariationsJSON();">
-            </div>
-
-            <div class="flex-1 min-w-[160px]">
-                <input type="text" value="${data.name || ''}" placeholder="Finish / Variant Name (e.g. Burnished Mahogany)" required class="w-full h-9 rounded-lg px-3 text-xs font-semibold text-stone-900 border border-stone-200 bg-stone-50 outline-none focus:border-saltora-terracotta var-name" oninput="syncVariationsJSON();">
-            </div>
-
-            <div class="w-28">
-                <input type="text" value="${data.sku || ''}" placeholder="SKU (optional)" class="w-full h-9 rounded-lg px-2.5 text-xs text-stone-700 border border-stone-200 bg-stone-50 outline-none var-sku" oninput="syncVariationsJSON();">
-            </div>
-
-            <div class="w-24">
-                <input type="number" step="0.01" value="${data.price || ''}" placeholder="Price (€)" class="w-full h-9 rounded-lg px-2.5 text-xs text-stone-700 border border-stone-200 bg-stone-50 outline-none var-price" oninput="syncVariationsJSON();">
-            </div>
-
-            <div class="w-24">
-                <input type="number" min="0" value="${data.stock !== undefined && data.stock !== null ? data.stock : ''}" placeholder="Stock (Qty)" class="w-full h-9 rounded-lg px-2.5 text-xs text-stone-700 border border-stone-200 bg-stone-50 outline-none var-stock" oninput="syncVariationsJSON();" title="Variant Stock Quantity">
-            </div>
-
-            <button type="button" onclick="document.getElementById('${id}').remove(); syncVariationsJSON();" class="h-9 w-9 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition cursor-pointer" title="Remove Variation">
-                <i class="fa-solid fa-trash-can text-xs"></i>
-            </button>
-        `;
-
-        container.appendChild(card);
-    }
-
-    function syncVariationsJSON() {
-        const rows = document.querySelectorAll('.variation-row');
-        const items = [];
-        rows.forEach(r => {
-            const name = r.querySelector('.var-name')?.value.trim();
-            const color = r.querySelector('.var-color-hex')?.value.trim() || '#1c1210';
-            const sku = r.querySelector('.var-sku')?.value.trim() || null;
-            const price = r.querySelector('.var-price')?.value.trim() || null;
-            const stockRaw = r.querySelector('.var-stock')?.value.trim();
-            const stock = (stockRaw !== '' && !isNaN(stockRaw)) ? parseInt(stockRaw) : null;
-
-            if (name) {
-                items.push({ name, color, sku, price, stock });
-            }
-        });
-        document.getElementById('variations_json').value = JSON.stringify(items);
-        if (rows.length === 0) {
-            renderEmptyVariationsState();
-        }
-    }
-
-    // ========================================================
-    // ACCORDION TABS / DETAILS BUILDER
-    // ========================================================
-    function loadDefaultTabs() {
-        const container = document.getElementById('tabs-container');
-        container.innerHTML = '';
-        Object.keys(tabQuillInstances).forEach(k => delete tabQuillInstances[k]);
-
-        const defaults = [
-            {
-                title: 'Master Craftsmanship & Saddlery Finishing',
-                dot_color: '#78000b',
-                content: '<p>Jedes Stück wird in aufwendiger Einzelanfertigung von unseren erfahrenen Feinsattlern vollendet. Die Schnittkanten werden traditionell mehrfach von Hand mit Bienenwachs geschliffen und kantenversiegelt, wodurch eine unvergleichliche Beständigkeit und seidig-glatte Haptik entsteht.</p>',
-                features: ['Doppelte Sattlernaht mit gewachstem Garn', 'Handpolierte massive Messingbeschläge']
-            },
-            {
-                title: 'Materials & Tuscan Vegetable Tanning',
-                dot_color: '#d8b45a',
-                content: '<p>Für dieses Meisterstück verwenden wir ausschließlich europäisches Vollrind- und Kalbsleder der höchsten Selektionsstufe A+. Die Gerbung erfolgt in der Toskana rein pflanzlich mittels Rinden- und Kastanienextrakten – völlig frei von toxischem Chrom.</p>',
-                features: ['100% vegetabil gegerbt', 'Europäisches Vollrindleder']
-            },
-            {
-                title: 'Care Instructions & Patina Development',
-                dot_color: '#2e683a',
-                content: '<p>Pflanzlich gegerbtes Leder reift mit den Jahren und entwickelt eine unverwechselbare, edle Patina. Wir empfehlen, das Leder ein- bis zweimal jährlich sanft mit unserem organischen MEHAAJ Bienenwachsbalsam und einem Baumwolltuch zu nähren.</p>',
-                features: ['Inklusive Baumwoll-Staubbeutel', 'Bienenwachsbalsam-kompatibel']
-            },
-            {
-                title: 'Shipping, Gift Packaging & Free Returns',
-                dot_color: '#78000b',
-                content: '<p>Jedes Produkt verlässt unser Atelier in einer nummerierten MEHAAJ Luxus-Magnetbox, geschützt durch einen atmungsaktiven Staubbeutel aus Bio-Baumwolle. Der Versand erfolgt versichert via DHL Express mit Live-Tracking. 30 Tage Rückgaberecht mit beiliegendem Retourenetikett.</p>',
-                features: ['DHL Express mit Tracking', '30 Tage kostenlose Retoure in DE']
-            }
-        ];
-
-        defaults.forEach(t => renderAccordionTab(t));
-        syncTabsJSON();
-    }
-
-    function renderEmptyTabsState() {
-        const container = document.getElementById('tabs-container');
-        if (!container.querySelector('.tab-card')) {
-            container.innerHTML = `
-                <div id="empty-tabs-notice" class="p-6 rounded-xl border border-dashed border-stone-200 bg-stone-50/40 text-center text-xs text-stone-500">
-                    <i class="fa-solid fa-layer-group text-stone-300 text-xl mb-1.5 block"></i>
-                    <p class="font-medium text-stone-600">No accordion tabs added yet.</p>
-                    <p class="text-[0.68rem] text-stone-400 mt-0.5">Click <strong class="text-amber-600 cursor-pointer hover:underline" onclick="addAccordionTab()">+ Add Tab / FAQ</strong> to create custom sections, or click <strong>Load 4 Luxury Default Tabs</strong> if desired.</p>
-                </div>
-            `;
-        }
-    }
-
-    function addAccordionTab() {
-        renderAccordionTab({
-            title: '',
-            dot_color: '#78000b',
-            content: '',
-            features: []
-        });
-        syncTabsJSON();
-    }
-
-    function renderAccordionTab(data) {
-        const container = document.getElementById('tabs-container');
-        const emptyNotice = document.getElementById('empty-tabs-notice');
-        if (emptyNotice) emptyNotice.remove();
-
-        const tabId = 'tab_' + Math.random().toString(36).substr(2, 9);
-        const editorId = 'editor_' + tabId;
-
-        const card = document.createElement('div');
-        card.id = tabId;
-        card.className = 'tab-card bg-white rounded-xl border border-stone-200/90 p-5 sm:p-6 shadow-sm flex flex-col gap-5 transition-all hover:border-amber-600/40 hover:shadow-md';
-
-        const featuresText = Array.isArray(data.features) ? data.features.join('\n') : (data.features || '');
-
-        card.innerHTML = `
-            <div class="tab-header-row flex items-center justify-between pb-3 border-b border-stone-100">
-                <div class="flex items-center gap-2.5 flex-1 mr-3">
-                    <span class="tab-dot-preview h-3.5 w-3.5 rounded-full shrink-0 shadow-xs ring-2 ring-stone-100" style="background-color: ${data.dot_color || '#78000b'};"></span>
-                    <input type="text" value="${data.title || ''}" placeholder="Tab Title (e.g. Master Craftsmanship & Saddlery Finishing)" required class="tab-title w-full font-bold text-stone-900 text-xs sm:text-sm bg-transparent border-b border-transparent hover:border-stone-300 focus:border-amber-600 outline-none pb-0.5" oninput="syncTabsJSON();">
-                </div>
-                <div class="flex items-center gap-2">
-                    <select class="tab-dot-color h-8.5 rounded-lg px-2.5 text-[0.68rem] font-bold text-stone-700 border border-stone-200 bg-stone-50 outline-none focus:border-amber-600 cursor-pointer" onchange="this.closest('.tab-card').querySelector('.tab-dot-preview').style.backgroundColor = this.value; syncTabsJSON();">
-                        <option value="#78000b" ${data.dot_color === '#78000b' ? 'selected' : ''}>Burgundy (#78000b)</option>
-                        <option value="#d8b45a" ${data.dot_color === '#d8b45a' ? 'selected' : ''}>Gold (#d8b45a)</option>
-                        <option value="#2e683a" ${data.dot_color === '#2e683a' ? 'selected' : ''}>Forest (#2e683a)</option>
-                        <option value="#1c1210" ${data.dot_color === '#1c1210' ? 'selected' : ''}>Onyx (#1c1210)</option>
-                    </select>
-                    <button type="button" onclick="deleteAccordionTab('${tabId}')" class="h-8.5 w-8.5 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition cursor-pointer" title="Remove Tab">
-                        <i class="fa-solid fa-trash-can text-xs"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Tab Content Rich Text Editor -->
-            <div class="tab-content-block flex flex-col gap-1.5">
-                <div class="flex items-center justify-between">
-                    <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-stone-700">
-                        TAB CONTENT / DESCRIPTION (RICH TEXT)
-                    </label>
-                    <span class="text-[0.62rem] text-stone-400">Rich text content for this accordion section</span>
-                </div>
-                <div class="quill-tab-wrapper">
-                    <div id="${editorId}" class="tab-editor-container bg-white text-xs text-stone-800">${data.content || ''}</div>
-                </div>
-            </div>
-
-            <!-- Tab Checklist / Feature Highlights (As seen in screenshot) -->
-            <div class="tab-features-block flex flex-col gap-1.5 pt-1">
-                <div class="flex items-center justify-between">
-                    <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-stone-700">
-                        KEY HIGHLIGHT BULLETS (1 PER LINE)
-                    </label>
-                    <span class="text-[0.62rem] text-stone-400">Renders as checkmark badges (e.g. ✓ Double saddle stitching...)</span>
-                </div>
-                <textarea rows="3" placeholder="Double saddle stitching with waxed linen thread&#10;Hand-burnished solid brass hardware" class="tab-features w-full p-3 rounded-xl text-xs text-stone-800 border border-stone-200 bg-stone-50/50 outline-none focus:border-amber-600 focus:bg-white focus:ring-2 focus:ring-amber-600/10 transition shadow-2xs leading-relaxed" oninput="syncTabsJSON();">${featuresText}</textarea>
-            </div>
-        `;
-
-        container.appendChild(card);
-
-        // Initialize Quill on this tab
-        setTimeout(() => {
-            if (document.getElementById(editorId)) {
-                const q = new Quill('#' + editorId, {
-                    theme: 'snow',
-                    placeholder: 'Describe details, leather characteristics, instructions...',
-                    modules: {
-                        toolbar: [
-                            ['bold', 'italic', 'underline'],
-                            [{ 'list': 'bullet' }],
-                            ['link', 'clean']
-                        ]
-                    }
-                });
-                q.on('text-change', () => {
-                    syncTabsJSON();
-                });
-                tabQuillInstances[tabId] = q;
-            }
-        }, 50);
-    }
-
-    function deleteAccordionTab(tabId) {
-        if (tabQuillInstances[tabId]) {
-            delete tabQuillInstances[tabId];
-        }
-        const el = document.getElementById(tabId);
-        if (el) el.remove();
-        syncTabsJSON();
-    }
-
-    function syncTabsJSON() {
-        const cards = document.querySelectorAll('.tab-card');
-        const items = [];
-        cards.forEach(card => {
-            const title = card.querySelector('.tab-title')?.value.trim();
-            const dot_color = card.querySelector('.tab-dot-color')?.value || '#78000b';
-            const featuresRaw = card.querySelector('.tab-features')?.value.trim() || '';
-            const features = featuresRaw ? featuresRaw.split('\n').map(s => s.trim()).filter(Boolean) : [];
-
-            let content = '';
-            if (tabQuillInstances[card.id]) {
-                const html = tabQuillInstances[card.id].root.innerHTML;
-                content = (html === '<p><br></p>') ? '' : html;
-            } else {
-                content = card.querySelector('.tab-editor-container')?.innerHTML || '';
-            }
-
-            if (title) {
-                items.push({
-                    title: title,
-                    dot_color: dot_color,
-                    content: content,
-                    features: features
-                });
-            }
-        });
-        document.getElementById('accordion_tabs_json').value = JSON.stringify(items);
-        if (cards.length === 0) {
-            renderEmptyTabsState();
-        }
-    }
 </script>
 @endsection

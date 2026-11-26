@@ -157,6 +157,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'tagline' => 'nullable|string|max:255',
             'sku' => 'nullable|string|max:100|unique:products,sku',
             'category_id' => 'nullable|exists:categories,id',
             'subcategory_id' => 'nullable|exists:subcategories,id',
@@ -166,6 +167,22 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'craftsmanship' => 'nullable|string',
+            'materials' => 'nullable|string|max:255',
+            'lining' => 'nullable|string|max:255',
+            'hardware' => 'nullable|string|max:255',
+            'dimensions' => 'nullable|string|max:255',
+            'weight' => 'nullable|string|max:100',
+            'strap_drop' => 'nullable|string|max:100',
+            'origin' => 'nullable|string|max:100',
+            'is_made_to_order' => 'nullable|boolean',
+            'lead_time_days' => 'nullable|integer|min:0',
+            'delivery_days_min' => 'nullable|integer|min:1',
+            'delivery_days_max' => 'nullable|integer|min:1',
+            'allow_personalization' => 'nullable|boolean',
+            'personalization_types' => 'nullable|array',
+            'personalization_max_chars' => 'nullable|integer|min:1|max:50',
+            'personalization_fee' => 'nullable|numeric|min:0',
+            'payment_methods' => 'nullable|array',
             'variations' => 'nullable',
             'variations_json' => 'nullable|string',
             'accordion_tabs' => 'nullable',
@@ -178,7 +195,11 @@ class ProductController extends Controller
 
         $validated['slug'] = Str::slug($validated['name']) . '-' . Str::random(5);
         $validated['sku'] = $validated['sku'] ?? 'MHJ-' . strtoupper(Str::random(6));
-        $validated['is_featured'] = $request->has('is_featured');
+        $validated['is_featured'] = $request->boolean('is_featured');
+        $validated['is_made_to_order'] = $request->boolean('is_made_to_order');
+        $validated['allow_personalization'] = $request->boolean('allow_personalization');
+        $validated['personalization_types'] = $request->input('personalization_types', []);
+        $validated['payment_methods'] = $request->input('payment_methods', ['cod', 'stripe', 'klarna', 'bank_transfer']);
         $validated['variations'] = $this->processVariations($request);
         $validated['accordion_tabs'] = $this->processAccordionTabs($request);
 
@@ -218,6 +239,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'tagline' => 'nullable|string|max:255',
             'sku' => 'nullable|string|max:100|unique:products,sku,' . $product->id,
             'category_id' => 'nullable|exists:categories,id',
             'subcategory_id' => 'nullable|exists:subcategories,id',
@@ -227,6 +249,22 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'craftsmanship' => 'nullable|string',
+            'materials' => 'nullable|string|max:255',
+            'lining' => 'nullable|string|max:255',
+            'hardware' => 'nullable|string|max:255',
+            'dimensions' => 'nullable|string|max:255',
+            'weight' => 'nullable|string|max:100',
+            'strap_drop' => 'nullable|string|max:100',
+            'origin' => 'nullable|string|max:100',
+            'is_made_to_order' => 'nullable|boolean',
+            'lead_time_days' => 'nullable|integer|min:0',
+            'delivery_days_min' => 'nullable|integer|min:1',
+            'delivery_days_max' => 'nullable|integer|min:1',
+            'allow_personalization' => 'nullable|boolean',
+            'personalization_types' => 'nullable|array',
+            'personalization_max_chars' => 'nullable|integer|min:1|max:50',
+            'personalization_fee' => 'nullable|numeric|min:0',
+            'payment_methods' => 'nullable|array',
             'variations' => 'nullable',
             'variations_json' => 'nullable|string',
             'accordion_tabs' => 'nullable',
@@ -238,7 +276,11 @@ class ProductController extends Controller
         ]);
 
         $validated['slug'] = Str::slug($validated['name']) . '-' . $product->id;
-        $validated['is_featured'] = $request->has('is_featured');
+        $validated['is_featured'] = $request->boolean('is_featured');
+        $validated['is_made_to_order'] = $request->boolean('is_made_to_order');
+        $validated['allow_personalization'] = $request->boolean('allow_personalization');
+        $validated['personalization_types'] = $request->input('personalization_types', []);
+        $validated['payment_methods'] = $request->input('payment_methods', ['cod', 'stripe', 'klarna', 'bank_transfer']);
         $validated['variations'] = $this->processVariations($request);
         $validated['accordion_tabs'] = $this->processAccordionTabs($request);
 
@@ -276,35 +318,31 @@ class ProductController extends Controller
      */
     protected function processVariations(Request $request): ?array
     {
+        $raw = null;
         if ($request->filled('variations_json')) {
             $decoded = json_decode($request->input('variations_json'), true);
             if (is_array($decoded)) {
-                $clean = [];
-                foreach ($decoded as $v) {
-                    if (!empty($v['name'])) {
-                        $clean[] = [
-                            'name' => trim($v['name']),
-                            'color' => $v['color'] ?? '#1c1210',
-                            'price' => (!empty($v['price']) && is_numeric($v['price'])) ? (float)$v['price'] : null,
-                            'sku' => !empty($v['sku']) ? trim($v['sku']) : null,
-                            'stock' => (isset($v['stock']) && is_numeric($v['stock'])) ? (int)$v['stock'] : null,
-                        ];
-                    }
-                }
-                return count($clean) > 0 ? $clean : null;
+                $raw = $decoded;
             }
+        } elseif ($request->has('variations') && is_array($request->input('variations'))) {
+            $raw = $request->input('variations');
         }
 
-        if ($request->has('variations') && is_array($request->input('variations'))) {
+        if (is_array($raw)) {
             $clean = [];
-            foreach ($request->input('variations') as $v) {
-                if (!empty($v['name'])) {
+            foreach ($raw as $v) {
+                $name = trim($v['name'] ?? ($v['color_name'] ?? ''));
+                if (!empty($name) || !empty($v['sku']) || !empty($v['size'])) {
                     $clean[] = [
-                        'name' => trim($v['name']),
+                        'name' => $name ?: 'Variant',
                         'color' => $v['color'] ?? '#1c1210',
+                        'color_name' => trim($v['color_name'] ?? $name),
+                        'material' => trim($v['material'] ?? ''),
+                        'size' => trim($v['size'] ?? ''),
                         'price' => (!empty($v['price']) && is_numeric($v['price'])) ? (float)$v['price'] : null,
                         'sku' => !empty($v['sku']) ? trim($v['sku']) : null,
                         'stock' => (isset($v['stock']) && is_numeric($v['stock'])) ? (int)$v['stock'] : null,
+                        'active' => isset($v['active']) ? (bool)$v['active'] : true,
                     ];
                 }
             }
