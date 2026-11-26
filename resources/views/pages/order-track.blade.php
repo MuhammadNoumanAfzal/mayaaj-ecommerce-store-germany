@@ -103,9 +103,32 @@
                             <p class="text-xs text-[#685c54] mt-0.5">Aufgegeben am {{ $order->created_at->format('d. F Y, H:i') }} Uhr</p>
                         </div>
 
-                        <div class="text-right">
-                            <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#8a7c74] block">Gesamtbetrag</span>
-                            <span class="font-display text-xl font-bold text-[#78000b]">EUR {{ number_format($order->total_amount, 2, ',', '.') }}</span>
+                        <div class="text-right flex flex-col items-end gap-1.5">
+                            <div>
+                                <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#8a7c74] block">Gesamtbetrag</span>
+                                <span class="font-display text-xl font-bold text-[#78000b]">EUR {{ number_format($order->total_amount, 2, ',', '.') }}</span>
+                            </div>
+
+                            <div class="flex items-center gap-2 pt-1">
+                                <a 
+                                    href="{{ route('order.invoice', $order->id) }}" 
+                                    target="_blank" 
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#faf7f2] border border-[#e6decb] hover:bg-white text-[0.68rem] font-bold text-[#1c1210] hover:text-[#78000b] transition shadow-2xs"
+                                    title="Offizielle EU-Steuerrechnung mit 19% MwSt. und USt-IdNr. herunterladen"
+                                >
+                                    <svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    <span>Rechnung als PDF</span>
+                                </a>
+
+                                <a 
+                                    href="{{ route('returns.index', ['order_number' => $order->order_number, 'email' => $order->customer_email]) }}" 
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 hover:bg-amber-100 text-[0.68rem] font-bold text-amber-800 transition shadow-2xs"
+                                    title="14-Tage gesetzliches Widerrufsrecht wahrnehmen"
+                                >
+                                    <svg class="w-3.5 h-3.5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H4m0 0l5 5m-5-5l5-5"/></svg>
+                                    <span>Widerruf anmelden</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 

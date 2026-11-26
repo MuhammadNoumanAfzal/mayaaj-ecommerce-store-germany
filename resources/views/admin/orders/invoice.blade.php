@@ -130,7 +130,7 @@
                 
                 <p class="text-[0.68rem] text-stone-500 font-medium pt-1 leading-relaxed">
                     MEHAAJ E-Commerce GmbH • Maximilianstraße 28 • D-80539 München<br>
-                    USt-IdNr.: DE 391 048 291 • Amtsgericht München HRB 88201 B<br>
+                    USt-IdNr.: DE 328 991 421 • Amtsgericht München HRB 88201 B<br>
                     Tel: +49 (0) 89 2109 4400 • E-Mail: atelier@mehaaj.de • Web: www.mehaaj.de
                 </p>
             </div>

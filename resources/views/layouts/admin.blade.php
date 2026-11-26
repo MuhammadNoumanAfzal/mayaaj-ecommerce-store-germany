@@ -1203,8 +1203,34 @@
                                 <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
                                 <span data-i18n-de="Vorkasse & Rechnungen" data-i18n-en="Prepayments & Invoices">Prepayments & Invoices</span>
                             </a>
+                            <a href="{{ route('admin.returns') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.returns*') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                                <span data-i18n-de="Retouren & RMA" data-i18n-en="Returns & RMA">Returns & RMA</span>
+                                @php
+                                    $openReturnsCount = \App\Models\ReturnRequest::where('status', 'pending')->count();
+                                @endphp
+                                @if($openReturnsCount > 0)
+                                    <span class="ml-auto rounded-full bg-amber-100 text-amber-800 px-1.5 py-0.2 text-[0.6rem] font-bold">{{ $openReturnsCount }}</span>
+                                @endif
+                            </a>
                         </div>
                     </div>
+
+                    <!-- Customer Returns & RMA Direct Link -->
+                    <a href="{{ route('admin.returns') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.returns*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.returns*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                            </svg>
+                            <span data-i18n-de="Retouren & Widerruf" data-i18n-en="Returns & RMA">Returns & RMA</span>
+                        </div>
+                        @php
+                            $pendingRmaCount = \App\Models\ReturnRequest::where('status', 'pending')->count();
+                        @endphp
+                        @if($pendingRmaCount > 0)
+                            <span class="rounded-full bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 text-[0.62rem] font-bold">{{ $pendingRmaCount }} Neu</span>
+                        @endif
+                    </a>
 
                     <!-- Abandoned Carts Recovery Engine -->
                     <a href="{{ route('admin.abandoned-carts') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.abandoned-carts*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">

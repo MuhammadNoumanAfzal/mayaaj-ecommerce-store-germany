@@ -64,6 +64,13 @@ Route::get('/cart/recover/{token}', [CartController::class, 'recoverCart'])->nam
 Route::get('/order/track', [ShopController::class, 'trackOrder'])->name('order.track');
 Route::get('/bestellung-verfolgen', [ShopController::class, 'trackOrder'])->name('order.track.de');
 Route::post('/order/track', [ShopController::class, 'lookupOrder'])->name('order.track.lookup');
+Route::get('/order/track/{order}/invoice', [OrderController::class, 'printInvoice'])->name('order.invoice');
+
+// German Statutory 14-Day Returns & Widerrufsrecht Self-Service Portal
+Route::get('/returns', [\App\Http\Controllers\ReturnController::class, 'index'])->name('returns.index');
+Route::get('/widerruf', [\App\Http\Controllers\ReturnController::class, 'index'])->name('returns.de');
+Route::post('/returns', [\App\Http\Controllers\ReturnController::class, 'store'])->name('returns.store');
+Route::get('/returns/{returnNumber}/slip', [\App\Http\Controllers\ReturnController::class, 'returnSlip'])->name('returns.slip');
 
 // Dedicated Checkout Page Routes
 Route::get('/checkout', [CartController::class, 'checkoutPage'])->name('checkout.index');
@@ -233,6 +240,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/orders/{order}/send-dispatch-email', [OrderController::class, 'sendDispatchEmail'])->name('orders.send-dispatch-email');
             Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
             Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+            // Customer Returns & Widerrufsrecht (RMA) Management
+            Route::get('/returns', [\App\Http\Controllers\Admin\ReturnController::class, 'index'])->name('returns');
+            Route::put('/returns/{return}/status', [\App\Http\Controllers\Admin\ReturnController::class, 'updateStatus'])->name('returns.update-status');
+            Route::delete('/returns/{return}', [\App\Http\Controllers\Admin\ReturnController::class, 'destroy'])->name('returns.destroy');
 
             // Abandoned Carts Recovery Engine Routes
             Route::get('/abandoned-carts', [\App\Http\Controllers\Admin\AbandonedCartController::class, 'index'])->name('abandoned-carts');

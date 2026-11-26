@@ -51,6 +51,11 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function returnRequests()
+    {
+        return $this->hasMany(ReturnRequest::class);
+    }
+
     /**
      * Build courier tracking URL based on carrier name and code.
      */

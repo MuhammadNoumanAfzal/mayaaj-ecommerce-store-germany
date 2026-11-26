@@ -122,6 +122,16 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('order.track') }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="Track Order" data-i18n-de="Sendungsverfolgung">
+                            <span class="text-[#d8b45a]">›</span> Sendungsverfolgung
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('returns.index') }}" class="hover:text-[#ffd45a] transition flex items-center gap-1 text-[#ffd45a]" data-i18n-en="Returns & RMA Portal" data-i18n-de="Retouren & Widerrufsportal">
+                            <span class="text-[#d8b45a]">›</span> Retouren & Widerruf (§ 355)
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('returns') }}" class="hover:text-[#ffd45a] transition flex items-center gap-1" data-i18n-en="30-Day Return Policy" data-i18n-de="30 Tage Rückgaberecht">
                             <span class="text-[#d8b45a]">›</span> 30 Tage Rückgaberecht
                         </a>
