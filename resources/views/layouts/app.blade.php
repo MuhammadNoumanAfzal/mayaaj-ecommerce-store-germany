@@ -80,6 +80,8 @@
         }
         </script>
 
+        @stack('seo')
+
         <!-- Fonts: Playfair Display, Cormorant Garamond & Plus Jakarta Sans -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -150,5 +150,18 @@ class Product extends Model
             ->withPivot('is_required', 'sort_order')
             ->withTimestamps();
     }
+
+    /**
+     * Stock waitlist notifications for this product.
+     */
+    public function stockNotifications()
+    {
+        return $this->hasMany(StockNotification::class);
+    }
+
+    public function pendingStockNotifications()
+    {
+        return $this->hasMany(StockNotification::class)->where('status', 'pending');
+    }
 }
 

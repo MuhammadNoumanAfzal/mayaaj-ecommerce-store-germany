@@ -1177,6 +1177,23 @@
                             <span class="rounded-full bg-amber-50 text-amber-700 border border-amber-200/80 px-2 py-0.5 text-[0.62rem] font-bold">{{ $adminLowStockAlertCount }} Low</span>
                         @endif
                     </a>
+
+                    <!-- Waitlist & Restock Demand Intelligence -->
+                    <a href="{{ route('admin.waitlist') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.waitlist*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.waitlist*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span data-i18n-de="Warteliste & Nachfrage" data-i18n-en="Waitlist & Demand">Waitlist & Demand</span>
+                        </div>
+                        @php
+                            $adminPendingWaitlistCount = \App\Models\StockNotification::where('status', 'pending')->count();
+                        @endphp
+                        @if($adminPendingWaitlistCount > 0)
+                            <span class="rounded-full bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 text-[0.62rem] font-bold">{{ $adminPendingWaitlistCount }} Wait</span>
+                        @endif
+                    </a>
                     @endif
 
                     @if($canManageOrders)

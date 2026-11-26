@@ -1,4 +1,4 @@
-﻿@props(['product'])
+@props(['product'])
 
 <article class="luxury-panel group h-full overflow-hidden p-2 transition duration-500 hover:border-champagne/28">
     <div class="relative aspect-[4/5] overflow-hidden bg-[#2a1a15]">

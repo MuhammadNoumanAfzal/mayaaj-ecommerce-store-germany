@@ -72,6 +72,9 @@ Route::get('/widerruf', [\App\Http\Controllers\ReturnController::class, 'index']
 Route::post('/returns', [\App\Http\Controllers\ReturnController::class, 'store'])->name('returns.store');
 Route::get('/returns/{returnNumber}/slip', [\App\Http\Controllers\ReturnController::class, 'returnSlip'])->name('returns.slip');
 
+// Back-in-Stock Notification & Atelier Waitlist Subscription
+Route::post('/stock-notifications', [\App\Http\Controllers\StockNotificationController::class, 'store'])->name('stock-notifications.store');
+
 // Dedicated Checkout Page Routes
 Route::get('/checkout', [CartController::class, 'checkoutPage'])->name('checkout.index');
 Route::get('/kasse', [CartController::class, 'checkoutPage'])->name('checkout.de');
@@ -226,6 +229,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             // Dedicated Inventory & Stock Management Routes
             Route::get('/inventory', [\App\Http\Controllers\Admin\InventoryController::class, 'index'])->name('inventory');
             Route::post('/inventory/update-stock', [\App\Http\Controllers\Admin\InventoryController::class, 'updateStock'])->name('inventory.update-stock');
+
+            // Waitlist & Restock Demand Analytics
+            Route::get('/waitlist', [\App\Http\Controllers\Admin\WaitlistController::class, 'index'])->name('waitlist');
+            Route::post('/waitlist/{product}/notify', [\App\Http\Controllers\Admin\WaitlistController::class, 'sendRestockAlerts'])->name('waitlist.notify');
+            Route::delete('/waitlist/{notification}', [\App\Http\Controllers\Admin\WaitlistController::class, 'destroy'])->name('waitlist.destroy');
         });
 
         // 3. Orders & VIP Customers (Super Admin & Store Admin)

@@ -40,6 +40,88 @@
 @section('meta_description', Str::limit($cleanDesc, 155))
 @section('canonical', route('shop.show', $product->slug))
 @section('og_image', $product->image_url)
+@section('og_type', 'product')
+
+@push('seo')
+    <!-- OpenGraph & Social Meta Product Specifics -->
+    <meta property="product:price:amount" content="{{ number_format($effectivePrice, 2, '.', '') }}">
+    <meta property="product:price:currency" content="EUR">
+    <meta property="product:availability" content="{{ $product->stock > 0 ? 'in stock' : 'out of stock' }}">
+    <meta property="product:condition" content="new">
+    <meta property="product:brand" content="MEHAAJ">
+    <meta property="product:retailer_item_id" content="{{ $product->sku ?? ('MHJ-' . $product->id) }}">
+
+    <!-- Google SEO Schema.org JSON-LD (Product, Offer, AggregateRating, BreadcrumbList) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Product",
+                "@id": "{{ route('shop.show', $product->slug) }}#product",
+                "name": {{ json_encode($product->name) }},
+                "url": "{{ route('shop.show', $product->slug) }}",
+                "image": {{ json_encode($allImages->toArray()) }},
+                "description": {{ json_encode($cleanDesc) }},
+                "sku": "{{ $product->sku ?? ('MHJ-' . $product->id) }}",
+                "mpn": "{{ $product->sku ?? ('MHJ-' . $product->id) }}",
+                "brand": {
+                    "@type": "Brand",
+                    "name": "MEHAAJ"
+                },
+                "manufacturer": {
+                    "@type": "Organization",
+                    "name": "MEHAAJ Official Maison"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "url": "{{ route('shop.show', $product->slug) }}",
+                    "priceCurrency": "EUR",
+                    "price": "{{ number_format($effectivePrice, 2, '.', '') }}",
+                    "priceValidUntil": "2027-12-31",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "availability": "{{ $product->stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' }}",
+                    "seller": {
+                        "@type": "Organization",
+                        "name": "MEHAAJ Official Maison"
+                    }
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "{{ $approvedReviews->count() > 0 ? number_format($approvedReviews->avg('rating'), 1) : '5.0' }}",
+                    "reviewCount": "{{ max(1, $approvedReviews->count()) }}",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "{{ route('shop.show', $product->slug) }}#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Maison Home",
+                        "item": "{{ url('/') }}"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": {{ json_encode($product->category->name ?? 'Collection') }},
+                        "item": "{{ route('shop', ['category' => $product->category->slug ?? 'all']) }}"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": {{ json_encode($product->name) }},
+                        "item": "{{ route('shop.show', $product->slug) }}"
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+@endpush
 
 @php
     $catTranslations = [
@@ -245,10 +327,17 @@
                         <div class="mt-2 flex items-center gap-2 text-xs text-[#685c54]">
                             <span>SKU: <strong id="product-sku-display" class="font-mono text-[#1c1210]">{{ $firstVar['sku'] ?? ($product->sku ?? 'MHJ-' . $product->id) }}</strong></span>
                             <span class="text-[#c7baa7]">•</span>
-                            <span class="inline-flex items-center gap-1.5 font-semibold text-[#2e683a] text-xs">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#2e683a] animate-pulse"></span>
-                                <span data-i18n-en="In Stock • Dispatches via DHL Express" data-i18n-de="Auf Lager • Versand per DHL Express">In Stock • Dispatches via DHL Express</span>
-                            </span>
+                            @if($product->stock > 0)
+                                <span id="product-stock-badge" class="inline-flex items-center gap-1.5 font-semibold text-[#2e683a] text-xs">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-[#2e683a] animate-pulse"></span>
+                                    <span data-i18n-en="In Stock • Dispatches via DHL Express" data-i18n-de="Auf Lager • Versand per DHL Express">In Stock • Dispatches via DHL Express</span>
+                                </span>
+                            @else
+                                <span id="product-stock-badge" class="inline-flex items-center gap-1.5 font-semibold text-[#b45309] text-xs">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-[#b45309]"></span>
+                                    <span data-i18n-en="Sold Out • Join Atelier Waitlist" data-i18n-de="Derzeit vergriffen • Auf Warteliste vormerken">Sold Out • Join Atelier Waitlist</span>
+                                </span>
+                            @endif
                         </div>
 
                         <!-- Clean Price Display -->
@@ -317,20 +406,35 @@
                                 <button type="button" onclick="adjustProductQty(1)" class="h-7 w-7 flex items-center justify-center font-bold text-sm text-[#1c1210] hover:text-[#78000b] transition active:scale-90 cursor-pointer" aria-label="Increase quantity">+</button>
                             </div>
 
-                            <!-- Primary Add to Cart Button -->
-                            <button
-                                type="button"
-                                id="add-to-cart-primary"
-                                onclick="submitAddToCart()"
-                                class="animate-shine-sweep group/btn flex-1 flex h-11 items-center justify-center gap-2 rounded-lg bg-[#78000b] px-5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-md transition-all duration-200 hover:bg-[#500007] hover:shadow-lg active:scale-98 cursor-pointer"
-                            >
-                                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                                    <line x1="3" y1="6" x2="21" y2="6"/>
-                                    <path d="M16 10a4 4 0 01-8 0"/>
-                                </svg>
-                                <span data-i18n-en="ADD TO CART" data-i18n-de="IN DEN WARENKORB">ADD TO CART</span>
-                            </button>
+                            @if($product->stock > 0)
+                                <!-- Primary Add to Cart Button -->
+                                <button
+                                    type="button"
+                                    id="add-to-cart-primary"
+                                    onclick="submitAddToCart()"
+                                    class="animate-shine-sweep group/btn flex-1 flex h-11 items-center justify-center gap-2 rounded-lg bg-[#78000b] px-5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-md transition-all duration-200 hover:bg-[#500007] hover:shadow-lg active:scale-98 cursor-pointer"
+                                >
+                                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                                        <line x1="3" y1="6" x2="21" y2="6"/>
+                                        <path d="M16 10a4 4 0 01-8 0"/>
+                                    </svg>
+                                    <span data-i18n-en="ADD TO CART" data-i18n-de="IN DEN WARENKORB">ADD TO CART</span>
+                                </button>
+                            @else
+                                <!-- Sold Out - Notify When Available Button -->
+                                <button
+                                    type="button"
+                                    id="waitlist-trigger-btn"
+                                    onclick="openWaitlistModal()"
+                                    class="flex-1 flex h-11 items-center justify-center gap-2 rounded-lg bg-[#1c1210] px-5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-md transition-all duration-200 hover:bg-[#382622] hover:shadow-lg active:scale-98 cursor-pointer border border-[#d8b45a]/40"
+                                >
+                                    <svg class="h-4 w-4 text-[#d8b45a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                    </svg>
+                                    <span data-i18n-en="Sold Out – Notify When Available" data-i18n-de="Ausverkauft – Benachrichtigen">Ausverkauft – Benachrichtigen</span>
+                                </button>
+                            @endif
 
                             <!-- Wishlist Toggle Button -->
                             @php
@@ -809,6 +913,11 @@
             if (nameEl) nameEl.textContent = name;
             if (skuEl) skuEl.textContent = sku;
 
+            const waitlistVarName = document.getElementById('modalWaitlistVarName');
+            const waitlistVarInput = document.getElementById('waitlistFormVarInput');
+            if (waitlistVarName) waitlistVarName.textContent = name;
+            if (waitlistVarInput) waitlistVarInput.value = name;
+
             if (price) {
                 const priceEl = document.getElementById('product-price-display');
                 if (priceEl) priceEl.textContent = '€' + price.toFixed(2);
@@ -1054,7 +1163,159 @@
                 if (e.key === 'ArrowRight') navigateLightbox(1);
                 if (e.key === 'ArrowLeft') navigateLightbox(-1);
             }
+            const wModal = document.getElementById('waitlistModal');
+            if (wModal && !wModal.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeWaitlistModal();
+            }
         });
+
+        // 6. Atelier Waitlist Modal Handling
+        window.openWaitlistModal = function() {
+            const modal = document.getElementById('waitlistModal');
+            if (modal) modal.classList.remove('hidden');
+        };
+
+        window.closeWaitlistModal = function() {
+            const modal = document.getElementById('waitlistModal');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.submitWaitlistForm = function(e) {
+            e.preventDefault();
+            const form = document.getElementById('waitlistForm');
+            const submitBtn = document.getElementById('waitlistSubmitBtn');
+            const origHtml = submitBtn.innerHTML;
+
+            const email = document.getElementById('waitlistEmailInput').value;
+            const name = document.getElementById('waitlistNameInput').value;
+            const varName = document.getElementById('waitlistFormVarInput').value;
+            const productId = {{ $product->id }};
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">⟳</span> Bitte warten...';
+
+            fetch('{{ route("stock-notifications.store") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    variation_name: varName,
+                    customer_email: email,
+                    customer_name: name
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origHtml;
+                if (data.success) {
+                    closeWaitlistModal();
+                    if (window.LuxurySwal) {
+                        LuxurySwal.fire({
+                            icon: 'success',
+                            title: 'Warteliste bestätigt',
+                            text: data.message
+                        });
+                    } else if (window.LuxuryToast) {
+                        LuxuryToast.fire({ icon: 'success', title: data.message });
+                    } else {
+                        alert(data.message);
+                    }
+                    form.reset();
+                } else {
+                    alert(data.message || 'Ein Fehler ist aufgetreten.');
+                }
+            })
+            .catch(err => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origHtml;
+                console.error('Waitlist error:', err);
+                alert('Verbindung zum Server fehlgeschlagen.');
+            });
+        };
     })();
 </script>
+
+<!-- Luxury Atelier Waitlist Modal -->
+<div id="waitlistModal" class="fixed inset-0 z-50 hidden bg-[#1c1210]/70 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-[#e6decb] relative space-y-5">
+        <button type="button" onclick="closeWaitlistModal()" class="absolute top-4 right-4 text-[#8a7c74] hover:text-[#1c1210] text-xl font-bold cursor-pointer">✕</button>
+
+        <!-- Modal Header -->
+        <div class="space-y-1 text-center pr-6">
+            <span class="inline-flex items-center gap-1.5 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
+                <span data-i18n-en="ATELIER PRIORITÄTS-WARTELISTE" data-i18n-de="ATELIER PRIORITÄTS-WARTELISTE">ATELIER PRIORITÄTS-WARTELISTE</span>
+            </span>
+            <h3 class="font-display text-xl font-bold text-[#1c1210]" data-i18n-en="Notify When Available" data-i18n-de="Benachrichtigen, wenn verfügbar">
+                Benachrichtigen, wenn verfügbar
+            </h3>
+            <p class="text-xs text-[#685c54]" data-i18n-en="Join our private priority waitlist. You will receive an exclusive alert as soon as this handcrafted creation is restocked." data-i18n-de="Tragen Sie sich auf unsere exklusive Prioritäts-Warteliste ein. Wir benachrichtigen Sie diskret per E-Mail, sobald neue Stücke vollendet sind.">
+                Tragen Sie sich auf unsere exklusive Prioritäts-Warteliste ein. Wir benachrichtigen Sie diskret per E-Mail, sobald neue Stücke vollendet sind.
+            </p>
+        </div>
+
+        <!-- Product Preview Box -->
+        <div class="flex items-center gap-3 bg-[#faf7f2] p-3 rounded-xl border border-[#e6decb]">
+            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-12 w-12 rounded-lg object-cover border border-[#e6decb] shrink-0">
+            <div class="min-w-0 flex-1">
+                <h4 class="font-bold text-xs text-[#1c1210] truncate">{{ $product->name }}</h4>
+                <p class="text-[0.68rem] text-[#8a7c74]">
+                    <span data-i18n-en="Selection:" data-i18n-de="Ausführung:">Ausführung:</span> <span id="modalWaitlistVarName" class="font-bold text-[#78000b]">{{ $firstVar['name'] ?? 'Standard' }}</span>
+                </p>
+                <p class="text-xs font-bold text-[#1c1210] font-mono mt-0.5">€{{ number_format($effectivePrice, 2, '.', ',') }}</p>
+            </div>
+        </div>
+
+        <!-- Waitlist Form -->
+        <form id="waitlistForm" onsubmit="submitWaitlistForm(event)" class="space-y-3.5">
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="variation_name" id="waitlistFormVarInput" value="{{ $firstVar['name'] ?? '' }}">
+
+            <div>
+                <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-en="Your Name (Optional)" data-i18n-de="Ihr Name (Optional)">
+                    Ihr Name (Optional)
+                </label>
+                <input 
+                    type="text" 
+                    name="customer_name" 
+                    id="waitlistNameInput"
+                    placeholder="z. B. Dr. Maximilian von Weber" 
+                    class="w-full rounded-xl border border-[#e6decb] bg-[#faf7f2] px-3.5 py-2.5 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition shadow-2xs"
+                >
+            </div>
+
+            <div>
+                <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-en="Email Address *" data-i18n-de="E-Mail-Adresse *">
+                    E-Mail-Adresse *
+                </label>
+                <input 
+                    type="email" 
+                    name="customer_email" 
+                    id="waitlistEmailInput"
+                    required 
+                    placeholder="ihre.email@beispiel.de" 
+                    class="w-full rounded-xl border border-[#e6decb] bg-[#faf7f2] px-3.5 py-2.5 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition shadow-2xs"
+                >
+            </div>
+
+            <p class="text-[0.62rem] text-[#8a7c74] leading-relaxed" data-i18n-en="No spam. Only a one-time restock notification. Unsubscribe anytime." data-i18n-de="Kein Spam. Ausschließlich eine einmalige Benachrichtigung bei Wiederverfügbarkeit.">
+                Kein Spam. Ausschließlich eine einmalige Benachrichtigung bei Wiederverfügbarkeit.
+            </p>
+
+            <button 
+                type="submit" 
+                id="waitlistSubmitBtn"
+                class="w-full h-11 rounded-xl bg-[#78000b] hover:bg-[#5a0309] text-white text-xs font-bold uppercase tracking-[0.14em] transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+            >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                <span data-i18n-en="Notify Me" data-i18n-de="Auf Warteliste setzen">Auf Warteliste setzen</span>
+            </button>
+        </form>
+    </div>
+</div>
 @endsection
