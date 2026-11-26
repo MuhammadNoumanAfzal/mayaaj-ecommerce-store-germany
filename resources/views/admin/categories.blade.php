@@ -555,26 +555,17 @@
                     <!-- Upload Button & Hint -->
                     <div class="space-y-1">
                         <input type="file" name="image" id="modal_cat_file" accept="image/*" class="hidden" onchange="previewModalBanner(this)">
-                        <button type="button" onclick="document.getElementById('modal_cat_file').click()" class="h-8 px-4 rounded-xl bg-[#1c2434] hover:bg-[#78000b] text-white text-[0.72rem] font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer">
-                            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                            <span>Upload from Computer</span>
+                        <button 
+                            type="button" 
+                            onclick="document.getElementById('modal_cat_file').click()" 
+                            class="h-9 px-4 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
+                            style="background: #181210 !important; color: #ffffff !important;"
+                        >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #ffffff !important;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            <span style="color: #ffffff !important;">Upload from Computer</span>
                         </button>
-                        <p id="modal_banner_filename" class="text-[0.65rem] text-[#8a7c74]">PNG, JPG, WEBP up to 5MB</p>
+                        <p id="modal_banner_filename" class="text-[0.65rem] text-[#8a7c74]">PNG, JPG, WEBP up to 10MB</p>
                     </div>
-                </div>
-
-                <!-- OR USE IMAGE URL / PATH -->
-                <div class="mt-2.5">
-                    <label for="modal_image_url" class="block font-bold text-[0.62rem] text-[#8a7c74] uppercase tracking-wider mb-1">
-                        OR USE IMAGE URL / PATH
-                    </label>
-                    <input 
-                        type="text" 
-                        name="image_url" 
-                        id="modal_image_url" 
-                        placeholder="/images/categories/cat-belts.jpg"
-                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50/60 text-xs font-mono text-stone-900 outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
-                    >
                 </div>
             </div>
 

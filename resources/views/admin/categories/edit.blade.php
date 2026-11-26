@@ -4,7 +4,7 @@
 @section('admin-content')
 <div class="space-y-4 w-full pb-12 text-[#1c1210]">
 
-    <!-- 1. Colorful Breadcrumb Pill -->
+    <!-- 1. Clean Breadcrumb Pill -->
     <div class="bg-gradient-to-r from-white via-[#FAF7F2] to-white rounded-xl py-3 px-5 text-xs font-semibold text-stone-600 border border-[#ebdccb] shadow-2xs flex items-center justify-between">
         <div class="flex items-center gap-2">
             <a href="{{ route('admin.categories') }}" class="text-[#8a7c74] hover:text-[#78000b] transition flex items-center gap-1 font-bold" data-i18n-de="Kategorien" data-i18n-en="Categories">
@@ -30,8 +30,8 @@
         <!-- Header with Warm Sunset Atelier Gradient -->
         <div class="px-6 py-4.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] flex items-center justify-between gap-3 border-b border-[#ebdccb]">
             <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%); color: #d8b45a; border: 1px solid rgba(216, 180, 90, 0.45);">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                    <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
@@ -84,12 +84,6 @@
                         required 
                         class="w-full h-11 px-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
-                    <div class="mt-1.5 flex items-center gap-1.5">
-                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-[#FAF7F2] text-[#685c54] border border-[#ebdccb] text-[0.65rem] font-mono">
-                            <span class="text-[#8a7c74]">URL:</span>
-                            <strong id="slugEditPreview" class="text-[#78000b] font-bold">/{{ $category->slug }}</strong>
-                        </span>
-                    </div>
                 </div>
 
                 <!-- Status Select -->
@@ -107,9 +101,6 @@
                         <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }}>● Active (Visible in Storefront & Menu)</option>
                         <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }}>○ Draft (Hidden from Storefront)</option>
                     </select>
-                    <p class="text-[0.65rem] text-emerald-700 font-semibold mt-1.5 flex items-center gap-1">
-                        <span>✓</span> Instant visibility in navigation, search filter, and mobile menu
-                    </p>
                 </div>
 
             </div>
@@ -128,7 +119,7 @@
                 >{{ old('description', $category->description) }}</textarea>
             </div>
 
-            <!-- Row 3: Banner Image Upload (Warm Colorful Box) -->
+            <!-- Row 3: Banner Image Upload (Clean, Only Upload from Computer) -->
             <div>
                 <label class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"></span>
@@ -159,36 +150,21 @@
                                 onchange="previewFullEditCategoryImage(this)"
                                 class="hidden"
                             >
-                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                                <button type="button" onclick="document.getElementById('editCatImageInput').click()" class="h-9 px-4 rounded-xl bg-[#1c2434] hover:bg-[#78000b] text-white text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer">
-                                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                                    <span>Upload New from Computer</span>
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                                <button 
+                                    type="button" 
+                                    onclick="document.getElementById('editCatImageInput').click()" 
+                                    class="h-10 px-5 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm cursor-pointer active:scale-95"
+                                    style="background: #181210 !important; color: #ffffff !important;"
+                                >
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #ffffff !important;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                    <span style="color: #ffffff !important;">Upload New from Computer</span>
                                 </button>
-                                <span id="full_edit_filename" class="text-xs text-[#8a7c74]">
+                                <span id="full_edit_filename" class="text-xs font-semibold text-[#685c54]">
                                     {{ $category->image ? 'Current cover active' : 'PNG, JPG, WEBP up to 10MB' }}
                                 </span>
                             </div>
-                            <p class="text-[0.65rem] text-[#8a7c74]">Selecting a new file will automatically replace current cover</p>
-                        </div>
-                    </div>
-
-                    <!-- OR USE IMAGE URL / PATH -->
-                    <div class="mt-4 pt-3.5 border-t border-[#ebdccb]">
-                        <label for="edit_image_url" class="block font-bold text-[0.65rem] text-[#8a7c74] uppercase tracking-wider mb-1">
-                            OR USE IMAGE URL / PATH
-                        </label>
-                        <div class="relative">
-                            <span class="absolute left-3.5 top-3 text-stone-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                            </span>
-                            <input 
-                                type="text" 
-                                name="image_url" 
-                                id="edit_image_url" 
-                                value="{{ old('image_url') }}"
-                                placeholder="/images/categories/cat-belts.jpg"
-                                class="w-full h-10 pl-10 pr-4 rounded-xl border border-[#ebdccb] bg-white text-xs font-mono text-stone-900 outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
-                            >
+                            <p class="text-[0.68rem] text-[#8a7c74]">Selecting a new file will automatically replace current cover</p>
                         </div>
                     </div>
 
@@ -218,20 +194,6 @@
 </div>
 
 <script>
-    // Live Slug Preview Generator
-    const editNameInput = document.getElementById('catEditNameInput');
-    const slugEditPreview = document.getElementById('slugEditPreview');
-
-    if (editNameInput && slugEditPreview) {
-        editNameInput.addEventListener('input', function() {
-            const val = this.value.trim().toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/[\s_-]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-            slugEditPreview.textContent = '/' + (val || 'category-slug');
-        });
-    }
-
     // Live Image Preview Handler
     function previewFullEditCategoryImage(input) {
         if (input.files && input.files[0]) {

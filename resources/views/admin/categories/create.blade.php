@@ -4,7 +4,7 @@
 @section('admin-content')
 <div class="space-y-4 w-full pb-12 text-[#1c1210]">
 
-    <!-- 1. Colorful Breadcrumb Pill -->
+    <!-- 1. Clean Breadcrumb Pill -->
     <div class="bg-gradient-to-r from-white via-[#FAF7F2] to-white rounded-xl py-3 px-5 text-xs font-semibold text-stone-600 border border-[#ebdccb] shadow-2xs flex items-center justify-between">
         <div class="flex items-center gap-2">
             <a href="{{ route('admin.categories') }}" class="text-[#8a7c74] hover:text-[#78000b] transition flex items-center gap-1 font-bold" data-i18n-de="Kategorien" data-i18n-en="Categories">
@@ -14,24 +14,20 @@
             <span class="text-stone-300 font-mono">›</span> 
             <span class="text-[#78000b] font-bold" data-i18n-de="Neue Kategorie" data-i18n-en="New Category">New Category</span>
         </div>
-        <span class="text-[0.68rem] text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full font-bold border border-emerald-300/80 flex items-center gap-1.5 shadow-2xs">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Auto-Sorting Enabled</span>
-        </span>
     </div>
 
     <!-- 2. Colorful Form Card Container -->
     <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#ebdccb] shadow-xs overflow-hidden">
         @csrf
 
-        <!-- Decorative Top Accent Ribbon (Pink-Salt Burgundy & Gold) -->
+        <!-- Decorative Top Accent Ribbon -->
         <div class="h-1.5 bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b]"></div>
 
         <!-- Header with Warm Sunset Atelier Gradient -->
         <div class="px-6 py-4.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] flex items-center justify-between gap-3 border-b border-[#ebdccb]">
             <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%); color: #d8b45a; border: 1px solid rgba(216, 180, 90, 0.45);">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                    <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
@@ -43,7 +39,7 @@
                         </span>
                     </div>
                     <p class="text-[0.72rem] text-[#8a7c74] mt-0.5" data-i18n-de="Erstellen Sie eine neue Hauptkategorie für Ihren Luxuskatalog." data-i18n-en="Create a top-level category with automatic storefront synchronization.">
-                        Create a top-level category with automatic storefront synchronization & instant catalog indexing.
+                        Create a top-level category with automatic storefront synchronization.
                     </p>
                 </div>
             </div>
@@ -85,12 +81,6 @@
                         placeholder="e.g. Leather Briefcases"
                         class="w-full h-11 px-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
-                    <div class="mt-1.5 flex items-center gap-1.5">
-                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-[#FAF7F2] text-[#685c54] border border-[#ebdccb] text-[0.65rem] font-mono">
-                            <span class="text-[#8a7c74]">URL:</span>
-                            <strong id="slugPreview" class="text-[#78000b] font-bold">/category-slug</strong>
-                        </span>
-                    </div>
                 </div>
 
                 <!-- Status Select -->
@@ -108,9 +98,6 @@
                         <option value="active" {{ old('status', 'active') === 'active' ? 'selected' : '' }}>● Active (Visible in Storefront & Menu)</option>
                         <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }}>○ Draft (Hidden from Storefront)</option>
                     </select>
-                    <p class="text-[0.65rem] text-emerald-700 font-semibold mt-1.5 flex items-center gap-1">
-                        <span>✓</span> Instant visibility in navigation, search filter, and mobile menu
-                    </p>
                 </div>
 
             </div>
@@ -130,7 +117,7 @@
                 >{{ old('description') }}</textarea>
             </div>
 
-            <!-- Row 3: Banner Image Upload (Warm Colorful Box with Computer Upload & URL Support) -->
+            <!-- Row 3: Banner Image Upload (Clean, Only Upload from Computer) -->
             <div>
                 <label class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"></span>
@@ -140,13 +127,13 @@
                 <div class="rounded-2xl border border-[#ebdccb] p-5 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
                     
                     <div class="flex flex-col sm:flex-row items-center gap-4">
-                        <!-- Left: Thumbnail / Placeholder Frame -->
+                        <!-- Thumbnail / Placeholder Frame -->
                         <div id="full_banner_preview_box" class="w-16 h-16 rounded-xl bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shrink-0 overflow-hidden shadow-xs">
                             <img id="full_banner_preview_img" src="" class="hidden w-full h-full object-cover">
                             <svg id="full_banner_placeholder_svg" class="w-8 h-8 text-[#78000b]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
 
-                        <!-- Right: Upload Button & Format Hint -->
+                        <!-- Upload Button & Clear Visibility Hint -->
                         <div class="flex-1 text-center sm:text-left space-y-1.5">
                             <input 
                                 type="file" 
@@ -156,33 +143,19 @@
                                 onchange="previewFullCategoryImage(this)"
                                 class="hidden"
                             >
-                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                                <button type="button" onclick="document.getElementById('catImageInput').click()" class="h-9 px-4 rounded-xl bg-[#1c2434] hover:bg-[#78000b] text-white text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer">
-                                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                                    <span>Upload from Computer</span>
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                                <button 
+                                    type="button" 
+                                    onclick="document.getElementById('catImageInput').click()" 
+                                    class="h-10 px-5 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm cursor-pointer active:scale-95"
+                                    style="background: #181210 !important; color: #ffffff !important;"
+                                >
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #ffffff !important;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                    <span style="color: #ffffff !important;">Upload from Computer</span>
                                 </button>
-                                <span id="full_banner_filename" class="text-xs text-[#8a7c74]">PNG, JPG, WEBP up to 10MB</span>
+                                <span id="full_banner_filename" class="text-xs font-semibold text-[#685c54]">PNG, JPG, WEBP up to 10MB</span>
                             </div>
-                            <p class="text-[0.65rem] text-[#8a7c74]">Recommended dimensions: 800×800px (Square) or 1200×800px (Landscape)</p>
-                        </div>
-                    </div>
-
-                    <!-- OR USE IMAGE URL / PATH -->
-                    <div class="mt-4 pt-3.5 border-t border-[#ebdccb]">
-                        <label for="image_url" class="block font-bold text-[0.65rem] text-[#8a7c74] uppercase tracking-wider mb-1">
-                            OR USE IMAGE URL / PATH
-                        </label>
-                        <div class="relative">
-                            <span class="absolute left-3.5 top-3 text-stone-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                            </span>
-                            <input 
-                                type="text" 
-                                name="image_url" 
-                                id="image_url" 
-                                placeholder="/images/categories/cat-belts.jpg"
-                                class="w-full h-10 pl-10 pr-4 rounded-xl border border-[#ebdccb] bg-white text-xs font-mono text-stone-900 outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
-                            >
+                            <p class="text-[0.68rem] text-[#8a7c74]">Recommended: 800×800px (Square) or 1200×800px (Landscape)</p>
                         </div>
                     </div>
 
@@ -212,20 +185,6 @@
 </div>
 
 <script>
-    // Live Slug Preview Generator
-    const nameInput = document.getElementById('catNameInput');
-    const slugPreview = document.getElementById('slugPreview');
-
-    if (nameInput && slugPreview) {
-        nameInput.addEventListener('input', function() {
-            const val = this.value.trim().toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/[\s_-]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-            slugPreview.textContent = '/' + (val || 'category-slug');
-        });
-    }
-
     // Live Image Preview Handler
     function previewFullCategoryImage(input) {
         if (input.files && input.files[0]) {
