@@ -95,11 +95,11 @@
         </div>
 
         <!-- Filter, Sort & Search Toolbar Form -->
-        <div class="p-3 bg-gradient-to-r from-[#faf7f2] via-[#f5ede2] to-[#faf7f2] border-b border-[#ebdccb] relative z-30">
-            <form action="{{ route('admin.subcategories') }}" method="GET" id="subcategoriesFilterForm" class="flex items-center gap-2 text-xs font-semibold text-stone-700 w-full overflow-x-auto lg:overflow-x-visible">
+        <div class="p-3.5 sm:p-4 bg-gradient-to-r from-[#faf7f2] via-[#f5ede2] to-[#faf7f2] border-b border-[#ebdccb] relative z-30">
+            <form action="{{ route('admin.subcategories') }}" method="GET" id="subcategoriesFilterForm" class="flex flex-wrap lg:flex-nowrap items-center gap-2 text-xs font-semibold text-stone-700 w-full">
                 
                 <!-- Left: Search Box with Live Auto-Suggestions -->
-                <div class="relative flex-1 min-w-[180px]">
+                <div class="relative flex-1 min-w-[160px]">
                     <div class="relative">
                         <input
                             type="text"
@@ -110,10 +110,10 @@
                             placeholder="Search subcategory by name, slug or parent..."
                             data-i18n-placeholder-de="Unterkategorie suchen..."
                             data-i18n-placeholder-en="Search subcategory by name, slug or parent..."
-                            class="h-9 w-full pl-8 pr-7 rounded-xl border border-[#ebdccb] bg-white text-xs font-semibold text-stone-900 outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs placeholder:text-stone-400 placeholder:font-normal transition"
+                            class="h-10 w-full pl-9 pr-8 rounded-xl border border-[#ebdccb] bg-white text-xs font-semibold text-stone-900 outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs placeholder:text-stone-400 placeholder:font-normal transition"
                         >
                         <!-- Search Icon -->
-                        <div class="absolute left-2.5 top-2.5 text-stone-400 pointer-events-none">
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none">
                             <svg class="h-4 w-4 text-[#8a7267]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         </div>
                         
@@ -122,7 +122,7 @@
                             type="button" 
                             id="subcategorySearchClearBtn" 
                             onclick="clearSubcategorySearch()" 
-                            class="absolute right-2 top-2 h-5 w-5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-400 hover:text-stone-700 transition flex items-center justify-center text-[0.65rem] cursor-pointer {{ request('search') ? '' : 'hidden' }}"
+                            class="absolute right-2.5 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-400 hover:text-stone-700 transition flex items-center justify-center text-[0.65rem] cursor-pointer {{ request('search') ? '' : 'hidden' }}"
                             title="Clear search"
                         >✕</button>
                     </div>
@@ -132,7 +132,7 @@
                         id="subcategorySuggestionsPanel" 
                         class="hidden absolute left-0 right-0 top-full mt-2 z-50 bg-white rounded-2xl border border-[#ebdccb] shadow-2xl overflow-hidden"
                     >
-                        <div class="px-4 py-2 bg-gradient-to-r from-stone-50 via-white to-stone-50 border-b border-[#ebdccb] flex items-center justify-between text-[0.68rem] font-bold text-stone-400 uppercase tracking-wider">
+                        <div class="px-4 py-2.5 bg-gradient-to-r from-stone-50 via-white to-stone-50 border-b border-[#ebdccb] flex items-center justify-between text-[0.68rem] font-bold text-stone-400 uppercase tracking-wider">
                             <span class="flex items-center gap-1.5 text-stone-700">
                                 <span class="h-1.5 w-1.5 rounded-full bg-[#78000b]"></span>
                                 <span>Suggested Subcategories</span>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
 
-                <!-- Right: Sleek, Unified Filter Pills with Leading Icons (In Same Line) -->
+                <!-- Right: Sleek, Unified Filter Pills with Leading Icons (In Same Line, No Overlapping) -->
                 <style>
                     select.filter-select,
                     select.appearance-none {
@@ -163,15 +163,16 @@
                         display: none !important;
                     }
                 </style>
-                <div class="flex items-center gap-2 shrink-0">
+                <div class="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
                     
                     <!-- Parent Category Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
                         <select 
                             name="category_id" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            style="padding-left: 34px !important; padding-right: 26px !important; -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-image: none !important;"
+                            class="filter-select h-10 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="">Category: All</option>
                             @foreach($categories as $cat)
@@ -180,35 +181,37 @@
                                 </option>
                             @endforeach
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
-                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center text-stone-400">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Status Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
                         <select 
                             name="status" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            style="padding-left: 34px !important; padding-right: 26px !important; -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-image: none !important;"
+                            class="filter-select h-10 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="">Status: All ({{ $totalCount }})</option>
                             <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Status: Active ({{ $activeCount }})</option>
                             <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Status: Draft ({{ $draftCount }})</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
-                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center text-stone-400">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Sort Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/></svg>
                         <select 
                             name="sort" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            style="padding-left: 34px !important; padding-right: 26px !important; -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-image: none !important;"
+                            class="filter-select h-10 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="name_asc" {{ request('sort', 'name_asc') === 'name_asc' ? 'selected' : '' }}>Sort: Name (A → Z)</option>
                             <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>Sort: Name (Z → A)</option>
@@ -216,31 +219,32 @@
                             <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Sort: Newest First</option>
                             <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Sort: Oldest First</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
-                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center text-stone-400">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Per Page Filter -->
                     <div class="relative">
-                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                        <svg class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                         <select 
                             name="per_page" 
                             onchange="this.form.submit()" 
-                            class="filter-select h-9 pl-7 pr-6 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
+                            style="padding-left: 34px !important; padding-right: 26px !important; -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-image: none !important;"
+                            class="filter-select h-10 rounded-xl bg-white border border-[#ebdccb] text-xs font-bold text-stone-700 hover:border-[#78000b] focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 shadow-2xs outline-none cursor-pointer transition appearance-none"
                         >
                             <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 / page</option>
                             <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10 / page</option>
                             <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 / page</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-stone-400">
-                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        <div class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center text-stone-400">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                         </div>
                     </div>
 
                     <!-- Reset Filters Button -->
                     @if(request()->anyFilled(['search', 'category_id', 'status', 'sort']))
-                        <a href="{{ route('admin.subcategories') }}" class="h-9 px-3 rounded-xl text-xs font-bold text-stone-600 hover:text-rose-600 bg-white hover:bg-rose-50 border border-[#ebdccb] hover:border-rose-200 transition shadow-2xs inline-flex items-center gap-1 shrink-0" title="Reset all filters">
+                        <a href="{{ route('admin.subcategories') }}" class="h-10 px-3.5 rounded-xl text-xs font-bold text-stone-600 hover:text-rose-600 bg-white hover:bg-rose-50 border border-[#ebdccb] hover:border-rose-200 transition shadow-2xs inline-flex items-center gap-1.5 shrink-0" title="Reset all filters">
                             <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             <span data-i18n-de="Zurücksetzen" data-i18n-en="Reset">Reset</span>
                         </a>
