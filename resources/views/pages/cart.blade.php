@@ -202,8 +202,9 @@
                             <input
                                 type="text"
                                 id="page-voucher-input"
-                                placeholder="MEHAAJ10"
-                                class="flex-1 rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-1.5 text-xs text-[#1c1210] uppercase placeholder-[#8a7c74] focus:border-[#78000b] focus:bg-white focus:outline-none"
+                                value="{{ $coupon['code'] ?? '' }}"
+                                placeholder="z.B. MEHAAJ10"
+                                class="flex-1 rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-1.5 text-xs text-[#1c1210] uppercase font-mono font-bold placeholder-[#8a7c74] focus:border-[#78000b] focus:bg-white focus:outline-none"
                             >
                             <button
                                 type="button"
@@ -215,8 +216,8 @@
                                 EINLÖSEN
                             </button>
                         </div>
-                        <p id="page-voucher-success" class="hidden text-[0.65rem] font-bold text-[#2e683a] mt-1.5" data-i18n-de="Gutschein MEHAAJ10 (-10%) angewendet! ✓" data-i18n-en="Voucher MEHAAJ10 (-10%) applied! ✓">
-                            Gutschein MEHAAJ10 (-10%) angewendet! ✓
+                        <p id="page-voucher-success" class="{{ !empty($coupon) ? '' : 'hidden' }} text-[0.65rem] font-bold text-[#2e683a] mt-1.5">
+                            ✓ Gutschein {{ $coupon['code'] ?? '' }} (-{{ $coupon['badge'] ?? '' }}) aktiv!
                         </p>
                     </div>
 
@@ -238,9 +239,12 @@
                             <span class="font-bold text-[#1c1210]" data-i18n-de="Inklusive" data-i18n-en="Complimentary">Inklusive</span>
                         </div>
 
-                        <div id="voucher-discount-row" class="hidden justify-between items-center text-[#2e683a] font-bold">
-                            <span>MEHAAJ VIP (-10%)</span>
-                            <span id="voucher-discount-val">- EUR 0,00</span>
+                        <div id="voucher-discount-row" class="{{ !empty($coupon) && ($discount ?? 0) > 0 ? 'flex' : 'hidden' }} justify-between items-center text-[#2e683a] font-bold">
+                            <div class="flex items-center gap-1.5">
+                                <span id="page-discount-label">Gutschein ({{ $coupon['code'] ?? '' }} -{{ $coupon['badge'] ?? '' }})</span>
+                                <button type="button" onclick="removePageVoucher()" class="text-stone-400 hover:text-rose-600 transition text-[0.65rem] px-1 rounded bg-[#f2ebdc]" title="Gutschein entfernen">✕</button>
+                            </div>
+                            <span id="voucher-discount-val">- EUR {{ number_format($discount ?? 0, 2, ',', '.') }}</span>
                         </div>
 
                         <div class="flex justify-between items-baseline text-base font-bold text-[#1c1210] border-t border-[#e6decb] pt-3">
@@ -405,17 +409,37 @@
             document.getElementById('page-vat-display').innerText = data.formatted_vat;
         }
 
-        let finalTotal = isPageVoucherApplied ? rawPageTotal * 0.9 : rawPageTotal;
-        if (document.getElementById('page-total-display')) {
-            document.getElementById('page-total-display').innerText = 'EUR ' + finalTotal.toFixed(2).replace('.', ',');
+        // Discount Handling
+        const discountRow = document.getElementById('voucher-discount-row');
+        const discountLabel = document.getElementById('page-discount-label');
+        const discountVal = document.getElementById('voucher-discount-val');
+        const voucherInput = document.getElementById('page-voucher-input');
+        const voucherSuccess = document.getElementById('page-voucher-success');
+
+        if (data.coupon && data.discount > 0) {
+            isPageVoucherApplied = true;
+            if (discountRow) {
+                discountRow.classList.remove('hidden');
+                discountRow.classList.add('flex');
+            }
+            if (discountLabel) discountLabel.innerText = `Gutschein (${data.coupon.code} -${data.coupon.badge})`;
+            if (discountVal) discountVal.innerText = data.formatted_discount;
+            if (voucherInput && !voucherInput.value) voucherInput.value = data.coupon.code;
+            if (voucherSuccess) {
+                voucherSuccess.innerText = `✓ Gutschein ${data.coupon.code} (-${data.coupon.badge}) angewendet!`;
+                voucherSuccess.classList.remove('hidden');
+            }
+        } else {
+            isPageVoucherApplied = false;
+            if (discountRow) {
+                discountRow.classList.add('hidden');
+                discountRow.classList.remove('flex');
+            }
+            if (voucherSuccess) voucherSuccess.classList.add('hidden');
         }
 
-        if (isPageVoucherApplied) {
-            const discountAmount = rawPageTotal * 0.1;
-            const discountRow = document.getElementById('voucher-discount-row');
-            const discountVal = document.getElementById('voucher-discount-val');
-            if (discountRow) discountRow.classList.remove('hidden'), discountRow.classList.add('flex');
-            if (discountVal) discountVal.innerText = '- EUR ' + discountAmount.toFixed(2).replace('.', ',');
+        if (document.getElementById('page-total-display')) {
+            document.getElementById('page-total-display').innerText = data.formatted_total;
         }
 
         document.querySelectorAll('.cart-badge-count').forEach(b => {
@@ -454,48 +478,77 @@
     function applyPageVoucher() {
         const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
         const input = document.getElementById('page-voucher-input').value.trim();
-        const successMsg = document.getElementById('page-voucher-success');
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-        if (rawPageTotal <= 0) {
-            LuxurySwal.fire({
+        if (!input) {
+            LuxuryToast.fire({
                 icon: 'warning',
-                title: isEn ? 'Cart is Empty' : 'Warenkorb ist leer',
-                text: isEn ? 'Please add products before redeeming a promo voucher.' : 'Bitte fügen Sie Produkte hinzu, bevor Sie einen Gutschein einlösen.',
-                confirmButtonText: 'OK'
+                title: isEn ? 'Please enter a voucher code' : 'Bitte geben Sie einen Gutscheincode ein'
             });
             return;
         }
 
-        if (input.toUpperCase() === 'MEHAAJ10') {
-            isPageVoucherApplied = true;
-            if (successMsg) successMsg.classList.remove('hidden');
-
-            const discountAmount = rawPageTotal * 0.1;
-            const discountedTotal = rawPageTotal * 0.9;
-
-            const discountRow = document.getElementById('voucher-discount-row');
-            const discountVal = document.getElementById('voucher-discount-val');
-            if (discountRow) discountRow.classList.remove('hidden'), discountRow.classList.add('flex');
-            if (discountVal) discountVal.innerText = '- EUR ' + discountAmount.toFixed(2).replace('.', ',');
-
-            if (document.getElementById('page-total-display')) {
-                document.getElementById('page-total-display').innerText = 'EUR ' + discountedTotal.toFixed(2).replace('.', ',');
+        fetch(window.mehaajUrl('/cart/apply-coupon'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token || '',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ code: input })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                renderPageCartData(data);
+                if (typeof fetchAndUpdateCartDrawer === 'function') fetchAndUpdateCartDrawer(false);
+                LuxuryToast.fire({
+                    icon: 'success',
+                    title: data.message
+                });
+            } else {
+                LuxurySwal.fire({
+                    icon: 'error',
+                    title: isEn ? 'Voucher Invalid' : 'Gutschein nicht anwendbar',
+                    text: data.message,
+                    confirmButtonText: 'OK'
+                });
             }
-
-            LuxurySwal.fire({
-                icon: 'success',
-                title: isEn ? 'VIP Voucher Applied! 🎉' : 'VIP-Gutscheincode Eingelöst! 🎉',
-                text: isEn ? 'A 10% discount has been applied to your order.' : 'Ihnen wurden 10% Rabatt auf Ihre Bestellung gutgeschrieben.',
-                confirmButtonText: isEn ? 'Wonderful' : 'Wunderbar'
-            });
-        } else {
+        })
+        .catch(err => {
             LuxurySwal.fire({
                 icon: 'error',
-                title: isEn ? 'Invalid Voucher' : 'Ungültiger Code',
-                text: isEn ? 'The voucher entered is not valid. Try: MEHAAJ10' : 'Der Gutscheincode ist ungültig. Versuchen Sie: MEHAAJ10',
-                confirmButtonText: isEn ? 'Try Again' : 'Erneut versuchen'
+                title: 'Error',
+                text: 'Network error validating voucher.'
             });
-        }
+        });
+    }
+
+    function removePageVoucher() {
+        const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        fetch(window.mehaajUrl('/cart/remove-coupon'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token || '',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const voucherInput = document.getElementById('page-voucher-input');
+                if (voucherInput) voucherInput.value = '';
+                renderPageCartData(data);
+                if (typeof fetchAndUpdateCartDrawer === 'function') fetchAndUpdateCartDrawer(false);
+                LuxuryToast.fire({
+                    icon: 'info',
+                    title: data.message
+                });
+            }
+        });
     }
 </script>
 @endsection

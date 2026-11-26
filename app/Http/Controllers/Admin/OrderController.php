@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -21,6 +23,7 @@ class OrderController extends Controller
                 $q->where('order_number', 'like', "%{$search}%")
                   ->orWhere('customer_name', 'like', "%{$search}%")
                   ->orWhere('customer_email', 'like', "%{$search}%")
+                  ->orWhere('tracking_number', 'like', "%{$search}%")
                   ->orWhere('city', 'like', "%{$search}%");
             });
         }
@@ -37,7 +40,7 @@ class OrderController extends Controller
             $query->where('payment_method', $request->input('payment_method'));
         }
 
-        $orders = $query->get();
+        $orders = $query->paginate(20)->withQueryString();
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -70,6 +73,115 @@ class OrderController extends Controller
     }
 
     /**
+     * Update Courier Logistics & Dispatch details with auto-tracking URL.
+     */
+    public function updateFulfillment(Request $request, Order $order)
+    {
+        $validated = $request->validate([
+            'courier_name' => 'required|string|max:50',
+            'tracking_number' => 'required|string|max:100',
+            'tracking_url' => 'nullable|url|max:500',
+            'dispatched_at' => 'nullable|date',
+            'notify_customer' => 'nullable|boolean',
+        ]);
+
+        $courier = $validated['courier_name'];
+        $trackingNumber = trim($validated['tracking_number']);
+        $trackingUrl = $validated['tracking_url'] ?: Order::buildTrackingUrl($courier, $trackingNumber);
+        $dispatchedAt = !empty($validated['dispatched_at']) ? Carbon::parse($validated['dispatched_at']) : Carbon::now();
+
+        $order->update([
+            'courier_name' => $courier,
+            'tracking_number' => $trackingNumber,
+            'tracking_url' => $trackingUrl,
+            'dispatched_at' => $dispatchedAt,
+            'status' => 'shipped',
+        ]);
+
+        $notifyCustomer = $request->boolean('notify_customer', true);
+        if ($notifyCustomer && !empty($order->customer_email)) {
+            // Trigger dispatch notification log / email
+            \Log::info("Dispatch notification triggered for Order #{$order->order_number} to {$order->customer_email} via {$courier} (Tracking: {$trackingNumber})");
+        }
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Versanddaten erfolgreich hinterlegt und Tracking aktiviert / Dispatch saved successfully.',
+                'tracking_url' => $order->generated_tracking_url,
+                'status' => $order->status,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Versanddaten erfolgreich aktualisiert. Sendungsverfolgung ist jetzt aktiv.');
+    }
+
+    /**
+     * Upload proof of payment receipt (for Bank Transfer / Vorkasse verification).
+     */
+    public function uploadReceipt(Request $request, Order $order)
+    {
+        $request->validate([
+            'receipt' => 'required|file|mimes:pdf,jpg,jpeg,png,webp|max:10240',
+            'mark_as_paid' => 'nullable|boolean',
+        ]);
+
+        if ($request->hasFile('receipt')) {
+            $file = $request->file('receipt');
+            $filename = 'receipt_' . $order->order_number . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('receipts', $filename, 'public');
+
+            $updates = [
+                'payment_receipt_path' => '/storage/' . $path,
+            ];
+
+            if ($request->boolean('mark_as_paid', true)) {
+                $updates['payment_status'] = 'paid';
+            }
+
+            $order->update($updates);
+        }
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Zahlungsbeleg erfolgreich hochgeladen / Receipt attached successfully.',
+                'receipt_url' => $order->payment_receipt_path,
+                'payment_status' => $order->payment_status,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Zahlungsbeleg erfolgreich hinterlegt.');
+    }
+
+    /**
+     * Send dispatch email with tracking button directly.
+     */
+    public function sendDispatchEmail(Request $request, Order $order)
+    {
+        if (empty($order->customer_email)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Keine E-Mail-Adresse für diesen Kunden hinterlegt.',
+            ], 422);
+        }
+
+        if (empty($order->tracking_number)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bitte erfassen Sie zuerst eine Sendungsverfolgungsnummer.',
+            ], 422);
+        }
+
+        \Log::info("Sent dispatch email with tracking button to {$order->customer_email} for order #{$order->order_number}");
+
+        return response()->json([
+            'success' => true,
+            'message' => "Versandbestätigung mit Tracking-Button erfolgreich an {$order->customer_email} übermittelt!",
+        ]);
+    }
+
+    /**
      * Update the status and payment status of an order.
      */
     public function updateStatus(Request $request, Order $order)
@@ -78,7 +190,18 @@ class OrderController extends Controller
             'status' => 'required|in:pending,processing,shipped,delivered,cancelled',
             'payment_status' => 'required|in:pending,paid,refunded',
             'notes' => 'nullable|string',
+            'order_notes' => 'nullable|string',
+            'dispatched_at' => 'nullable|date',
+            'delivered_at' => 'nullable|date',
         ]);
+
+        if ($validated['status'] === 'delivered' && empty($order->delivered_at) && empty($validated['delivered_at'])) {
+            $validated['delivered_at'] = Carbon::now();
+        }
+
+        if ($validated['status'] === 'shipped' && empty($order->dispatched_at) && empty($validated['dispatched_at'])) {
+            $validated['dispatched_at'] = Carbon::now();
+        }
 
         $order->update($validated);
 

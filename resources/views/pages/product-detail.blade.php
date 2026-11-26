@@ -220,11 +220,20 @@
                                 @endif
                             </span>
 
-                            <div class="flex items-center gap-1.5 text-xs text-[#685c54]">
-                                <span class="text-[#d8b45a] tracking-wider text-[0.7rem]">★★★★★</span>
-                                <span class="font-bold text-[#1c1210]">4.9</span>
-                                <span class="text-[#8a7c74] text-[0.65rem]">(48 <span data-i18n-en="reviews" data-i18n-de="Bewertungen">reviews</span>)</span>
-                            </div>
+                            @php
+                                $approvedReviewsList = $approvedReviews ?? collect();
+                                $reviewCount = $approvedReviewsList->count();
+                                $avgRating = $reviewCount > 0 ? round($approvedReviewsList->avg('rating'), 1) : 5.0;
+                            @endphp
+                            <a href="#reviews-section" class="flex items-center gap-1.5 text-xs text-[#685c54] hover:text-[#78000b] transition">
+                                <span class="text-[#d8b45a] tracking-wider text-[0.7rem]">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        {{ $i <= round($avgRating) ? '★' : '☆' }}
+                                    @endfor
+                                </span>
+                                <span class="font-bold text-[#1c1210]">{{ number_format($avgRating, 1) }}</span>
+                                <span class="text-[#8a7c74] text-[0.65rem]">({{ $reviewCount }} <span data-i18n-en="reviews" data-i18n-de="Bewertungen">reviews</span>)</span>
+                            </a>
                         </div>
 
                         <!-- Product Title -->
@@ -397,6 +406,252 @@
                     </div>
                 @endforeach
             </div>
+        </div>
+    </section>
+
+    <!-- Curated "Frequently Bought Together" / "Bundle & Save" Section -->
+    @if(isset($activeDeal) && $activeDeal && $activeDeal->products->count() >= 2)
+        <section class="py-8 sm:py-10 border-b border-[#dfd6c4] bg-[#faf7f2]">
+            <div class="w-full max-w-[1180px] mx-auto px-4 sm:px-6">
+                
+                <div class="rounded-2xl border border-[#d9cebc] bg-white p-6 sm:p-8 shadow-xs">
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#f2ebdc] pb-4 mb-6">
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-[#78000b]">
+                                <span>{{ $activeDeal->formatted_badge }}</span>
+                            </div>
+                            <h2 class="font-display text-xl sm:text-2xl font-medium text-[#1c1210] mt-0.5" data-i18n-en="Frequently Paired Together" data-i18n-de="Häufig zusammen gekauft">
+                                Häufig zusammen gekauft
+                            </h2>
+                        </div>
+                        @if($activeDeal->savings_amount > 0)
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                <span>Sparen Sie {{ number_format($activeDeal->savings_amount, 2, ',', '.') }} € als Set</span>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                        
+                        <!-- Left: Bundled Items Cards (8 Cols) -->
+                        <div class="lg:col-span-8 flex flex-wrap sm:flex-nowrap items-center gap-3">
+                            @foreach($activeDeal->products as $bundleP)
+                                <div class="flex-1 min-w-[200px] p-3.5 rounded-xl border {{ $bundleP->id === $product->id ? 'border-[#78000b] bg-[#fbf6f4]' : 'border-[#e6decb] bg-[#faf7f2]' }} flex items-center gap-3">
+                                    <img src="{{ $bundleP->image_url }}" alt="{{ $bundleP->name }}" class="w-16 h-16 rounded-lg border border-[#e6decb] object-cover bg-white shrink-0 shadow-2xs">
+                                    <div class="flex-1 min-w-0">
+                                        @if($bundleP->id === $product->id)
+                                            <span class="text-[0.58rem] font-bold uppercase tracking-wider text-[#78000b] block">Dieser Artikel</span>
+                                        @endif
+                                        <h3 class="font-display text-xs font-medium text-[#1c1210] truncate">{{ $bundleP->name }}</h3>
+                                        <div class="mt-1 flex items-baseline gap-1.5">
+                                            <span class="text-xs font-bold text-[#1c1210]">
+                                                {{ number_format(($bundleP->sale_price ?: $bundleP->price), 2, ',', '.') }} €
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if(!$loop->last)
+                                    <div class="h-8 w-8 rounded-full bg-[#1c1210] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                                        +
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <!-- Right: Price & 1-Click Buy (4 Cols) -->
+                        <div class="lg:col-span-4 rounded-xl border border-[#e6decb] bg-[#faf7f2] p-5 space-y-3">
+                            <div>
+                                <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#685c54] block">Set-Vorzugspreis</span>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <span class="font-display text-2xl font-bold text-[#78000b]">
+                                        EUR {{ number_format($activeDeal->bundle_price, 2, ',', '.') }}
+                                    </span>
+                                    <span class="text-xs text-[#8a7c74] line-through">
+                                        EUR {{ number_format($activeDeal->regular_total, 2, ',', '.') }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onclick="addCuratedBundleToBag({{ $activeDeal->id }}, this)"
+                                class="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-[#78000b] hover:bg-[#5a0309] text-white text-xs font-bold uppercase tracking-[0.14em] shadow-md transition-all active:scale-95 cursor-pointer"
+                            >
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                <span data-i18n-en="ADD BUNDLE TO BAG" data-i18n-de="SET IN DEN WARENKORB">SET IN DEN WARENKORB</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    @endif
+
+    <!-- Maison Client Reviews & Testimonials Section -->
+    <section id="reviews-section" class="py-10 sm:py-14 border-t border-[#dfd6c4] bg-[#faf7f2]/50">
+        <div class="w-full max-w-[1180px] mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#dfd6c4] pb-5 mb-8">
+                <div>
+                    <span class="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#78000b]" data-i18n-en="CLIENT EXPERIENCES" data-i18n-de="KUNDENERFAHRUNGEN">KUNDENERFAHRUNGEN</span>
+                    <h2 class="font-display text-2xl sm:text-3xl font-medium text-[#1c1210] mt-1" data-i18n-en="Patron Reviews & Atelier Impressions" data-i18n-de="Kundenbewertungen & Atelier-Eindrücke">
+                        Kundenbewertungen & Atelier-Eindrücke
+                    </h2>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="text-[#d8b45a] text-lg">
+                            @for($i = 1; $i <= 5; $i++)
+                                {{ $i <= round($avgRating) ? '★' : '☆' }}
+                            @endfor
+                        </div>
+                        <span class="text-sm font-bold text-[#1c1210]">{{ number_format($avgRating, 1) }} / 5.0</span>
+                        <span class="text-xs text-[#8a7c74]">({{ $reviewCount }})</span>
+                    </div>
+                    <button
+                        type="button"
+                        onclick="toggleReviewForm()"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#78000b] hover:bg-[#5a0309] text-white text-xs font-bold uppercase tracking-[0.14em] shadow-sm transition active:scale-95 cursor-pointer"
+                    >
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        <span data-i18n-en="WRITE A REVIEW" data-i18n-de="BEWERTUNG SCHREIBEN">BEWERTUNG SCHREIBEN</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Review Submission Drawer -->
+            <div id="review-submission-drawer" class="hidden mb-10 overflow-hidden rounded-2xl border border-[#d9cebc] bg-white p-6 sm:p-8 shadow-sm">
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex items-center justify-between border-b border-[#f0e7d8] pb-3 mb-6">
+                        <div>
+                            <h3 class="font-display text-lg font-medium text-[#1c1210]" data-i18n-en="Share Your Atelier Experience" data-i18n-de="Teilen Sie Ihre Atelier-Erfahrung">
+                                Teilen Sie Ihre Atelier-Erfahrung
+                            </h3>
+                            <p class="text-xs text-[#8a7c74] mt-0.5" data-i18n-en="Your verified feedback helps fellow connoisseurs appreciate our craftsmanship." data-i18n-de="Ihr Feedback hilft Kennern, unsere Handwerkskunst wertzuschätzen.">
+                                Ihr Feedback hilft Kennern, unsere Handwerkskunst wertzuschätzen.
+                            </p>
+                        </div>
+                        <button type="button" onclick="toggleReviewForm()" class="text-[#8a7c74] hover:text-[#1c1210] p-1 text-sm">✕</button>
+                    </div>
+
+                    <form id="product-review-form" onsubmit="submitProductReview(event)" class="space-y-4">
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                        <!-- Rating Picker -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-[#685c54] mb-1.5" data-i18n-en="YOUR RATING" data-i18n-de="IHRE BEWERTUNG">IHRE BEWERTUNG</label>
+                            <div class="flex items-center gap-2" id="star-rating-selector">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <button type="button" onclick="setFormRating({{ $i }})" class="star-btn text-2xl text-[#d8b45a] hover:scale-110 transition cursor-pointer" data-star="{{ $i }}">★</button>
+                                @endfor
+                                <input type="hidden" name="rating" id="review-form-rating" value="5">
+                                <span id="rating-label" class="text-xs font-semibold text-[#78000b] ml-2">5 Sterne (Hervorragend)</span>
+                            </div>
+                        </div>
+
+                        <!-- Name & Email -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-[#685c54] mb-1" data-i18n-en="YOUR NAME *" data-i18n-de="IHR NAME *">IHR NAME *</label>
+                                <input type="text" name="customer_name" required placeholder="z. B. Dr. Heinrich von Kleist" class="w-full h-10 px-3 rounded-lg border border-[#d9cebc] text-xs text-[#1c1210] focus:border-[#78000b] focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-[#685c54] mb-1" data-i18n-en="EMAIL ADDRESS *" data-i18n-de="E-MAIL-ADRESSE *">E-MAIL-ADRESSE *</label>
+                                <input type="email" name="customer_email" required placeholder="heinrich@adelsbrief.de" class="w-full h-10 px-3 rounded-lg border border-[#d9cebc] text-xs text-[#1c1210] focus:border-[#78000b] focus:outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Location & Title -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-[#685c54] mb-1" data-i18n-en="LOCATION (OPTIONAL)" data-i18n-de="STANDORT / STADT">STANDORT / STADT</label>
+                                <input type="text" name="location" placeholder="z. B. Frankfurt am Main, DE" class="w-full h-10 px-3 rounded-lg border border-[#d9cebc] text-xs text-[#1c1210] focus:border-[#78000b] focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-[#685c54] mb-1" data-i18n-en="REVIEW HEADLINE" data-i18n-de="ÜBERSCHRIFT">ÜBERSCHRIFT</label>
+                                <input type="text" name="title" placeholder="z. B. Vollendete Handwerkskunst" class="w-full h-10 px-3 rounded-lg border border-[#d9cebc] text-xs text-[#1c1210] focus:border-[#78000b] focus:outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Review Text -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-[#685c54] mb-1" data-i18n-en="YOUR REVIEW *" data-i18n-de="IHRE REZENSION *">IHRE REZENSION *</label>
+                            <textarea name="comment" rows="4" required placeholder="Beschreiben Sie die Lederqualität, Verarbeitung, Tragekomfort..." class="w-full p-3 rounded-lg border border-[#d9cebc] text-xs text-[#1c1210] focus:border-[#78000b] focus:outline-none"></textarea>
+                        </div>
+
+                        <div id="review-form-alert" class="hidden text-xs p-3 rounded-lg"></div>
+
+                        <div class="flex items-center justify-end gap-3 pt-2">
+                            <button type="button" onclick="toggleReviewForm()" class="px-4 py-2 text-xs font-semibold text-[#8a7c74] hover:text-[#1c1210]">Abbrechen</button>
+                            <button type="submit" id="review-submit-btn" class="h-10 px-6 rounded-lg bg-[#78000b] hover:bg-[#5a0309] text-white text-xs font-bold uppercase tracking-[0.14em] shadow-md transition active:scale-95 cursor-pointer">
+                                Rezension Einreichen
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Reviews List Grid -->
+            @if($approvedReviewsList->count() > 0)
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    @foreach($approvedReviewsList as $rev)
+                        <div class="flex flex-col justify-between rounded-xl border border-[#d9cebc] bg-white p-5 shadow-2xs hover:border-[#d8b45a] transition-all">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-3">
+                                    <div class="text-[#d8b45a] text-sm tracking-wider">
+                                        @for($s = 1; $s <= 5; $s++)
+                                            {{ $s <= $rev->rating ? '★' : '☆' }}
+                                        @endfor
+                                    </div>
+                                    @if($rev->is_verified)
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-semibold bg-[#2e683a]/10 text-[#2e683a] border border-[#2e683a]/20">
+                                            <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                            <span data-i18n-en="Verified Buyer" data-i18n-de="Verifizierter Käufer">Verifizierter Käufer</span>
+                                        </span>
+                                    @endif
+                                </div>
+
+                                @if($rev->title)
+                                    <h4 class="font-display text-sm font-semibold text-[#1c1210] mb-1.5">{{ $rev->title }}</h4>
+                                @endif
+
+                                <p class="text-xs text-[#5c4e46] leading-relaxed line-clamp-4">{{ $rev->comment }}</p>
+                            </div>
+
+                            <div class="pt-4 mt-4 border-t border-[#f0e7d8] flex items-center justify-between text-[0.68rem] text-[#8a7c74]">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded-full bg-[#f0e7d8] text-[#78000b] flex items-center justify-center font-bold text-[0.6rem]">
+                                        {{ strtoupper(substr($rev->customer_name, 0, 1)) }}
+                                    </span>
+                                    <span class="font-semibold text-[#1c1210]">{{ $rev->customer_name }}</span>
+                                    @if($rev->location)
+                                        <span class="text-[#c7baa7]">•</span>
+                                        <span>{{ $rev->location }}</span>
+                                    @endif
+                                </div>
+                                <span>{{ $rev->created_at ? $rev->created_at->format('d. M Y') : 'Kürzlich' }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="rounded-2xl border border-dashed border-[#d9cebc] bg-white p-8 text-center max-w-md mx-auto">
+                    <div class="w-12 h-12 rounded-full bg-[#faf7f2] border border-[#d9cebc] flex items-center justify-center mx-auto mb-3 text-[#d8b45a] text-xl">★</div>
+                    <h3 class="font-display text-base font-medium text-[#1c1210]" data-i18n-en="Be the first to review" data-i18n-de="Seien Sie der Erste, der bewertet">
+                        Seien Sie der Erste, der bewertet
+                    </h3>
+                    <p class="text-xs text-[#8a7c74] mt-1 mb-4" data-i18n-en="Share your atelier impressions with fellow patrons." data-i18n-de="Teilen Sie Ihre Eindrücke mit anderen Kennern des Hauses.">
+                        Teilen Sie Ihre Eindrücke mit anderen Kennern des Hauses.
+                    </p>
+                    <button type="button" onclick="toggleReviewForm()" class="px-4 py-2 rounded-lg bg-[#78000b] text-white text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-[#5a0309] transition">
+                        Erste Bewertung Verfassen
+                    </button>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -647,6 +902,137 @@
             if (typeof quickAddToCart === 'function') {
                 quickAddToCart(productId, currentQty, selectedVariation);
             }
+        };
+
+        // 8. Add Curated Bundle to Bag
+        window.addCuratedBundleToBag = function(dealId, btnEl) {
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            const origText = btnEl.innerHTML;
+            btnEl.disabled = true;
+            btnEl.innerHTML = '<span class="animate-pulse">Wird hinzugefügt...</span>';
+
+            fetch(window.mehaajUrl ? window.mehaajUrl('/cart/add-bundle') : '/cart/add-bundle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token || '',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ deal_id: dealId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                btnEl.disabled = false;
+                btnEl.innerHTML = origText;
+                if (data.success) {
+                    if (typeof openCartDrawer === 'function') {
+                        openCartDrawer();
+                        if (typeof fetchAndUpdateCartDrawer === 'function') fetchAndUpdateCartDrawer(false);
+                    }
+                    if (window.LuxuryToast) {
+                        window.LuxuryToast.fire({ icon: 'success', title: data.message });
+                    } else {
+                        alert(data.message);
+                    }
+                } else {
+                    if (window.LuxurySwal) {
+                        window.LuxurySwal.fire({ icon: 'error', title: 'Bundle Error', text: data.message });
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            })
+            .catch(err => {
+                btnEl.disabled = false;
+                btnEl.innerHTML = origText;
+                console.error('Bundle error:', err);
+            });
+        };
+
+        // 9. Client Review Handlers
+        window.toggleReviewForm = function() {
+            const drawer = document.getElementById('review-submission-drawer');
+            if (!drawer) return;
+            drawer.classList.toggle('hidden');
+            if (!drawer.classList.contains('hidden')) {
+                drawer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        window.setFormRating = function(score) {
+            const ratingInput = document.getElementById('review-form-rating');
+            const ratingLabel = document.getElementById('rating-label');
+            if (ratingInput) ratingInput.value = score;
+
+            const labels = {
+                5: '5 Sterne (Hervorragend)',
+                4: '4 Sterne (Sehr gut)',
+                3: '3 Sterne (Gut)',
+                2: '2 Sterne (Ausbaufähig)',
+                1: '1 Stern (Unzureichend)'
+            };
+            if (ratingLabel) ratingLabel.textContent = labels[score] || (score + ' Sterne');
+
+            document.querySelectorAll('#star-rating-selector .star-btn').forEach(btn => {
+                const s = parseInt(btn.getAttribute('data-star'));
+                btn.textContent = s <= score ? '★' : '☆';
+            });
+        };
+
+        window.submitProductReview = function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = document.getElementById('review-submit-btn');
+            const alertBox = document.getElementById('review-form-alert');
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+            const origText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="animate-pulse">Wird übermittelt...</span>';
+
+            const formData = new FormData(form);
+
+            fetch('{{ route("reviews.store") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token || '',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origText;
+
+                if (data.success) {
+                    form.reset();
+                    if (alertBox) {
+                        alertBox.className = 'text-xs p-3 rounded-lg bg-[#2e683a]/10 text-[#2e683a] border border-[#2e683a]/20 block';
+                        alertBox.textContent = data.message;
+                    }
+                    if (window.LuxuryToast) {
+                        window.LuxuryToast.fire({ icon: 'success', title: data.message });
+                    }
+                    setTimeout(() => {
+                        window.toggleReviewForm();
+                    }, 2500);
+                } else {
+                    if (alertBox) {
+                        alertBox.className = 'text-xs p-3 rounded-lg bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20 block';
+                        alertBox.textContent = data.message || 'Ein Fehler ist aufgetreten.';
+                    }
+                }
+            })
+            .catch(err => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origText;
+                console.error('Review submit error:', err);
+                if (alertBox) {
+                    alertBox.className = 'text-xs p-3 rounded-lg bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20 block';
+                    alertBox.textContent = 'Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut.';
+                }
+            });
         };
 
         document.addEventListener('keydown', function(e) {

@@ -161,6 +161,15 @@
                                         <span data-i18n-de="Ausstehend" data-i18n-en="Pending">Pending</span>
                                     </span>
                                 @endif
+
+                                @if($order->tracking_number)
+                                    <div class="mt-1 flex items-center gap-1 text-[0.62rem] text-stone-500 font-mono">
+                                        <span>🚚</span>
+                                        <a href="{{ $order->generated_tracking_url }}" target="_blank" class="text-saltora-terracotta hover:underline font-bold truncate max-w-[140px]" title="{{ $order->courier_name }}: {{ $order->tracking_number }}">
+                                            {{ $order->courier_name ?: 'DHL' }}: {{ $order->tracking_number }}
+                                        </a>
+                                    </div>
+                                @endif
                             </td>
 
                             <!-- Payment Status Badge -->
@@ -178,6 +187,12 @@
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[0.65rem] font-extrabold uppercase">
                                         <span data-i18n-de="Offen" data-i18n-en="Unpaid">Unpaid</span>
                                     </span>
+                                @endif
+
+                                @if($order->payment_receipt_path)
+                                    <a href="{{ $order->payment_receipt_path }}" target="_blank" class="block text-[0.6rem] text-purple-700 font-bold hover:underline mt-0.5">
+                                        📎 Beleg prüfen ↗
+                                    </a>
                                 @endif
                             </td>
 

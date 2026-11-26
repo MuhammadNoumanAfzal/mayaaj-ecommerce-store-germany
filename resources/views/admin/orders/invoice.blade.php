@@ -203,8 +203,15 @@
                 <p class="text-stone-700 italic">
                     "{{ $order->notes ?? 'Standard Signature Presentation — White-glove packaging with silk dust bag and wax seal certificate.' }}"
                 </p>
-                <p class="text-[0.65rem] text-stone-400 pt-1 font-medium">
-                    <span data-i18n-en="Logistics Partner:" data-i18n-de="Versanddienstleister:">Logistics Partner:</span> <strong>DHL Express Germany (GoGreen Climate Neutral)</strong>
+                <p class="text-[0.65rem] text-stone-500 pt-1 font-medium">
+                    <span data-i18n-en="Logistics Partner:" data-i18n-de="Versanddienstleister:">Logistics Partner:</span> <strong>{{ $order->courier_name ?: 'DHL Express Germany (Insured)' }}</strong>
+                    @if($order->tracking_number)
+                        <br><span data-i18n-en="Tracking Code:" data-i18n-de="Sendungsnummer:">Tracking Code:</span> 
+                        <a href="{{ $order->generated_tracking_url }}" target="_blank" class="font-mono font-bold text-[#964B42] underline decoration-dotted">{{ $order->tracking_number }}</a>
+                        @if($order->dispatched_at)
+                            <span class="text-stone-400">({{ $order->dispatched_at->format('d.m.Y') }})</span>
+                        @endif
+                    @endif
                 </p>
             </div>
 

@@ -7,6 +7,10 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Customer;
+use App\Models\Coupon;
+use App\Models\CouponUsage;
+use App\Models\Deal;
+use App\Models\AbandonedCart;
 
 class CartController extends Controller
 {
@@ -24,9 +28,12 @@ class CartController extends Controller
                 'cart' => $cart,
                 'count' => $totals['count'],
                 'subtotal' => $totals['subtotal'],
+                'discount' => $totals['discount'],
+                'coupon' => $totals['coupon'],
                 'vat' => $totals['vat'],
                 'total' => $totals['total'],
                 'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+                'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
                 'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
                 'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
             ]);
@@ -35,6 +42,8 @@ class CartController extends Controller
         return view('pages.cart', [
             'cart' => $cart,
             'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
             'count' => $totals['count'],
@@ -52,6 +61,8 @@ class CartController extends Controller
         return view('pages.checkout', [
             'cart' => $cart,
             'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
             'count' => $totals['count'],
@@ -71,9 +82,12 @@ class CartController extends Controller
             'cart' => array_values($cart),
             'count' => $totals['count'],
             'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
         ]);
@@ -99,7 +113,7 @@ class CartController extends Controller
             $product = Product::where('slug', $request->slug)->first();
         }
 
-        // Fallback: If no product found, check if first available product can be used or return default item
+        // Fallback: If no product found, check if first available product can be used
         if (!$product) {
             $product = Product::first();
         }
@@ -160,9 +174,103 @@ class CartController extends Controller
             'cart' => array_values($cart),
             'count' => $totals['count'],
             'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
+            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
+            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+        ]);
+    }
+
+    /**
+     * Add entire curated product bundle deal to cart with package savings.
+     */
+    public function addBundle(Request $request)
+    {
+        $request->validate([
+            'deal_id' => 'required|integer|exists:deals,id',
+            'product_ids' => 'nullable|array',
+            'product_ids.*' => 'integer|exists:products,id',
+        ]);
+
+        $deal = Deal::with('products')->findOrFail($request->deal_id);
+
+        if (!$deal->is_active || $deal->is_expired) {
+            $isEn = app()->getLocale() === 'en';
+            return response()->json([
+                'success' => false,
+                'message' => $isEn ? 'This deal is no longer active.' : 'Dieses Bundle-Angebot ist leider nicht mehr aktiv.',
+            ], 422);
+        }
+
+        // Get products to bundle (all products in deal or selected subset)
+        $selectedIds = $request->input('product_ids', []);
+        $bundleProducts = empty($selectedIds) 
+            ? $deal->products 
+            : $deal->products->whereIn('id', $selectedIds);
+
+        if ($bundleProducts->count() < 2) {
+            $isEn = app()->getLocale() === 'en';
+            return response()->json([
+                'success' => false,
+                'message' => $isEn ? 'Please select at least 2 bundle items.' : 'Bitte wählen Sie mindestens 2 Bundle-Artikel aus.',
+            ], 422);
+        }
+
+        // Calculate proportional package prices
+        $regTotal = 0;
+        foreach ($bundleProducts as $p) {
+            $regTotal += ($p->sale_price && $p->sale_price < $p->price) ? (float)$p->sale_price : (float)$p->price;
+        }
+
+        $bundlePrice = $deal->bundle_price;
+        $ratio = ($regTotal > 0) ? ($bundlePrice / $regTotal) : 1;
+
+        $cart = session()->get('cart', []);
+
+        foreach ($bundleProducts as $p) {
+            $effectiveReg = ($p->sale_price && $p->sale_price < $p->price) ? (float)$p->sale_price : (float)$p->price;
+            $packageItemPrice = round($effectiveReg * $ratio, 2);
+            $itemKey = 'bundle_' . $deal->id . '_' . $p->id;
+
+            $cart[$itemKey] = [
+                'item_key' => $itemKey,
+                'id' => $p->id,
+                'name' => $p->name . ' [' . ($deal->badge_text ?: 'BUNDLE') . ']',
+                'variation' => 'Curated Duo Set',
+                'price' => $packageItemPrice,
+                'image_url' => $p->image_url,
+                'slug' => $p->slug,
+                'qty' => 1,
+                'sku' => $p->sku ?? ('MHJ-' . $p->id),
+                'is_bundle' => true,
+                'bundle_title' => $deal->title,
+            ];
+        }
+
+        session()->put('cart', $cart);
+        $totals = $this->calculateTotals($cart);
+
+        $isEn = app()->getLocale() === 'en';
+        $msg = $isEn
+            ? "Curated set '{$deal->title}' added to your shopping bag! (Saved {$deal->savings_percentage}%)"
+            : "Kuriertes Set '{$deal->title}' zum Warenkorb hinzugefügt! ({$deal->savings_percentage}% gespart)";
+
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+            'cart' => array_values($cart),
+            'count' => $totals['count'],
+            'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'coupon' => $totals['coupon'],
+            'vat' => $totals['vat'],
+            'total' => $totals['total'],
+            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
         ]);
@@ -207,9 +315,12 @@ class CartController extends Controller
             'cart' => array_values($cart),
             'count' => $totals['count'],
             'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
         ]);
@@ -245,9 +356,115 @@ class CartController extends Controller
             'cart' => array_values($cart),
             'count' => $totals['count'],
             'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
             'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
+            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
+            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+        ]);
+    }
+
+    /**
+     * AJAX endpoint: Validate and apply coupon to active cart session.
+     */
+    public function applyCoupon(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string|max:50',
+        ]);
+
+        $code = strtoupper(trim($request->input('code')));
+        $cart = session()->get('cart', []);
+
+        $locale = app()->getLocale();
+        $isEn = ($locale === 'en');
+
+        if (empty($cart)) {
+            return response()->json([
+                'success' => false,
+                'message' => $isEn ? 'Your cart is empty. Please add products first.' : 'Ihr Warenkorb ist leer. Bitte legen Sie zuerst Artikel in den Warenkorb.',
+            ], 422);
+        }
+
+        // Calculate subtotal before coupon
+        $subtotal = 0;
+        foreach ($cart as $item) {
+            $subtotal += ((float) ($item['price'] ?? 0) * (int) ($item['qty'] ?? 1));
+        }
+
+        $coupon = Coupon::where('code', $code)->first();
+
+        if (!$coupon) {
+            return response()->json([
+                'success' => false,
+                'message' => $isEn ? "Coupon code '{$code}' does not exist or is invalid." : "Gutscheincode '{$code}' ist ungültig.",
+            ], 404);
+        }
+
+        $error = null;
+        if (!$coupon->validateForCart($subtotal, $error, $locale)) {
+            return response()->json([
+                'success' => false,
+                'message' => $error,
+            ], 422);
+        }
+
+        $discount = $coupon->calculateDiscount($subtotal);
+
+        // Store in session
+        session()->put('coupon', [
+            'id' => $coupon->id,
+            'code' => $coupon->code,
+            'type' => $coupon->type,
+            'value' => $coupon->value,
+            'discount' => $discount,
+            'badge' => $coupon->badge_text,
+        ]);
+
+        $totals = $this->calculateTotals($cart);
+
+        $successMsg = $isEn
+            ? "Voucher code '{$coupon->code}' applied successfully (-{$coupon->badge_text})!"
+            : "Gutscheincode '{$coupon->code}' erfolgreich angewendet (-{$coupon->badge_text})!";
+
+        return response()->json([
+            'success' => true,
+            'message' => $successMsg,
+            'coupon' => session('coupon'),
+            'subtotal' => $totals['subtotal'],
+            'discount' => $totals['discount'],
+            'vat' => $totals['vat'],
+            'total' => $totals['total'],
+            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
+            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
+            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+        ]);
+    }
+
+    /**
+     * AJAX endpoint: Remove applied coupon from active session.
+     */
+    public function removeCoupon(Request $request)
+    {
+        session()->forget('coupon');
+        $cart = session()->get('cart', []);
+        $totals = $this->calculateTotals($cart);
+
+        $isEn = app()->getLocale() === 'en';
+        return response()->json([
+            'success' => true,
+            'message' => $isEn ? 'Voucher removed from order.' : 'Gutscheincode entfernt.',
+            'subtotal' => $totals['subtotal'],
+            'discount' => 0,
+            'coupon' => null,
+            'vat' => $totals['vat'],
+            'total' => $totals['total'],
+            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
+            'formatted_discount' => 'EUR 0,00',
             'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
             'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
         ]);
@@ -282,12 +499,29 @@ class CartController extends Controller
         }
 
         $totals = $this->calculateTotals($cart);
-        $totalAmount = $totals['total'];
+        $subtotal = $totals['subtotal'];
+        $discountAmount = 0;
+        $appliedCoupon = null;
 
-        // Apply voucher discount if valid
-        if (strtoupper($request->input('voucher_code')) === 'MEHAAJ10') {
-            $totalAmount = round($totalAmount * 0.9, 2);
+        // Check if voucher was passed or present in session
+        $couponCodeInput = trim($request->input('voucher_code') ?? '');
+        if (!empty($couponCodeInput)) {
+            $appliedCoupon = Coupon::where('code', strtoupper($couponCodeInput))->first();
+        } elseif (session()->has('coupon')) {
+            $sessionCoupon = session()->get('coupon');
+            $appliedCoupon = Coupon::where('code', $sessionCoupon['code'] ?? '')->first();
         }
+
+        $couponError = null;
+        if ($appliedCoupon && $appliedCoupon->validateForCart($subtotal, $couponError, app()->getLocale())) {
+            $discountAmount = $appliedCoupon->calculateDiscount($subtotal);
+            $couponCode = $appliedCoupon->code;
+        } else {
+            $couponCode = null;
+            $discountAmount = 0;
+        }
+
+        $totalAmount = max(0, round($subtotal - $discountAmount, 2));
 
         // Generate unique Order Number
         do {
@@ -307,6 +541,10 @@ class CartController extends Controller
             $notes = "Zahlungsart: Manuelle Banküberweisung (Vorkasse) • Ref: " . $orderNumber;
         }
 
+        if ($couponCode && $discountAmount > 0) {
+            $notes .= " | Eingelöster Gutschein: " . $couponCode . " (-" . number_format($discountAmount, 2, ',', '.') . " EUR)";
+        }
+
         $order = Order::create([
             'order_number' => $orderNumber,
             'customer_name' => $customerName,
@@ -316,6 +554,9 @@ class CartController extends Controller
             'city' => $request->city,
             'postal_code' => $request->postal_code,
             'country' => $request->country,
+            'subtotal' => $subtotal,
+            'discount_amount' => $discountAmount,
+            'coupon_code' => $couponCode,
             'total_amount' => $totalAmount,
             'payment_method' => $paymentMethod,
             'payment_status' => 'pending',
@@ -347,7 +588,7 @@ class CartController extends Controller
             $customer->total_orders += 1;
             $customer->save();
         } else {
-            Customer::create([
+            $customer = Customer::create([
                 'name' => $customerName,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -362,8 +603,38 @@ class CartController extends Controller
             ]);
         }
 
-        // Clear Session Cart
+        // Record Coupon Usage & Increment Counter
+        if ($appliedCoupon && $discountAmount > 0) {
+            $appliedCoupon->increment('used_count');
+            CouponUsage::create([
+                'coupon_id' => $appliedCoupon->id,
+                'order_id' => $order->id,
+                'customer_id' => $customer ? $customer->id : null,
+                'customer_email' => $request->email,
+                'discount_amount' => $discountAmount,
+            ]);
+        }
+
+        // Mark any matching Abandoned Cart as recovered
+        try {
+            AbandonedCart::where('session_id', session()->getId())
+                ->orWhere(function ($q) use ($request) {
+                    if (!empty($request->email)) {
+                        $q->where('customer_email', $request->email)
+                          ->whereIn('recovery_status', ['pending', 'contacted']);
+                    }
+                })
+                ->update([
+                    'recovery_status' => 'recovered',
+                    'recovered_at' => now(),
+                ]);
+        } catch (\Exception $e) {
+            \Log::error('Abandoned cart recovery status update error: ' . $e->getMessage());
+        }
+
+        // Clear Session Cart and Coupon
         session()->forget('cart');
+        session()->forget('coupon');
 
         $isEn = app()->getLocale() === 'en';
         return response()->json([
@@ -382,7 +653,7 @@ class CartController extends Controller
     }
 
     /**
-     * Helper to compute subtotal, vat, and total.
+     * Helper to compute subtotal, discount, vat, and total.
      */
     private function calculateTotals(array $cart): array
     {
@@ -396,15 +667,134 @@ class CartController extends Controller
             $count += $qty;
         }
 
-        $vat = round($subtotal * 0.19, 2);
-        $total = round($subtotal, 2);
+        $discount = 0;
+        $activeCoupon = null;
+
+        if (session()->has('coupon')) {
+            $couponSession = session()->get('coupon');
+            $couponModel = Coupon::where('code', $couponSession['code'] ?? '')->first();
+            $err = null;
+            if ($couponModel && $couponModel->validateForCart($subtotal, $err, app()->getLocale())) {
+                $discount = $couponModel->calculateDiscount($subtotal);
+                $activeCoupon = [
+                    'id' => $couponModel->id,
+                    'code' => $couponModel->code,
+                    'type' => $couponModel->type,
+                    'value' => $couponModel->value,
+                    'badge' => $couponModel->badge_text,
+                    'discount' => $discount,
+                ];
+                // Keep session updated with fresh discount
+                session()->put('coupon', $activeCoupon);
+            } else {
+                session()->forget('coupon');
+            }
+        }
+
+        $totalAfterDiscount = max(0, round($subtotal - $discount, 2));
+        $vat = round($totalAfterDiscount * 0.19, 2);
 
         return [
             'count' => $count,
             'subtotal' => round($subtotal, 2),
+            'discount' => round($discount, 2),
+            'coupon' => $activeCoupon,
             'shipping' => 0.00,
             'vat' => $vat,
-            'total' => $total,
+            'total' => $totalAfterDiscount,
         ];
+    }
+
+    /**
+     * AJAX endpoint to continuously track cart abandonment when customer fills info
+     */
+    public function trackAbandonment(Request $request)
+    {
+        $cart = session()->get('cart', []);
+        if (empty($cart)) {
+            return response()->json(['success' => false, 'message' => 'Cart is empty']);
+        }
+
+        $email = trim($request->input('email', ''));
+        $phone = trim($request->input('phone', ''));
+        $firstName = trim($request->input('first_name', ''));
+        $lastName = trim($request->input('last_name', ''));
+        $name = trim($firstName . ' ' . $lastName);
+
+        if (empty($email) && empty($phone) && empty($name)) {
+            return response()->json(['success' => false, 'message' => 'No contact information provided']);
+        }
+
+        $totals = $this->calculateTotals($cart);
+        $sessionId = session()->getId();
+
+        // Check if there is an existing pending/contacted cart for this session or email
+        $abandonedCart = AbandonedCart::where('session_id', $sessionId)
+            ->whereIn('recovery_status', ['pending', 'contacted'])
+            ->first();
+
+        if (!$abandonedCart && !empty($email)) {
+            $abandonedCart = AbandonedCart::where('customer_email', $email)
+                ->whereIn('recovery_status', ['pending', 'contacted'])
+                ->latest()
+                ->first();
+        }
+
+        $customer = !empty($email) ? Customer::where('email', $email)->first() : null;
+
+        if ($abandonedCart) {
+            $abandonedCart->session_id = $sessionId;
+            if ($customer) $abandonedCart->customer_id = $customer->id;
+            if (!empty($name)) $abandonedCart->customer_name = $name;
+            if (!empty($email)) $abandonedCart->customer_email = $email;
+            if (!empty($phone)) $abandonedCart->customer_phone = $phone;
+            $abandonedCart->cart_items = $cart;
+            $abandonedCart->cart_total = $totals['total'];
+            $abandonedCart->save();
+        } else {
+            $abandonedCart = AbandonedCart::create([
+                'session_id' => $sessionId,
+                'customer_id' => $customer ? $customer->id : null,
+                'customer_name' => $name ?: null,
+                'customer_email' => $email ?: null,
+                'customer_phone' => $phone ?: null,
+                'cart_items' => $cart,
+                'cart_total' => $totals['total'],
+                'recovery_status' => 'pending',
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'tracking_id' => $abandonedCart->id,
+            'token' => $abandonedCart->recovery_token,
+            'recovery_url' => $abandonedCart->recovery_url,
+        ]);
+    }
+
+    /**
+     * 1-Click Restore Cart Link
+     */
+    public function recoverCart(Request $request, $token)
+    {
+        $abandonedCart = AbandonedCart::where('recovery_token', $token)->firstOrFail();
+
+        if (!empty($abandonedCart->cart_items) && is_array($abandonedCart->cart_items)) {
+            session()->put('cart', $abandonedCart->cart_items);
+        }
+
+        // Save recovered customer contact info into session to pre-fill checkout fields
+        session()->put('recovered_customer', [
+            'name' => $abandonedCart->customer_name,
+            'email' => $abandonedCart->customer_email,
+            'phone' => $abandonedCart->customer_phone,
+        ]);
+
+        $isEn = app()->getLocale() === 'en';
+        $msg = $isEn
+            ? 'Your luxury shopping bag has been successfully restored! Please complete your order.'
+            : 'Ihr exklusiver Warenkorb wurde erfolgreich wiederhergestellt! Bitte schließen Sie Ihre Bestellung ab.';
+
+        return redirect()->route('checkout.index')->with('recovery_success', $msg);
     }
 }

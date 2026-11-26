@@ -953,18 +953,28 @@
             </div>
         </div>
 
-        <!-- Header Center: Global Search Input -->
-        <div class="hidden md:flex items-center flex-1 max-w-lg mx-6">
+        <!-- Header Center: Global Search Input with Ctrl+K shortcut -->
+        <div class="hidden md:flex items-center flex-1 max-w-lg mx-6 relative" id="admin-search-container">
             <div class="relative w-full">
                 <input
                     id="admin-search-input"
                     type="text"
-                    placeholder="Search products, orders, customers..."
-                    data-i18n-placeholder-de="Suche nach Produkten, Bestellungen, Kunden..."
-                    data-i18n-placeholder-en="Search products, orders, customers..."
-                    class="w-full h-10 rounded-full bg-stone-50 border border-stone-200 px-4 pl-10 text-xs text-stone-800 outline-none transition-all placeholder:text-stone-400 focus:bg-white focus:ring-2 focus:ring-saltora-terracotta/20 focus:border-saltora-terracotta"
+                    autocomplete="off"
+                    placeholder="Search products, orders, customers... (Ctrl + K)"
+                    data-i18n-placeholder-de="Produkte, Bestellungen, Kunden suchen... (Strg + K)"
+                    data-i18n-placeholder-en="Search products, orders, customers... (Ctrl + K)"
+                    class="w-full h-10 rounded-full bg-stone-50 border border-stone-200 px-4 pl-10 pr-16 text-xs text-stone-800 outline-none transition-all placeholder:text-stone-400 focus:bg-white focus:ring-2 focus:ring-saltora-terracotta/20 focus:border-saltora-terracotta shadow-2xs"
                 >
                 <svg class="h-4 w-4 absolute left-3.5 top-3 text-stone-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <kbd class="absolute right-3.5 top-2.5 px-2 py-0.5 rounded-md bg-stone-200/80 text-stone-600 text-[0.62rem] font-mono font-bold border border-stone-300/80 shadow-2xs pointer-events-none select-none">Ctrl K</kbd>
+            </div>
+
+            <!-- Global Search Results Instant Dropdown Modal -->
+            <div id="admin-search-dropdown" class="hidden absolute top-12 left-0 right-0 max-h-[500px] overflow-y-auto rounded-2xl bg-white border border-stone-200 shadow-2xl z-50 p-2 divide-y divide-stone-100">
+                <div id="admin-search-loading" class="hidden p-4 text-center text-xs text-stone-400 font-medium">
+                    <span class="animate-pulse">Suche läuft... / Searching atelier database...</span>
+                </div>
+                <div id="admin-search-content" class="space-y-2 p-1"></div>
             </div>
         </div>
 
@@ -1133,6 +1143,22 @@
                         </div>
                     </div>
 
+                    <!-- Deals & Bundles (Curated Sets Tag) -->
+                    <a href="{{ route('admin.deals') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.deals*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.deals*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                            </svg>
+                            <span data-i18n-de="Deals & Bundles" data-i18n-en="Deals & Bundles">Deals & Bundles</span>
+                        </div>
+                        @php
+                            $adminActiveDealsCount = \App\Models\Deal::active()->count();
+                        @endphp
+                        @if($adminActiveDealsCount > 0)
+                            <span class="rounded-full bg-saltora-blush text-saltora-terracotta border border-saltora-terracotta/30 px-2 py-0.5 text-[0.62rem] font-bold">{{ $adminActiveDealsCount }} Sets</span>
+                        @endif
+                    </a>
+
                     <!-- Inventory & Stock Management (Warehouse Package 3D) -->
                     <a href="{{ route('admin.inventory') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.inventory*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                         <div class="flex items-center gap-3">
@@ -1180,6 +1206,40 @@
                         </div>
                     </div>
 
+                    <!-- Abandoned Carts Recovery Engine -->
+                    <a href="{{ route('admin.abandoned-carts') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.abandoned-carts*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.abandoned-carts*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                            <span data-i18n-de="Verlassene Warenkörbe" data-i18n-en="Abandoned Carts">Abandoned Carts</span>
+                        </div>
+                        @php
+                            $pendingAbandonedCartsCount = \App\Models\AbandonedCart::where('recovery_status', 'pending')->count();
+                        @endphp
+                        @if($pendingAbandonedCartsCount > 0)
+                            <span class="rounded-full bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 text-[0.62rem] font-bold">{{ $pendingAbandonedCartsCount }} Open</span>
+                        @endif
+                    </a>
+
+                    <!-- Coupons & Promotional Engine (Voucher Promo Ticket) -->
+                    <a href="{{ route('admin.coupons') }}" class="flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 rounded-xl {{ request()->routeIs('admin.coupons*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <div class="flex items-center gap-3">
+                            <svg class="h-4 w-4 {{ request()->routeIs('admin.coupons*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 0 0-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
+                            </svg>
+                            <span data-i18n-de="Gutscheine & Rabatte" data-i18n-en="Coupons & Promos">Coupons & Promos</span>
+                        </div>
+                        @php
+                            $adminActiveCouponsCount = \App\Models\Coupon::active()->count();
+                        @endphp
+                        @if($adminActiveCouponsCount > 0)
+                            <span class="rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-2 py-0.5 text-[0.62rem] font-bold">{{ $adminActiveCouponsCount }} Active</span>
+                        @endif
+                    </a>
+
                     <!-- Collapsible VIP Customers Dropdown (Royal Crown Elite) -->
                     <div class="space-y-1">
                         <button type="button" onclick="toggleSidebarMenu('customers-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.customers*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
@@ -1205,23 +1265,27 @@
                         </div>
                     </div>
 
-                    <!-- Collapsible Financial Intelligence Dropdown (Accounting Balance Scales) -->
+                    <!-- Collapsible Analytics & Finance Dropdown (ROI Engine) -->
                     <div class="space-y-1">
-                        <button type="button" onclick="toggleSidebarMenu('finance-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.finance*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
+                        <button type="button" onclick="toggleSidebarMenu('finance-menu')" class="w-full flex items-center justify-between px-3.5 py-2.5 transition-all duration-200 cursor-pointer rounded-xl {{ request()->routeIs('admin.finance*', 'admin.analytics*') ? 'admin-nav-item-active' : 'admin-nav-item' }}">
                             <div class="flex items-center gap-3">
-                                <svg class="h-4 w-4 {{ request()->routeIs('admin.finance*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-                                    <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-                                    <path d="M7 21h10"/>
-                                    <path d="M12 3v18"/>
-                                    <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+                                <svg class="h-4 w-4 {{ request()->routeIs('admin.finance*', 'admin.analytics*') ? 'text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 3v18h18"/>
+                                    <path d="m19 9-5 5-4-4-3 3"/>
                                 </svg>
-                                <span data-i18n-de="Finanzen & GuV" data-i18n-en="Finance & GuV">Finance & GuV</span>
+                                <span data-i18n-de="Analytics & Finanzen" data-i18n-en="Analytics & Finance">Analytics & Finance</span>
                             </div>
-                            <svg id="finance-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.finance*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                            <div class="flex items-center gap-1.5">
+                                <span class="rounded bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-1.5 py-0.5 text-[0.58rem] font-extrabold uppercase">ROI</span>
+                                <svg id="finance-menu-arrow" class="h-3.5 w-3.5 transition-transform duration-200 {{ request()->routeIs('admin.finance*', 'admin.analytics*') ? 'rotate-180 text-saltora-terracotta' : 'text-stone-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                            </div>
                         </button>
 
-                        <div id="finance-menu" class="{{ request()->routeIs('admin.finance*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
+                        <div id="finance-menu" class="{{ request()->routeIs('admin.finance*', 'admin.analytics*') ? 'block' : 'hidden' }} ml-4 pl-3.5 border-l-2 border-stone-200 my-1 space-y-1">
+                            <a href="{{ route('admin.analytics') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.analytics') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
+                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                <span data-i18n-de="Sales & ROI Dashboard" data-i18n-en="Sales & ROI Dashboard">Sales & ROI Dashboard</span>
+                            </a>
                             <a href="{{ route('admin.finance.profit-loss') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.finance.profit-loss') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
                                 <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
                                 <span data-i18n-de="Gewinn & Verlust (GuV)" data-i18n-en="Profit & Loss (P&L)">Profit & Loss (P&L)</span>
@@ -1575,6 +1639,155 @@
             applyLanguage(localStorage.getItem('mehaaj_admin_lang') || getCookie('mehaaj_admin_lang') || 'en');
             setAdminTheme(localStorage.getItem('mehaaj_admin_theme') || getCookie('mehaaj_admin_theme') || 'light');
         });
+
+        // ==========================================
+        // Global Admin Search Engine (Ctrl + K)
+        // ==========================================
+        let searchDebounceTimer = null;
+        const searchInput = document.getElementById('admin-search-input');
+        const searchDropdown = document.getElementById('admin-search-dropdown');
+        const searchContent = document.getElementById('admin-search-content');
+        const searchLoading = document.getElementById('admin-search-loading');
+
+        function closeSearchDropdown() {
+            if (searchDropdown) {
+                searchDropdown.classList.add('hidden');
+            }
+        }
+
+        function openSearchDropdown() {
+            if (searchDropdown && searchInput && searchInput.value.trim().length >= 2) {
+                searchDropdown.classList.remove('hidden');
+            }
+        }
+
+        // Global Keyboard Shortcut: Ctrl + K or Cmd + K
+        window.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+                e.preventDefault();
+                if (searchInput) {
+                    searchInput.focus();
+                    searchInput.select();
+                    if (searchInput.value.trim().length >= 2) {
+                        openSearchDropdown();
+                    }
+                }
+            } else if (e.key === 'Escape') {
+                closeSearchDropdown();
+                if (searchInput) searchInput.blur();
+            }
+        });
+
+        // Click outside closes dropdown
+        document.addEventListener('click', function(e) {
+            const container = document.getElementById('admin-search-container');
+            if (container && !container.contains(e.target)) {
+                closeSearchDropdown();
+            }
+        });
+
+        if (searchInput) {
+            searchInput.addEventListener('focus', function() {
+                if (this.value.trim().length >= 2) {
+                    openSearchDropdown();
+                }
+            });
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                clearTimeout(searchDebounceTimer);
+
+                if (query.length < 2) {
+                    closeSearchDropdown();
+                    return;
+                }
+
+                if (searchLoading) searchLoading.classList.remove('hidden');
+                if (searchDropdown) searchDropdown.classList.remove('hidden');
+
+                searchDebounceTimer = setTimeout(() => {
+                    fetch(`/admin/search?q=${encodeURIComponent(query)}`, {
+                        headers: { 'Accept': 'application/json' }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (searchLoading) searchLoading.classList.add('hidden');
+                        renderSearchResults(data);
+                    })
+                    .catch(err => {
+                        if (searchLoading) searchLoading.classList.add('hidden');
+                        console.error('Search error:', err);
+                    });
+                }, 250);
+            });
+        }
+
+        function renderSearchResults(data) {
+            if (!searchContent) return;
+            searchContent.innerHTML = '';
+
+            if (!data.results || data.total_results === 0) {
+                searchContent.innerHTML = `
+                    <div class="p-6 text-center text-xs text-stone-400">
+                        <div class="text-base mb-1">🔍</div>
+                        <p class="font-bold text-stone-700">Keine Treffer gefunden</p>
+                        <p class="text-[0.68rem] text-stone-400">Keine passenden Produkte, Bestellungen, Kunden oder Gutscheine für "${data.query || ''}".</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const sections = [
+                { key: 'products', title: 'Produkte & Artikel', icon: '🛍️' },
+                { key: 'orders', title: 'Bestellungen & Rechnungen', icon: '📦' },
+                { key: 'customers', title: 'Kunden & VIP-Klienten', icon: '👤' },
+                { key: 'coupons', title: 'Gutscheincodes', icon: '🏷️' },
+                { key: 'deals', title: 'Deals & Bundles', icon: '⚡' },
+                { key: 'abandoned_carts', title: 'Verlassene Warenkörbe', icon: '🛒' }
+            ];
+
+            let html = '';
+
+            sections.forEach(sec => {
+                const items = data.results[sec.key];
+                if (items && items.length > 0) {
+                    html += `
+                        <div class="py-1">
+                            <div class="px-2.5 py-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-stone-400 flex items-center gap-1.5">
+                                <span>${sec.icon}</span>
+                                <span>${sec.title} (${items.length})</span>
+                            </div>
+                            <div class="space-y-0.5 mt-0.5">
+                    `;
+
+                    items.forEach(item => {
+                        html += `
+                            <a href="${item.url}" class="flex items-center justify-between p-2 rounded-xl hover:bg-stone-50 transition group">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    ${item.image ? `<img src="${item.image}" class="w-8 h-8 rounded-lg object-cover border border-stone-200 shrink-0 bg-stone-100">` : ''}
+                                    <div class="min-w-0">
+                                        <div class="font-bold text-xs text-stone-900 group-hover:text-saltora-terracotta truncate transition">${item.title}</div>
+                                        <div class="text-[0.65rem] text-stone-500 truncate">${item.subtitle || ''}</div>
+                                    </div>
+                                </div>
+                                <div class="shrink-0 ml-3 text-right">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-stone-100 text-stone-700 border border-stone-200 group-hover:bg-saltora-blush group-hover:text-saltora-terracotta transition">
+                                        ${item.badge || ''}
+                                    </span>
+                                </div>
+                            </a>
+                        `;
+                    });
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            searchContent.innerHTML = html;
+        }
 
         // Pink-Salt SweetAlert Logout Modal (Adapts to Dark / Light)
         function confirmSignOut() {

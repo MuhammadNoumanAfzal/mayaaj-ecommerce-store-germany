@@ -56,10 +56,10 @@
             <input
                 type="text"
                 id="drawer-voucher-input"
-                placeholder="Voucher code (e.g. MEHAAJ10)"
+                placeholder="Gutscheincode (z.B. MEHAAJ10)"
                 data-i18n-placeholder-de="Gutscheincode (z.B. MEHAAJ10)"
                 data-i18n-placeholder-en="Voucher code (e.g. MEHAAJ10)"
-                class="flex-1 rounded border border-[#e6decb] bg-white px-3 py-1.5 text-xs text-[#1c1210] placeholder-[#8a7c74] focus:border-[#78000b] focus:outline-none shadow-xs"
+                class="flex-1 rounded border border-[#e6decb] bg-white px-3 py-1.5 text-xs text-[#1c1210] uppercase placeholder-[#8a7c74] focus:border-[#78000b] focus:outline-none shadow-xs font-mono font-bold"
             >
             <button
                 type="button"
@@ -71,13 +71,21 @@
                 APPLY
             </button>
         </div>
-        <p id="voucher-message" class="hidden text-[0.65rem] font-bold text-[#2e683a] animate-pulse" data-i18n-de="Gutscheincode MEHAAJ10 angewendet (-10%) ✓" data-i18n-en="Voucher MEHAAJ10 applied (-10%) ✓">Voucher MEHAAJ10 applied (-10%) ✓</p>
+        <p id="voucher-message" class="hidden text-[0.65rem] font-bold text-[#2e683a]"></p>
 
         <!-- Summary Cost Breakdown -->
         <div class="space-y-1.5 text-xs text-[#5c4f46]">
             <div class="flex justify-between">
                 <span data-i18n-de="Zwischensumme" data-i18n-en="Subtotal">Zwischensumme</span>
                 <span id="drawer-subtotal" class="font-bold text-[#1c1210]">EUR 0,00</span>
+            </div>
+            <!-- Dynamic Discount Row -->
+            <div id="drawer-discount-row" class="hidden justify-between items-center text-xs font-bold text-[#2e683a]">
+                <div class="flex items-center gap-1.5">
+                    <span id="drawer-discount-label">Gutschein</span>
+                    <button type="button" onclick="removeDrawerVoucher()" class="text-stone-400 hover:text-rose-600 transition text-[0.65rem] px-1 rounded bg-[#f2ebdc]" title="Gutschein entfernen">✕</button>
+                </div>
+                <span id="drawer-discount">- EUR 0,00</span>
             </div>
             <div class="flex justify-between text-[0.68rem] text-[#685c54]">
                 <span data-i18n-de="inkl. 19% MwSt." data-i18n-en="incl. 19% VAT">inkl. 19% MwSt.</span>
@@ -257,9 +265,35 @@
         if (document.getElementById('drawer-subtotal')) document.getElementById('drawer-subtotal').innerText = data.formatted_subtotal;
         if (document.getElementById('drawer-vat')) document.getElementById('drawer-vat').innerText = data.formatted_vat;
 
-        let finalTotal = isVoucherApplied ? rawCartTotal * 0.9 : rawCartTotal;
+        // Discount Handling
+        const discountRow = document.getElementById('drawer-discount-row');
+        const discountLabel = document.getElementById('drawer-discount-label');
+        const discountVal = document.getElementById('drawer-discount');
+        const voucherInput = document.getElementById('drawer-voucher-input');
+        const voucherMsg = document.getElementById('voucher-message');
+
+        if (data.coupon && data.discount > 0) {
+            if (discountRow) {
+                discountRow.classList.remove('hidden');
+                discountRow.classList.add('flex');
+            }
+            if (discountLabel) discountLabel.innerText = `Gutschein (${data.coupon.code} -${data.coupon.badge})`;
+            if (discountVal) discountVal.innerText = data.formatted_discount;
+            if (voucherInput && !voucherInput.value) voucherInput.value = data.coupon.code;
+            if (voucherMsg) {
+                voucherMsg.innerText = `✓ ${data.coupon.code} aktiv (-${data.coupon.badge})`;
+                voucherMsg.classList.remove('hidden');
+            }
+        } else {
+            if (discountRow) {
+                discountRow.classList.add('hidden');
+                discountRow.classList.remove('flex');
+            }
+            if (voucherMsg) voucherMsg.classList.add('hidden');
+        }
+
         if (document.getElementById('drawer-total')) {
-            document.getElementById('drawer-total').innerText = 'EUR ' + finalTotal.toFixed(2).replace('.', ',');
+            document.getElementById('drawer-total').innerText = data.formatted_total;
         }
     }
 
@@ -328,36 +362,76 @@
     function applyDrawerVoucher() {
         const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
         const input = document.getElementById('drawer-voucher-input').value.trim();
-        const msg = document.getElementById('voucher-message');
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-        if (rawCartTotal <= 0) {
-            LuxurySwal.fire({
+        if (!input) {
+            LuxuryToast.fire({
                 icon: 'warning',
-                title: isEn ? 'Cart is Empty' : 'Warenkorb ist leer',
-                text: isEn ? 'Please add items to your cart before applying a voucher code.' : 'Bitte fügen Sie zuerst Artikel zum Warenkorb hinzu, bevor Sie einen Gutscheincode einlösen.',
-                confirmButtonText: 'OK'
+                title: isEn ? 'Please enter a voucher code' : 'Bitte geben Sie einen Gutscheincode ein'
             });
             return;
         }
 
-        if (input.toUpperCase() === 'MEHAAJ10') {
-            isVoucherApplied = true;
-            msg.classList.remove('hidden');
-            let discounted = rawCartTotal * 0.9;
-            document.getElementById('drawer-total').innerText = 'EUR ' + discounted.toFixed(2).replace('.', ',');
-            LuxurySwal.fire({
-                icon: 'success',
-                title: isEn ? 'Voucher Code Applied! 🎉' : 'Gutscheincode Eingelöst! 🎉',
-                text: isEn ? 'You have received a 10% discount on your order.' : 'Ihnen wurden 10% Rabatt auf Ihre gesamte Bestellung gutgeschrieben.',
-                confirmButtonText: isEn ? 'Wonderful' : 'Wunderbar'
-            });
-        } else {
+        fetch(window.mehaajUrl('/cart/apply-coupon'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token || '',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ code: input })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                renderCartDrawerContent(data);
+                if (typeof recalcPageCart === 'function') recalcPageCart();
+                LuxuryToast.fire({
+                    icon: 'success',
+                    title: data.message
+                });
+            } else {
+                LuxurySwal.fire({
+                    icon: 'error',
+                    title: isEn ? 'Voucher Invalid' : 'Gutschein nicht anwendbar',
+                    text: data.message,
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
+        .catch(err => {
             LuxurySwal.fire({
                 icon: 'error',
-                title: isEn ? 'Invalid Code' : 'Ungültiger Code',
-                text: isEn ? 'The voucher code entered is not valid. Try: MEHAAJ10' : 'Der eingegebene Gutscheincode ist nicht gültig. Versuchen Sie: MEHAAJ10',
-                confirmButtonText: isEn ? 'Try Again' : 'Erneut versuchen'
+                title: 'Error',
+                text: 'Network error validating voucher.'
             });
-        }
+        });
+    }
+
+    function removeDrawerVoucher() {
+        const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        fetch(window.mehaajUrl('/cart/remove-coupon'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token || '',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const voucherInput = document.getElementById('drawer-voucher-input');
+                if (voucherInput) voucherInput.value = '';
+                renderCartDrawerContent(data);
+                if (typeof recalcPageCart === 'function') recalcPageCart();
+                LuxuryToast.fire({
+                    icon: 'info',
+                    title: data.message
+                });
+            }
+        });
     }
 </script>

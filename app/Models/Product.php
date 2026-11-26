@@ -140,5 +140,15 @@ class Product extends Model
     {
         return $this->hasMany(Review::class)->where('status', 'approved');
     }
+
+    /**
+     * Deals and Bundles containing this product.
+     */
+    public function deals()
+    {
+        return $this->belongsToMany(Deal::class, 'deal_product')
+            ->withPivot('is_required', 'sort_order')
+            ->withTimestamps();
+    }
 }
 

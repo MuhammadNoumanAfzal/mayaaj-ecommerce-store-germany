@@ -46,8 +46,24 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/warenkorb', [CartController::class, 'index'])->name('cart.de');
 Route::get('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/add-bundle', [CartController::class, 'addBundle'])->name('cart.add-bundle');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/apply-coupon', [CartController::class, 'applyCoupon'])->name('cart.apply-coupon');
+Route::post('/cart/remove-coupon', [CartController::class, 'removeCoupon'])->name('cart.remove-coupon');
+
+// Curated Deals & Bundles Public Routes
+Route::get('/deals', [ShopController::class, 'deals'])->name('deals');
+Route::get('/angebote', [ShopController::class, 'deals'])->name('deals.de');
+
+// Abandoned Cart Real-Time Tracking & 1-Click Recovery
+Route::post('/cart/track-abandonment', [CartController::class, 'trackAbandonment'])->name('cart.track-abandonment');
+Route::get('/cart/recover/{token}', [CartController::class, 'recoverCart'])->name('cart.recover');
+
+// Customer Order Logistics & Courier Tracking Lookup
+Route::get('/order/track', [ShopController::class, 'trackOrder'])->name('order.track');
+Route::get('/bestellung-verfolgen', [ShopController::class, 'trackOrder'])->name('order.track.de');
+Route::post('/order/track', [ShopController::class, 'lookupOrder'])->name('order.track.lookup');
 
 // Dedicated Checkout Page Routes
 Route::get('/checkout', [CartController::class, 'checkoutPage'])->name('checkout.index');
@@ -126,6 +142,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Dashboard accessible by all authenticated roles
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard/export-csv', [DashboardController::class, 'exportCsv'])->name('dashboard.export-csv');
 
         // Dynamic Locale Switcher for English / German (Persistent)
         Route::post('/lang/{locale}', function (string $locale) {
@@ -178,6 +195,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
             Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
+            // Deals & Product Bundles CRUD Routes
+            Route::get('/deals', [\App\Http\Controllers\Admin\DealController::class, 'index'])->name('deals');
+            Route::get('/deals/create', [\App\Http\Controllers\Admin\DealController::class, 'create'])->name('deals.create');
+            Route::post('/deals', [\App\Http\Controllers\Admin\DealController::class, 'store'])->name('deals.store');
+            Route::get('/deals/{deal}/edit', [\App\Http\Controllers\Admin\DealController::class, 'edit'])->name('deals.edit');
+            Route::put('/deals/{deal}', [\App\Http\Controllers\Admin\DealController::class, 'update'])->name('deals.update');
+            Route::post('/deals/{deal}/toggle-status', [\App\Http\Controllers\Admin\DealController::class, 'toggleStatus'])->name('deals.toggle-status');
+            Route::delete('/deals/{deal}', [\App\Http\Controllers\Admin\DealController::class, 'destroy'])->name('deals.destroy');
+
             // Dedicated Inventory & Stock Management Routes
             Route::get('/inventory', [\App\Http\Controllers\Admin\InventoryController::class, 'index'])->name('inventory');
             Route::post('/inventory/update-stock', [\App\Http\Controllers\Admin\InventoryController::class, 'updateStock'])->name('inventory.update-stock');
@@ -190,8 +216,25 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
             Route::get('/orders/{order}/invoice', [OrderController::class, 'printInvoice'])->name('orders.invoice');
             Route::get('/orders/{order}/packing-slip', [OrderController::class, 'printPackingSlip'])->name('orders.packing-slip');
+            Route::post('/orders/{order}/fulfillment', [OrderController::class, 'updateFulfillment'])->name('orders.fulfillment');
+            Route::post('/orders/{order}/upload-receipt', [OrderController::class, 'uploadReceipt'])->name('orders.upload-receipt');
+            Route::post('/orders/{order}/send-dispatch-email', [OrderController::class, 'sendDispatchEmail'])->name('orders.send-dispatch-email');
             Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
             Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+            // Abandoned Carts Recovery Engine Routes
+            Route::get('/abandoned-carts', [\App\Http\Controllers\Admin\AbandonedCartController::class, 'index'])->name('abandoned-carts');
+            Route::post('/abandoned-carts/{id}/send-email', [\App\Http\Controllers\Admin\AbandonedCartController::class, 'sendRecoveryEmail'])->name('abandoned-carts.send-email');
+            Route::post('/abandoned-carts/{id}/mark-contacted', [\App\Http\Controllers\Admin\AbandonedCartController::class, 'markContacted'])->name('abandoned-carts.mark-contacted');
+            Route::patch('/abandoned-carts/{id}/status', [\App\Http\Controllers\Admin\AbandonedCartController::class, 'updateStatus'])->name('abandoned-carts.update-status');
+            Route::delete('/abandoned-carts/{id}', [\App\Http\Controllers\Admin\AbandonedCartController::class, 'destroy'])->name('abandoned-carts.destroy');
+
+            // Coupons & Promotional Engine CRUD Routes
+            Route::get('/coupons', [\App\Http\Controllers\Admin\CouponController::class, 'index'])->name('coupons');
+            Route::post('/coupons', [\App\Http\Controllers\Admin\CouponController::class, 'store'])->name('coupons.store');
+            Route::put('/coupons/{coupon}', [\App\Http\Controllers\Admin\CouponController::class, 'update'])->name('coupons.update');
+            Route::post('/coupons/{coupon}/toggle-status', [\App\Http\Controllers\Admin\CouponController::class, 'toggleStatus'])->name('coupons.toggle-status');
+            Route::delete('/coupons/{coupon}', [\App\Http\Controllers\Admin\CouponController::class, 'destroy'])->name('coupons.destroy');
 
             // VIP Customers CRUD Routes
             Route::get('/customers', [CustomerController::class, 'index'])->name('customers');
@@ -200,6 +243,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
             Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
             Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+            // Global Admin Live Search Route
+            Route::get('/search', [\App\Http\Controllers\Admin\SearchController::class, 'search'])->name('search');
+
+            // Dedicated E-Commerce Sales & ROI Analytics Dashboard
+            Route::get('/analytics', [\App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics');
 
             // Financial Intelligence & Accounting (Profit & Loss, Balance Sheet, OpEx)
             Route::prefix('finance')->name('finance.')->group(function () {

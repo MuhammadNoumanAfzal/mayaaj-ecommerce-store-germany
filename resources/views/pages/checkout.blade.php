@@ -58,6 +58,23 @@
             </div>
         @else
 
+            @php
+                $recovered = session('recovered_customer', []);
+                $recFullName = trim($recovered['name'] ?? '');
+                $recParts = $recFullName ? explode(' ', $recFullName, 2) : ['', ''];
+                $recFirst = $recParts[0] ?? '';
+                $recLast = $recParts[1] ?? '';
+                $recEmail = $recovered['email'] ?? '';
+                $recPhone = $recovered['phone'] ?? '';
+            @endphp
+
+            @if(session('recovery_success'))
+                <div class="mb-5 rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-xs font-semibold text-emerald-800 flex items-center gap-3 shadow-2xs">
+                    <span class="text-lg">🛍️</span>
+                    <div>{{ session('recovery_success') }}</div>
+                </div>
+            @endif
+
             <!-- Two-Column Checkout Layout -->
             <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
 
@@ -82,22 +99,22 @@
                             <div class="grid gap-3 sm:grid-cols-2">
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Vorname *" data-i18n-en="First Name *">Vorname *</label>
-                                    <input type="text" id="ship-first-name" required placeholder="Maximilian" data-i18n-placeholder-de="Maximilian" data-i18n-placeholder-en="Maximilian" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="text" id="ship-first-name" required value="{{ $recFirst }}" placeholder="Maximilian" data-i18n-placeholder-de="Maximilian" data-i18n-placeholder-en="Maximilian" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Nachname *" data-i18n-en="Last Name *">Nachname *</label>
-                                    <input type="text" id="ship-last-name" required placeholder="Mustermann" data-i18n-placeholder-de="Mustermann" data-i18n-placeholder-en="Doe" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="text" id="ship-last-name" required value="{{ $recLast }}" placeholder="Mustermann" data-i18n-placeholder-de="Mustermann" data-i18n-placeholder-en="Doe" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="E-Mail-Adresse *" data-i18n-en="Email Address *">E-Mail-Adresse *</label>
-                                    <input type="email" id="ship-email" required placeholder="maximilian@beispiel.de" data-i18n-placeholder-de="maximilian@beispiel.de" data-i18n-placeholder-en="john.doe@example.com" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="email" id="ship-email" required value="{{ $recEmail }}" placeholder="maximilian@beispiel.de" data-i18n-placeholder-de="maximilian@beispiel.de" data-i18n-placeholder-en="john.doe@example.com" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div>
                                     <label class="block text-[0.68rem] font-bold uppercase tracking-wider text-[#1c1210] mb-1" data-i18n-de="Telefonnummer *" data-i18n-en="Phone Number *">Telefonnummer *</label>
-                                    <input type="tel" id="ship-phone" required placeholder="+49 151 23456789" data-i18n-placeholder-de="+49 151 23456789" data-i18n-placeholder-en="+1 (555) 019-2834" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
+                                    <input type="tel" id="ship-phone" required value="{{ $recPhone }}" placeholder="+49 151 23456789" data-i18n-placeholder-de="+49 151 23456789" data-i18n-placeholder-en="+1 (555) 019-2834" class="w-full rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-2 text-xs text-[#1c1210] focus:border-[#78000b] focus:bg-white focus:outline-none transition">
                                 </div>
 
                                 <div class="sm:col-span-2">
@@ -289,8 +306,9 @@
                                 <input
                                     type="text"
                                     id="checkout-voucher-input"
-                                    placeholder="MEHAAJ10"
-                                    class="flex-1 rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-1.5 text-xs text-[#1c1210] uppercase placeholder-[#8a7c74] focus:border-[#78000b] focus:bg-white focus:outline-none"
+                                    value="{{ $coupon['code'] ?? '' }}"
+                                    placeholder="z.B. MEHAAJ10"
+                                    class="flex-1 rounded-lg border border-[#e6decb] bg-[#faf7f2] px-3 py-1.5 text-xs text-[#1c1210] uppercase font-mono font-bold placeholder-[#8a7c74] focus:border-[#78000b] focus:bg-white focus:outline-none"
                                 >
                                 <button
                                     type="button"
@@ -302,8 +320,8 @@
                                     EINLÖSEN
                                 </button>
                             </div>
-                            <p id="checkout-voucher-msg" class="hidden text-[0.65rem] font-bold text-[#2e683a] mt-1" data-i18n-de="Gutschein MEHAAJ10 (-10%) aktiviert! ✓" data-i18n-en="Voucher MEHAAJ10 (-10%) applied! ✓">
-                                Gutschein MEHAAJ10 (-10%) aktiviert! ✓
+                            <p id="checkout-voucher-msg" class="{{ !empty($coupon) ? '' : 'hidden' }} text-[0.65rem] font-bold text-[#2e683a] mt-1">
+                                ✓ Gutschein {{ $coupon['code'] ?? '' }} aktiv!
                             </p>
                         </div>
 
@@ -325,9 +343,12 @@
                                 <span class="font-bold text-[#1c1210]" data-i18n-de="Inklusive" data-i18n-en="Complimentary">Inklusive</span>
                             </div>
 
-                            <div id="co-discount-row" class="hidden justify-between items-center text-[#2e683a] font-bold">
-                                <span>MEHAAJ VIP (-10%)</span>
-                                <span id="co-discount-val">- EUR 0,00</span>
+                            <div id="co-discount-row" class="{{ !empty($coupon) && ($discount ?? 0) > 0 ? 'flex' : 'hidden' }} justify-between items-center text-[#2e683a] font-bold">
+                                <div class="flex items-center gap-1.5">
+                                    <span id="co-discount-label">Gutschein ({{ $coupon['code'] ?? '' }} -{{ $coupon['badge'] ?? '' }})</span>
+                                    <button type="button" onclick="removeCheckoutVoucher()" class="text-stone-400 hover:text-rose-600 transition text-[0.65rem] px-1 rounded bg-[#f2ebdc]" title="Gutschein entfernen">✕</button>
+                                </div>
+                                <span id="co-discount-val">- EUR {{ number_format($discount ?? 0, 2, ',', '.') }}</span>
                             </div>
 
                             <div class="flex justify-between items-baseline text-base font-bold text-[#1c1210] border-t border-[#e6decb] pt-3">
@@ -393,31 +414,107 @@
         const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
         const code = document.getElementById('checkout-voucher-input').value.trim();
         const msg = document.getElementById('checkout-voucher-msg');
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-        if (code.toUpperCase() === 'MEHAAJ10') {
-            isCheckoutVoucherApplied = true;
-            if (msg) msg.classList.remove('hidden');
-
-            const discount = rawCheckoutTotal * 0.1;
-            const discounted = rawCheckoutTotal * 0.9;
-
-            const row = document.getElementById('co-discount-row');
-            const val = document.getElementById('co-discount-val');
-            if (row) row.classList.remove('hidden'), row.classList.add('flex');
-            if (val) val.innerText = '- EUR ' + discount.toFixed(2).replace('.', ',');
-
-            document.getElementById('co-total').innerText = 'EUR ' + discounted.toFixed(2).replace('.', ',');
-
+        if (!code) {
             LuxuryToast.fire({
-                icon: 'success',
-                title: isEn ? 'Voucher applied (-10%)! 🎉' : 'Gutschein eingelöst (-10%)! 🎉'
+                icon: 'warning',
+                title: isEn ? 'Please enter a voucher code' : 'Bitte geben Sie einen Gutscheincode ein'
             });
-        } else {
-            LuxuryToast.fire({
-                icon: 'error',
-                title: isEn ? 'Invalid Code. Try MEHAAJ10' : 'Ungültiger Code. Versuchen Sie: MEHAAJ10'
-            });
+            return;
         }
+
+        fetch(window.mehaajUrl('/cart/apply-coupon'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token || '',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ code: code })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                isCheckoutVoucherApplied = true;
+                if (msg) {
+                    msg.innerText = `✓ Gutschein ${data.coupon.code} (-${data.coupon.badge}) aktiviert!`;
+                    msg.classList.remove('hidden');
+                }
+
+                const row = document.getElementById('co-discount-row');
+                const label = document.getElementById('co-discount-label');
+                const val = document.getElementById('co-discount-val');
+                if (row) {
+                    row.classList.remove('hidden');
+                    row.classList.add('flex');
+                }
+                if (label) label.innerText = `Gutschein (${data.coupon.code} -${data.coupon.badge})`;
+                if (val) val.innerText = data.formatted_discount;
+
+                if (document.getElementById('co-subtotal')) document.getElementById('co-subtotal').innerText = data.formatted_subtotal;
+                if (document.getElementById('co-vat')) document.getElementById('co-vat').innerText = data.formatted_vat;
+                if (document.getElementById('co-total')) document.getElementById('co-total').innerText = data.formatted_total;
+
+                LuxuryToast.fire({
+                    icon: 'success',
+                    title: data.message
+                });
+            } else {
+                LuxurySwal.fire({
+                    icon: 'error',
+                    title: isEn ? 'Voucher Invalid' : 'Gutschein ungültig',
+                    text: data.message,
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
+        .catch(err => {
+            LuxurySwal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Network error validating voucher.'
+            });
+        });
+    }
+
+    function removeCheckoutVoucher() {
+        const isEn = (window.getCurrentLang ? window.getCurrentLang() : 'de') === 'en';
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        fetch(window.mehaajUrl('/cart/remove-coupon'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token || '',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                isCheckoutVoucherApplied = false;
+                const input = document.getElementById('checkout-voucher-input');
+                if (input) input.value = '';
+                const msg = document.getElementById('checkout-voucher-msg');
+                if (msg) msg.classList.add('hidden');
+
+                const row = document.getElementById('co-discount-row');
+                if (row) {
+                    row.classList.add('hidden');
+                    row.classList.remove('flex');
+                }
+
+                if (document.getElementById('co-subtotal')) document.getElementById('co-subtotal').innerText = data.formatted_subtotal;
+                if (document.getElementById('co-vat')) document.getElementById('co-vat').innerText = data.formatted_vat;
+                if (document.getElementById('co-total')) document.getElementById('co-total').innerText = data.formatted_total;
+
+                LuxuryToast.fire({
+                    icon: 'info',
+                    title: data.message
+                });
+            }
+        });
     }
 
     function submitCheckoutOrder() {
@@ -586,5 +683,53 @@
             });
         });
     }
+
+    // Real-Time Abandoned Cart Tracking Hook
+    let trackDebounceTimer = null;
+    function syncAbandonedCart() {
+        clearTimeout(trackDebounceTimer);
+        trackDebounceTimer = setTimeout(() => {
+            const email = document.getElementById('ship-email')?.value.trim();
+            const phone = document.getElementById('ship-phone')?.value.trim();
+            const firstName = document.getElementById('ship-first-name')?.value.trim();
+            const lastName = document.getElementById('ship-last-name')?.value.trim();
+
+            if (!email && !phone) return;
+
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            fetch(window.mehaajUrl ? window.mehaajUrl('/cart/track-abandonment') : '/cart/track-abandonment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token || '',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    phone: phone,
+                    first_name: firstName,
+                    last_name: lastName
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.tracking_id) {
+                    console.log('Abandoned cart synced:', data.tracking_id);
+                }
+            })
+            .catch(err => console.error('Cart tracking err:', err));
+        }, 600);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        ['ship-email', 'ship-phone', 'ship-first-name', 'ship-last-name'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', syncAbandonedCart);
+                el.addEventListener('change', syncAbandonedCart);
+                el.addEventListener('blur', syncAbandonedCart);
+            }
+        });
+    });
 </script>
 @endsection

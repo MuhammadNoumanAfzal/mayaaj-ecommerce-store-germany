@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subcategory;
+use App\Models\Deal;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -170,7 +172,28 @@ class ShopController extends Controller
 
         $approvedReviews = $product->reviews()->where('status', 'approved')->latest()->get();
 
-        return view('pages.product-detail', compact('product', 'relatedProducts', 'approvedReviews'));
+        $activeDeal = Deal::active()
+            ->whereHas('products', function ($q) use ($product) {
+                $q->where('products.id', $product->id);
+            })
+            ->with('products')
+            ->first();
+
+        return view('pages.product-detail', compact('product', 'relatedProducts', 'approvedReviews', 'activeDeal'));
+    }
+
+    /**
+     * Dedicated Deals & Product Bundles showcase page.
+     */
+    public function deals(Request $request)
+    {
+        $deals = Deal::active()
+            ->with('products')
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('pages.deals', compact('deals'));
     }
 
     /**
@@ -252,5 +275,54 @@ class ShopController extends Controller
             'count' => $formatted->count(),
             'products' => $formatted,
         ]);
+    }
+
+    /**
+     * Display Customer Order Tracking & Courier Lookup Page.
+     */
+    public function trackOrder(Request $request)
+    {
+        $order = null;
+        $orderNumber = trim($request->input('number', $request->input('order', '')));
+        $email = trim($request->input('email', ''));
+
+        if (!empty($orderNumber)) {
+            $query = Order::with('items')->where('order_number', $orderNumber);
+            if (!empty($email)) {
+                $query->where('customer_email', $email);
+            }
+            $order = $query->first();
+        }
+
+        return view('pages.order-track', compact('order', 'orderNumber', 'email'));
+    }
+
+    /**
+     * Handle Customer Order Lookup Form submission.
+     */
+    public function lookupOrder(Request $request)
+    {
+        $request->validate([
+            'order_number' => 'required|string|max:50',
+            'customer_email' => 'required|email|max:150',
+        ]);
+
+        $orderNumber = trim($request->input('order_number'));
+        $email = trim($request->input('customer_email'));
+
+        $order = Order::with('items')
+            ->where('order_number', $orderNumber)
+            ->where('customer_email', $email)
+            ->first();
+
+        if (!$order) {
+            $isEn = app()->getLocale() === 'en';
+            $errMsg = $isEn
+                ? 'No matching order found for this order number and email address.'
+                : 'Keine passende Bestellung für diese Bestellnummer und E-Mail-Adresse gefunden.';
+            return redirect()->route('order.track')->withInput()->with('error', $errMsg);
+        }
+
+        return view('pages.order-track', compact('order', 'orderNumber', 'email'));
     }
 }

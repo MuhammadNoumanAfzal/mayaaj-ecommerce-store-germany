@@ -84,16 +84,16 @@ class ReviewController extends Controller
             'product_id'     => 'nullable|exists:products,id',
         ]);
 
-        $validated['is_verified'] = true;
-        $validated['status'] = 'approved';
+        $validated['is_verified'] = false;
+        $validated['status'] = 'pending';
 
         $review = Review::create($validated);
         $review->load('product');
 
         $isDe = session('locale', 'en') === 'de';
         $successMsg = $isDe
-            ? 'Vielen Dank! Ihre verifizierte Bewertung wurde erfolgreich in unserem Atelier-Gästebuch veröffentlicht.'
-            : 'Thank you! Your verified review has been published directly to our atelier guestbook.';
+            ? 'Vielen Dank! Ihre Bewertung wurde eingereicht und wird nach redaktioneller Prüfung durch unser Atelier freigeschaltet.'
+            : 'Thank you! Your review has been submitted and is in the moderation queue for atelier verification.';
 
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
