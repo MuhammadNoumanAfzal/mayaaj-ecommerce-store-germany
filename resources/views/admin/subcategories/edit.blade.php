@@ -20,7 +20,7 @@
     </div>
 
     <!-- 2. Colorful Form Card Container -->
-    <form action="{{ route('admin.subcategories.update', $subcategory->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#ebdccb] shadow-xs overflow-hidden border-t-4 border-t-[#78000b]">
+    <form action="{{ route('admin.subcategories.update', $subcategory->id) }}" method="POST" class="bg-white rounded-2xl border border-[#ebdccb] shadow-xs overflow-hidden border-t-4 border-t-[#78000b]">
         @csrf
         @method('PUT')
 
@@ -61,8 +61,8 @@
                 </div>
             @endif
 
-            <!-- Row 1: Parent Category & Subcategory Name -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Row 1: All 3 Inputs in a Single Line (Parent Category, Subcategory Name, Catalog Status) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 
                 <!-- Parent Category -->
                 <div>
@@ -96,10 +96,7 @@
                     >
                 </div>
 
-            </div>
-
-            <!-- Row 2: Catalog Status -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Catalog Status -->
                 <div>
                     <label for="status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
                         Catalog Status <span class="text-[#78000b] font-bold">*</span>
@@ -113,9 +110,10 @@
                         <option value="draft" {{ old('status', $subcategory->status) === 'draft' ? 'selected' : '' }}>• Draft (Hidden from Storefront)</option>
                     </select>
                 </div>
+
             </div>
 
-            <!-- Row 3: Description & Tagline -->
+            <!-- Row 2: Description & Tagline -->
             <div>
                 <label for="description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
                     Description & Tagline
@@ -126,57 +124,6 @@
                     rows="3" 
                     class="w-full p-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition leading-relaxed shadow-2xs"
                 >{{ old('description', $subcategory->description) }}</textarea>
-            </div>
-
-            <!-- Row 4: Banner Image Upload -->
-            <div>
-                <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
-                    Banner Image
-                </label>
-                
-                <div class="rounded-xl border border-[#ebdccb] p-4 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
-                    
-                    <div class="flex flex-col sm:flex-row items-center gap-3.5">
-                        <!-- Left: Current or Preview Thumbnail -->
-                        <div id="sub_edit_preview_box" class="w-14 h-14 rounded-xl bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shrink-0 overflow-hidden shadow-xs">
-                            @if($subcategory->image_url)
-                                <img id="sub_edit_preview_img" src="{{ $subcategory->image_url }}" class="w-full h-full object-cover">
-                                <svg id="sub_edit_placeholder_svg" class="hidden w-7 h-7 text-[#78000b]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            @else
-                                <img id="sub_edit_preview_img" src="" class="hidden w-full h-full object-cover">
-                                <svg id="sub_edit_placeholder_svg" class="w-7 h-7 text-[#78000b]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            @endif
-                        </div>
-
-                        <!-- Right: Upload Button & Format Hint -->
-                        <div class="flex-1 text-center sm:text-left space-y-1">
-                            <input 
-                                type="file" 
-                                name="image" 
-                                id="subEditImageInput" 
-                                accept="image/*"
-                                onchange="previewSubEditImage(this)"
-                                class="hidden"
-                            >
-                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                                <button 
-                                    type="button" 
-                                    onclick="document.getElementById('subEditImageInput').click()" 
-                                    class="h-9 px-4 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer active:scale-95"
-                                    style="background: #181210 !important; color: #ffffff !important;"
-                                >
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #ffffff !important;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                                    <span style="color: #ffffff !important;">Upload New from Computer</span>
-                                </button>
-                                <span id="sub_edit_filename" class="text-[0.7rem] font-semibold text-[#685c54]">
-                                    {{ $subcategory->image ? 'Current cover active' : 'PNG, JPG, WEBP up to 10MB' }}
-                                </span>
-                            </div>
-                            <p class="text-[0.65rem] text-[#8a7c74]">Selecting a new file will automatically replace current cover</p>
-                        </div>
-                    </div>
-
-                </div>
             </div>
 
         </div>
@@ -200,26 +147,4 @@
     </form>
 
 </div>
-
-<script>
-    // Live Image Preview Handler
-    function previewSubEditImage(input) {
-        if (input.files && input.files[0]) {
-            const file = input.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.getElementById('sub_edit_preview_img');
-                const svg = document.getElementById('sub_edit_placeholder_svg');
-                const fn = document.getElementById('sub_edit_filename');
-                if (img) { img.src = e.target.result; img.classList.remove('hidden'); }
-                if (svg) { svg.classList.add('hidden'); }
-                if (fn) {
-                    fn.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
-                    fn.className = 'text-xs text-emerald-700 font-bold';
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-</script>
 @endsection
