@@ -2,7 +2,7 @@
 @section('title', 'Edit Subcategory - MEHAAJ Admin')
 
 @section('admin-content')
-<div class="space-y-6 max-w-5xl mx-auto pb-16">
+<div class="space-y-4 w-full pb-12">
 
     <!-- Form Container Card (Pink-Salt Style) -->
     <form action="{{ route('admin.subcategories.update', $subcategory->id) }}" method="POST" enctype="multipart/form-data" class="exec-card bg-white rounded-2xl border border-stone-200/90 shadow-md shadow-stone-900/5 overflow-hidden border-t-4 border-t-saltora-terracotta">

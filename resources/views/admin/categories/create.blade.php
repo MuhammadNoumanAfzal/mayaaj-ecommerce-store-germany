@@ -2,7 +2,7 @@
 @section('title', 'Add New Category - MEHAAJ Atelier Admin')
 
 @section('admin-content')
-<div class="space-y-3.5 max-w-3xl mx-auto pb-10 text-[#1c1210]">
+<div class="space-y-4 w-full pb-12 text-[#1c1210]">
 
     <!-- 1. Minimalist Clean Breadcrumb Pill -->
     <div class="bg-white rounded-xl py-2.5 px-4 text-xs font-semibold text-stone-600 border border-[#e5ded5] shadow-xs flex items-center justify-between">
