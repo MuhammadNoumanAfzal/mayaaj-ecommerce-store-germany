@@ -39,8 +39,9 @@
                     $pCat = $prod->category->name ?? 'Haute Maroquinerie';
                     $pImg = $prod->image_url;
                     $pHoverImg = $prod->hover_image_url ?? $pImg;
-                    $pPrice = '€' . number_format($prod->price, 2, '.', ',');
-                    $pSalePrice = $prod->sale_price ? '€' . number_format($prod->sale_price, 2, '.', ',') : null;
+                    $pPrice = currency_format($prod->price);
+                    $pSalePrice = $prod->sale_price ? currency_format($prod->sale_price) : null;
+                    $isWishlisted = in_array($prod->id, $wishlistProductIds ?? []);
                     $detailUrl = route('shop.show', $pSlug);
                     $prodPayload = htmlspecialchars(json_encode([
                         'id' => $prod->id,
@@ -99,9 +100,9 @@
                             <button
                                 type="button"
                                 data-wishlist-btn-id="{{ $prod->id }}"
-                                onclick="event.stopPropagation(); toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
+                                onclick="event.stopPropagation(); window.toggleWishlist({{ $prod->id }}, this); toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
                                 data-product="{{ $prodPayload }}"
-                                class="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full border border-[#d8b45a]/50 bg-white/95 text-neutral-700 shadow-md transition-all duration-300 hover:bg-[#78000b] hover:text-white hover:scale-110 cursor-pointer"
+                                class="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full border {{ $isWishlisted ? 'border-[#78000b] text-[#78000b] bg-[#78000b]/10' : 'border-[#d8b45a]/50 text-neutral-700 bg-white/95' }} shadow-md transition-all duration-300 hover:bg-[#78000b] hover:text-white hover:scale-110 cursor-pointer"
                                 aria-label="Add to wishlist"
                                 title="Wishlist"
                                 data-i18n-aria-en="Add to wishlist"
@@ -109,7 +110,7 @@
                                 data-i18n-title-en="Wishlist"
                                 data-i18n-title-de="Wunschliste"
                             >
-                                <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 24 24" fill="currentColor">
+                                <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 24 24" fill="{{ $isWishlisted ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-width="1.8">
                                     <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
                                 </svg>
                             </button>

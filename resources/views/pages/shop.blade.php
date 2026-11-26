@@ -425,8 +425,9 @@
                                 $pCat = $product->category->name ?? 'Haute Maroquinerie';
                                 $pImg = $product->image_url;
                                 $pHoverImg = $product->hover_image_url ?? $pImg;
-                                $pPrice = '€' . number_format($product->price, 2, '.', ',');
-                                $pSalePrice = ($product->sale_price && $product->sale_price < $product->price) ? '€' . number_format($product->sale_price, 2, '.', ',') : null;
+                                $pPrice = currency_format($product->price);
+                                $pSalePrice = ($product->sale_price && $product->sale_price < $product->price) ? currency_format($product->sale_price) : null;
+                                $isWishlisted = in_array($product->id, $wishlistProductIds ?? []);
                                 $hasDiscount = ($product->sale_price && $product->sale_price < $product->price);
                                 $discountPercent = $hasDiscount ? round((($product->price - $product->sale_price) / $product->price) * 100) : 0;
                                 $detailUrl = route('shop.show', $pSlug);
@@ -494,13 +495,13 @@
                                         <button
                                             type="button"
                                             data-wishlist-btn-id="{{ $product->id }}"
-                                            onclick="event.stopPropagation(); toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
+                                            onclick="event.stopPropagation(); window.toggleWishlist({{ $product->id }}, this); toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
                                             data-product="{{ $prodPayload }}"
-                                            class="flex h-7 w-7 items-center justify-center rounded-full border border-[#d8b45a]/50 bg-white/95 text-[#78000b] backdrop-blur-md shadow-xs transition hover:bg-[#78000b] hover:text-white cursor-pointer"
+                                            class="flex h-7 w-7 items-center justify-center rounded-full border {{ $isWishlisted ? 'border-[#78000b] text-[#78000b] bg-[#78000b]/10' : 'border-[#d8b45a]/50 text-[#78000b] bg-white/95' }} backdrop-blur-md shadow-xs transition hover:bg-[#78000b] hover:text-white cursor-pointer"
                                             aria-label="Save to Wishlist"
                                             title="Save to Wishlist"
                                         >
-                                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="{{ $isWishlisted ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-width="2">
                                                 <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
                                             </svg>
                                         </button>

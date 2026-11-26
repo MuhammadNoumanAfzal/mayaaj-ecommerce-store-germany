@@ -271,8 +271,66 @@
             window.setSiteLanguage = setSiteLanguage;
 
             // ==========================================
-            // 2. WISHLIST ENGINE (localStorage + Drawer)
+            // 2. WISHLIST ENGINE (localStorage + Database Sync)
             // ==========================================
+            window.switchCurrency = function(code) {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                fetch('/currency/' + code, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token || '',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                })
+                .catch(() => {
+                    window.location.href = '/currency/' + code;
+                });
+            };
+
+            window.toggleWishlist = function(productId, btnEl) {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                fetch('{{ route("wishlist.toggle") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token || '',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ product_id: productId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelectorAll('.wishlist-badge-count').forEach(el => {
+                            el.textContent = data.count;
+                        });
+                        document.querySelectorAll('[data-wishlist-btn-id="' + productId + '"]').forEach(btn => {
+                            const icon = btn.querySelector('svg');
+                            if (data.is_wishlisted) {
+                                btn.classList.add('text-[#78000b]', 'fill-current');
+                                if (icon) icon.setAttribute('fill', 'currentColor');
+                            } else {
+                                btn.classList.remove('text-[#78000b]', 'fill-current');
+                                if (icon) icon.setAttribute('fill', 'none');
+                            }
+                        });
+                        if (window.LuxuryToast) {
+                            window.LuxuryToast.fire({
+                                icon: data.is_wishlisted ? 'success' : 'info',
+                                title: data.message
+                            });
+                        }
+                    }
+                })
+                .catch(err => console.error('Wishlist error:', err));
+            };
+
             function getWishlist() {
                 try {
                     return JSON.parse(localStorage.getItem('mehaaj_wishlist') || '[]');

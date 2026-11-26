@@ -148,6 +148,63 @@
                 >DE</button>
             </div>
 
+            <!-- Currency Switcher Pill Dropdown (EUR, USD, GBP, CHF) -->
+            @php
+                $activeCurrenciesList = $activeCurrencies ?? collect([
+                    (object)['code' => 'EUR', 'symbol' => '€'],
+                    (object)['code' => 'USD', 'symbol' => '$'],
+                    (object)['code' => 'GBP', 'symbol' => '£'],
+                    (object)['code' => 'CHF', 'symbol' => 'CHF']
+                ]);
+                $currCode = session('currency', 'EUR');
+                $currObj = $activeCurrenciesList->firstWhere('code', $currCode) ?? (object)['code' => 'EUR', 'symbol' => '€'];
+            @endphp
+            <div class="relative group/currency">
+                <button
+                    type="button"
+                    class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full border border-white/25 bg-black/35 text-[0.62rem] font-bold text-white/90 hover:text-[#d8b45a] hover:border-[#d8b45a]/60 shadow-2xs backdrop-blur-md transition cursor-pointer"
+                    aria-label="Select Currency"
+                >
+                    <span class="text-[#d8b45a]">{{ $currObj->symbol }}</span>
+                    <span>{{ $currObj->code }}</span>
+                    <svg class="w-2.5 h-2.5 opacity-70 group-hover/currency:rotate-180 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                </button>
+                <div class="hidden group-hover/currency:block absolute right-0 top-full mt-1.5 w-32 rounded-xl border border-[#d8b45a]/30 bg-[#1f1715] p-1.5 shadow-xl backdrop-blur-xl z-50 animate-in fade-in slide-in-from-top-1">
+                    <div class="space-y-0.5">
+                        @foreach($activeCurrenciesList as $c)
+                            <button
+                                type="button"
+                                onclick="switchCurrency('{{ $c->code }}')"
+                                class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[0.68rem] font-semibold transition cursor-pointer {{ $c->code === $currCode ? 'bg-[#78000b] text-white font-bold' : 'text-white/80 hover:bg-white/10 hover:text-[#d8b45a]' }}"
+                            >
+                                <span class="flex items-center gap-1.5">
+                                    <span class="text-[#d8b45a] font-bold">{{ $c->symbol }}</span>
+                                    <span>{{ $c->code }}</span>
+                                </span>
+                                @if($c->code === $currCode)
+                                    <span class="text-[0.6rem] text-[#ffd45a]">✓</span>
+                                @endif
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wishlist Heart Button & Badge -->
+            <a 
+                href="{{ route('wishlist.index') }}" 
+                class="group relative flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white hover:bg-[#78000b] hover:text-[#ffd45a] hover:border-[#ffd45a]/50 transition-all duration-300 cursor-pointer shadow-2xs backdrop-blur-xs" 
+                aria-label="Maison Merkzettel / Wishlist"
+                title="Wunschliste & Gespeicherte Favoriten"
+            >
+                <svg class="h-4.5 w-4.5 sm:h-5 sm:w-5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span class="wishlist-badge-count absolute -top-1 -right-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-[#d8b45a] px-1 text-[0.6rem] font-black text-[#120807] shadow-sm ring-2 ring-[#78000b]">
+                    {{ $wishlistCount ?? 0 }}
+                </span>
+            </a>
+
             <!-- Shopping Bag Drawer Trigger Button -->
             <button 
                 type="button" 
@@ -535,6 +592,32 @@
                     >DE</button>
                 </div>
             </div>
+
+            <!-- Mobile Currency Selector -->
+            <div class="flex items-center justify-between px-1">
+                <span class="text-xs text-white/75 font-semibold uppercase tracking-wider" data-i18n-en="Currency:" data-i18n-de="Währung:">Währung:</span>
+                <div class="inline-flex items-center gap-1 rounded-full border border-white/25 bg-black/40 p-0.5 text-xs font-bold shadow-xs backdrop-blur-md">
+                    @foreach($activeCurrenciesList as $c)
+                        <button
+                            type="button"
+                            onclick="switchCurrency('{{ $c->code }}')"
+                            class="px-2.5 py-1 rounded-full transition cursor-pointer {{ $c->code === $currCode ? 'bg-[#78000b] text-[#ffd45a] font-bold' : 'text-white/70 hover:text-white' }}"
+                        >{{ $c->code }}</button>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Mobile Wishlist Button -->
+            <a 
+                href="{{ route('wishlist.index') }}" 
+                class="w-full flex items-center justify-center gap-2 rounded-lg bg-white/10 border border-white/20 py-2.5 text-xs font-bold uppercase tracking-widest text-white hover:bg-[#78000b] transition cursor-pointer"
+            >
+                <svg class="h-4 w-4 text-[#ffd45a]" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span data-i18n-en="Wishlist & Favorites" data-i18n-de="Merkzettel & Favoriten">Merkzettel & Favoriten</span>
+                <span>(<span class="wishlist-badge-count">{{ $wishlistCount ?? 0 }}</span>)</span>
+            </a>
 
             <button 
                 type="button" 

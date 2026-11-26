@@ -11,9 +11,16 @@ use App\Models\Coupon;
 use App\Models\CouponUsage;
 use App\Models\Deal;
 use App\Models\AbandonedCart;
+use App\Models\Currency;
 
 class CartController extends Controller
 {
+    private function formatCartPrice(float $amount): string
+    {
+        return function_exists('currency_format')
+            ? currency_format($amount)
+            : '€' . number_format($amount, 2, '.', ',');
+    }
     /**
      * Display the cart page or return JSON representation of cart.
      */
@@ -32,10 +39,10 @@ class CartController extends Controller
                 'coupon' => $totals['coupon'],
                 'vat' => $totals['vat'],
                 'total' => $totals['total'],
-                'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
-                'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
-                'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
-                'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+                'formatted_subtotal' => $this->formatCartPrice($totals['subtotal']),
+                'formatted_discount' => '- ' . $this->formatCartPrice($totals['discount']),
+                'formatted_vat' => $this->formatCartPrice($totals['vat']),
+                'formatted_total' => $this->formatCartPrice($totals['total']),
             ]);
         }
 
@@ -86,10 +93,10 @@ class CartController extends Controller
             'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
-            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
-            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
-            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
-            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'formatted_subtotal' => $this->formatCartPrice($totals['subtotal']),
+            'formatted_discount' => '- ' . $this->formatCartPrice($totals['discount']),
+            'formatted_vat' => $this->formatCartPrice($totals['vat']),
+            'formatted_total' => $this->formatCartPrice($totals['total']),
         ]);
     }
 
@@ -178,10 +185,10 @@ class CartController extends Controller
             'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
-            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
-            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
-            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
-            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'formatted_subtotal' => $this->formatCartPrice($totals['subtotal']),
+            'formatted_discount' => '- ' . $this->formatCartPrice($totals['discount']),
+            'formatted_vat' => $this->formatCartPrice($totals['vat']),
+            'formatted_total' => $this->formatCartPrice($totals['total']),
         ]);
     }
 
@@ -269,10 +276,10 @@ class CartController extends Controller
             'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
-            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
-            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
-            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
-            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'formatted_subtotal' => $this->formatCartPrice($totals['subtotal']),
+            'formatted_discount' => '- ' . $this->formatCartPrice($totals['discount']),
+            'formatted_vat' => $this->formatCartPrice($totals['vat']),
+            'formatted_total' => $this->formatCartPrice($totals['total']),
         ]);
     }
 
@@ -319,10 +326,10 @@ class CartController extends Controller
             'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
-            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
-            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
-            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
-            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'formatted_subtotal' => $this->formatCartPrice($totals['subtotal']),
+            'formatted_discount' => '- ' . $this->formatCartPrice($totals['discount']),
+            'formatted_vat' => $this->formatCartPrice($totals['vat']),
+            'formatted_total' => $this->formatCartPrice($totals['total']),
         ]);
     }
 
@@ -360,10 +367,10 @@ class CartController extends Controller
             'coupon' => $totals['coupon'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
-            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
-            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
-            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
-            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'formatted_subtotal' => $this->formatCartPrice($totals['subtotal']),
+            'formatted_discount' => '- ' . $this->formatCartPrice($totals['discount']),
+            'formatted_vat' => $this->formatCartPrice($totals['vat']),
+            'formatted_total' => $this->formatCartPrice($totals['total']),
         ]);
     }
 
@@ -438,10 +445,10 @@ class CartController extends Controller
             'discount' => $totals['discount'],
             'vat' => $totals['vat'],
             'total' => $totals['total'],
-            'formatted_subtotal' => 'EUR ' . number_format($totals['subtotal'], 2, ',', '.'),
-            'formatted_discount' => '- EUR ' . number_format($totals['discount'], 2, ',', '.'),
-            'formatted_vat' => 'EUR ' . number_format($totals['vat'], 2, ',', '.'),
-            'formatted_total' => 'EUR ' . number_format($totals['total'], 2, ',', '.'),
+            'formatted_subtotal' => $this->formatCartPrice($totals['subtotal']),
+            'formatted_discount' => '- ' . $this->formatCartPrice($totals['discount']),
+            'formatted_vat' => $this->formatCartPrice($totals['vat']),
+            'formatted_total' => $this->formatCartPrice($totals['total']),
         ]);
     }
 

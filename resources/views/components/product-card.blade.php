@@ -9,8 +9,18 @@
             loading="lazy"
         >
         <div class="absolute inset-0 bg-gradient-to-t from-espresso/36 via-transparent to-transparent opacity-80"></div>
-        <button class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center border border-champagne/20 bg-espresso/72 text-ivory transition duration-300 hover:border-champagne/70 hover:text-champagne" type="button" aria-label="{{ $product['name'] }} zur Wunschliste hinzufügen">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" aria-hidden="true">
+        @php
+            $prodId = $product['id'] ?? (is_object($product) ? $product->id : null);
+            $isWishlisted = in_array($prodId, $wishlistProductIds ?? []);
+        @endphp
+        <button 
+            class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center border border-champagne/20 bg-espresso/72 {{ $isWishlisted ? 'text-[#ffd45a] border-[#ffd45a]/70' : 'text-ivory' }} transition duration-300 hover:border-champagne/70 hover:text-champagne cursor-pointer z-10" 
+            type="button" 
+            data-wishlist-btn-id="{{ $prodId }}"
+            onclick="event.stopPropagation(); if (typeof window.toggleWishlist === 'function') { window.toggleWishlist({{ $prodId }}, this); }"
+            aria-label="{{ $product['name'] }} zur Wunschliste hinzufügen"
+        >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="{{ $isWishlisted ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-width="1.35" aria-hidden="true">
                 <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z" stroke-linejoin="round" />
             </svg>
         </button>

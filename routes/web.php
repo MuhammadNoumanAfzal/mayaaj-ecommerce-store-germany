@@ -107,6 +107,18 @@ Route::match(['get', 'post'], '/lang/{locale}', function ($locale, \Illuminate\H
     return redirect()->back();
 })->name('site.lang');
 
+// Multi-Currency Engine Switcher
+Route::match(['get', 'post'], '/currency/{code}', [\App\Http\Controllers\CurrencyController::class, 'switch'])->name('currency.switch');
+
+// Maison Patron Wishlist & Saved Creations
+Route::get('/wishlist', [\App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist.index');
+Route::get('/merkzettel', [\App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist.de');
+Route::post('/wishlist/toggle', [\App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
+Route::post('/wishlist/{product}/move-to-bag', [\App\Http\Controllers\WishlistController::class, 'moveToBag'])->name('wishlist.move-to-bag');
+Route::post('/wishlist/move-all-to-bag', [\App\Http\Controllers\WishlistController::class, 'moveAllToBag'])->name('wishlist.move-all-to-bag');
+Route::delete('/wishlist/{product}', [\App\Http\Controllers\WishlistController::class, 'destroy'])->name('wishlist.destroy');
+Route::post('/wishlist/sync', [\App\Http\Controllers\WishlistController::class, 'sync'])->name('wishlist.sync');
+
 /*
 |--------------------------------------------------------------------------
 | Admin Portal Routes (Authentication, Categories & Subcategories)

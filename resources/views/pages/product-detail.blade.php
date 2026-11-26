@@ -252,16 +252,25 @@
                         </div>
 
                         <!-- Clean Price Display -->
-                        <div class="mt-3.5 flex items-baseline gap-3">
+                        @php
+                            $currConv = currency_convert($effectivePrice);
+                            $currCode = session('currency', 'EUR');
+                        @endphp
+                        <div class="mt-3.5 flex items-baseline gap-3 flex-wrap">
                             <span id="product-price-display" class="font-sans text-2xl sm:text-3xl font-bold text-[#1c1210]">
-                                €{{ number_format($effectivePrice, 2, '.', ',') }}
+                                {{ $currConv['formatted'] }}
                             </span>
+                            @if($currCode !== 'EUR')
+                                <span class="text-xs text-[#8a7c74] font-mono">
+                                    (ca. €{{ number_format($effectivePrice, 2, '.', ',') }})
+                                </span>
+                            @endif
                             @if($hasDiscount)
                                 <span class="text-sm text-[#8a7c74] line-through font-mono">
-                                    €{{ number_format($product->price, 2, '.', ',') }}
+                                    {{ currency_format($product->price) }}
                                 </span>
                                 <span class="rounded bg-[#78000b] px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wider text-white">
-                                    <span data-i18n-en="SAVE" data-i18n-de="SPAREN">SAVE</span> €{{ number_format($product->price - $product->sale_price, 2, '.', ',') }}
+                                    <span data-i18n-en="SAVE" data-i18n-de="SPAREN">SAVE</span> {{ currency_format($product->price - $product->sale_price) }}
                                 </span>
                             @endif
                         </div>
@@ -335,12 +344,15 @@
                                     'slug' => $product->slug,
                                 ]), ENT_QUOTES, 'UTF-8');
                             @endphp
+                            @php
+                                $isFav = in_array($product->id, $wishlistProductIds ?? []);
+                            @endphp
                             <button
                                 type="button"
                                 data-wishlist-btn-id="{{ $product->id }}"
-                                onclick="toggleWishlistProduct(JSON.parse(this.dataset.product), this)"
+                                onclick="window.toggleWishlist({{ $product->id }}, this); toggleWishlistProduct(JSON.parse(this.dataset.product), this);"
                                 data-product="{{ $prodPayload }}"
-                                class="h-11 w-11 flex items-center justify-center rounded-lg border border-[#d9cebc] bg-[#faf8f5] text-[#78000b] shadow-2xs transition-all duration-200 hover:bg-[#78000b] hover:text-white cursor-pointer shrink-0"
+                                class="h-11 w-11 flex items-center justify-center rounded-lg border border-[#d9cebc] bg-[#faf8f5] {{ $isFav ? 'text-[#78000b] bg-[#78000b]/10' : 'text-[#78000b]' }} shadow-2xs transition-all duration-200 hover:bg-[#78000b] hover:text-white cursor-pointer shrink-0"
                                 title="Save to Wishlist"
                                 aria-label="Wishlist"
                                 data-i18n-title-en="Save to Wishlist"
@@ -348,7 +360,7 @@
                                 data-i18n-aria-en="Wishlist"
                                 data-i18n-aria-de="Wunschliste"
                             >
-                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="{{ $isFav ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-width="2">
                                     <path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/>
                                 </svg>
                             </button>
