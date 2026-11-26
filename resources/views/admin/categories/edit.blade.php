@@ -168,19 +168,19 @@
 
         </div>
 
-        <!-- 3. Colorful Footer Actions Bar -->
-        <div class="px-5 py-3.5 bg-[#FAF7F2] border-t border-[#ebdccb] flex items-center justify-between">
-            <a href="{{ route('admin.categories') }}" class="h-8.5 px-4 rounded-lg text-xs font-semibold text-[#685c54] bg-white border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5 shadow-2xs">
-                <span>Cancel</span>
+        <!-- Footer Actions Bar -->
+        <div class="px-6 py-4 bg-stone-50/80 border-t border-stone-200/80 flex items-center justify-between">
+            <a href="{{ route('admin.categories') }}" class="btn-exec-secondary rounded-xl px-5 py-2.5 text-xs transition-all flex items-center gap-2 cursor-pointer shadow-2xs">
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <span data-i18n-de="Abbrechen" data-i18n-en="Cancel">Cancel</span>
             </a>
 
             <button 
                 type="submit" 
-                class="h-8.5 px-5 rounded-lg text-xs font-bold uppercase tracking-wider text-white shadow-sm transition active:scale-95 cursor-pointer flex items-center gap-2"
-                style="background: linear-gradient(135deg, #78000b 0%, #9e1422 100%) !important;"
+                class="btn-exec-primary rounded-xl px-6 py-2.5 text-xs transition-all flex items-center gap-2 cursor-pointer shadow-md active:scale-95"
             >
-                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                <span>Save Changes</span>
+                <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                <span data-i18n-de="Änderungen Speichern" data-i18n-en="Save Changes">Save Changes</span>
             </button>
         </div>
 
