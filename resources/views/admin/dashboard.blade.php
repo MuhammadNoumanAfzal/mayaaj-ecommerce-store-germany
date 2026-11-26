@@ -2,301 +2,297 @@
 @section('title', 'Executive Atelier Dashboard - MEHAAJ Luxury Control Center')
 
 @section('admin-content')
-<div class="space-y-5 text-[#1c1210]">
+<div class="space-y-3.5 text-[#1c1210]">
 
-    <!-- 1. Executive Top Hero Banner (Ultra-Modern, Compact Luxury) -->
-    <div class="rounded-2xl p-5 sm:p-6 bg-[#1f1715] text-[#faf7f2] border border-[#382b27] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden">
+    <!-- 1. Executive Top Hero Banner (Ultra-Modern, Compact Luxury, Guaranteed Contrast) -->
+    <div class="rounded-2xl p-3.5 sm:p-4 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-3 relative overflow-hidden" style="background: linear-gradient(135deg, #181210 0%, #241a17 100%) !important; color: #ffffff !important; border: 1px solid #382b27 !important;">
         <!-- Subtle luxury decorative ambient glow -->
         <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-[#78000b]/20 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="relative z-10 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-[#2e211e] border border-[#483732] flex items-center justify-center text-stone-200 font-serif font-black text-lg tracking-wider shrink-0 shadow-inner">
+        <div class="relative z-10 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center font-serif font-black text-base tracking-wider shrink-0 shadow-inner" style="background: #251b18 !important; border: 1px solid #483732 !important; color: #f5ede6 !important;">
                 MH
             </div>
             <div>
                 <div class="flex items-center gap-2">
-                    <h1 class="text-base sm:text-lg font-serif font-bold tracking-tight text-white uppercase">
+                    <h1 class="text-sm sm:text-base font-serif font-bold tracking-tight text-white uppercase whitespace-nowrap">
                         MEHAAJ LUXURY ATELIER
                     </h1>
-                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[0.62rem] font-bold tracking-wider uppercase bg-[#2e683a]/25 text-[#4ade80] border border-[#2e683a]/40">
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[0.6rem] font-bold tracking-wider uppercase whitespace-nowrap" style="background: rgba(46,104,58,0.3) !important; color: #4ade80 !important; border: 1px solid rgba(46,104,58,0.5) !important;">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#4ade80] animate-pulse"></span> LIVE
                     </span>
                 </div>
-                <p class="text-xs text-[#c4b4a9] mt-0.5" data-i18n-en="Executive Leathercraft Control Center • Real-time sales velocity & orders across Europe & DACH" data-i18n-de="Executive Atelier Kontrollzentrum • Echtzeit-Umsatzgeschwindigkeiten & Bestellungen in DACH">
+                <p class="text-[0.72rem] text-[#c4b4a9] mt-0.5 truncate max-w-xl" data-i18n-en="Executive Leathercraft Control Center • Real-time sales velocity & orders across Europe & DACH" data-i18n-de="Executive Atelier Kontrollzentrum • Echtzeit-Umsatzgeschwindigkeiten & Bestellungen in DACH">
                     Executive Leathercraft Control Center • Real-time sales velocity & orders across Europe & DACH
                 </p>
             </div>
         </div>
 
-        <div class="relative z-10 flex items-center gap-3">
-            <div class="bg-[#1f1614] rounded-xl px-4 py-2 border border-[#d8b45a]/40 text-right shadow-sm">
-                <span class="text-[0.62rem] uppercase font-bold tracking-wider text-[#d8b45a] block" data-i18n-en="Total Revenue" data-i18n-de="Gesamtumsatz">TOTAL REVENUE</span>
-                <span class="text-lg font-serif font-bold text-white tracking-wide">€{{ number_format($grossRevenue, 2) }}</span>
+        <div class="relative z-10 flex items-center gap-2.5">
+            <div class="rounded-xl px-3.5 py-1.5 text-right shadow-sm" style="background: #140e0c !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                <span class="text-[0.58rem] uppercase font-bold tracking-wider text-[#d8b45a] block whitespace-nowrap" data-i18n-en="Total Revenue" data-i18n-de="Gesamtumsatz">TOTAL REVENUE</span>
+                <span class="text-base sm:text-lg font-serif font-bold text-white tracking-wide whitespace-nowrap">€{{ number_format($grossRevenue, 2) }}</span>
             </div>
-            <a href="{{ route('admin.products.create') }}" class="h-10 px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 bg-[#78000b] hover:bg-[#5a0309] text-white shadow-sm transition active:scale-95 cursor-pointer whitespace-nowrap">
+            <a href="{{ route('admin.products.create') }}" class="h-9 px-3.5 rounded-xl text-[0.72rem] font-bold uppercase tracking-wider flex items-center gap-1.5 bg-[#78000b] hover:bg-[#5a0309] text-white shadow-sm transition active:scale-95 cursor-pointer whitespace-nowrap">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span data-i18n-en="+ New Creation" data-i18n-de="+ Neues Produkt">+ New Creation</span>
             </a>
-            <a href="{{ route('home') }}" target="_blank" class="h-10 px-3 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-[#2e211e] hover:bg-[#3d2c28] text-[#e0d3c5] border border-[#483732] transition">
+            <a href="{{ route('home') }}" target="_blank" class="h-9 px-2.5 rounded-xl text-[0.72rem] font-semibold flex items-center gap-1.5 bg-[#251b18] hover:bg-[#382b27] text-[#e0d3c5] border border-[#483732] transition whitespace-nowrap">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 <span class="hidden sm:inline" data-i18n-en="Live Store" data-i18n-de="Live Store">Live Store</span>
             </a>
         </div>
     </div>
 
-    <!-- 2. Executive Sales, Delivery & Real Profit Audit Control Card -->
-    <div class="rounded-2xl bg-white border border-[#e5ded5] p-5 shadow-xs space-y-4">
+    <!-- 2. Executive Profit & Sales Audit Control Card (Ultra-Compact, Single-Line Typography) -->
+    <div class="rounded-2xl bg-white border border-[#e5ded5] p-3.5 sm:p-4 shadow-xs space-y-3">
         
         <!-- Header row with title, date filters & export buttons -->
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#f0e8de] pb-4">
-            <div>
-                <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center justify-between gap-2.5 pb-2.5 border-b border-[#f0e8de]">
+            <div class="flex items-center gap-2.5">
+                <div class="flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-[#78000b]"></span>
-                    <h2 class="font-serif text-base sm:text-lg font-bold text-[#1c1210]" data-i18n-en="Executive Sales, Delivery & Real Profit Audit" data-i18n-de="Executive Umsatz, Lieferung & Reingewinn-Audit">
-                        Executive Sales, Delivery & Real Profit Audit
+                    <h2 class="font-serif text-sm sm:text-base font-bold text-[#1c1210] whitespace-nowrap" data-i18n-en="Executive Profit & Sales Audit" data-i18n-de="Executive Gewinn- & Umsatz-Audit">
+                        Executive Profit & Sales Audit
                     </h2>
                 </div>
-                <div class="flex items-center gap-3 text-xs text-[#8a7c74] mt-0.5">
-                    <button type="button" onclick="toggleMetricCards()" id="toggle-cards-btn" class="font-semibold text-[#78000b] hover:underline flex items-center gap-1">
-                        <span>Hide Cards</span> <span id="toggle-arrow">▲</span>
-                    </button>
-                    <span>•</span>
-                    <span>Auditing Period: <strong>{{ now()->format('F Y') }}</strong></span>
+                <button type="button" onclick="toggleMetricCards()" id="toggle-cards-btn" class="text-[0.68rem] font-semibold text-[#78000b] hover:underline flex items-center gap-0.5 whitespace-nowrap">
+                    <span>Hide</span> <span id="toggle-arrow">▲</span>
+                </button>
+                <span class="text-[0.68rem] text-[#8a7c74] hidden md:inline whitespace-nowrap">• Period: <strong>{{ now()->format('M Y') }}</strong></span>
+            </div>
+
+            <!-- Date Filters Pill Bar & Action buttons in one compact row -->
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Date Filters Pill Bar -->
+                <div class="inline-flex items-center gap-0.5 bg-[#faf7f2] p-0.5 rounded-lg border border-[#ebdccb]">
+                    <button type="button" onclick="setTimeframe('daily', this)" class="timeframe-btn px-2 py-1 text-[0.68rem] font-bold rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Today</button>
+                    <button type="button" onclick="setTimeframe('yesterday', this)" class="timeframe-btn px-2 py-1 text-[0.68rem] font-bold rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Yesterday</button>
+                    <button type="button" onclick="setTimeframe('7days', this)" class="timeframe-btn px-2 py-1 text-[0.68rem] font-bold rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">7 Days</button>
+                    <button type="button" onclick="setTimeframe('monthly', this)" class="timeframe-btn active-tf px-2.5 py-1 text-[0.68rem] font-bold rounded-md text-white shadow-xs whitespace-nowrap" style="background: #1c1210 !important; color: #ffffff !important;">Monthly</button>
+                    <button type="button" onclick="setTimeframe('yearly', this)" class="timeframe-btn px-2 py-1 text-[0.68rem] font-bold rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Yearly</button>
+                    <button type="button" onclick="openCustomDateModal()" class="timeframe-btn px-2 py-1 text-[0.68rem] font-bold rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Custom</button>
                 </div>
-            </div>
 
-            <!-- Date Filters Pill Bar -->
-            <div class="flex flex-wrap items-center gap-1.5 bg-[#faf7f2] p-1 rounded-xl border border-[#ebdccb]">
-                <button type="button" onclick="setTimeframe('daily', this)" class="timeframe-btn px-2.5 py-1 text-[0.7rem] font-bold rounded-lg text-[#685c54] hover:text-[#1c1210] transition">Daily (Today)</button>
-                <button type="button" onclick="setTimeframe('yesterday', this)" class="timeframe-btn px-2.5 py-1 text-[0.7rem] font-bold rounded-lg text-[#685c54] hover:text-[#1c1210] transition">Yesterday</button>
-                <button type="button" onclick="setTimeframe('7days', this)" class="timeframe-btn px-2.5 py-1 text-[0.7rem] font-bold rounded-lg text-[#685c54] hover:text-[#1c1210] transition">7 Days</button>
-                <button type="button" onclick="setTimeframe('monthly', this)" class="timeframe-btn active-tf px-3 py-1 text-[0.7rem] font-bold rounded-lg bg-[#1f1715] text-white shadow-xs">Monthly</button>
-                <button type="button" onclick="setTimeframe('yearly', this)" class="timeframe-btn px-2.5 py-1 text-[0.7rem] font-bold rounded-lg text-[#685c54] hover:text-[#1c1210] transition">Yearly</button>
-                <button type="button" onclick="openCustomDateModal()" class="timeframe-btn px-2.5 py-1 text-[0.7rem] font-bold rounded-lg text-[#685c54] hover:text-[#1c1210] transition">Custom Date</button>
-            </div>
-
-            <!-- Action buttons -->
-            <div class="flex items-center gap-2">
-                <button type="button" onclick="openDailyClosingModal()" class="h-8 px-3 rounded-lg text-[0.7rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    <span>Daily Closing</span>
-                </button>
-                <button type="button" onclick="window.print()" class="h-8 px-3 rounded-lg text-[0.7rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                    <span>Sales Report</span>
-                </button>
-                <a href="{{ route('admin.dashboard.export-csv') }}" class="h-8 px-3 rounded-lg text-[0.7rem] font-bold bg-[#2e683a] hover:bg-[#23532d] text-white transition flex items-center gap-1.5 shadow-xs">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span>Export CSV</span>
-                </a>
+                <!-- Action buttons -->
+                <div class="inline-flex items-center gap-1.5">
+                    <button type="button" onclick="openDailyClosingModal()" class="h-7 px-2.5 rounded-md text-[0.68rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1 whitespace-nowrap">
+                        <svg class="w-3 h-3 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <span>Closing</span>
+                    </button>
+                    <button type="button" onclick="window.print()" class="h-7 px-2.5 rounded-md text-[0.68rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1 whitespace-nowrap">
+                        <svg class="w-3 h-3 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                        <span>Report</span>
+                    </button>
+                    <a href="{{ route('admin.dashboard.export-csv') }}" class="h-7 px-2.5 rounded-md text-[0.68rem] font-bold bg-[#2e683a] hover:bg-[#23532d] text-white transition flex items-center gap-1 shadow-xs whitespace-nowrap">
+                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>CSV</span>
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- Metric Categories Filter Strip -->
-        <div class="flex items-center justify-between gap-3 text-xs">
-            <div class="flex items-center gap-2">
-                <button type="button" onclick="filterCardType('all', this)" class="card-filter-btn active-cf px-3 py-1 rounded-full text-[0.7rem] font-bold bg-[#78000b] text-white">All Metrics (8)</button>
-                <button type="button" onclick="filterCardType('profit', this)" class="card-filter-btn px-3 py-1 rounded-full text-[0.7rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8]">Profit & Cash (4)</button>
-                <button type="button" onclick="filterCardType('delivery', this)" class="card-filter-btn px-3 py-1 rounded-full text-[0.7rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8]">Delivery & Courier (4)</button>
+        <div class="flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-1.5">
+                <button type="button" onclick="filterCardType('all', this)" class="card-filter-btn active-cf px-2.5 py-0.5 rounded-full text-[0.68rem] font-bold bg-[#78000b] text-white whitespace-nowrap">All (8)</button>
+                <button type="button" onclick="filterCardType('profit', this)" class="card-filter-btn px-2.5 py-0.5 rounded-full text-[0.68rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8] whitespace-nowrap">Profit (4)</button>
+                <button type="button" onclick="filterCardType('delivery', this)" class="card-filter-btn px-2.5 py-0.5 rounded-full text-[0.68rem] font-bold bg-[#faf7f2] text-[#685c54] border border-[#d9cebc] hover:bg-[#f0e7d8] whitespace-nowrap">Delivery (4)</button>
             </div>
-            <span class="text-[0.68rem] text-[#8a7c74] font-medium hidden sm:inline">Real-time synchronized with Atelier Ledger</span>
+            <span class="text-[0.65rem] text-[#8a7c74] font-medium hidden sm:inline whitespace-nowrap">Live Ledger Synchronized</span>
         </div>
 
-        <!-- 3. High-Density 8 KPI Cards (2x4 Grid, Compact Less-Spacing) -->
-        <div id="metrics-cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-1">
+        <!-- 3. High-Density 8 KPI Cards (2x4 Grid, Compact, Single-Line Titles) -->
+        <div id="metrics-cards-container" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 pt-0.5">
             
-            <!-- Row 1: Operational Velocity -->
-            
-            <!-- Card 1: TOTAL ORDERS PLACED -->
-            <div class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#78000b]/40 hover:shadow-xs transition">
+            <!-- Card 1: ORDERS PLACED -->
+            <div class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#78000b]/40 hover:shadow-xs transition">
                 <div>
                     <div class="flex items-center justify-between text-[#8a7c74]">
-                        <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#736357]">TOTAL ORDERS PLACED</span>
-                        <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#736357] whitespace-nowrap">ORDERS PLACED</span>
+                        <svg class="w-3.5 h-3.5 text-[#78000b] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     </div>
-                    <div class="mt-2 flex items-baseline gap-2">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">{{ $ordersCount }}</span>
+                    <div class="mt-1.5 flex items-baseline gap-1.5">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#1c1210] leading-tight">{{ $ordersCount }}</span>
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74]">In selected timeframe</p>
+                <p class="mt-1.5 text-[0.65rem] text-[#8a7c74] truncate">All recorded orders</p>
             </div>
 
-            <!-- Card 2: DELIVERED ORDERS -->
-            <div class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#2e683a]/40 hover:shadow-xs transition">
+            <!-- Card 2: DELIVERED -->
+            <div class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#2e683a]/40 hover:shadow-xs transition">
                 <div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#2e683a]">DELIVERED ORDERS</span>
-                        <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#2e683a]/15 text-[#2e683a] border border-[#2e683a]/30">
-                            {{ $deliverySuccessRate }}% SUCCESS
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#2e683a] whitespace-nowrap">DELIVERED</span>
+                        <span class="px-1.5 py-0.2 rounded text-[0.58rem] font-bold bg-[#2e683a]/15 text-[#2e683a] border border-[#2e683a]/30 whitespace-nowrap">
+                            {{ $deliverySuccessRate }}% RATE
                         </span>
                     </div>
-                    <div class="mt-2 flex items-baseline gap-2">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">{{ $deliveredCount }}</span>
+                    <div class="mt-1.5 flex items-baseline gap-1.5">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#1c1210] leading-tight">{{ $deliveredCount }}</span>
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74]">DHL Express & Hermes delivered</p>
+                <p class="mt-1.5 text-[0.65rem] text-[#8a7c74] truncate">DHL Express & Hermes</p>
             </div>
 
-            <!-- Card 3: IN TRANSIT / DISPATCHED -->
-            <div class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#1d4ed8]/40 hover:shadow-xs transition">
+            <!-- Card 3: IN TRANSIT -->
+            <div class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#1d4ed8]/40 hover:shadow-xs transition">
                 <div>
                     <div class="flex items-center justify-between text-[#8a7c74]">
-                        <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#1d4ed8]">IN TRANSIT / DISPATCHED</span>
-                        <svg class="w-4 h-4 text-[#1d4ed8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#1d4ed8] whitespace-nowrap">IN TRANSIT</span>
+                        <svg class="w-3.5 h-3.5 text-[#1d4ed8] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                     </div>
-                    <div class="mt-2 flex items-baseline gap-2">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">{{ $dispatchedCount }}</span>
+                    <div class="mt-1.5 flex items-baseline gap-1.5">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#1c1210] leading-tight">{{ $dispatchedCount }}</span>
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74]">With Courier (DHL / UPS / Hermes)</p>
+                <p class="mt-1.5 text-[0.65rem] text-[#8a7c74] truncate">Active courier dispatches</p>
             </div>
 
             <!-- Card 4: RETURNS & RMA -->
-            <a href="{{ route('admin.returns') }}" class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#b91c1c]/40 hover:shadow-xs transition group">
+            <a href="{{ route('admin.returns') }}" class="metric-card metric-delivery rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#b91c1c]/40 hover:shadow-xs transition group">
                 <div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#991b1b]">RETURNS & RMA (§ 355)</span>
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#991b1b] whitespace-nowrap">RETURNS & RMA</span>
                         @if($pendingReturnsCount > 0)
-                            <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#fee2e2] text-[#991b1b] border border-[#fecaca] animate-pulse">
+                            <span class="px-1.5 py-0.2 rounded text-[0.58rem] font-bold bg-[#fee2e2] text-[#991b1b] border border-[#fecaca] animate-pulse whitespace-nowrap">
                                 {{ $pendingReturnsCount }} IN PRÜFUNG
                             </span>
                         @else
-                            <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#f3f4f6] text-stone-600 border border-stone-200">
+                            <span class="px-1.5 py-0.2 rounded text-[0.58rem] font-bold bg-[#f3f4f6] text-stone-600 border border-stone-200 whitespace-nowrap">
                                 0 OFFEN
                             </span>
                         @endif
                     </div>
-                    <div class="mt-2 flex items-baseline gap-2">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">{{ $totalReturnsCount }}</span>
+                    <div class="mt-1.5 flex items-baseline gap-1.5">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#1c1210] leading-tight">{{ $totalReturnsCount }}</span>
                         @if($openRmaRefundVolume > 0)
-                            <span class="text-[0.68rem] text-[#991b1b] font-mono font-bold">€{{ number_format($openRmaRefundVolume, 2) }}</span>
+                            <span class="text-[0.65rem] text-[#991b1b] font-mono font-bold whitespace-nowrap">€{{ number_format($openRmaRefundVolume, 2) }}</span>
                         @endif
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74] group-hover:text-[#78000b] flex items-center justify-between">
-                    <span>14-Tage Widerrufsanträge</span>
-                    <span class="font-bold text-[0.65rem] text-[#991b1b]">Verwalten →</span>
+                <p class="mt-1.5 text-[0.65rem] text-[#8a7c74] group-hover:text-[#78000b] flex items-center justify-between truncate">
+                    <span>§ 355 14-Tage Widerruf</span>
+                    <span class="font-bold text-[0.62rem] text-[#991b1b] whitespace-nowrap">Verwalten →</span>
                 </p>
             </a>
 
-            <!-- Row 2: Financial Audit & True Profit -->
-
-            <!-- Card 5: DELIVERED GROSS REVENUE -->
-            <div class="metric-card metric-profit rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#78000b]/40 hover:shadow-xs transition">
+            <!-- Card 5: GROSS REVENUE -->
+            <div class="metric-card metric-profit rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#78000b]/40 hover:shadow-xs transition">
                 <div>
-                    <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#736357] block">DELIVERED GROSS REVENUE</span>
-                    <div class="mt-2 flex items-baseline gap-1">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">€{{ number_format($grossRevenue, 2) }}</span>
+                    <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#736357] block whitespace-nowrap">GROSS REVENUE</span>
+                    <div class="mt-1.5 flex items-baseline gap-1">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#1c1210] leading-tight">€{{ number_format($grossRevenue, 2) }}</span>
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74]">From active & completed orders</p>
+                <p class="mt-1.5 text-[0.65rem] text-[#8a7c74] truncate">Active & completed sales</p>
             </div>
 
             <!-- Card 6: PRODUCT PURCHASE COST (COGS) -->
-            <div class="metric-card metric-profit rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#78000b]/40 hover:shadow-xs transition">
+            <div class="metric-card metric-profit rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#78000b]/40 hover:shadow-xs transition">
                 <div>
-                    <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#736357] block">PRODUCT PURCHASE COST (COGS)</span>
-                    <div class="mt-2 flex items-baseline gap-1">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">€{{ number_format($cogsTotal, 2) }}</span>
+                    <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#736357] block whitespace-nowrap">PRODUCT COST (COGS)</span>
+                    <div class="mt-1.5 flex items-baseline gap-1">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#1c1210] leading-tight">€{{ number_format($cogsTotal, 2) }}</span>
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74]">Real raw material & craft cost</p>
+                <p class="mt-1.5 text-[0.65rem] text-[#8a7c74] truncate">Raw leather & craft cost</p>
             </div>
 
             <!-- Card 7: COURIER FREIGHT LOSS / EXPENSE -->
-            <div class="metric-card metric-profit rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-4 flex flex-col justify-between hover:border-[#b45309]/40 hover:shadow-xs transition">
+            <div class="metric-card metric-profit rounded-xl border border-[#ebdccb] bg-[#faf7f2]/60 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#b45309]/40 hover:shadow-xs transition">
                 <div>
-                    <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#b45309] block">COURIER FREIGHT & LOGISTICS</span>
-                    <div class="mt-2 flex items-baseline gap-1">
-                        <span class="font-serif text-2xl font-bold text-[#1c1210]">€{{ number_format($logisticsExpense, 2) }}</span>
+                    <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#b45309] block whitespace-nowrap">FREIGHT & LOGISTICS</span>
+                    <div class="mt-1.5 flex items-baseline gap-1">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#1c1210] leading-tight">€{{ number_format($logisticsExpense, 2) }}</span>
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#8a7c74]">DHL GoGreen courier invoices</p>
+                <p class="mt-1.5 text-[0.65rem] text-[#8a7c74] truncate">Courier carrier expense</p>
             </div>
 
             <!-- Card 8: NET REALIZED PROFIT -->
-            <div class="metric-card metric-profit rounded-xl border border-[#2e683a]/30 bg-[#2e683a]/5 p-4 flex flex-col justify-between hover:border-[#2e683a]/60 hover:shadow-xs transition">
+            <div class="metric-card metric-profit rounded-xl border border-[#2e683a]/30 bg-[#2e683a]/5 p-3 sm:p-3.5 flex flex-col justify-between hover:border-[#2e683a]/60 hover:shadow-xs transition">
                 <div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-[0.65rem] font-bold uppercase tracking-wider text-[#2e683a]">NET REALIZED PROFIT</span>
-                        <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#2e683a]/20 text-[#2e683a] border border-[#2e683a]/30">
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#2e683a] whitespace-nowrap">NET PROFIT</span>
+                        <span class="px-1.5 py-0.2 rounded text-[0.58rem] font-bold bg-[#2e683a]/20 text-[#2e683a] border border-[#2e683a]/30 whitespace-nowrap">
                             {{ $netMarginPct }}% MARGIN
                         </span>
                     </div>
-                    <div class="mt-2 flex items-baseline gap-1">
-                        <span class="font-serif text-2xl font-bold text-[#2e683a]">€{{ number_format($netRealizedProfit, 2) }}</span>
+                    <div class="mt-1.5 flex items-baseline gap-1">
+                        <span class="font-serif text-xl sm:text-2xl font-bold text-[#2e683a] leading-tight">€{{ number_format($netRealizedProfit, 2) }}</span>
                     </div>
                 </div>
-                <p class="mt-2 text-[0.68rem] text-[#2e683a]/80">(Revenue − COGS − Freight Losses)</p>
+                <p class="mt-1.5 text-[0.65rem] text-[#2e683a]/80 truncate">(Revenue − COGS − Freight)</p>
             </div>
 
         </div>
 
-        <!-- 4. Six Micro Velocity Badges (High-Density Executive Pulse) -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 pt-2 border-t border-[#f0e8de]">
-            <a href="{{ route('admin.products') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
-                <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">CREATIONS</span>
-                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $productsCount }}</span>
-                    <span class="text-[0.62rem] text-[#2e683a] block font-semibold">● {{ $activeProductsCount }} Active</span>
+        <!-- 4. Six Micro Velocity Badges (Single Row on Desktop, Compact, No Clumsy Wrapping) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 pt-2 border-t border-[#f0e8de]">
+            <a href="{{ route('admin.products') }}" class="rounded-lg border border-[#ebdccb] bg-white p-2 sm:p-2.5 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
+                <div class="min-w-0 pr-1">
+                    <span class="text-[0.58rem] uppercase font-bold text-[#8a7c74] block whitespace-nowrap">CREATIONS</span>
+                    <span class="font-serif text-base font-bold text-[#1c1210] leading-tight block">{{ $productsCount }}</span>
+                    <span class="text-[0.58rem] text-[#2e683a] block font-semibold truncate">● {{ $activeProductsCount }} Active</span>
                 </div>
-                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
-                </div>
-            </a>
-
-            <a href="{{ route('admin.orders') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#b45309]/40 hover:shadow-xs transition group">
-                <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">ORDERS</span>
-                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $ordersCount }}</span>
-                    <span class="text-[0.62rem] text-[#b45309] block font-semibold">● {{ $ordersThisMonth }} This Month</span>
-                </div>
-                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#b45309] group-hover:bg-[#b45309] group-hover:text-white transition">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <div class="w-6 h-6 rounded-md bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
                 </div>
             </a>
 
-            <a href="{{ route('admin.returns') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#991b1b]/40 hover:shadow-xs transition group">
-                <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#991b1b] block">RETOUREN / RMA</span>
-                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $totalReturnsCount }}</span>
-                    <span class="text-[0.62rem] text-[#991b1b] block font-semibold">● {{ $pendingReturnsCount }} In Prüfung</span>
+            <a href="{{ route('admin.orders') }}" class="rounded-lg border border-[#ebdccb] bg-white p-2 sm:p-2.5 flex items-center justify-between hover:border-[#b45309]/40 hover:shadow-xs transition group">
+                <div class="min-w-0 pr-1">
+                    <span class="text-[0.58rem] uppercase font-bold text-[#8a7c74] block whitespace-nowrap">ORDERS</span>
+                    <span class="font-serif text-base font-bold text-[#1c1210] leading-tight block">{{ $ordersCount }}</span>
+                    <span class="text-[0.58rem] text-[#b45309] block font-semibold truncate">● {{ $ordersThisMonth }} This Month</span>
                 </div>
-                <div class="w-7 h-7 rounded-lg bg-rose-50 border border-rose-200 flex items-center justify-center text-[#991b1b] group-hover:bg-[#991b1b] group-hover:text-white transition">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                </div>
-            </a>
-
-            <a href="{{ route('admin.waitlist') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
-                <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#78000b] block">WARTELISTE</span>
-                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $pendingWaitlistCount }}</span>
-                    <span class="text-[0.62rem] text-[#78000b] block font-semibold">● €{{ number_format($latentRevenueDemand, 0) }} Demand</span>
-                </div>
-                <div class="w-7 h-7 rounded-lg bg-[#78000b]/10 border border-[#78000b]/20 flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div class="w-6 h-6 rounded-md bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#b45309] group-hover:bg-[#b45309] group-hover:text-white transition shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                 </div>
             </a>
 
-            <a href="{{ route('admin.messages') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
-                <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">INQUIRIES</span>
-                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $contactMessagesCount }}</span>
-                    <span class="text-[0.62rem] text-[#78000b] block font-semibold">● {{ $contactMessagesCount }} Concierge</span>
+            <a href="{{ route('admin.returns') }}" class="rounded-lg border border-[#ebdccb] bg-white p-2 sm:p-2.5 flex items-center justify-between hover:border-[#991b1b]/40 hover:shadow-xs transition group">
+                <div class="min-w-0 pr-1">
+                    <span class="text-[0.58rem] uppercase font-bold text-[#991b1b] block whitespace-nowrap">RETOUREN / RMA</span>
+                    <span class="font-serif text-base font-bold text-[#1c1210] leading-tight block">{{ $totalReturnsCount }}</span>
+                    <span class="text-[0.58rem] text-[#991b1b] block font-semibold truncate">● {{ $pendingReturnsCount }} In Prüfung</span>
                 </div>
-                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <div class="w-6 h-6 rounded-md bg-rose-50 border border-rose-200 flex items-center justify-center text-[#991b1b] group-hover:bg-[#991b1b] group-hover:text-white transition shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
                 </div>
             </a>
 
-            <a href="{{ route('admin.customers') }}" class="rounded-xl border border-[#ebdccb] bg-white p-3 flex items-center justify-between hover:border-[#2e683a]/40 hover:shadow-xs transition group">
-                <div>
-                    <span class="text-[0.62rem] uppercase font-bold text-[#8a7c74] block">PATRONS</span>
-                    <span class="font-serif text-lg font-bold text-[#1c1210]">{{ $customersCount }}</span>
-                    <span class="text-[0.62rem] text-[#2e683a] block font-semibold">● AOV: €{{ number_format($aov, 0) }}</span>
+            <a href="{{ route('admin.waitlist') }}" class="rounded-lg border border-[#ebdccb] bg-white p-2 sm:p-2.5 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
+                <div class="min-w-0 pr-1">
+                    <span class="text-[0.58rem] uppercase font-bold text-[#78000b] block whitespace-nowrap">WARTELISTE</span>
+                    <span class="font-serif text-base font-bold text-[#1c1210] leading-tight block">{{ $pendingWaitlistCount }}</span>
+                    <span class="text-[0.58rem] text-[#78000b] block font-semibold truncate">● €{{ number_format($latentRevenueDemand, 0) }} Demand</span>
                 </div>
-                <div class="w-7 h-7 rounded-lg bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#2e683a] group-hover:bg-[#2e683a] group-hover:text-white transition">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                <div class="w-6 h-6 rounded-md bg-[#78000b]/10 border border-[#78000b]/20 flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+            </a>
+
+            <a href="{{ route('admin.messages') }}" class="rounded-lg border border-[#ebdccb] bg-white p-2 sm:p-2.5 flex items-center justify-between hover:border-[#78000b]/40 hover:shadow-xs transition group">
+                <div class="min-w-0 pr-1">
+                    <span class="text-[0.58rem] uppercase font-bold text-[#8a7c74] block whitespace-nowrap">INQUIRIES</span>
+                    <span class="font-serif text-base font-bold text-[#1c1210] leading-tight block">{{ $contactMessagesCount }}</span>
+                    <span class="text-[0.58rem] text-[#78000b] block font-semibold truncate">● {{ $contactMessagesCount }} Concierge</span>
+                </div>
+                <div class="w-6 h-6 rounded-md bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b] group-hover:bg-[#78000b] group-hover:text-white transition shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+            </a>
+
+            <a href="{{ route('admin.customers') }}" class="rounded-lg border border-[#ebdccb] bg-white p-2 sm:p-2.5 flex items-center justify-between hover:border-[#2e683a]/40 hover:shadow-xs transition group">
+                <div class="min-w-0 pr-1">
+                    <span class="text-[0.58rem] uppercase font-bold text-[#8a7c74] block whitespace-nowrap">PATRONS</span>
+                    <span class="font-serif text-base font-bold text-[#1c1210] leading-tight block">{{ $customersCount }}</span>
+                    <span class="text-[0.58rem] text-[#2e683a] block font-semibold truncate">● AOV: €{{ number_format($aov, 0) }}</span>
+                </div>
+                <div class="w-6 h-6 rounded-md bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#2e683a] group-hover:bg-[#2e683a] group-hover:text-white transition shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                 </div>
             </a>
         </div>
@@ -304,45 +300,45 @@
     </div>
 
     <!-- 5. Dual Analytics Deck (Multi-Chart Flow on Left + Atelier Health on Right) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
         
         <!-- Left 8-Cols: Orders & Fulfillment Flow with Switcher Tabs -->
-        <div class="lg:col-span-8 rounded-2xl bg-white border border-[#e5ded5] p-5 shadow-xs flex flex-col justify-between">
+        <div class="lg:col-span-8 rounded-2xl bg-white border border-[#e5ded5] p-3.5 sm:p-4 shadow-xs flex flex-col justify-between">
             <div>
                 <!-- Deck Header with Tabs -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#f0e8de] pb-3.5">
+                <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#f0e8de] pb-2.5">
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-[#78000b]"></span>
-                        <h3 class="font-serif text-base font-bold text-[#1c1210]">Orders & Fulfillment Flow</h3>
+                        <h3 class="font-serif text-sm sm:text-base font-bold text-[#1c1210] whitespace-nowrap">Orders & Fulfillment Flow</h3>
                     </div>
 
                     <!-- Chart Switcher Tabs -->
-                    <div class="flex items-center gap-1 bg-[#faf7f2] p-1 rounded-xl border border-[#ebdccb] overflow-x-auto text-[0.7rem] font-bold">
-                        <button type="button" onclick="switchChartMode('revenue', this)" class="chart-tab-btn px-2.5 py-1 rounded-lg text-[#685c54] hover:text-[#1c1210] transition">~ Revenue</button>
-                        <button type="button" onclick="switchChartMode('orders', this)" class="chart-tab-btn active-ct px-2.5 py-1 rounded-lg bg-[#1f1715] text-white shadow-xs">📦 Orders</button>
-                        <button type="button" onclick="switchChartMode('payments', this)" class="chart-tab-btn px-2.5 py-1 rounded-lg text-[#685c54] hover:text-[#1c1210] transition">💳 Payments</button>
-                        <button type="button" onclick="switchChartMode('collections', this)" class="chart-tab-btn px-2.5 py-1 rounded-lg text-[#685c54] hover:text-[#1c1210] transition">🏷️ Collections</button>
-                        <button type="button" onclick="switchChartMode('cities', this)" class="chart-tab-btn px-2.5 py-1 rounded-lg text-[#685c54] hover:text-[#1c1210] transition">📍 Cities</button>
+                    <div class="flex items-center gap-0.5 bg-[#faf7f2] p-0.5 rounded-lg border border-[#ebdccb] text-[0.68rem] font-bold">
+                        <button type="button" onclick="switchChartMode('revenue', this)" class="chart-tab-btn px-2.5 py-1 rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Revenue</button>
+                        <button type="button" onclick="switchChartMode('orders', this)" class="chart-tab-btn active-ct px-2.5 py-1 rounded-md text-white shadow-xs whitespace-nowrap" style="background: #1c1210 !important; color: #ffffff !important;">Orders</button>
+                        <button type="button" onclick="switchChartMode('payments', this)" class="chart-tab-btn px-2.5 py-1 rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Payments</button>
+                        <button type="button" onclick="switchChartMode('collections', this)" class="chart-tab-btn px-2.5 py-1 rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Collections</button>
+                        <button type="button" onclick="switchChartMode('cities', this)" class="chart-tab-btn px-2.5 py-1 rounded-md text-[#685c54] hover:text-[#1c1210] transition whitespace-nowrap">Cities</button>
                     </div>
                 </div>
 
                 <!-- Dynamic Chart Canvas Container -->
-                <div class="h-64 sm:h-72 w-full relative pt-4">
+                <div class="h-60 sm:h-64 w-full relative pt-3">
                     <canvas id="flowMultiChart"></canvas>
                 </div>
             </div>
 
             <!-- Chart Footer Indicator Bar -->
-            <div class="pt-3 border-t border-[#f0e8de] flex flex-wrap items-center justify-between text-xs text-[#8a7c74]">
-                <div class="flex items-center gap-2">
+            <div class="pt-2.5 border-t border-[#f0e8de] flex flex-wrap items-center justify-between text-[0.68rem] text-[#8a7c74]">
+                <div class="flex items-center gap-2 whitespace-nowrap">
                     <span class="w-2 h-2 rounded-full bg-[#78000b]"></span>
                     <span>Euro (€)</span>
                     <span>•</span>
-                    <span>Total Recorded Orders: <strong class="text-[#1c1210]">{{ $ordersCount }}</strong></span>
+                    <span>Recorded Orders: <strong class="text-[#1c1210]">{{ $ordersCount }}</strong></span>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span>Avg Ticket: <strong class="text-[#1c1210]">€{{ number_format($aov, 2) }}</strong></span>
-                    <span class="px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-[#2e683a]/15 text-[#2e683a] border border-[#2e683a]/30">
+                <div class="flex items-center gap-2.5 whitespace-nowrap">
+                    <span>AOV: <strong class="text-[#1c1210]">€{{ number_format($aov, 2) }}</strong></span>
+                    <span class="px-2 py-0.5 rounded-full text-[0.6rem] font-bold bg-[#2e683a]/15 text-[#2e683a] border border-[#2e683a]/30">
                         {{ $deliverySuccessRate }}% Delivery Success
                     </span>
                 </div>
@@ -350,50 +346,50 @@
         </div>
 
         <!-- Right 4-Cols: Atelier Health & Stock -->
-        <div class="lg:col-span-4 rounded-2xl bg-white border border-[#e5ded5] p-5 shadow-xs flex flex-col justify-between space-y-4">
+        <div class="lg:col-span-4 rounded-2xl bg-white border border-[#e5ded5] p-3.5 sm:p-4 shadow-xs flex flex-col justify-between space-y-3">
             <div>
-                <div class="flex items-center justify-between border-b border-[#f0e8de] pb-3">
+                <div class="flex items-center justify-between border-b border-[#f0e8de] pb-2.5">
                     <div>
-                        <h3 class="font-serif text-sm font-bold text-[#1c1210]">Atelier Health & Stock</h3>
-                        <p class="text-[0.68rem] text-[#8a7c74]">Real-time workshop & order metrics</p>
+                        <h3 class="font-serif text-sm font-bold text-[#1c1210] whitespace-nowrap">Atelier Health & Stock</h3>
+                        <p class="text-[0.65rem] text-[#8a7c74]">Real-time workshop & order metrics</p>
                     </div>
-                    <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#78000b] bg-[#78000b]/10 px-2 py-0.5 rounded-md">INVENTORY</span>
+                    <span class="text-[0.6rem] font-bold uppercase tracking-wider text-[#78000b] bg-[#78000b]/10 px-2 py-0.5 rounded-md whitespace-nowrap">INVENTORY</span>
                 </div>
 
                 <!-- Low Stock Alert Box -->
-                <div class="mt-3.5 rounded-xl border border-[#ebdccb] bg-[#faf7f2] p-3 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-lg bg-[#b45309]/15 text-[#b45309] flex items-center justify-center font-bold text-xs shrink-0">!</div>
-                        <div>
-                            <p class="text-xs font-bold text-[#1c1210]">{{ $lowStockCount }} Low Stock Alerts</p>
-                            <p class="text-[0.65rem] text-[#8a7c74]">Stock level ≤ 10 in atelier</p>
+                <div class="mt-2.5 rounded-lg border border-[#ebdccb] bg-[#faf7f2] p-2 sm:p-2.5 flex items-center justify-between">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <div class="w-6 h-6 rounded-md bg-[#b45309]/15 text-[#b45309] flex items-center justify-center font-bold text-xs shrink-0">!</div>
+                        <div class="min-w-0">
+                            <p class="text-xs font-bold text-[#1c1210] truncate">{{ $lowStockCount }} Low Stock Alerts</p>
+                            <p class="text-[0.62rem] text-[#8a7c74] truncate">Stock level ≤ 10 in atelier</p>
                         </div>
                     </div>
-                    <a href="{{ route('admin.products') }}" class="px-2.5 py-1 rounded-lg text-[0.68rem] font-bold bg-white text-[#78000b] border border-[#d9cebc] hover:bg-[#78000b] hover:text-white transition">
+                    <a href="{{ route('admin.products') }}" class="px-2 py-0.5 rounded-md text-[0.65rem] font-bold bg-white text-[#78000b] border border-[#d9cebc] hover:bg-[#78000b] hover:text-white transition shrink-0 whitespace-nowrap">
                         Restock
                     </a>
                 </div>
 
                 <!-- Back-in-Stock Waitlist Demand Alert Box -->
-                <div class="mt-2.5 rounded-xl border border-[#ebdccb] bg-[#faf7f2] p-3 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-lg bg-[#78000b]/15 text-[#78000b] flex items-center justify-center font-bold text-xs shrink-0">🔔</div>
-                        <div>
-                            <p class="text-xs font-bold text-[#1c1210]">{{ $pendingWaitlistCount }} Wartelisten-Anfragen</p>
-                            <p class="text-[0.65rem] text-[#8a7c74]">Latente Nachfrage: <strong class="text-[#78000b]">€{{ number_format($latentRevenueDemand, 2, ',', '.') }}</strong></p>
+                <div class="mt-2 rounded-lg border border-[#ebdccb] bg-[#faf7f2] p-2 sm:p-2.5 flex items-center justify-between">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <div class="w-6 h-6 rounded-md bg-[#78000b]/15 text-[#78000b] flex items-center justify-center font-bold text-xs shrink-0">🔔</div>
+                        <div class="min-w-0">
+                            <p class="text-xs font-bold text-[#1c1210] truncate">{{ $pendingWaitlistCount }} Wartelisten-Anfragen</p>
+                            <p class="text-[0.62rem] text-[#8a7c74] truncate">Latent: <strong class="text-[#78000b]">€{{ number_format($latentRevenueDemand, 2, ',', '.') }}</strong></p>
                         </div>
                     </div>
-                    <a href="{{ route('admin.waitlist') }}" class="px-2.5 py-1 rounded-lg text-[0.68rem] font-bold bg-white text-[#78000b] border border-[#d9cebc] hover:bg-[#78000b] hover:text-white transition whitespace-nowrap">
+                    <a href="{{ route('admin.waitlist') }}" class="px-2 py-0.5 rounded-md text-[0.65rem] font-bold bg-white text-[#78000b] border border-[#d9cebc] hover:bg-[#78000b] hover:text-white transition shrink-0 whitespace-nowrap">
                         Warteliste
                     </a>
                 </div>
 
                 <!-- Payment Methods Distribution Bar -->
-                <div class="space-y-3 pt-3">
+                <div class="space-y-2 pt-2.5">
                     <div>
-                        <div class="flex items-center justify-between text-xs mb-1">
-                            <span class="text-[#685c54] font-medium">Bank Transfer / Vorkasse (SEPA)</span>
-                            <span class="font-bold text-[#1c1210]">€{{ number_format($paymentBreakdown['vorkasse']['amount'], 2) }}</span>
+                        <div class="flex items-center justify-between text-[0.7rem] mb-0.5">
+                            <span class="text-[#685c54] font-medium whitespace-nowrap">Bank Transfer (SEPA)</span>
+                            <span class="font-bold text-[#1c1210] whitespace-nowrap">€{{ number_format($paymentBreakdown['vorkasse']['amount'], 2) }}</span>
                         </div>
                         <div class="w-full h-1.5 rounded-full bg-[#f0e8de] overflow-hidden">
                             <div class="h-full bg-[#78000b] rounded-full" style="width: 78%;"></div>
@@ -401,9 +397,9 @@
                     </div>
 
                     <div>
-                        <div class="flex items-center justify-between text-xs mb-1">
-                            <span class="text-[#685c54] font-medium">Cash on Delivery (COD)</span>
-                            <span class="font-bold text-[#1c1210]">€{{ number_format($paymentBreakdown['cod']['amount'], 2) }}</span>
+                        <div class="flex items-center justify-between text-[0.7rem] mb-0.5">
+                            <span class="text-[#685c54] font-medium whitespace-nowrap">Cash on Delivery (COD)</span>
+                            <span class="font-bold text-[#1c1210] whitespace-nowrap">€{{ number_format($paymentBreakdown['cod']['amount'], 2) }}</span>
                         </div>
                         <div class="w-full h-1.5 rounded-full bg-[#f0e8de] overflow-hidden">
                             <div class="h-full bg-[#b45309] rounded-full" style="width: 15%;"></div>
@@ -411,9 +407,9 @@
                     </div>
 
                     <div>
-                        <div class="flex items-center justify-between text-xs mb-1">
-                            <span class="text-[#685c54] font-medium">Credit Card & Apple Pay</span>
-                            <span class="font-bold text-[#1c1210]">€{{ number_format($paymentBreakdown['stripe']['amount'], 2) }}</span>
+                        <div class="flex items-center justify-between text-[0.7rem] mb-0.5">
+                            <span class="text-[#685c54] font-medium whitespace-nowrap">Credit Card & Apple Pay</span>
+                            <span class="font-bold text-[#1c1210] whitespace-nowrap">€{{ number_format($paymentBreakdown['stripe']['amount'], 2) }}</span>
                         </div>
                         <div class="w-full h-1.5 rounded-full bg-[#f0e8de] overflow-hidden">
                             <div class="h-full bg-[#2e683a] rounded-full" style="width: 7%;"></div>
@@ -422,38 +418,38 @@
                 </div>
 
                 <!-- Top Dispatch Hubs -->
-                <div class="pt-4 border-t border-[#f0e8de]">
-                    <span class="text-[0.62rem] font-bold uppercase tracking-wider text-[#8a7c74] block mb-2">TOP DISPATCH HUBS</span>
-                    <div class="space-y-1.5">
+                <div class="pt-3 border-t border-[#f0e8de]">
+                    <span class="text-[0.58rem] font-bold uppercase tracking-wider text-[#8a7c74] block mb-1.5 whitespace-nowrap">TOP DISPATCH HUBS</span>
+                    <div class="space-y-1">
                         @foreach($topCities as $cityName => $cityData)
-                            <div class="flex items-center justify-between text-xs py-1 px-2 rounded-lg hover:bg-[#faf7f2] transition">
-                                <span class="font-semibold text-[#1c1210]">{{ $cityName }}</span>
-                                <span class="font-mono text-[0.68rem] text-[#78000b] font-bold">€{{ number_format($cityData['total'], 0) }}</span>
+                            <div class="flex items-center justify-between text-xs py-0.5 px-1.5 rounded hover:bg-[#faf7f2] transition">
+                                <span class="font-semibold text-[#1c1210] text-[0.72rem] whitespace-nowrap">{{ $cityName }}</span>
+                                <span class="font-mono text-[0.68rem] text-[#78000b] font-bold whitespace-nowrap">€{{ number_format($cityData['total'], 0) }}</span>
                             </div>
                         @endforeach
                     </div>
                 </div>
             </div>
 
-            <div class="pt-3 border-t border-[#f0e8de] flex items-center justify-between text-[0.68rem] text-[#8a7c74]">
-                <a href="{{ route('admin.orders') }}" class="hover:text-[#78000b] font-semibold">View Orders ({{ $ordersCount }})</a>
+            <div class="pt-2 border-t border-[#f0e8de] flex items-center justify-between text-[0.65rem] text-[#8a7c74]">
+                <a href="{{ route('admin.orders') }}" class="hover:text-[#78000b] font-semibold whitespace-nowrap">Orders ({{ $ordersCount }})</a>
                 <span>•</span>
-                <a href="{{ route('admin.categories') }}" class="hover:text-[#78000b] font-semibold">Collections ({{ $categories->count() }})</a>
+                <a href="{{ route('admin.categories') }}" class="hover:text-[#78000b] font-semibold whitespace-nowrap">Collections ({{ $categories->count() }})</a>
                 <span>•</span>
-                <a href="{{ route('admin.settings') }}" class="hover:text-[#78000b] font-semibold">Settings</a>
+                <a href="{{ route('admin.settings') }}" class="hover:text-[#78000b] font-semibold whitespace-nowrap">Settings</a>
             </div>
         </div>
 
     </div>
 
     <!-- 6. Recent Store Orders Table (Clean & Compact) -->
-    <div class="rounded-2xl bg-white border border-[#e5ded5] p-5 shadow-xs space-y-4">
-        <div class="flex items-center justify-between border-b border-[#f0e8de] pb-3">
+    <div class="rounded-2xl bg-white border border-[#e5ded5] p-3.5 sm:p-4 shadow-xs space-y-3">
+        <div class="flex items-center justify-between border-b border-[#f0e8de] pb-2.5">
             <div class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                <h3 class="font-serif text-base font-bold text-[#1c1210]">Recent Store Orders</h3>
+                <svg class="w-3.5 h-3.5 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <h3 class="font-serif text-sm sm:text-base font-bold text-[#1c1210] whitespace-nowrap">Recent Store Orders</h3>
             </div>
-            <a href="{{ route('admin.orders') }}" class="text-xs font-bold text-[#78000b] hover:underline flex items-center gap-1">
+            <a href="{{ route('admin.orders') }}" class="text-[0.72rem] font-bold text-[#78000b] hover:underline flex items-center gap-1 whitespace-nowrap">
                 <span>View All Orders</span> <span>→</span>
             </a>
         </div>
@@ -461,38 +457,38 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
                 <thead>
-                    <tr class="bg-[#faf7f2] text-[0.65rem] font-bold text-[#685c54] uppercase tracking-wider border-b border-[#ebdccb]">
-                        <th class="py-2.5 px-3">ORDER #</th>
-                        <th class="py-2.5 px-3">PATRON</th>
-                        <th class="py-2.5 px-3">DESTINATION</th>
-                        <th class="py-2.5 px-3">AMOUNT (€)</th>
-                        <th class="py-2.5 px-3">METHOD</th>
-                        <th class="py-2.5 px-3">STATUS</th>
-                        <th class="py-2.5 px-3 text-right">ACTION</th>
+                    <tr class="bg-[#faf7f2] text-[0.62rem] font-bold text-[#685c54] uppercase tracking-wider border-b border-[#ebdccb]">
+                        <th class="py-2 px-3 whitespace-nowrap">ORDER #</th>
+                        <th class="py-2 px-3 whitespace-nowrap">PATRON</th>
+                        <th class="py-2 px-3 whitespace-nowrap">DESTINATION</th>
+                        <th class="py-2 px-3 whitespace-nowrap">AMOUNT (€)</th>
+                        <th class="py-2 px-3 whitespace-nowrap">METHOD</th>
+                        <th class="py-2 px-3 whitespace-nowrap">STATUS</th>
+                        <th class="py-2 px-3 text-right whitespace-nowrap">ACTION</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#f0e8de]">
                     @forelse($recentOrders as $order)
                         <tr class="hover:bg-[#faf7f2]/50 transition">
-                            <td class="py-3 px-3 font-mono font-bold text-[#1c1210]">
+                            <td class="py-2 px-3 font-mono font-bold text-xs text-[#1c1210] whitespace-nowrap">
                                 {{ $order->order_number }}
                             </td>
-                            <td class="py-3 px-3">
-                                <p class="font-semibold text-[#1c1210]">{{ $order->customer_name }}</p>
-                                <p class="text-[0.65rem] text-[#8a7c74]">{{ $order->customer_email }}</p>
+                            <td class="py-2 px-3 whitespace-nowrap">
+                                <p class="font-semibold text-xs text-[#1c1210] leading-tight">{{ $order->customer_name }}</p>
+                                <p class="text-[0.62rem] text-[#8a7c74] leading-tight">{{ $order->customer_email }}</p>
                             </td>
-                            <td class="py-3 px-3 text-[#685c54]">
+                            <td class="py-2 px-3 text-[#685c54] text-xs whitespace-nowrap">
                                 {{ $order->city ?: 'Berlin' }}
                             </td>
-                            <td class="py-3 px-3 font-serif font-bold text-[#1c1210]">
+                            <td class="py-2 px-3 font-serif font-bold text-xs text-[#1c1210] whitespace-nowrap">
                                 €{{ number_format($order->total_amount, 2) }}
                             </td>
-                            <td class="py-3 px-3">
-                                <span class="px-2 py-0.5 rounded text-[0.65rem] font-bold uppercase bg-[#faf7f2] border border-[#d9cebc] text-[#685c54]">
+                            <td class="py-2 px-3 whitespace-nowrap">
+                                <span class="px-2 py-0.5 rounded text-[0.62rem] font-bold uppercase bg-[#faf7f2] border border-[#d9cebc] text-[#685c54]">
                                     {{ $order->payment_method ?: 'Vorkasse' }}
                                 </span>
                             </td>
-                            <td class="py-3 px-3">
+                            <td class="py-2 px-3 whitespace-nowrap">
                                 @php
                                     $st = strtolower($order->status);
                                     $stBadge = match($st) {
@@ -510,19 +506,19 @@
                                         default     => '● Ausstehend',
                                     };
                                 @endphp
-                                <span class="px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold border {{ $stBadge }}">
+                                <span class="px-2 py-0.5 rounded-full text-[0.62rem] font-bold border {{ $stBadge }}">
                                     {{ $stLabel }}
                                 </span>
                             </td>
-                            <td class="py-3 px-3 text-right">
-                                <a href="{{ route('admin.orders.show', $order->id) }}" class="px-3 py-1 rounded-lg text-[0.68rem] font-bold bg-[#faf7f2] hover:bg-[#78000b] hover:text-white text-[#1c1210] border border-[#d9cebc] transition">
+                            <td class="py-2 px-3 text-right whitespace-nowrap">
+                                <a href="{{ route('admin.orders.show', $order->id) }}" class="px-2.5 py-1 rounded-md text-[0.65rem] font-bold bg-[#faf7f2] hover:bg-[#78000b] hover:text-white text-[#1c1210] border border-[#d9cebc] transition">
                                     View
                                 </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-6 text-center text-xs text-[#8a7c74]">
+                            <td colspan="7" class="py-4 text-center text-xs text-[#8a7c74]">
                                 No store orders recorded yet.
                             </td>
                         </tr>
@@ -536,41 +532,41 @@
 
 <!-- Daily Closing Modal Dialog -->
 <div id="daily-closing-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-[#d9cebc] shadow-xl space-y-4">
-        <div class="flex items-center justify-between border-b border-[#f0e8de] pb-3">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 border border-[#d9cebc] shadow-xl space-y-3.5">
+        <div class="flex items-center justify-between border-b border-[#f0e8de] pb-2.5">
             <div>
-                <h3 class="font-serif text-lg font-bold text-[#1c1210]">Tagesabschluss (Daily Closing)</h3>
-                <p class="text-xs text-[#8a7c74]">{{ now()->format('d. F Y - H:i') }} • Atelier Mehaaj</p>
+                <h3 class="font-serif text-base font-bold text-[#1c1210]">Tagesabschluss (Daily Closing)</h3>
+                <p class="text-[0.68rem] text-[#8a7c74]">{{ now()->format('d. F Y - H:i') }} • Atelier Mehaaj</p>
             </div>
             <button type="button" onclick="closeDailyClosingModal()" class="text-[#8a7c74] hover:text-[#1c1210] text-sm p-1">✕</button>
         </div>
 
-        <div class="space-y-2 text-xs">
-            <div class="flex justify-between py-1.5 border-b border-[#faf7f2]">
+        <div class="space-y-1.5 text-xs">
+            <div class="flex justify-between py-1 border-b border-[#faf7f2]">
                 <span class="text-[#685c54]">Heutige Bestellungen</span>
                 <span class="font-bold text-[#1c1210]">{{ $ordersCount }} Einheiten</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-[#faf7f2]">
+            <div class="flex justify-between py-1 border-b border-[#faf7f2]">
                 <span class="text-[#685c54]">Bruttoumsatz</span>
                 <span class="font-bold text-[#1c1210]">€{{ number_format($grossRevenue, 2) }}</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-[#faf7f2]">
+            <div class="flex justify-between py-1 border-b border-[#faf7f2]">
                 <span class="text-[#685c54]">Material & Fertigungskosten (COGS)</span>
                 <span class="font-bold text-[#b45309]">€{{ number_format($cogsTotal, 2) }}</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-[#faf7f2]">
+            <div class="flex justify-between py-1 border-b border-[#faf7f2]">
                 <span class="text-[#685c54]">Logistik & Fracht (DHL Express)</span>
                 <span class="font-bold text-[#b45309]">€{{ number_format($logisticsExpense, 2) }}</span>
             </div>
-            <div class="flex justify-between py-2 border-t-2 border-[#1c1210] text-sm">
+            <div class="flex justify-between py-1.5 border-t-2 border-[#1c1210] text-sm">
                 <span class="font-bold text-[#1c1210]">Echter Reingewinn (Net Profit)</span>
                 <span class="font-bold text-[#2e683a]">€{{ number_format($netRealizedProfit, 2) }} ({{ $netMarginPct }}%)</span>
             </div>
         </div>
 
         <div class="flex items-center justify-end gap-2 pt-2">
-            <button type="button" onclick="closeDailyClosingModal()" class="px-4 py-2 text-xs font-bold text-[#8a7c74]">Schließen</button>
-            <button type="button" onclick="window.print()" class="px-4 py-2 rounded-lg bg-[#78000b] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#5a0309] transition">
+            <button type="button" onclick="closeDailyClosingModal()" class="px-3 py-1.5 text-xs font-bold text-[#8a7c74]">Schließen</button>
+            <button type="button" onclick="window.print()" class="px-3.5 py-1.5 rounded-lg bg-[#78000b] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#5a0309] transition">
                 Drucken / PDF
             </button>
         </div>
@@ -786,24 +782,32 @@
         window.switchChartMode = function(mode, btn) {
             currentMode = mode;
             document.querySelectorAll('.chart-tab-btn').forEach(b => {
-                b.classList.remove('active-ct', 'bg-[#1f1715]', 'text-white', 'shadow-xs');
+                b.classList.remove('active-ct', 'shadow-xs');
                 b.classList.add('text-[#685c54]');
+                b.style.background = '';
+                b.style.color = '';
             });
             if (btn) {
-                btn.classList.add('active-ct', 'bg-[#1f1715]', 'text-white', 'shadow-xs');
+                btn.classList.add('active-ct', 'shadow-xs');
                 btn.classList.remove('text-[#685c54]');
+                btn.style.background = '#1c1210';
+                btn.style.color = '#ffffff';
             }
             renderChart(mode);
         };
 
         window.setTimeframe = function(tf, btn) {
             document.querySelectorAll('.timeframe-btn').forEach(b => {
-                b.classList.remove('active-tf', 'bg-[#1f1715]', 'text-white', 'shadow-xs');
+                b.classList.remove('active-tf', 'shadow-xs');
                 b.classList.add('text-[#685c54]');
+                b.style.background = '';
+                b.style.color = '';
             });
             if (btn) {
-                btn.classList.add('active-tf', 'bg-[#1f1715]', 'text-white', 'shadow-xs');
+                btn.classList.add('active-tf', 'shadow-xs');
                 btn.classList.remove('text-[#685c54]');
+                btn.style.background = '#1c1210';
+                btn.style.color = '#ffffff';
             }
         };
 
@@ -845,11 +849,11 @@
             if (container.classList.contains('hidden')) {
                 container.classList.remove('hidden');
                 arrow.textContent = '▲';
-                btn.querySelector('span').textContent = 'Hide Cards';
+                btn.querySelector('span').textContent = 'Hide';
             } else {
                 container.classList.add('hidden');
                 arrow.textContent = '▼';
-                btn.querySelector('span').textContent = 'Show Cards';
+                btn.querySelector('span').textContent = 'Show';
             }
         };
 
