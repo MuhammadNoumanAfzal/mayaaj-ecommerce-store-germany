@@ -138,9 +138,13 @@ class CategoryController extends Controller
             ? Str::slug($validated['slug']) 
             : Str::slug($validated['name']);
 
-        $validated['order_index'] = $validated['order_index'] !== null && $validated['order_index'] !== ''
-            ? (int) $validated['order_index'] 
-            : 0;
+        // Auto-sorting: assign next sequential order index automatically
+        if (!isset($validated['order_index']) || $validated['order_index'] === null || $validated['order_index'] === '') {
+            $maxOrder = Category::max('order_index') ?? 0;
+            $validated['order_index'] = $maxOrder + 1;
+        } else {
+            $validated['order_index'] = (int) $validated['order_index'];
+        }
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('categories', 'public');
@@ -193,9 +197,12 @@ class CategoryController extends Controller
             ? Str::slug($validated['slug']) 
             : Str::slug($validated['name']);
 
-        $validated['order_index'] = $validated['order_index'] !== null && $validated['order_index'] !== ''
-            ? (int) $validated['order_index'] 
-            : 0;
+        // Auto-sorting: preserve current order index if not explicitly passed
+        if (!isset($validated['order_index']) || $validated['order_index'] === null || $validated['order_index'] === '') {
+            $validated['order_index'] = $category->order_index ?? 0;
+        } else {
+            $validated['order_index'] = (int) $validated['order_index'];
+        }
 
         if ($request->hasFile('image')) {
             if ($category->image && Storage::disk('public')->exists($category->image)) {

@@ -50,10 +50,10 @@
             <div>
                 <h2 class="font-extrabold text-lg text-stone-900 tracking-tight flex items-center gap-2.5">
                     <svg class="w-5 h-5 text-saltora-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    <span data-i18n-de="Kategorien Übersicht & Steuerung" data-i18n-en="Categories Directory & Ordering">Categories Directory & Ordering</span>
+                    <span data-i18n-de="Kategorien Übersicht" data-i18n-en="Categories Directory">Categories Directory</span>
                 </h2>
-                <p class="text-xs text-stone-500 font-medium mt-0.5" data-i18n-de="Verwalten Sie Reihenfolge, Sichtbarkeit und Hierarchien für den Storefront." data-i18n-en="Control sorting order, visibility, and product linkages across the MEHAAJ storefront.">
-                    Control sorting order, visibility, and product linkages across the MEHAAJ storefront.
+                <p class="text-xs text-stone-500 font-medium mt-0.5" data-i18n-de="Verwalten Sie Sichtbarkeit und Hierarchien für den Storefront." data-i18n-en="Manage collections, catalog visibility, and storefront synchronization.">
+                    Manage collections, catalog visibility, and storefront synchronization.
                 </p>
             </div>
             
@@ -192,7 +192,7 @@
             <table class="w-full text-left text-xs">
                 <thead>
                     <tr class="exec-table-head bg-stone-50 text-stone-800 font-extrabold uppercase tracking-wider text-[0.7rem] border-y border-stone-200">
-                        <th class="py-3.5 px-4 font-black w-16 text-center" data-i18n-de="Index" data-i18n-en="Order">Order</th>
+                        <th class="py-3.5 px-4 font-black w-14 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
                         <th class="py-3.5 px-4 font-black" data-i18n-de="Kategorie" data-i18n-en="Category">Category</th>
                         <th class="py-3.5 px-3 font-black text-center w-28" data-i18n-de="Unterkategorien" data-i18n-en="Subcategories">Subcategories</th>
                         <th class="py-3.5 px-3 font-black text-center w-28" data-i18n-de="Produkte" data-i18n-en="Products">Products</th>

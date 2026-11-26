@@ -2,77 +2,57 @@
 @section('title', 'Edit Category - MEHAAJ Atelier Admin')
 
 @section('admin-content')
-<div class="space-y-6 max-w-5xl mx-auto pb-16">
+<div class="space-y-3.5 max-w-3xl mx-auto pb-10 text-[#1c1210]">
 
-    <!-- Top Breadcrumb Pill -->
-    <div class="bg-white rounded-xl shadow-2xs py-3 px-5 text-xs font-semibold text-stone-600 border border-stone-200/80 flex items-center justify-between">
+    <!-- 1. Minimalist Clean Breadcrumb Pill -->
+    <div class="bg-white rounded-xl py-2.5 px-4 text-xs font-semibold text-stone-600 border border-[#e5ded5] shadow-xs flex items-center justify-between">
         <div class="flex items-center gap-2">
-            <a href="{{ route('admin.categories') }}" class="text-stone-400 hover:text-stone-700 transition" data-i18n-de="Kategorien" data-i18n-en="Categories">Categories</a>
+            <a href="{{ route('admin.categories') }}" class="text-stone-400 hover:text-[#78000b] transition" data-i18n-de="Kategorien" data-i18n-en="Categories">Categories</a>
             <span class="text-stone-300 font-mono">›</span> 
-            <span class="text-stone-900 font-bold">{{ $category->name }}</span>
+            <span class="text-stone-900 font-bold">Edit: {{ $category->name }}</span>
         </div>
-        <div class="flex items-center gap-3">
-            <a href="{{ route('shop', ['category' => $category->slug]) }}" target="_blank" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
-                <span>↗</span> <span data-i18n-de="Im Shop Ansehen" data-i18n-en="View in Storefront">View in Storefront</span>
-            </a>
-            <span class="text-stone-300">|</span>
-            <a href="{{ route('admin.categories') }}" class="text-xs font-bold text-saltora-terracotta hover:underline">
-                ← <span data-i18n-de="Zurück zur Übersicht" data-i18n-en="Back to Directory">Back to Directory</span>
-            </a>
-        </div>
+        <a href="{{ route('shop', ['category' => $category->slug]) }}" target="_blank" class="text-[0.68rem] font-bold text-[#78000b] hover:underline flex items-center gap-1">
+            <span>↗</span> <span>View in Storefront</span>
+        </a>
     </div>
 
-    <!-- Form Container Card -->
-    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data" class="exec-card bg-white rounded-2xl border border-stone-200/90 shadow-md shadow-stone-900/5 overflow-hidden border-t-4 border-t-saltora-terracotta">
+    <!-- 2. Form Container Card -->
+    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#e5ded5] shadow-xs overflow-hidden">
         @csrf
         @method('PUT')
 
-        <!-- Top Header with Actions & Quick Stats -->
-        <div class="px-6 py-4 bg-stone-50/50 flex flex-wrap items-center justify-between gap-3 border-b border-stone-200/80">
+        <!-- Clean Header -->
+        <div class="px-5 py-4 bg-[#faf7f2] flex items-center justify-between gap-3 border-b border-[#f0e8de]">
             <div class="flex items-center gap-3">
-                <div class="p-2.5 rounded-xl bg-saltora-blush text-saltora-terracotta border border-saltora-terracotta/20 shadow-2xs">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <div class="w-9 h-9 rounded-xl bg-white text-[#78000b] border border-[#ebdccb] flex items-center justify-center shrink-0 shadow-2xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h2 class="font-extrabold text-base text-stone-900 tracking-tight">
-                            <span data-i18n-de="Kategorie Bearbeiten:" data-i18n-en="Edit Category:">Edit Category:</span> 
-                            <span class="text-saltora-terracotta">{{ $category->name }}</span>
+                        <h2 class="font-serif text-base font-bold text-[#1c1210] tracking-tight">
+                            Edit Category: <span class="text-[#78000b]">{{ $category->name }}</span>
                         </h2>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[0.62rem] font-bold {{ $category->status === 'active' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
+                        <span class="inline-flex items-center px-2 py-0.2 rounded-full text-[0.6rem] font-bold uppercase {{ $category->status === 'active' ? 'bg-[#2e683a]/15 text-[#2e683a] border border-[#2e683a]/30' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
                             {{ ucfirst($category->status) }}
                         </span>
                     </div>
-                    <p class="text-[0.7rem] text-stone-500 font-medium" data-i18n-de="Aktualisieren Sie Details, Bilder und Sichtbarkeitsstatus." data-i18n-en="Update details, ordering, and catalog visibility with real-time storefront synchronization.">
-                        Update details, ordering, and catalog visibility with real-time storefront synchronization.
+                    <p class="text-[0.68rem] text-[#8a7c74]">
+                        Update details and cover image with real-time storefront synchronization.
                     </p>
                 </div>
             </div>
-            
-            <div class="flex items-center gap-2.5">
-                <a href="{{ route('admin.categories') }}" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs">
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    <span data-i18n-de="Zurück" data-i18n-en="Back">Back</span>
-                </a>
-                <button 
-                    type="submit" 
-                    class="btn-exec-primary rounded-xl px-5 py-2 text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-md"
-                >
-                    <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                    <span data-i18n-de="Änderungen Speichern" data-i18n-en="Save Changes">Save Changes</span>
-                </button>
-            </div>
         </div>
 
-        <!-- Form Body -->
-        <div class="p-6 sm:p-8 text-xs space-y-5">
+        <!-- Form Body (Compact & High-Density) -->
+        <div class="p-5 sm:p-6 text-xs space-y-4">
+            
             @if ($errors->any())
-                <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
-                    <p class="font-bold text-sm flex items-center gap-2">
-                        <svg class="w-4 h-4 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span data-i18n-de="Bitte korrigieren Sie die folgenden Fehler:" data-i18n-en="Please correct the following errors:">Please correct the following errors:</span>
+                <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
+                    <p class="font-bold text-xs flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>Please correct the errors below:</span>
                     </p>
-                    <ul class="list-disc list-inside text-xs pl-6">
+                    <ul class="list-disc list-inside text-[0.7rem] pl-5 space-y-0.5">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -80,12 +60,13 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Row 1: Name & Status -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 <!-- Category Name -->
                 <div>
-                    <label for="name" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="KATEGORIE NAME *" data-i18n-en="CATEGORY NAME *">
-                        CATEGORY NAME *
+                    <label for="catEditNameInput" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
+                        Category Name <span class="text-[#78000b]">*</span>
                     </label>
                     <input 
                         type="text" 
@@ -93,113 +74,110 @@
                         id="catEditNameInput" 
                         value="{{ old('name', $category->name) }}" 
                         required 
-                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
+                        class="w-full h-9 px-3 rounded-lg border border-[#ebdccb] bg-[#faf7f2]/60 text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/10 transition"
                     >
-                    <div class="flex items-center gap-1.5 text-[0.68rem] text-stone-400 mt-1 font-mono">
-                        <span>Slug:</span>
-                        <span id="slugEditPreview" class="text-saltora-terracotta font-semibold">/{{ $category->slug }}</span>
+                    <div class="flex items-center gap-1 text-[0.65rem] text-[#8a7c74] mt-1 font-mono">
+                        <span>URL:</span>
+                        <span id="slugEditPreview" class="text-[#78000b] font-semibold">/{{ $category->slug }}</span>
                     </div>
                 </div>
 
                 <!-- Status Select -->
                 <div>
-                    <label for="status" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="STATUS *" data-i18n-en="STATUS *">
-                        STATUS *
+                    <label for="status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
+                        Catalog Status <span class="text-[#78000b]">*</span>
                     </label>
                     <select 
                         name="status" 
                         id="status" 
-                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-semibold outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs"
+                        class="w-full h-9 px-3 rounded-lg border border-[#ebdccb] bg-[#faf7f2]/60 text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/10 transition"
                     >
-                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }} data-i18n-de="Aktiv (Sichtbar im Katalog & Navigation)" data-i18n-en="Active (Visible in Catalog & Navigation)">Active (Visible in Catalog & Navigation)</option>
-                        <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }} data-i18n-de="Entwurf (Versteckt)" data-i18n-en="Draft (Hidden)">Draft (Hidden)</option>
+                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }}>Active (Visible in Storefront)</option>
+                        <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }}>Draft (Hidden)</option>
                     </select>
+                    <p class="text-[0.65rem] text-[#8a7c74] mt-1">Control instant visibility in navigation & shop filter.</p>
                 </div>
 
             </div>
 
-            <!-- Description -->
+            <!-- Row 2: Description -->
             <div>
-                <label for="description" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="BESCHREIBUNG" data-i18n-en="DESCRIPTION">
-                    DESCRIPTION
+                <label for="description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
+                    Description
                 </label>
                 <textarea 
                     name="description" 
                     id="description" 
-                    rows="4" 
-                    class="w-full p-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs leading-relaxed"
+                    rows="3" 
+                    class="w-full p-3 rounded-lg border border-[#ebdccb] bg-[#faf7f2]/60 text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/10 transition leading-relaxed"
                 >{{ old('description', $category->description) }}</textarea>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+            <!-- Row 3: Category Cover Image Upload (Modern Dropzone Box) -->
+            <div>
+                <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
+                    Category Cover Image
+                </label>
                 
-                <!-- Display Sort Order -->
-                <div>
-                    <label for="order_index" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="SORTIERUNG / REIHENFOLGE" data-i18n-en="SORT ORDER / INDEX">
-                        SORT ORDER / INDEX
-                    </label>
-                    <input 
-                        type="number" 
-                        name="order_index" 
-                        id="order_index" 
-                        value="{{ old('order_index', $category->order_index ?? 0) }}" 
-                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs font-medium outline-none focus:border-saltora-terracotta focus:ring-2 focus:ring-saltora-terracotta/20 shadow-2xs font-mono"
-                    >
-                    <p class="text-[0.68rem] text-stone-400 mt-1 font-medium" data-i18n-de="Niedrigere Werte werden zuerst in der Navigation angezeigt." data-i18n-en="Lower numbers display first in menu and homepage slider.">Lower numbers display first in menu and homepage slider.</p>
-                </div>
-
-                <!-- Category Image Upload -->
-                <div>
-                    <label for="editCatImageInput" class="block font-bold text-xs text-stone-800 mb-1.5 uppercase tracking-wider" data-i18n-de="KATEGORIE BILD / COVER" data-i18n-en="CATEGORY IMAGE / COVER">
-                        CATEGORY IMAGE / COVER
-                    </label>
-                    
-                    @if($category->image)
-                        <div class="mb-3 flex items-center gap-3 p-2.5 bg-stone-50 border border-stone-200 rounded-xl" id="currentImageDisplay">
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="h-12 w-12 rounded-lg object-cover border border-stone-300">
-                            <div>
-                                <p class="text-[0.68rem] font-bold text-stone-700" data-i18n-de="Aktuelles Cover-Bild" data-i18n-en="Current cover image">Current cover image</p>
-                                <p class="text-[0.62rem] text-stone-400" data-i18n-de="Laden Sie unten eine neue Datei hoch, um es zu ersetzen." data-i18n-en="Select a new file below to replace it.">Select a new file below to replace it.</p>
-                            </div>
-                        </div>
-                    @endif
-
+                <div class="rounded-xl border border-dashed border-[#d9cebc] bg-[#faf7f2]/40 hover:bg-[#faf7f2] hover:border-[#78000b]/50 p-4 transition text-center relative cursor-pointer" onclick="document.getElementById('editCatImageInput').click()">
                     <input 
                         type="file" 
                         name="image" 
                         id="editCatImageInput" 
                         accept="image/*"
                         onchange="previewEditCategoryImage(this)"
-                        class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-saltora-blush file:text-saltora-terracotta hover:file:bg-saltora-blush/80 h-10 px-2 rounded-xl border border-stone-200 bg-stone-50 text-stone-900 text-xs cursor-pointer shadow-2xs"
+                        class="hidden"
                     >
 
-                    <!-- New Image Preview Container -->
-                    <div id="newImagePreviewContainer" class="mt-3 hidden items-center gap-3 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
-                        <img id="newImagePreviewImg" src="" alt="New Preview" class="h-12 w-12 object-cover rounded-lg border border-emerald-300 shadow-2xs">
-                        <div>
-                            <span class="text-[0.68rem] font-bold text-emerald-800 block">New Image Selected</span>
-                            <span class="text-[0.62rem] text-emerald-600">Will replace current cover upon saving.</span>
+                    @if($category->image)
+                        <!-- Current Image Display State -->
+                        <div id="currentImageContainer" class="flex items-center justify-center gap-3.5 py-1">
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="h-16 w-16 object-cover rounded-lg border border-[#ebdccb] shadow-sm">
+                            <div class="text-left">
+                                <p class="text-xs font-bold text-[#1c1210]">Current Cover Active</p>
+                                <p class="text-[0.65rem] text-[#8a7c74]">Click anywhere to choose a new file to replace it</p>
+                                <span class="inline-block text-[0.65rem] text-[#78000b] font-bold mt-0.5">Replace Image ↗</span>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Empty Upload State -->
+                        <div id="currentImageContainer" class="flex flex-col items-center justify-center gap-1.5 py-1">
+                            <div class="w-8 h-8 rounded-full bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shadow-2xs">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            </div>
+                            <p class="text-xs font-semibold text-[#1c1210]">Click to upload cover image</p>
+                            <p class="text-[0.65rem] text-[#8a7c74]">JPG, PNG, or WebP</p>
+                        </div>
+                    @endif
+
+                    <!-- New Selected Image Preview State -->
+                    <div id="newImagePreviewContainer" class="hidden items-center justify-center gap-3 py-1">
+                        <img id="newImagePreviewImg" src="" alt="New Preview" class="h-16 w-16 object-cover rounded-lg border border-[#2e683a]/40 shadow-sm">
+                        <div class="text-left">
+                            <p id="newImagePreviewName" class="text-xs font-bold text-[#1c1210] truncate max-w-xs">new-image.jpg</p>
+                            <p class="text-[0.65rem] text-[#2e683a] font-semibold">Will replace cover upon saving</p>
+                            <button type="button" onclick="event.stopPropagation(); resetEditImage();" class="text-[0.65rem] text-[#78000b] hover:underline font-bold mt-0.5">
+                                Keep Existing Cover
+                            </button>
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>
 
-        <!-- Footer Actions Bar -->
-        <div class="px-6 py-4 bg-stone-50/70 border-t border-stone-200/80 flex items-center justify-between">
-            <a href="{{ route('admin.categories') }}" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs">
-                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                <span data-i18n-de="Abbrechen" data-i18n-en="Cancel">Cancel</span>
+        <!-- 3. Clean Footer Actions Bar (Single-Wording, Zero Duplication) -->
+        <div class="px-5 py-3.5 bg-[#faf7f2] border-t border-[#f0e8de] flex items-center justify-between">
+            <a href="{{ route('admin.categories') }}" class="h-8 px-4 rounded-lg text-xs font-semibold text-[#685c54] bg-white border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5">
+                <span>Cancel</span>
             </a>
 
             <button 
                 type="submit" 
-                class="btn-exec-primary rounded-xl px-6 py-2.5 text-xs transition-all flex items-center gap-2 cursor-pointer shadow-md"
+                class="h-8 px-5 rounded-lg text-xs font-bold uppercase tracking-wider text-white bg-[#78000b] hover:bg-[#5a0309] transition flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
             >
-                <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                <span data-i18n-de="Änderungen Speichern" data-i18n-en="Save Changes">Save Changes</span>
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                <span>Save Changes</span>
             </button>
         </div>
 
@@ -208,18 +186,52 @@
 </div>
 
 <script>
+    // Live Slug Preview Generator
+    const editNameInput = document.getElementById('catEditNameInput');
+    const slugEditPreview = document.getElementById('slugEditPreview');
+
+    if (editNameInput && slugEditPreview) {
+        editNameInput.addEventListener('input', function() {
+            const val = this.value.trim().toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            slugEditPreview.textContent = '/' + (val || 'category-slug');
+        });
+    }
+
+    // Live Image Preview Handler
     function previewEditCategoryImage(input) {
-        const container = document.getElementById('newImagePreviewContainer');
+        const currentContainer = document.getElementById('currentImageContainer');
+        const previewContainer = document.getElementById('newImagePreviewContainer');
         const img = document.getElementById('newImagePreviewImg');
+        const nameLabel = document.getElementById('newImagePreviewName');
+
         if (input.files && input.files[0]) {
+            const file = input.files[0];
+            nameLabel.textContent = file.name;
             const reader = new FileReader();
             reader.onload = function(e) {
                 img.src = e.target.result;
-                container.classList.remove('hidden');
-                container.classList.add('flex');
+                if (currentContainer) currentContainer.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+                previewContainer.classList.add('flex');
             };
-            reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(file);
         }
+    }
+
+    function resetEditImage() {
+        const input = document.getElementById('editCatImageInput');
+        const currentContainer = document.getElementById('currentImageContainer');
+        const previewContainer = document.getElementById('newImagePreviewContainer');
+        const img = document.getElementById('newImagePreviewImg');
+
+        input.value = '';
+        img.src = '';
+        previewContainer.classList.add('hidden');
+        previewContainer.classList.remove('flex');
+        if (currentContainer) currentContainer.classList.remove('hidden');
     }
 </script>
 @endsection
