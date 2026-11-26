@@ -56,58 +56,68 @@
 
         <!-- 3. Luxury Interactive Stepper Tabs (5 Steps) -->
         <div class="bg-[#FAF8F5] border-b border-[#ebdccb] px-3 sm:px-6 py-2.5 overflow-x-auto">
-            <nav class="flex items-center justify-between min-w-[620px] gap-2" aria-label="Product Wizard Steps">
+            <nav class="flex items-center justify-between min-w-[660px] gap-2" aria-label="Product Wizard Steps">
                 
                 <!-- Tab 1: Core Catalog -->
-                <button type="button" onclick="goToStep(1)" id="stepTab-1" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]">1</span>
+                <button type="button" onclick="goToStep(1)" id="stepTab-1" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a] shadow-xs">
+                        1
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-[#1c1210] truncate">Core Catalog</span>
-                        <span class="step-sub block text-[0.62rem] text-[#8a7267] truncate">Pricing & SKU</span>
+                        <span class="step-title block font-bold text-xs text-[#111827] truncate">Core Catalog</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-[#4b5563] truncate">Pricing & SKU</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 2: Craft & Specs -->
-                <button type="button" onclick="goToStep(2)" id="stepTab-2" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">2</span>
+                <button type="button" onclick="goToStep(2)" id="stepTab-2" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        2
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Craft & Specs</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Materials & Size</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Craft & Specs</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Materials & Size</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 3: Bespoke & Delivery -->
-                <button type="button" onclick="goToStep(3)" id="stepTab-3" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">3</span>
+                <button type="button" onclick="goToStep(3)" id="stepTab-3" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        3
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Bespoke & Time</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Made-to-Order</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Bespoke & Time</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Made-to-Order</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 4: Variations Matrix -->
-                <button type="button" onclick="goToStep(4)" id="stepTab-4" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">4</span>
+                <button type="button" onclick="goToStep(4)" id="stepTab-4" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        4
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Variations</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Color & Matrix</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Variations</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Color & Matrix</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 5: Media & Payments -->
-                <button type="button" onclick="goToStep(5)" id="stepTab-5" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">5</span>
+                <button type="button" onclick="goToStep(5)" id="stepTab-5" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        5
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Media & Pay</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Gallery & COD</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Media & Pay</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Gallery & Rules</span>
                     </div>
                 </button>
 
@@ -163,11 +173,12 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
-                            <label for="prod_sku" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732]">
+                            <label for="prod_sku" class="block font-bold text-xs uppercase tracking-wider text-[#111827]">
                                 Master SKU Code
                             </label>
-                            <button type="button" onclick="generateRandomSku()" class="text-[0.65rem] font-bold text-[#78000b] hover:underline cursor-pointer">
-                                ⚡ Regenerate
+                            <button type="button" onclick="generateRandomSku()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold text-[#78000b] bg-[#78000b]/8 hover:bg-[#78000b]/15 border border-[#78000b]/20 transition cursor-pointer active:scale-95 shadow-2xs">
+                                <svg class="w-3.5 h-3.5 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                <span>Regenerate</span>
                             </button>
                         </div>
                         <input 
@@ -175,7 +186,7 @@
                             name="sku" 
                             id="prod_sku" 
                             value="{{ old('sku', $product->sku) }}" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold font-mono outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold font-mono outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
                 </div>
@@ -300,10 +311,10 @@
                         <select 
                             name="status" 
                             id="prod_status" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs cursor-pointer"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs cursor-pointer"
                         >
-                            <option value="active" {{ old('status', $product->status) === 'active' ? 'selected' : '' }}>• Active (Live in Storefront)</option>
-                            <option value="draft" {{ old('status', $product->status) === 'draft' ? 'selected' : '' }}>• Draft (Hidden from Store)</option>
+                            <option value="active" {{ old('status', $product->status) === 'active' ? 'selected' : '' }}>Active (Live in Storefront)</option>
+                            <option value="draft" {{ old('status', $product->status) === 'draft' ? 'selected' : '' }}>Draft (Hidden from Store)</option>
                         </select>
                     </div>
 
@@ -484,8 +495,8 @@
                 <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-[#78000b]/10 text-[#78000b] flex items-center justify-center font-bold">
-                                ✂️
+                            <div class="w-9 h-9 rounded-xl bg-[#78000b]/10 text-[#78000b] flex items-center justify-center shrink-0 border border-[#78000b]/20">
+                                <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
                             </div>
                             <div>
                                 <h4 class="font-serif font-bold text-sm text-[#1c1210]">Made to Order (Artisanal Commission)</h4>
@@ -559,8 +570,8 @@
                 <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-[#d8b45a]/20 text-[#78000b] flex items-center justify-center font-bold">
-                                🔤
+                            <div class="w-9 h-9 rounded-xl bg-[#d8b45a]/20 text-[#78000b] flex items-center justify-center shrink-0 border border-[#d8b45a]/40">
+                                <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
                             </div>
                             <div>
                                 <h4 class="font-serif font-bold text-sm text-[#1c1210]">Hot-Stamping & Custom Monogramming</h4>
@@ -593,17 +604,20 @@
                                 Allowed Foil Stamping Types
                             </label>
                             <div class="flex flex-wrap items-center gap-3">
-                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
-                                    <input type="checkbox" name="personalization_types[]" value="gold_foil" {{ in_array('gold_foil', $types) ? 'checked' : '' }} class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
-                                    <span class="font-bold text-xs text-amber-700">✦ 24k Gold Foil</span>
+                                <label class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition shadow-2xs">
+                                    <input type="checkbox" name="personalization_types[]" value="gold_foil" {{ in_array('gold_foil', $types) ? 'checked' : '' }} class="w-4 h-4 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="w-3 h-3 rounded-full bg-gradient-to-br from-amber-300 to-amber-600 border border-amber-600 shadow-2xs"></span>
+                                    <span class="font-bold text-xs text-amber-950">24k Gold Foil</span>
                                 </label>
-                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
-                                    <input type="checkbox" name="personalization_types[]" value="silver_foil" {{ in_array('silver_foil', $types) ? 'checked' : '' }} class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
-                                    <span class="font-bold text-xs text-stone-600">✦ Silver Palladium Foil</span>
+                                <label class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition shadow-2xs">
+                                    <input type="checkbox" name="personalization_types[]" value="silver_foil" {{ in_array('silver_foil', $types) ? 'checked' : '' }} class="w-4 h-4 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="w-3 h-3 rounded-full bg-gradient-to-br from-stone-200 to-stone-400 border border-stone-500 shadow-2xs"></span>
+                                    <span class="font-bold text-xs text-stone-900">Silver Palladium Foil</span>
                                 </label>
-                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
-                                    <input type="checkbox" name="personalization_types[]" value="blind_deboss" {{ in_array('blind_deboss', $types) ? 'checked' : '' }} class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
-                                    <span class="font-bold text-xs text-[#78000b]">✦ Blind Deboss (Tone-on-Tone)</span>
+                                <label class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition shadow-2xs">
+                                    <input type="checkbox" name="personalization_types[]" value="blind_deboss" {{ in_array('blind_deboss', $types) ? 'checked' : '' }} class="w-4 h-4 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="w-3 h-3 rounded-full bg-[#78000b] border border-[#4a0207] shadow-2xs"></span>
+                                    <span class="font-bold text-xs text-[#78000b]">Blind Deboss (Tone-on-Tone)</span>
                                 </label>
                             </div>
                         </div>
@@ -948,7 +962,9 @@
                     <input type="number" value="${v.stock !== null && v.stock !== undefined ? v.stock : 10}" onchange="updateVariantField(${idx}, 'stock', parseInt(this.value) || 0)" class="w-16 h-8 px-1.5 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs font-bold text-center">
                 </td>
                 <td class="py-2.5 px-3 text-center">
-                    <button type="button" onclick="removeVariantRow(${idx})" class="w-6 h-6 rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition flex items-center justify-center mx-auto text-xs font-bold" title="Remove">✕</button>
+                    <button type="button" onclick="removeVariantRow(${idx})" class="w-7 h-7 rounded-lg text-rose-600 hover:bg-rose-50 hover:text-rose-800 transition flex items-center justify-center mx-auto cursor-pointer" title="Remove Variant">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
                 </td>
             </tr>
         `).join('');
@@ -1032,20 +1048,31 @@
             if (tab) {
                 const num = tab.querySelector('.step-num');
                 const title = tab.querySelector('.step-title');
+                const sub = tab.querySelector('.step-sub');
                 if (i === currentStep) {
-                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs';
-                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]';
-                    if (title) title.className = 'step-title block font-bold text-xs text-[#1c1210] truncate';
+                    tab.className = 'step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs';
+                    if (num) {
+                        num.className = 'step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a] shadow-xs';
+                        num.textContent = i;
+                    }
+                    if (title) title.className = 'step-title block font-bold text-xs text-[#111827] truncate';
+                    if (sub) sub.className = 'step-sub block text-[0.65rem] font-semibold text-[#4b5563] truncate';
                 } else if (i < currentStep) {
-                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
-                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-emerald-600 text-white';
-                    if (num) num.innerHTML = '✓';
-                    if (title) title.className = 'step-title block font-bold text-xs text-stone-700 truncate';
+                    tab.className = 'step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
+                    if (num) {
+                        num.className = 'step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-emerald-600 text-white shadow-2xs';
+                        num.innerHTML = '<svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                    }
+                    if (title) title.className = 'step-title block font-bold text-xs text-[#111827] truncate';
+                    if (sub) sub.className = 'step-sub block text-[0.65rem] font-semibold text-emerald-700 truncate';
                 } else {
-                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
-                    if (num) num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600';
-                    if (num) num.textContent = i;
-                    if (title) title.className = 'step-title block font-bold text-xs text-stone-500 truncate';
+                    tab.className = 'step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
+                    if (num) {
+                        num.className = 'step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700';
+                        num.textContent = i;
+                    }
+                    if (title) title.className = 'step-title block font-bold text-xs text-stone-600 truncate';
+                    if (sub) sub.className = 'step-sub block text-[0.65rem] font-semibold text-stone-500 truncate';
                 }
             }
         }

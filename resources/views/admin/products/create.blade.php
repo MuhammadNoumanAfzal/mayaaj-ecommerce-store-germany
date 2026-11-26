@@ -48,58 +48,68 @@
 
         <!-- 3. Luxury Interactive Stepper Tabs (5 Steps) -->
         <div class="bg-[#FAF8F5] border-b border-[#ebdccb] px-3 sm:px-6 py-2.5 overflow-x-auto">
-            <nav class="flex items-center justify-between min-w-[620px] gap-2" aria-label="Product Wizard Steps">
+            <nav class="flex items-center justify-between min-w-[660px] gap-2" aria-label="Product Wizard Steps">
                 
                 <!-- Tab 1: Core Catalog -->
-                <button type="button" onclick="goToStep(1)" id="stepTab-1" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]">1</span>
+                <button type="button" onclick="goToStep(1)" id="stepTab-1" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a] shadow-xs">
+                        1
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-[#1c1210] truncate">Core Catalog</span>
-                        <span class="step-sub block text-[0.62rem] text-[#8a7267] truncate">Pricing & SKU</span>
+                        <span class="step-title block font-bold text-xs text-[#111827] truncate">Core Catalog</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-[#4b5563] truncate">Pricing & SKU</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 2: Craft & Specs -->
-                <button type="button" onclick="goToStep(2)" id="stepTab-2" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">2</span>
+                <button type="button" onclick="goToStep(2)" id="stepTab-2" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        2
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Craft & Specs</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Materials & Size</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Craft & Specs</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Materials & Size</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 3: Bespoke & Delivery -->
-                <button type="button" onclick="goToStep(3)" id="stepTab-3" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">3</span>
+                <button type="button" onclick="goToStep(3)" id="stepTab-3" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        3
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Bespoke & Time</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Made-to-Order</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Bespoke & Time</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Made-to-Order</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 4: Variations Matrix -->
-                <button type="button" onclick="goToStep(4)" id="stepTab-4" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">4</span>
+                <button type="button" onclick="goToStep(4)" id="stepTab-4" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        4
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Variations</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Color & Matrix</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Variations</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Color & Matrix</span>
                     </div>
                 </button>
 
                 <div class="w-4 h-px bg-[#ebdccb] shrink-0"></div>
 
                 <!-- Tab 5: Media & Payments -->
-                <button type="button" onclick="goToStep(5)" id="stepTab-5" class="step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
-                    <span class="step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600">5</span>
+                <button type="button" onclick="goToStep(5)" id="stepTab-5" class="step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]">
+                    <span class="step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700">
+                        5
+                    </span>
                     <div class="min-w-0">
-                        <span class="step-title block font-bold text-xs text-stone-500 truncate">Media & Pay</span>
-                        <span class="step-sub block text-[0.62rem] text-stone-400 truncate">Gallery & COD</span>
+                        <span class="step-title block font-bold text-xs text-stone-600 truncate">Media & Pay</span>
+                        <span class="step-sub block text-[0.65rem] font-semibold text-stone-500 truncate">Gallery & Rules</span>
                     </div>
                 </button>
 
@@ -156,11 +166,12 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
-                            <label for="prod_sku" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732]">
-                                Master SKU Code <span class="text-stone-400 font-normal">(Optional)</span>
+                            <label for="prod_sku" class="block font-bold text-xs uppercase tracking-wider text-[#111827]">
+                                Master SKU Code <span class="text-[#4b5563] font-normal text-[0.65rem]">(Optional)</span>
                             </label>
-                            <button type="button" onclick="generateRandomSku()" class="text-[0.65rem] font-bold text-[#78000b] hover:underline cursor-pointer">
-                                ⚡ Auto-Generate
+                            <button type="button" onclick="generateRandomSku()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold text-[#78000b] bg-[#78000b]/8 hover:bg-[#78000b]/15 border border-[#78000b]/20 transition cursor-pointer active:scale-95 shadow-2xs">
+                                <svg class="w-3.5 h-3.5 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                <span>Auto-Generate</span>
                             </button>
                         </div>
                         <input 
@@ -169,7 +180,7 @@
                             id="prod_sku" 
                             value="{{ old('sku') }}" 
                             placeholder="e.g. MHJ-BC-8902" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold font-mono outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold font-mono outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
                 </div>
@@ -289,16 +300,16 @@
                     </div>
 
                     <div>
-                        <label for="prod_status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_status" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Catalog Visibility <span class="text-[#78000b]">*</span>
                         </label>
                         <select 
                             name="status" 
                             id="prod_status" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs cursor-pointer"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs cursor-pointer"
                         >
-                            <option value="active" {{ old('status', 'active') === 'active' ? 'selected' : '' }}>• Active (Live in Storefront)</option>
-                            <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }}>• Draft (Hidden from Store)</option>
+                            <option value="active" {{ old('status', 'active') === 'active' ? 'selected' : '' }}>Active (Live in Storefront)</option>
+                            <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }}>Draft (Hidden from Store)</option>
                         </select>
                     </div>
 
@@ -328,15 +339,18 @@
                 
                 <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
                     <div>
-                        <h3 class="font-serif text-base font-bold text-[#1c1210]">2. Atelier Craftsmanship & Specifications</h3>
-                        <p class="text-[0.7rem] text-[#8a7267]">Poetic storytelling, certified leather origin, premium materials, and physical measurements.</p>
+                        <h3 class="font-serif text-base font-bold text-[#111827]">2. Atelier Craftsmanship & Specifications</h3>
+                        <p class="text-xs font-semibold text-[#4b5563]">Poetic storytelling, certified leather origin, premium materials, and physical measurements.</p>
                     </div>
-                    <span class="text-[0.65rem] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">German Quality Standards</span>
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-300 shadow-2xs">
+                        <svg class="w-3.5 h-3.5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>German Quality Standards</span>
+                    </span>
                 </div>
 
                 <!-- Poetic Short Tagline -->
                 <div>
-                    <label for="prod_tagline" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                    <label for="prod_tagline" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                         Poetic Short Tagline
                     </label>
                     <input 
@@ -345,13 +359,13 @@
                         id="prod_tagline" 
                         value="{{ old('tagline') }}" 
                         placeholder="e.g. Sculpted in full-grain Vachetta, designed for timeless executive journeys." 
-                        class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                        class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
                 </div>
 
                 <!-- Storytelling & Description -->
                 <div>
-                    <label for="prod_description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                    <label for="prod_description" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                         Storytelling & Atelier Description
                     </label>
                     <textarea 
@@ -359,14 +373,14 @@
                         id="prod_description" 
                         rows="4" 
                         placeholder="Detailed poetic description of the product silhouette, sensory leather feel, and artisanal legacy..." 
-                        class="w-full p-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition leading-relaxed shadow-2xs"
+                        class="w-full p-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition leading-relaxed shadow-2xs"
                     >{{ old('description') }}</textarea>
                 </div>
 
                 <!-- Material Composition (3 Columns) -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label for="prod_materials" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_materials" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Outer Leather & Material
                         </label>
                         <input 
@@ -375,12 +389,12 @@
                             id="prod_materials" 
                             value="{{ old('materials', '100% Full-Grain Italian Vachetta Leather') }}" 
                             placeholder="e.g. 100% Italian Vachetta Leather" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
 
                     <div>
-                        <label for="prod_lining" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_lining" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Interior Lining
                         </label>
                         <input 
@@ -389,12 +403,12 @@
                             id="prod_lining" 
                             value="{{ old('lining', 'Hand-finished Micro-Suede & Organic Cotton') }}" 
                             placeholder="e.g. Micro-Suede / Velvet" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
 
                     <div>
-                        <label for="prod_hardware" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_hardware" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Hardware / Metal Finish
                         </label>
                         <input 
@@ -403,7 +417,7 @@
                             id="prod_hardware" 
                             value="{{ old('hardware', 'Solid Brass with 24k Champagne Gold plating') }}" 
                             placeholder="e.g. Brushed Gold / Palladium" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
                 </div>
@@ -411,7 +425,7 @@
                 <!-- Physical Dimensions & Origin (4 Columns) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-xl border border-[#ebdccb] bg-[#FAF8F5]">
                     <div>
-                        <label for="prod_dimensions" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_dimensions" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Dimensions (L × W × H)
                         </label>
                         <input 
@@ -420,12 +434,12 @@
                             id="prod_dimensions" 
                             value="{{ old('dimensions', '40 × 29 × 10 cm') }}" 
                             placeholder="e.g. 40 × 29 × 10 cm" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
 
                     <div>
-                        <label for="prod_weight" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_weight" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Weight
                         </label>
                         <input 
@@ -434,12 +448,12 @@
                             id="prod_weight" 
                             value="{{ old('weight', '950 g') }}" 
                             placeholder="e.g. 950 g" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
 
                     <div>
-                        <label for="prod_strap" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_strap" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Handle / Strap Drop
                         </label>
                         <input 
@@ -448,12 +462,12 @@
                             id="prod_strap" 
                             value="{{ old('strap_drop', '48 - 58 cm (Adjustable)') }}" 
                             placeholder="e.g. 48 - 58 cm" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
 
                     <div>
-                        <label for="prod_origin" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        <label for="prod_origin" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                             Atelier Origin Badge
                         </label>
                         <input 
@@ -462,7 +476,7 @@
                             id="prod_origin" 
                             value="{{ old('origin', 'Handcrafted in Germany') }}" 
                             placeholder="e.g. Handcrafted in Germany" 
-                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                         >
                     </div>
                 </div>
@@ -476,22 +490,25 @@
                 
                 <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
                     <div>
-                        <h3 class="font-serif text-base font-bold text-[#1c1210]">3. Bespoke Commission & Delivery Controls</h3>
-                        <p class="text-[0.7rem] text-[#8a7267]">Fulfillment mode (In-Stock vs Made-to-Order), custom monogramming, and lead times.</p>
+                        <h3 class="font-serif text-base font-bold text-[#111827]">3. Bespoke Commission & Delivery Controls</h3>
+                        <p class="text-xs font-semibold text-[#4b5563]">Fulfillment mode (In-Stock vs Made-to-Order), custom monogramming, and lead times.</p>
                     </div>
-                    <span class="text-[0.65rem] font-bold text-[#d8b45a] bg-[#1c1210] px-2.5 py-1 rounded-lg">Atelier Bespoke System</span>
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#d8b45a] bg-[#111827] px-3 py-1 rounded-lg shadow-2xs">
+                        <svg class="w-3.5 h-3.5 text-[#d8b45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span>Atelier Bespoke System</span>
+                    </span>
                 </div>
 
                 <!-- 1. Fulfillment Mode: In-Stock vs Made-to-Order -->
                 <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-[#78000b]/10 text-[#78000b] flex items-center justify-center font-bold">
-                                ✂️
+                            <div class="w-9 h-9 rounded-xl bg-[#78000b]/10 text-[#78000b] flex items-center justify-center shrink-0 border border-[#78000b]/20">
+                                <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
                             </div>
                             <div>
-                                <h4 class="font-serif font-bold text-sm text-[#1c1210]">Made to Order (Artisanal Commission)</h4>
-                                <p class="text-[0.68rem] text-[#8a7267]">Crafted on demand upon client order instead of holding pre-made stock.</p>
+                                <h4 class="font-serif font-bold text-sm text-[#111827]">Made to Order (Artisanal Commission)</h4>
+                                <p class="text-xs font-semibold text-[#4b5563]">Crafted on demand upon client order instead of holding pre-made stock.</p>
                             </div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
@@ -504,14 +521,14 @@
                                 {{ old('is_made_to_order') ? 'checked' : '' }} 
                                 class="sr-only peer"
                             >
-                            <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#78000b]"></div>
+                            <div class="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#78000b]"></div>
                         </label>
                     </div>
 
                     <!-- Lead Time & Delivery Windows (Dynamic) -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-[#f1e6da]">
                         <div id="lead_time_container" class="{{ old('is_made_to_order') ? '' : 'opacity-60 pointer-events-none' }}">
-                            <label for="lead_time_days" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            <label for="lead_time_days" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                                 Handcrafting Lead Time (Days)
                             </label>
                             <input 
@@ -521,13 +538,13 @@
                                 value="{{ old('lead_time_days', 6) }}" 
                                 min="0" 
                                 placeholder="5 to 7 days" 
-                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                             >
-                            <p class="text-[0.62rem] text-stone-400 mt-1">Days required by craftsmen before courier handover.</p>
+                            <p class="text-[0.68rem] font-semibold text-[#4b5563] mt-1">Days required by craftsmen before courier handover.</p>
                         </div>
 
                         <div>
-                            <label for="delivery_days_min" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            <label for="delivery_days_min" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                                 Min Transit Delivery Days
                             </label>
                             <input 
@@ -536,13 +553,13 @@
                                 id="delivery_days_min" 
                                 value="{{ old('delivery_days_min', 2) }}" 
                                 min="1" 
-                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                             >
-                            <p class="text-[0.62rem] text-stone-400 mt-1">e.g. 2 days within Germany / DHL Express.</p>
+                            <p class="text-[0.68rem] font-semibold text-[#4b5563] mt-1">e.g. 2 days within Germany / DHL Express.</p>
                         </div>
 
                         <div>
-                            <label for="delivery_days_max" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                            <label for="delivery_days_max" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                                 Max Transit Delivery Days
                             </label>
                             <input 
@@ -551,9 +568,9 @@
                                 id="delivery_days_max" 
                                 value="{{ old('delivery_days_max', 4) }}" 
                                 min="1" 
-                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                                class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                             >
-                            <p class="text-[0.62rem] text-stone-400 mt-1">e.g. 4 days across Europe / Standard.</p>
+                            <p class="text-[0.68rem] font-semibold text-[#4b5563] mt-1">e.g. 4 days across Europe / Standard.</p>
                         </div>
                     </div>
                 </div>
@@ -562,12 +579,12 @@
                 <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-[#d8b45a]/20 text-[#78000b] flex items-center justify-center font-bold">
-                                🔤
+                            <div class="w-9 h-9 rounded-xl bg-[#d8b45a]/20 text-[#78000b] flex items-center justify-center shrink-0 border border-[#d8b45a]/40">
+                                <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
                             </div>
                             <div>
-                                <h4 class="font-serif font-bold text-sm text-[#1c1210]">Hot-Stamping & Custom Monogramming</h4>
-                                <p class="text-[0.68rem] text-[#8a7267]">Allow clients to customize this piece with their initials or custom name engraving.</p>
+                                <h4 class="font-serif font-bold text-sm text-[#111827]">Hot-Stamping & Custom Monogramming</h4>
+                                <p class="text-xs font-semibold text-[#4b5563]">Allow clients to customize this piece with their initials or custom name engraving.</p>
                             </div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
@@ -580,7 +597,7 @@
                                 {{ old('allow_personalization') ? 'checked' : '' }} 
                                 class="sr-only peer"
                             >
-                            <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#78000b]"></div>
+                            <div class="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#78000b]"></div>
                         </label>
                     </div>
 
@@ -588,28 +605,31 @@
                     <div id="personalization_config_container" class="{{ old('allow_personalization') ? '' : 'hidden' }} space-y-4 pt-2 border-t border-[#f1e6da]">
                         
                         <div>
-                            <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-2">
+                            <label class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-2">
                                 Allowed Foil Stamping Types
                             </label>
                             <div class="flex flex-wrap items-center gap-3">
-                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
-                                    <input type="checkbox" name="personalization_types[]" value="gold_foil" checked class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
-                                    <span class="font-bold text-xs text-amber-700">✦ 24k Gold Foil</span>
+                                <label class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition shadow-2xs">
+                                    <input type="checkbox" name="personalization_types[]" value="gold_foil" checked class="w-4 h-4 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="w-3 h-3 rounded-full bg-gradient-to-br from-amber-300 to-amber-600 border border-amber-600 shadow-2xs"></span>
+                                    <span class="font-bold text-xs text-amber-950">24k Gold Foil</span>
                                 </label>
-                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
-                                    <input type="checkbox" name="personalization_types[]" value="silver_foil" checked class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
-                                    <span class="font-bold text-xs text-stone-600">✦ Silver Palladium Foil</span>
+                                <label class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition shadow-2xs">
+                                    <input type="checkbox" name="personalization_types[]" value="silver_foil" checked class="w-4 h-4 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="w-3 h-3 rounded-full bg-gradient-to-br from-stone-200 to-stone-400 border border-stone-500 shadow-2xs"></span>
+                                    <span class="font-bold text-xs text-stone-900">Silver Palladium Foil</span>
                                 </label>
-                                <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition">
-                                    <input type="checkbox" name="personalization_types[]" value="blind_deboss" checked class="w-3.5 h-3.5 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
-                                    <span class="font-bold text-xs text-[#78000b]">✦ Blind Deboss (Tone-on-Tone)</span>
+                                <label class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-[#ebdccb] bg-white cursor-pointer hover:border-[#78000b] transition shadow-2xs">
+                                    <input type="checkbox" name="personalization_types[]" value="blind_deboss" checked class="w-4 h-4 text-[#78000b] rounded border-stone-300 accent-[#78000b]">
+                                    <span class="w-3 h-3 rounded-full bg-[#78000b] border border-[#4a0207] shadow-2xs"></span>
+                                    <span class="font-bold text-xs text-[#78000b]">Blind Deboss (Tone-on-Tone)</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label for="personalization_max_chars" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                                <label for="personalization_max_chars" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                                     Max Characters Limit
                                 </label>
                                 <input 
@@ -619,27 +639,27 @@
                                     value="{{ old('personalization_max_chars', 5) }}" 
                                     min="1" 
                                     max="20" 
-                                    class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                                    class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-semibold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                                 >
-                                <p class="text-[0.62rem] text-stone-400 mt-1">Recommended: 3 to 5 characters for luxury monogramming.</p>
+                                <p class="text-[0.68rem] font-semibold text-[#4b5563] mt-1">Recommended: 3 to 5 characters for luxury monogramming.</p>
                             </div>
 
                             <div>
-                                <label for="personalization_fee" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                                <label for="personalization_fee" class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                                     Personalization Surcharge (€)
                                 </label>
                                 <div class="relative">
-                                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-stone-500">€</span>
+                                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-[#111827]">€</span>
                                     <input 
                                         type="number" 
                                         step="0.01" 
                                         name="personalization_fee" 
                                         id="personalization_fee" 
                                         value="{{ old('personalization_fee', '0.00') }}" 
-                                        class="w-full h-10 pl-8 pr-3.5 rounded-xl border border-[#ebdccb] bg-white text-stone-900 text-xs font-bold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                                        class="w-full h-10 pl-8 pr-3.5 rounded-xl border border-[#ebdccb] bg-white text-[#111827] text-xs font-bold outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                                     >
                                 </div>
-                                <p class="text-[0.62rem] text-stone-400 mt-1">Set 0.00 for complimentary artisanal monogramming.</p>
+                                <p class="text-[0.68rem] font-semibold text-[#4b5563] mt-1">Set 0.00 for complimentary artisanal monogramming.</p>
                             </div>
                         </div>
 
@@ -655,11 +675,12 @@
                 
                 <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
                     <div>
-                        <h3 class="font-serif text-base font-bold text-[#1c1210]">4. Real-World Variations Matrix</h3>
-                        <p class="text-[0.7rem] text-[#8a7267]">Configure color swatches, leather textures, sizes, and per-variant SKU/stock controls.</p>
+                        <h3 class="font-serif text-base font-bold text-[#111827]">4. Real-World Variations Matrix</h3>
+                        <p class="text-xs font-semibold text-[#4b5563]">Configure color swatches, leather textures, sizes, and per-variant SKU/stock controls.</p>
                     </div>
-                    <button type="button" onclick="addNewVariantRow()" class="btn-exec-primary rounded-xl px-3 py-1.5 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95">
-                        <span>+ Add Variant</span>
+                    <button type="button" onclick="addNewVariantRow()" class="btn-exec-primary rounded-xl px-3.5 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        <span>Add Variant</span>
                     </button>
                 </div>
 
@@ -667,23 +688,23 @@
                 <input type="hidden" name="variations_json" id="variations_json_input">
 
                 <!-- Quick Preset Swatches Helper -->
-                <div class="p-3 rounded-xl border border-[#ebdccb] bg-[#FAF8F5] flex flex-wrap items-center justify-between gap-2.5">
-                    <span class="text-[0.68rem] font-bold text-[#483732] uppercase tracking-wider">Atelier Leather Swatch Presets:</span>
+                <div class="p-3.5 rounded-xl border border-[#ebdccb] bg-[#FAF8F5] flex flex-wrap items-center justify-between gap-2.5">
+                    <span class="text-xs font-bold text-[#111827] uppercase tracking-wider">Atelier Leather Swatch Presets:</span>
                     <div class="flex flex-wrap items-center gap-2">
-                        <button type="button" onclick="addPresetVariant('Noir Deep Black', '#141414', 'Smooth Calfskin', 'Standard', 0)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
-                            <span class="w-3 h-3 rounded-full bg-[#141414] border border-stone-300"></span>
+                        <button type="button" onclick="addPresetVariant('Noir Deep Black', '#141414', 'Smooth Calfskin', 'Standard', 0)" class="px-3 py-1.5 rounded-lg bg-white border border-[#ebdccb] text-xs font-bold text-[#111827] hover:border-[#78000b] transition flex items-center gap-2 cursor-pointer shadow-2xs">
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#141414] border border-stone-400"></span>
                             <span>Noir Black</span>
                         </button>
-                        <button type="button" onclick="addPresetVariant('Cognac Amber', '#9E471A', 'Vachetta Pull-up', 'Standard', 0)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
-                            <span class="w-3 h-3 rounded-full bg-[#9E471A] border border-stone-300"></span>
+                        <button type="button" onclick="addPresetVariant('Cognac Amber', '#9E471A', 'Vachetta Pull-up', 'Standard', 0)" class="px-3 py-1.5 rounded-lg bg-white border border-[#ebdccb] text-xs font-bold text-[#111827] hover:border-[#78000b] transition flex items-center gap-2 cursor-pointer shadow-2xs">
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#9E471A] border border-stone-400"></span>
                             <span>Cognac</span>
                         </button>
-                        <button type="button" onclick="addPresetVariant('Chocolat Espresso', '#3A1E14', 'Grained Togo', 'Standard', 0)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
-                            <span class="w-3 h-3 rounded-full bg-[#3A1E14] border border-stone-300"></span>
+                        <button type="button" onclick="addPresetVariant('Chocolat Espresso', '#3A1E14', 'Grained Togo', 'Standard', 0)" class="px-3 py-1.5 rounded-lg bg-white border border-[#ebdccb] text-xs font-bold text-[#111827] hover:border-[#78000b] transition flex items-center gap-2 cursor-pointer shadow-2xs">
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#3A1E14] border border-stone-400"></span>
                             <span>Chocolat</span>
                         </button>
-                        <button type="button" onclick="addPresetVariant('Burgundy Saltora', '#78000B', 'Fine Saffiano', 'Large 42', 30)" class="px-2.5 py-1 rounded-lg bg-white border border-[#ebdccb] text-[0.68rem] font-bold text-stone-700 hover:border-[#78000b] transition flex items-center gap-1.5 cursor-pointer shadow-2xs">
-                            <span class="w-3 h-3 rounded-full bg-[#78000B] border border-stone-300"></span>
+                        <button type="button" onclick="addPresetVariant('Burgundy Saltora', '#78000B', 'Fine Saffiano', 'Large 42', 30)" class="px-3 py-1.5 rounded-lg bg-white border border-[#ebdccb] text-xs font-bold text-[#111827] hover:border-[#78000b] transition flex items-center gap-2 cursor-pointer shadow-2xs">
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#78000B] border border-stone-400"></span>
                             <span>Burgundy</span>
                         </button>
                     </div>
@@ -693,18 +714,18 @@
                 <div class="rounded-xl border border-[#ebdccb] overflow-hidden shadow-2xs">
                     <table class="w-full text-left text-xs" id="variantsMatrixTable">
                         <thead>
-                            <tr class="bg-gradient-to-r from-[#fbf8f4] via-[#f7eee3] to-[#fbf8f4] text-[#483732] font-black uppercase tracking-wider text-[0.65rem] border-b border-[#ebdccb]">
-                                <th class="py-2.5 px-3 w-10 text-center">Swatch</th>
-                                <th class="py-2.5 px-3">Variant / Color Name</th>
-                                <th class="py-2.5 px-3">Texture / Leather</th>
-                                <th class="py-2.5 px-3 w-28">Size / Model</th>
-                                <th class="py-2.5 px-3 w-32">Variant SKU</th>
-                                <th class="py-2.5 px-3 w-28 text-right">Price Adj (€)</th>
-                                <th class="py-2.5 px-3 w-20 text-center">Stock</th>
-                                <th class="py-2.5 px-3 w-14 text-center">Action</th>
+                            <tr class="bg-gradient-to-r from-[#fbf8f4] via-[#f7eee3] to-[#fbf8f4] text-[#111827] font-black uppercase tracking-wider text-xs border-b border-[#ebdccb]">
+                                <th class="py-3 px-3 w-12 text-center">Swatch</th>
+                                <th class="py-3 px-3">Variant / Color Name</th>
+                                <th class="py-3 px-3">Texture / Leather</th>
+                                <th class="py-3 px-3 w-32">Size / Model</th>
+                                <th class="py-3 px-3 w-36">Variant SKU</th>
+                                <th class="py-3 px-3 w-28 text-right">Price Adj (€)</th>
+                                <th class="py-3 px-3 w-24 text-center">Stock</th>
+                                <th class="py-3 px-3 w-16 text-center">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="variantsTableBody" class="divide-y divide-[#f1e6da] bg-white">
+                        <tbody id="variantsTableBody" class="divide-y divide-[#f1e6da] bg-white text-[#111827]">
                             <!-- Populated via JavaScript dynamically -->
                         </tbody>
                     </table>
@@ -719,15 +740,18 @@
                 
                 <div class="border-b border-[#f1e6da] pb-3 flex items-center justify-between">
                     <div>
-                        <h3 class="font-serif text-base font-bold text-[#1c1210]">5. Media Showcase & Payment Rules</h3>
-                        <p class="text-[0.7rem] text-[#8a7267]">Showcase imagery and selective payment gateway eligibility per item.</p>
+                        <h3 class="font-serif text-base font-bold text-[#111827]">5. Media Showcase & Payment Rules</h3>
+                        <p class="text-xs font-semibold text-[#4b5563]">Showcase imagery and selective payment gateway eligibility per item.</p>
                     </div>
-                    <span class="text-[0.65rem] font-bold text-[#78000b] bg-[#FAF7F2] px-2.5 py-1 rounded-lg border border-[#ebdccb]">Final Launch Step</span>
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#78000b] bg-[#FAF7F2] px-3 py-1 rounded-lg border border-[#ebdccb] shadow-2xs">
+                        <svg class="w-3.5 h-3.5 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span>Final Launch Step</span>
+                    </span>
                 </div>
 
                 <!-- 1. Main Cover Image Upload -->
                 <div>
-                    <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                    <label class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
                         Primary Atelier Cover Image <span class="text-[#78000b]">*</span>
                     </label>
                     <div class="rounded-xl border border-[#ebdccb] p-4 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
@@ -739,13 +763,13 @@
                             <div class="flex-1 text-center sm:text-left space-y-1">
                                 <input type="file" name="image" id="prod_main_image" accept="image/*" onchange="previewMainImage(this)" class="hidden">
                                 <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                                    <button type="button" onclick="document.getElementById('prod_main_image').click()" class="h-9 px-4 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer active:scale-95 bg-[#181210] text-white">
+                                    <button type="button" onclick="document.getElementById('prod_main_image').click()" class="h-9 px-4 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer active:scale-95 bg-[#111827] text-white hover:bg-black">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
                                         <span>Select Primary Cover</span>
                                     </button>
-                                    <span id="main_cover_filename" class="text-[0.7rem] font-semibold text-[#685c54]">PNG, JPG, WEBP up to 30MB</span>
+                                    <span id="main_cover_filename" class="text-xs font-bold text-[#111827]">PNG, JPG, WEBP up to 30MB</span>
                                 </div>
-                                <p class="text-[0.65rem] text-[#8a7c74]">Recommended ratio: 1:1 Square (1200×1200px) on pure off-white background.</p>
+                                <p class="text-[0.68rem] font-semibold text-[#4b5563]">Recommended ratio: 1:1 Square (1200×1200px) on pure off-white background.</p>
                             </div>
                         </div>
                     </div>
@@ -753,8 +777,8 @@
 
                 <!-- 2. Multi-Angle High-Res Gallery -->
                 <div>
-                    <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
-                        High-Res Detail Gallery Slides <span class="text-stone-400 font-normal">(Multi-Select)</span>
+                    <label class="block font-bold text-xs uppercase tracking-wider text-[#111827] mb-1.5">
+                        High-Res Detail Gallery Slides <span class="text-[#4b5563] font-normal text-[0.68rem]">(Multi-Select)</span>
                     </label>
                     <div class="rounded-xl border border-dashed border-[#ebdccb] p-5 text-center bg-[#FAF8F5] hover:bg-white transition cursor-pointer" onclick="document.getElementById('prod_gallery_input').click()">
                         <input type="file" name="gallery[]" id="prod_gallery_input" accept="image/*" multiple onchange="previewGalleryImages(this)" class="hidden">
@@ -763,8 +787,8 @@
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                             </div>
                             <div>
-                                <span class="font-bold text-xs text-[#1c1210]">Click to choose multi-angle gallery photos</span>
-                                <p class="text-[0.65rem] text-stone-400">Exterior profile, interior lining, hardware macro, scale on model</p>
+                                <span class="font-bold text-xs text-[#111827]">Click to choose multi-angle gallery photos</span>
+                                <p class="text-[0.68rem] font-semibold text-[#4b5563]">Exterior profile, interior lining, hardware macro, scale on model</p>
                             </div>
                         </div>
                     </div>
@@ -774,44 +798,64 @@
                 <!-- 3. Product-Level Payment Gateway Eligibility -->
                 <div class="p-4 sm:p-5 rounded-2xl border border-[#ebdccb] bg-gradient-to-br from-[#FAF8F5] via-white to-[#FAF8F5] space-y-3.5">
                     <div>
-                        <h4 class="font-serif font-bold text-sm text-[#1c1210]">Product-Level Payment Gateway Control</h4>
-                        <p class="text-[0.68rem] text-[#8a7267]">Configure allowed payment options. Uncheck Cash on Delivery (COD) for high-ticket or personalized bespoke pieces.</p>
+                        <h4 class="font-serif font-bold text-sm text-[#111827]">Product-Level Payment Gateway Control</h4>
+                        <p class="text-xs font-semibold text-[#4b5563]">Configure allowed payment options. Uncheck Cash on Delivery (COD) for high-ticket or personalized bespoke pieces.</p>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2">
                         <!-- COD Option -->
-                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                        <label class="flex items-center gap-3 p-3.5 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs group">
                             <input type="checkbox" name="payment_methods[]" value="cod" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
-                            <div>
-                                <span class="font-bold text-xs text-[#1c1210] block">Cash on Delivery</span>
-                                <span class="text-[0.62rem] text-stone-500 block">Pay cash at doorstep</span>
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-lg bg-[#78000b]/8 text-[#78000b] flex items-center justify-center shrink-0">
+                                    <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-xs text-[#111827] block">Cash on Delivery</span>
+                                    <span class="text-[0.65rem] font-semibold text-[#4b5563] block">Pay cash at doorstep</span>
+                                </div>
                             </div>
                         </label>
 
                         <!-- Stripe / Cards -->
-                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                        <label class="flex items-center gap-3 p-3.5 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs group">
                             <input type="checkbox" name="payment_methods[]" value="stripe" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
-                            <div>
-                                <span class="font-bold text-xs text-[#1c1210] block">Credit / Debit Card</span>
-                                <span class="text-[0.62rem] text-stone-500 block">Visa, Mastercard, Amex</span>
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-lg bg-[#78000b]/8 text-[#78000b] flex items-center justify-center shrink-0">
+                                    <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-xs text-[#111827] block">Credit / Debit Card</span>
+                                    <span class="text-[0.65rem] font-semibold text-[#4b5563] block">Visa, Mastercard, Amex</span>
+                                </div>
                             </div>
                         </label>
 
                         <!-- Klarna -->
-                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                        <label class="flex items-center gap-3 p-3.5 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs group">
                             <input type="checkbox" name="payment_methods[]" value="klarna" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
-                            <div>
-                                <span class="font-bold text-xs text-[#1c1210] block">Klarna Pay Later</span>
-                                <span class="text-[0.62rem] text-stone-500 block">Slice in 30 days</span>
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-lg bg-[#78000b]/8 text-[#78000b] flex items-center justify-center shrink-0">
+                                    <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-xs text-[#111827] block">Klarna Pay Later</span>
+                                    <span class="text-[0.65rem] font-semibold text-[#4b5563] block">Slice in 30 days</span>
+                                </div>
                             </div>
                         </label>
 
                         <!-- Bank Transfer -->
-                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs">
+                        <label class="flex items-center gap-3 p-3.5 rounded-xl border border-[#ebdccb] bg-white hover:border-[#78000b] transition cursor-pointer shadow-2xs group">
                             <input type="checkbox" name="payment_methods[]" value="bank_transfer" checked class="w-4 h-4 rounded text-[#78000b] focus:ring-[#78000b]/20 border-stone-300 accent-[#78000b] cursor-pointer">
-                            <div>
-                                <span class="font-bold text-xs text-[#1c1210] block">SEPA Bank Transfer</span>
-                                <span class="text-[0.62rem] text-stone-500 block">Advance wire payment</span>
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-lg bg-[#78000b]/8 text-[#78000b] flex items-center justify-center shrink-0">
+                                    <svg class="w-4 h-4 text-[#78000b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="5 6 12 3 19 6"/><line x1="4" y1="10" x2="4" y2="21"/><line x1="20" y1="10" x2="20" y2="21"/><line x1="8" y1="14" x2="8" y2="17"/><line x1="12" y1="14" x2="12" y2="17"/><line x1="16" y1="14" x2="16" y2="17"/></svg>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-xs text-[#111827] block">SEPA Bank Transfer</span>
+                                    <span class="text-[0.65rem] font-semibold text-[#4b5563] block">Advance wire payment</span>
+                                </div>
                             </div>
                         </label>
                     </div>
@@ -929,7 +973,9 @@
                     <input type="number" value="${v.stock !== null ? v.stock : 10}" onchange="updateVariantField(${idx}, 'stock', parseInt(this.value) || 0)" class="w-16 h-8 px-1.5 rounded-lg border border-[#ebdccb] bg-[#fdfbf9] text-xs font-bold text-center">
                 </td>
                 <td class="py-2.5 px-3 text-center">
-                    <button type="button" onclick="removeVariantRow(${idx})" class="w-6 h-6 rounded-lg text-rose-500 hover:bg-rose-50 hover:text-rose-700 transition flex items-center justify-center mx-auto text-xs font-bold" title="Remove">✕</button>
+                    <button type="button" onclick="removeVariantRow(${idx})" class="w-7 h-7 rounded-lg text-rose-600 hover:bg-rose-50 hover:text-rose-800 transition flex items-center justify-center mx-auto cursor-pointer" title="Remove Variant">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
                 </td>
             </tr>
         `).join('');
@@ -1015,26 +1061,29 @@
                 const title = tab.querySelector('.step-title');
                 const sub = tab.querySelector('.step-sub');
                 if (i === currentStep) {
-                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs';
+                    tab.className = 'step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group bg-white border border-[#ebdccb] shadow-2xs';
                     if (num) {
-                        num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a]';
+                        num.className = 'step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-[#78000b] text-[#d8b45a] shadow-xs';
                         num.textContent = i;
                     }
-                    if (title) title.className = 'step-title block font-bold text-xs text-[#1c1210] truncate';
+                    if (title) title.className = 'step-title block font-bold text-xs text-[#111827] truncate';
+                    if (sub) sub.className = 'step-sub block text-[0.65rem] font-semibold text-[#4b5563] truncate';
                 } else if (i < currentStep) {
-                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
+                    tab.className = 'step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
                     if (num) {
-                        num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-emerald-600 text-white';
-                        num.innerHTML = '✓';
+                        num.className = 'step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-emerald-600 text-white shadow-2xs';
+                        num.innerHTML = '<svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
                     }
-                    if (title) title.className = 'step-title block font-bold text-xs text-stone-700 truncate';
+                    if (title) title.className = 'step-title block font-bold text-xs text-[#111827] truncate';
+                    if (sub) sub.className = 'step-sub block text-[0.65rem] font-semibold text-emerald-700 truncate';
                 } else {
-                    tab.className = 'step-tab flex-1 flex items-center gap-2 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
+                    tab.className = 'step-tab flex-1 flex items-center gap-2.5 p-2 rounded-xl transition text-left cursor-pointer group hover:bg-white border border-transparent hover:border-[#ebdccb]';
                     if (num) {
-                        num.className = 'step-num w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-600';
+                        num.className = 'step-num w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 bg-stone-200 text-stone-700';
                         num.textContent = i;
                     }
-                    if (title) title.className = 'step-title block font-bold text-xs text-stone-500 truncate';
+                    if (title) title.className = 'step-title block font-bold text-xs text-stone-600 truncate';
+                    if (sub) sub.className = 'step-sub block text-[0.65rem] font-semibold text-stone-500 truncate';
                 }
             }
         }

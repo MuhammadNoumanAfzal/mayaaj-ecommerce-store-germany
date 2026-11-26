@@ -13,7 +13,7 @@
     <!-- Fonts: Cormorant Garamond, Playfair Display & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Icons, Chart.js, SweetAlert2 & Quill Rich Text Editor -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -167,9 +167,57 @@
     <style>
         body {
             background-color: #F8F5EF !important;
-            color: #292524 !important;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #111827 !important;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.011em;
+        }
+
+        /* High-Contrast Luxury Typography - Crisp Black Text, Zero Faint Gray */
+        h1, h2, h3, h4, h5, h6 {
+            color: #111827 !important;
+            letter-spacing: -0.015em;
+        }
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif !important;
+        }
+
+        /* Eliminating faint washed-out grays with readable dark slate & rich black */
+        .text-stone-400, 
+        .text-stone-500, 
+        .text-gray-400, 
+        .text-gray-500, 
+        .text-neutral-400,
+        .text-neutral-500,
+        .text-\[\#8a7267\], 
+        .text-\[\#8a7c74\],
+        .text-\[\#66605B\], 
+        .text-\[\#a39b93\] {
+            color: #374151 !important; /* Deep charcoal/black instead of washed out gray */
+        }
+
+        .text-stone-600, 
+        .text-gray-600, 
+        .text-neutral-600,
+        .text-\[\#483732\],
+        .text-\[\#685c54\] {
+            color: #1f2937 !important; /* High contrast black-slate */
+        }
+
+        .text-stone-700, 
+        .text-stone-800, 
+        .text-stone-900, 
+        .text-gray-700, 
+        .text-gray-800, 
+        .text-gray-900, 
+        .text-neutral-700,
+        .text-neutral-800,
+        .text-neutral-900,
+        .text-\[\#1c1210\],
+        .text-\[\#181210\] {
+            color: #111827 !important; /* Pure luxury black */
         }
 
         /* Hide Default Native Scrollbars */
@@ -186,80 +234,86 @@
         }
 
         /* Form Labels & Readability */
-        label, form label {
-            color: #292524 !important;
+        label, form label, .form-label {
+            color: #111827 !important;
             font-weight: 700 !important;
+        }
+
+        /* Input Placeholders with Strong Readability */
+        ::placeholder {
+            color: #6b7280 !important;
+            opacity: 1 !important;
         }
 
         /* Header & Sidebar Styles matching Pink-Salt */
         header.admin-executive-header {
             background-color: #ffffff !important;
-            color: #1C1917 !important;
+            color: #111827 !important;
             border-bottom: 1px solid #E5DED5 !important;
         }
 
         aside.admin-executive-sidebar {
             background-color: #ffffff !important;
-            color: #292524 !important;
+            color: #111827 !important;
             border-right: 1px solid #E5DED5 !important;
         }
 
         .admin-nav-item {
-            color: #66605B !important;
+            color: #1f2937 !important;
             transition: all 0.2s ease-in-out;
             font-weight: 600;
             border-radius: 0.75rem;
         }
 
         .admin-nav-item svg {
-            color: #8C827A;
+            color: #4b5563;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .admin-nav-item:hover {
             background-color: #FBF6F4 !important;
-            color: #964B42 !important;
+            color: #78000b !important;
         }
 
         .admin-nav-item:hover svg {
-            color: #964B42 !important;
+            color: #78000b !important;
             transform: scale(1.08);
         }
 
         .admin-nav-item-active {
             background-color: #F4E8E5 !important;
-            color: #964B42 !important;
+            color: #78000b !important;
             font-weight: 700 !important;
             border-radius: 0.75rem;
         }
 
         .admin-nav-item-active svg {
-            color: #964B42 !important;
+            color: #78000b !important;
         }
 
         .admin-nav-subitem {
-            color: #66605B !important;
-            font-weight: 500;
+            color: #374151 !important;
+            font-weight: 600;
         }
 
         .admin-nav-subitem svg {
-            color: #A39B93;
+            color: #6b7280;
             transition: all 0.2s ease;
         }
 
         .admin-nav-subitem:hover {
             background-color: #FBF6F4 !important;
-            color: #964B42 !important;
+            color: #78000b !important;
         }
 
         .admin-nav-subitem:hover svg {
-            color: #964B42 !important;
+            color: #78000b !important;
             transform: translateX(2px);
         }
 
         .admin-nav-subitem-active {
             background-color: #F4E8E5 !important;
-            color: #964B42 !important;
+            color: #78000b !important;
             font-weight: 700 !important;
         }
 
@@ -309,15 +363,16 @@
 
         .exec-input, form input[type="text"], form input[type="number"], form input[type="email"], form input[type="password"], form select, form textarea {
             background-color: #FBF6F4 !important;
-            color: #292524 !important;
+            color: #111827 !important;
             border: 1px solid #E5DED5 !important;
-            font-weight: 500 !important;
+            font-weight: 600 !important;
         }
 
         .exec-input:focus, form input:focus, form select:focus, form textarea:focus {
             background-color: #ffffff !important;
-            border-color: #964B42 !important;
-            box-shadow: 0 0 0 3px rgba(150, 75, 66, 0.15) !important;
+            border-color: #78000b !important;
+            color: #111827 !important;
+            box-shadow: 0 0 0 3px rgba(120, 0, 11, 0.15) !important;
         }
 
         select.appearance-none, select.filter-select {
@@ -336,7 +391,7 @@
             border: 1px solid #E5DED5 !important;
             border-radius: 1.25rem !important;
             box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.05) !important;
-            color: #292524 !important;
+            color: #111827 !important;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
 
@@ -348,7 +403,7 @@
         /* Table Styling */
         .exec-table-head, table thead tr {
             background-color: #F8F5EF !important;
-            color: #292524 !important;
+            color: #111827 !important;
             font-weight: 800 !important;
             text-transform: uppercase !important;
             letter-spacing: 0.05em !important;
@@ -357,7 +412,7 @@
         }
 
         .exec-table-head th, table thead th {
-            color: #292524 !important;
+            color: #111827 !important;
             font-weight: 800 !important;
             padding-top: 0.85rem !important;
             padding-bottom: 0.85rem !important;
@@ -366,7 +421,7 @@
         .exec-table-row, table tbody tr {
             transition: background-color 0.15s ease-in-out !important;
             border-bottom: 1px solid #E5DED5 !important;
-            color: #292524 !important;
+            color: #111827 !important;
         }
 
         .exec-table-row:hover, table tbody tr:hover {
