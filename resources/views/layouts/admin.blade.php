@@ -99,14 +99,15 @@
     <script>
         window.LuxurySwal = Swal.mixin({
             background: '#ffffff',
-            color: '#1c1917',
-            confirmButtonColor: '#964B42',
-            cancelButtonColor: '#64748b',
+            color: '#111827',
+            confirmButtonColor: '#78000b',
+            cancelButtonColor: '#4b5563',
             customClass: {
-                popup: 'rounded-2xl shadow-2xl border border-stone-200 font-sans',
-                title: 'font-bold text-lg text-stone-900',
-                confirmButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-[#964B42]/20 cursor-pointer',
-                cancelButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer'
+                popup: 'rounded-2xl shadow-2xl border border-[#ebdccb] font-sans p-6',
+                title: 'font-serif font-bold text-lg text-[#111827]',
+                htmlContainer: 'text-xs text-[#374151] font-medium leading-relaxed',
+                confirmButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-[#78000b]/20 cursor-pointer active:scale-95',
+                cancelButton: 'px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer active:scale-95'
             }
         });
 
@@ -114,19 +115,31 @@
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3200,
+            timer: 3600,
             timerProgressBar: true,
             background: '#ffffff',
-            color: '#1c1917',
-            iconColor: '#964B42',
+            color: '#111827',
+            iconColor: '#78000b',
             customClass: {
-                popup: 'border border-stone-200 rounded-xl shadow-xl text-xs font-sans font-bold'
+                popup: 'border border-[#ebdccb] rounded-xl shadow-xl text-xs font-sans font-bold text-[#111827] px-4 py-3'
             },
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer);
                 toast.addEventListener('mouseleave', Swal.resumeTimer);
             }
         });
+
+        // Safely redirect native browser alerts to LuxuryToast so "localhost says" popup is never shown
+        window.alert = function(message) {
+            if (window.LuxuryToast) {
+                window.LuxuryToast.fire({
+                    icon: 'warning',
+                    title: message
+                });
+            } else {
+                console.warn(message);
+            }
+        };
     </script>
 
     @if(session('success'))

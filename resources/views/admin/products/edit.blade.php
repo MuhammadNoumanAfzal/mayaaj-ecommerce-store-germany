@@ -1026,7 +1026,18 @@
             const priceEl = document.getElementById('prod_price');
             const catEl = document.getElementById('category_id');
             if (!nameEl.value.trim() || !priceEl.value || !catEl.value) {
-                alert('Please complete the required Step 1 fields (Product Title, Category, and Retail Price).');
+                if (window.LuxurySwal) {
+                    LuxurySwal.fire({
+                        icon: 'warning',
+                        title: 'Required Fields Incomplete',
+                        text: 'Please complete the required Step 1 fields (Product Title, Category, and Retail Price).'
+                    });
+                } else if (window.LuxuryToast) {
+                    LuxuryToast.fire({
+                        icon: 'warning',
+                        title: 'Please complete the required Step 1 fields (Product Title, Category, and Retail Price).'
+                    });
+                }
                 return;
             }
         }
