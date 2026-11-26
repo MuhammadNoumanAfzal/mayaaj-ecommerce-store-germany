@@ -9,6 +9,7 @@ use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -94,8 +95,10 @@ class ProductController extends Controller
                 break;
         }
 
-        // Pagination (10 per page, matching Categories and Subcategories)
-        $products = $query->paginate(10)->withQueryString();
+        // Pagination (Dynamic per-page, defaulting to 10)
+        $perPage = (int) $request->input('per_page', 10);
+        if (!in_array($perPage, [5, 10, 25, 50])) $perPage = 10;
+        $products = $query->paginate($perPage)->withQueryString();
 
         // Categories & Subcategories for filter dropdowns
         $categories = Category::withCount('products')->orderBy('name')->get();
@@ -407,6 +410,33 @@ class ProductController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * Quick status toggle (Active / Draft) for products.
+     */
+    public function updateStatus(Request $request, Product $product)
+    {
+        $newStatus = $product->status === 'active' ? 'draft' : 'active';
+        $product->status = $newStatus;
+        $product->save();
+
+        Cache::forget('mehaaj_featured_products');
+        Cache::forget('mehaaj_home_products');
+
+        $message = $newStatus === 'active' 
+            ? 'Product is now LIVE and visible in the storefront.' 
+            : 'Product is now HIDDEN as DRAFT from storefront.';
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'status' => $newStatus,
+                'message' => $message,
+            ]);
+        }
+
+        return back()->with('success', $message);
     }
 
     /**

@@ -216,6 +216,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/products', [ProductController::class, 'store'])->name('products.store');
             Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
             Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+            Route::patch('/products/{product}/status', [ProductController::class, 'updateStatus'])->name('products.status');
             Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
             // Deals & Product Bundles CRUD Routes

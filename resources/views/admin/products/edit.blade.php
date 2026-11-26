@@ -15,7 +15,7 @@
             <span class="text-[#78000b] font-bold">Edit: {{ $product->name }}</span>
         </div>
         <div class="flex items-center gap-2">
-            <a href="{{ route('product.detail', $product->slug) }}" target="_blank" class="text-[0.68rem] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-300/80 hover:bg-emerald-100 transition flex items-center gap-1 shadow-2xs">
+            <a href="{{ route('products.detail', $product->slug) }}" target="_blank" class="text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-300 hover:bg-emerald-100 transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
                 <span>↗</span> <span>Live View</span>
             </a>
             <span id="wizardStepIndicatorBadge" class="px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20">Step 1 of 5</span>
