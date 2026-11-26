@@ -498,7 +498,6 @@
         <div class="flex items-center justify-between border-b border-[#f0e8de] pb-3.5">
             <div>
                 <h3 class="font-serif text-lg font-bold text-[#8B4513] tracking-tight">Add Collection Category</h3>
-                <p class="text-[0.68rem] text-[#8a7c74]">Automatic storefront synchronization & auto-sorting</p>
             </div>
             <button type="button" onclick="closeAddCategoryModal()" class="w-8 h-8 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition flex items-center justify-center cursor-pointer text-xs font-bold border border-stone-200">
                 ✕

@@ -26,17 +26,9 @@
                     <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h2 class="font-serif text-base sm:text-lg font-bold text-[#1c1210] tracking-tight leading-tight" data-i18n-de="Neue Kategorie Hinzufügen" data-i18n-en="Add New Category">
-                            Add New Category
-                        </h2>
-                        <span class="px-2 py-0.5 rounded-md text-[0.6rem] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
-                            Collection Ready
-                        </span>
-                    </div>
-                    <p class="text-[0.68rem] text-[#8a7c74] mt-0.5" data-i18n-de="Erstellen Sie eine neue Hauptkategorie für Ihren Luxuskatalog." data-i18n-en="Create a top-level category with automatic storefront synchronization.">
-                        Create a top-level category with automatic storefront synchronization.
-                    </p>
+                    <h2 class="font-serif text-base sm:text-lg font-bold text-[#1c1210] tracking-tight leading-tight" data-i18n-de="Neue Kategorie Hinzufügen" data-i18n-en="Add New Category">
+                        Add New Category
+                    </h2>
                 </div>
             </div>
         </div>

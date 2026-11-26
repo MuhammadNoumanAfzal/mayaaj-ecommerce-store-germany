@@ -37,9 +37,6 @@
                             {{ ucfirst($category->status) }}
                         </span>
                     </div>
-                    <p class="text-[0.68rem] text-[#8a7c74] mt-0.5">
-                        Update details and cover image with real-time storefront synchronization.
-                    </p>
                 </div>
             </div>
         </div>
