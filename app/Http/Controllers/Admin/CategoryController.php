@@ -132,6 +132,7 @@ class CategoryController extends Controller
             'status'      => 'required|in:active,draft',
             'order_index' => 'nullable|integer',
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
+            'image_url'   => 'nullable|string|max:1000',
         ]);
 
         $validated['slug'] = !empty($validated['slug']) 
@@ -149,6 +150,8 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('categories', 'public');
             $validated['image'] = $path;
+        } elseif (!empty($request->image_url)) {
+            $validated['image'] = ltrim($request->image_url, '/');
         }
 
         $category = Category::create($validated);
@@ -191,6 +194,7 @@ class CategoryController extends Controller
             'status'      => 'required|in:active,draft',
             'order_index' => 'nullable|integer',
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:30720',
+            'image_url'   => 'nullable|string|max:1000',
         ]);
 
         $validated['slug'] = !empty($validated['slug']) 
@@ -211,6 +215,8 @@ class CategoryController extends Controller
 
             $path = $request->file('image')->store('categories', 'public');
             $validated['image'] = $path;
+        } elseif ($request->filled('image_url')) {
+            $validated['image'] = ltrim($request->image_url, '/');
         }
 
         $category->update($validated);

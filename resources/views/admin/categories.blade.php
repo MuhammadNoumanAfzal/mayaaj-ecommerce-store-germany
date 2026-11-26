@@ -57,10 +57,10 @@
                 </p>
             </div>
             
-            <a href="{{ route('admin.categories.create') }}" class="btn-exec-primary rounded-xl px-5 py-2.5 text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer shrink-0">
+            <button type="button" onclick="openAddCategoryModal()" class="btn-exec-primary rounded-xl px-5 py-2.5 text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer shrink-0">
                 <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span data-i18n-de="Kategorie Hinzufügen" data-i18n-en="Add Category">Add Category</span>
-            </a>
+            </button>
         </div>
 
         <!-- Filter, Sort & Search Toolbar Form -->
@@ -490,6 +490,108 @@
     </div>
 </div>
 
+<!-- Add Collection Category Popup Modal Dialog -->
+<div id="add-category-modal" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 hidden transition-all duration-300" style="z-index: 9999 !important; background-color: rgba(24, 18, 16, 0.65) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important;" onclick="closeAddCategoryModal()">
+    <div class="relative w-full max-w-lg bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden p-6 sm:p-7 space-y-4" onclick="event.stopPropagation()">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b border-[#f0e8de] pb-3.5">
+            <div>
+                <h3 class="font-serif text-lg font-bold text-[#8B4513] tracking-tight">Add Collection Category</h3>
+                <p class="text-[0.68rem] text-[#8a7c74]">Automatic storefront synchronization & auto-sorting</p>
+            </div>
+            <button type="button" onclick="closeAddCategoryModal()" class="w-8 h-8 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition flex items-center justify-center cursor-pointer text-xs font-bold border border-stone-200">
+                ✕
+            </button>
+        </div>
+
+        <!-- Form -->
+        <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 text-xs">
+            @csrf
+            <input type="hidden" name="status" value="active">
+
+            <!-- Category Title -->
+            <div>
+                <label for="modal_cat_name" class="block font-bold text-[0.7rem] text-[#685c54] uppercase tracking-wider mb-1.5">
+                    Category Title <span class="text-[#78000b]">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    id="modal_cat_name" 
+                    required 
+                    placeholder="e.g. Travel Duffles & Luggage"
+                    class="w-full h-11 px-4 rounded-xl border border-stone-200 bg-stone-50/60 text-xs font-semibold text-stone-900 outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                >
+            </div>
+
+            <!-- Tagline -->
+            <div>
+                <label for="modal_cat_tagline" class="block font-bold text-[0.7rem] text-[#685c54] uppercase tracking-wider mb-1.5">
+                    Tagline
+                </label>
+                <input 
+                    type="text" 
+                    name="description" 
+                    id="modal_cat_tagline" 
+                    placeholder="Brief poetic description of the collection"
+                    class="w-full h-11 px-4 rounded-xl border border-stone-200 bg-stone-50/60 text-xs font-medium text-stone-900 outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                >
+            </div>
+
+            <!-- Banner Image Box -->
+            <div>
+                <label class="block font-bold text-[0.7rem] text-[#685c54] uppercase tracking-wider mb-1.5">
+                    Banner Image
+                </label>
+                
+                <div class="rounded-2xl border border-[#ebdccb] bg-[#FAF7F2] p-4 flex items-center gap-3.5">
+                    <!-- Image Icon / Preview Thumbnail -->
+                    <div id="modal_banner_preview_box" class="w-12 h-12 rounded-xl bg-stone-200/70 border border-stone-300 flex items-center justify-center text-stone-400 shrink-0 overflow-hidden shadow-2xs">
+                        <img id="modal_banner_preview_img" src="" class="hidden w-full h-full object-cover">
+                        <svg id="modal_banner_placeholder_svg" class="w-6 h-6 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+
+                    <!-- Upload Button & Hint -->
+                    <div class="space-y-1">
+                        <input type="file" name="image" id="modal_cat_file" accept="image/*" class="hidden" onchange="previewModalBanner(this)">
+                        <button type="button" onclick="document.getElementById('modal_cat_file').click()" class="h-8 px-4 rounded-xl bg-[#1c2434] hover:bg-[#78000b] text-white text-[0.72rem] font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer">
+                            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            <span>Upload from Computer</span>
+                        </button>
+                        <p id="modal_banner_filename" class="text-[0.65rem] text-[#8a7c74]">PNG, JPG, WEBP up to 5MB</p>
+                    </div>
+                </div>
+
+                <!-- OR USE IMAGE URL / PATH -->
+                <div class="mt-2.5">
+                    <label for="modal_image_url" class="block font-bold text-[0.62rem] text-[#8a7c74] uppercase tracking-wider mb-1">
+                        OR USE IMAGE URL / PATH
+                    </label>
+                    <input 
+                        type="text" 
+                        name="image_url" 
+                        id="modal_image_url" 
+                        placeholder="/images/categories/cat-belts.jpg"
+                        class="w-full h-10 px-4 rounded-xl border border-stone-200 bg-stone-50/60 text-xs font-mono text-stone-900 outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                    >
+                </div>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button type="button" onclick="closeAddCategoryModal()" class="text-xs font-semibold text-[#8a7c74] hover:text-[#1c1210] px-3 py-2 transition">
+                    Cancel
+                </button>
+                <button type="submit" class="h-10 px-6 rounded-xl bg-[#181210] hover:bg-[#78000b] text-white text-xs font-bold transition shadow-md active:scale-95 cursor-pointer">
+                    Create Category
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
 <script>
     function openViewCategoryModal(data) {
         document.getElementById('cat-view-id').textContent = '#' + data.id;
@@ -570,9 +672,50 @@
         document.getElementById('view-category-modal').classList.add('hidden');
     }
 
+    function openAddCategoryModal() {
+        document.body.classList.add('overflow-hidden');
+        document.getElementById('add-category-modal').classList.remove('hidden');
+        setTimeout(() => document.getElementById('modal_cat_name')?.focus(), 50);
+    }
+
+    function closeAddCategoryModal() {
+        document.body.classList.remove('overflow-hidden');
+        document.getElementById('add-category-modal').classList.add('hidden');
+        if (window.location.hash === '#add-category' || window.location.hash === '#add') {
+            history.replaceState(null, null, ' ');
+        }
+    }
+
+    function previewModalBanner(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('modal_banner_preview_img');
+                const svg = document.getElementById('modal_banner_placeholder_svg');
+                const fn = document.getElementById('modal_banner_filename');
+                if (img) { img.src = e.target.result; img.classList.remove('hidden'); }
+                if (svg) { svg.classList.add('hidden'); }
+                if (fn) {
+                    fn.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
+                    fn.className = 'text-[0.65rem] text-emerald-700 font-bold';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Auto-open if #add-category in URL
+    window.addEventListener('DOMContentLoaded', function() {
+        if (window.location.hash === '#add-category' || window.location.hash === '#add') {
+            openAddCategoryModal();
+        }
+    });
+
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeViewCategoryModal();
+            closeAddCategoryModal();
         }
     });
 

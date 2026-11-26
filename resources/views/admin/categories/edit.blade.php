@@ -4,50 +4,56 @@
 @section('admin-content')
 <div class="space-y-4 w-full pb-12 text-[#1c1210]">
 
-    <!-- 1. Minimalist Clean Breadcrumb Pill -->
-    <div class="bg-white rounded-xl py-2.5 px-4 text-xs font-semibold text-stone-600 border border-[#e5ded5] shadow-xs flex items-center justify-between">
+    <!-- 1. Colorful Breadcrumb Pill -->
+    <div class="bg-gradient-to-r from-white via-[#FAF7F2] to-white rounded-xl py-3 px-5 text-xs font-semibold text-stone-600 border border-[#ebdccb] shadow-2xs flex items-center justify-between">
         <div class="flex items-center gap-2">
-            <a href="{{ route('admin.categories') }}" class="text-stone-400 hover:text-[#78000b] transition" data-i18n-de="Kategorien" data-i18n-en="Categories">Categories</a>
+            <a href="{{ route('admin.categories') }}" class="text-[#8a7c74] hover:text-[#78000b] transition flex items-center gap-1 font-bold" data-i18n-de="Kategorien" data-i18n-en="Categories">
+                <svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                <span>Categories</span>
+            </a>
             <span class="text-stone-300 font-mono">›</span> 
-            <span class="text-stone-900 font-bold">Edit: {{ $category->name }}</span>
+            <span class="text-[#78000b] font-bold">Edit: {{ $category->name }}</span>
         </div>
-        <a href="{{ route('shop', ['category' => $category->slug]) }}" target="_blank" class="text-[0.68rem] font-bold text-[#78000b] hover:underline flex items-center gap-1">
-            <span>↗</span> <span>View in Storefront</span>
+        <a href="{{ route('shop', ['category' => $category->slug]) }}" target="_blank" class="text-[0.68rem] font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-300/80 hover:bg-emerald-100 transition flex items-center gap-1 shadow-2xs">
+            <span>↗</span> <span>View in Live Store</span>
         </a>
     </div>
 
-    <!-- 2. Form Container Card -->
-    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#e5ded5] shadow-xs overflow-hidden">
+    <!-- 2. Colorful Form Card Container -->
+    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-[#ebdccb] shadow-xs overflow-hidden">
         @csrf
         @method('PUT')
 
-        <!-- Clean Header -->
-        <div class="px-5 py-4 bg-[#faf7f2] flex items-center justify-between gap-3 border-b border-[#f0e8de]">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-white text-[#78000b] border border-[#ebdccb] flex items-center justify-center shrink-0 shadow-2xs">
+        <!-- Decorative Top Accent Ribbon -->
+        <div class="h-1.5 bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b]"></div>
+
+        <!-- Header with Warm Sunset Atelier Gradient -->
+        <div class="px-6 py-4.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] flex items-center justify-between gap-3 border-b border-[#ebdccb]">
+            <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%); color: #d8b45a; border: 1px solid rgba(216, 180, 90, 0.45);">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h2 class="font-serif text-base font-bold text-[#1c1210] tracking-tight">
+                        <h2 class="font-serif text-lg font-bold text-[#1c1210] tracking-tight">
                             Edit Category: <span class="text-[#78000b]">{{ $category->name }}</span>
                         </h2>
-                        <span class="inline-flex items-center px-2 py-0.2 rounded-full text-[0.6rem] font-bold uppercase {{ $category->status === 'active' ? 'bg-[#2e683a]/15 text-[#2e683a] border border-[#2e683a]/30' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[0.62rem] font-bold uppercase tracking-wider {{ $category->status === 'active' ? 'bg-[#2e683a]/15 text-[#2e683a] border border-[#2e683a]/30' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
                             {{ ucfirst($category->status) }}
                         </span>
                     </div>
-                    <p class="text-[0.68rem] text-[#8a7c74]">
+                    <p class="text-[0.72rem] text-[#8a7c74] mt-0.5">
                         Update details and cover image with real-time storefront synchronization.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- Form Body (Compact & High-Density) -->
-        <div class="p-5 sm:p-6 text-xs space-y-4">
+        <!-- Form Body -->
+        <div class="p-6 sm:p-7 text-xs space-y-5">
             
             @if ($errors->any())
-                <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
+                <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1 shadow-2xs">
                     <p class="font-bold text-xs flex items-center gap-1.5">
                         <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         <span>Please correct the errors below:</span>
@@ -61,12 +67,14 @@
             @endif
 
             <!-- Row 1: Name & Status -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 
                 <!-- Category Name -->
                 <div>
-                    <label for="catEditNameInput" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
-                        Category Name <span class="text-[#78000b]">*</span>
+                    <label for="catEditNameInput" class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#78000b]"></span>
+                        <span>Category Name</span>
+                        <span class="text-[#78000b] font-bold">*</span>
                     </label>
                     <input 
                         type="text" 
@@ -74,107 +82,131 @@
                         id="catEditNameInput" 
                         value="{{ old('name', $category->name) }}" 
                         required 
-                        class="w-full h-9 px-3 rounded-lg border border-[#ebdccb] bg-[#faf7f2]/60 text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/10 transition"
+                        class="w-full h-11 px-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
-                    <div class="flex items-center gap-1 text-[0.65rem] text-[#8a7c74] mt-1 font-mono">
-                        <span>URL:</span>
-                        <span id="slugEditPreview" class="text-[#78000b] font-semibold">/{{ $category->slug }}</span>
+                    <div class="mt-1.5 flex items-center gap-1.5">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-[#FAF7F2] text-[#685c54] border border-[#ebdccb] text-[0.65rem] font-mono">
+                            <span class="text-[#8a7c74]">URL:</span>
+                            <strong id="slugEditPreview" class="text-[#78000b] font-bold">/{{ $category->slug }}</strong>
+                        </span>
                     </div>
                 </div>
 
                 <!-- Status Select -->
                 <div>
-                    <label for="status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
-                        Catalog Status <span class="text-[#78000b]">*</span>
+                    <label for="status" class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span>Catalog Status</span>
+                        <span class="text-[#78000b] font-bold">*</span>
                     </label>
                     <select 
                         name="status" 
                         id="status" 
-                        class="w-full h-9 px-3 rounded-lg border border-[#ebdccb] bg-[#faf7f2]/60 text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/10 transition"
+                        class="w-full h-11 px-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
-                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }}>Active (Visible in Storefront)</option>
-                        <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }}>Draft (Hidden)</option>
+                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }}>● Active (Visible in Storefront & Menu)</option>
+                        <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }}>○ Draft (Hidden from Storefront)</option>
                     </select>
-                    <p class="text-[0.65rem] text-[#8a7c74] mt-1">Control instant visibility in navigation & shop filter.</p>
+                    <p class="text-[0.65rem] text-emerald-700 font-semibold mt-1.5 flex items-center gap-1">
+                        <span>✓</span> Instant visibility in navigation, search filter, and mobile menu
+                    </p>
                 </div>
 
             </div>
 
             <!-- Row 2: Description -->
             <div>
-                <label for="description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
-                    Description
+                <label for="description" class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#b45309]"></span>
+                    <span>Description & Tagline</span>
                 </label>
                 <textarea 
                     name="description" 
                     id="description" 
                     rows="3" 
-                    class="w-full p-3 rounded-lg border border-[#ebdccb] bg-[#faf7f2]/60 text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/10 transition leading-relaxed"
+                    class="w-full p-4 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-normal outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition leading-relaxed shadow-2xs"
                 >{{ old('description', $category->description) }}</textarea>
             </div>
 
-            <!-- Row 3: Category Cover Image Upload (Modern Dropzone Box) -->
+            <!-- Row 3: Banner Image Upload (Warm Colorful Box) -->
             <div>
-                <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#685c54] mb-1.5">
-                    Category Cover Image
+                <label class="block font-bold text-[0.7rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"></span>
+                    <span>Banner Image</span>
                 </label>
                 
-                <div class="rounded-xl border border-dashed border-[#d9cebc] bg-[#faf7f2]/40 hover:bg-[#faf7f2] hover:border-[#78000b]/50 p-4 transition text-center relative cursor-pointer" onclick="document.getElementById('editCatImageInput').click()">
-                    <input 
-                        type="file" 
-                        name="image" 
-                        id="editCatImageInput" 
-                        accept="image/*"
-                        onchange="previewEditCategoryImage(this)"
-                        class="hidden"
-                    >
-
-                    @if($category->image)
-                        <!-- Current Image Display State -->
-                        <div id="currentImageContainer" class="flex items-center justify-center gap-3.5 py-1">
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="h-16 w-16 object-cover rounded-lg border border-[#ebdccb] shadow-sm">
-                            <div class="text-left">
-                                <p class="text-xs font-bold text-[#1c1210]">Current Cover Active</p>
-                                <p class="text-[0.65rem] text-[#8a7c74]">Click anywhere to choose a new file to replace it</p>
-                                <span class="inline-block text-[0.65rem] text-[#78000b] font-bold mt-0.5">Replace Image ↗</span>
-                            </div>
+                <div class="rounded-2xl border border-[#ebdccb] p-5 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <!-- Left: Current or Preview Thumbnail -->
+                        <div id="full_edit_preview_box" class="w-16 h-16 rounded-xl bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shrink-0 overflow-hidden shadow-xs">
+                            @if($category->image)
+                                <img id="full_edit_preview_img" src="{{ asset('storage/' . $category->image) }}" class="w-full h-full object-cover">
+                                <svg id="full_edit_placeholder_svg" class="hidden w-8 h-8 text-[#78000b]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            @else
+                                <img id="full_edit_preview_img" src="" class="hidden w-full h-full object-cover">
+                                <svg id="full_edit_placeholder_svg" class="w-8 h-8 text-[#78000b]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            @endif
                         </div>
-                    @else
-                        <!-- Empty Upload State -->
-                        <div id="currentImageContainer" class="flex flex-col items-center justify-center gap-1.5 py-1">
-                            <div class="w-8 h-8 rounded-full bg-white border border-[#ebdccb] flex items-center justify-center text-[#78000b] shadow-2xs">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </div>
-                            <p class="text-xs font-semibold text-[#1c1210]">Click to upload cover image</p>
-                            <p class="text-[0.65rem] text-[#8a7c74]">JPG, PNG, or WebP</p>
-                        </div>
-                    @endif
 
-                    <!-- New Selected Image Preview State -->
-                    <div id="newImagePreviewContainer" class="hidden items-center justify-center gap-3 py-1">
-                        <img id="newImagePreviewImg" src="" alt="New Preview" class="h-16 w-16 object-cover rounded-lg border border-[#2e683a]/40 shadow-sm">
-                        <div class="text-left">
-                            <p id="newImagePreviewName" class="text-xs font-bold text-[#1c1210] truncate max-w-xs">new-image.jpg</p>
-                            <p class="text-[0.65rem] text-[#2e683a] font-semibold">Will replace cover upon saving</p>
-                            <button type="button" onclick="event.stopPropagation(); resetEditImage();" class="text-[0.65rem] text-[#78000b] hover:underline font-bold mt-0.5">
-                                Keep Existing Cover
-                            </button>
+                        <!-- Right: Upload Button & Format Hint -->
+                        <div class="flex-1 text-center sm:text-left space-y-1.5">
+                            <input 
+                                type="file" 
+                                name="image" 
+                                id="editCatImageInput" 
+                                accept="image/*"
+                                onchange="previewFullEditCategoryImage(this)"
+                                class="hidden"
+                            >
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                                <button type="button" onclick="document.getElementById('editCatImageInput').click()" class="h-9 px-4 rounded-xl bg-[#1c2434] hover:bg-[#78000b] text-white text-xs font-bold transition flex items-center gap-2 shadow-xs cursor-pointer">
+                                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                    <span>Upload New from Computer</span>
+                                </button>
+                                <span id="full_edit_filename" class="text-xs text-[#8a7c74]">
+                                    {{ $category->image ? 'Current cover active' : 'PNG, JPG, WEBP up to 10MB' }}
+                                </span>
+                            </div>
+                            <p class="text-[0.65rem] text-[#8a7c74]">Selecting a new file will automatically replace current cover</p>
                         </div>
                     </div>
+
+                    <!-- OR USE IMAGE URL / PATH -->
+                    <div class="mt-4 pt-3.5 border-t border-[#ebdccb]">
+                        <label for="edit_image_url" class="block font-bold text-[0.65rem] text-[#8a7c74] uppercase tracking-wider mb-1">
+                            OR USE IMAGE URL / PATH
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3.5 top-3 text-stone-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                            </span>
+                            <input 
+                                type="text" 
+                                name="image_url" 
+                                id="edit_image_url" 
+                                value="{{ old('image_url') }}"
+                                placeholder="/images/categories/cat-belts.jpg"
+                                class="w-full h-10 pl-10 pr-4 rounded-xl border border-[#ebdccb] bg-white text-xs font-mono text-stone-900 outline-none focus:border-[#78000b] focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
+                            >
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
         </div>
 
-        <!-- 3. Clean Footer Actions Bar (Single-Wording, Zero Duplication) -->
-        <div class="px-5 py-3.5 bg-[#faf7f2] border-t border-[#f0e8de] flex items-center justify-between">
-            <a href="{{ route('admin.categories') }}" class="h-8 px-4 rounded-lg text-xs font-semibold text-[#685c54] bg-white border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5">
+        <!-- 3. Colorful Footer Actions Bar -->
+        <div class="px-6 py-4 bg-[#FAF7F2] border-t border-[#ebdccb] flex items-center justify-between">
+            <a href="{{ route('admin.categories') }}" class="h-9 px-4 rounded-xl text-xs font-semibold text-[#685c54] bg-white border border-[#d9cebc] hover:bg-[#f0e7d8] transition flex items-center gap-1.5 shadow-2xs">
                 <span>Cancel</span>
             </a>
 
             <button 
                 type="submit" 
-                class="h-8 px-5 rounded-lg text-xs font-bold uppercase tracking-wider text-white bg-[#78000b] hover:bg-[#5a0309] transition flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                class="h-9 px-6 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-md transition active:scale-95 cursor-pointer flex items-center gap-2"
+                style="background: linear-gradient(135deg, #78000b 0%, #9e1422 100%) !important;"
             >
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                 <span>Save Changes</span>
@@ -201,37 +233,23 @@
     }
 
     // Live Image Preview Handler
-    function previewEditCategoryImage(input) {
-        const currentContainer = document.getElementById('currentImageContainer');
-        const previewContainer = document.getElementById('newImagePreviewContainer');
-        const img = document.getElementById('newImagePreviewImg');
-        const nameLabel = document.getElementById('newImagePreviewName');
-
+    function previewFullEditCategoryImage(input) {
         if (input.files && input.files[0]) {
             const file = input.files[0];
-            nameLabel.textContent = file.name;
             const reader = new FileReader();
             reader.onload = function(e) {
-                img.src = e.target.result;
-                if (currentContainer) currentContainer.classList.add('hidden');
-                previewContainer.classList.remove('hidden');
-                previewContainer.classList.add('flex');
+                const img = document.getElementById('full_edit_preview_img');
+                const svg = document.getElementById('full_edit_placeholder_svg');
+                const fn = document.getElementById('full_edit_filename');
+                if (img) { img.src = e.target.result; img.classList.remove('hidden'); }
+                if (svg) { svg.classList.add('hidden'); }
+                if (fn) {
+                    fn.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
+                    fn.className = 'text-xs text-emerald-700 font-bold';
+                }
             };
             reader.readAsDataURL(file);
         }
-    }
-
-    function resetEditImage() {
-        const input = document.getElementById('editCatImageInput');
-        const currentContainer = document.getElementById('currentImageContainer');
-        const previewContainer = document.getElementById('newImagePreviewContainer');
-        const img = document.getElementById('newImagePreviewImg');
-
-        input.value = '';
-        img.src = '';
-        previewContainer.classList.add('hidden');
-        previewContainer.classList.remove('flex');
-        if (currentContainer) currentContainer.classList.remove('hidden');
     }
 </script>
 @endsection
