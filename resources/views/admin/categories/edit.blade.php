@@ -63,10 +63,8 @@
                 
                 <!-- Category Name -->
                 <div>
-                    <label for="catEditNameInput" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#78000b]"></span>
-                        <span>Category Name</span>
-                        <span class="text-[#78000b] font-bold">*</span>
+                    <label for="catEditNameInput" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        Category Name <span class="text-[#78000b] font-bold">*</span>
                     </label>
                     <input 
                         type="text" 
@@ -80,18 +78,16 @@
 
                 <!-- Status Select -->
                 <div>
-                    <label for="status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                        <span>Catalog Status</span>
-                        <span class="text-[#78000b] font-bold">*</span>
+                    <label for="status" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                        Catalog Status <span class="text-[#78000b] font-bold">*</span>
                     </label>
                     <select 
                         name="status" 
                         id="status" 
                         class="w-full h-10 px-3.5 rounded-xl border border-[#ebdccb] bg-[#fdfbf9] text-stone-900 text-xs font-semibold outline-none focus:border-[#78000b] focus:bg-white focus:ring-2 focus:ring-[#78000b]/15 transition shadow-2xs"
                     >
-                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }}>● Active (Visible in Storefront & Menu)</option>
-                        <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }}>○ Draft (Hidden from Storefront)</option>
+                        <option value="active" {{ old('status', $category->status) === 'active' ? 'selected' : '' }}>Active (Visible in Storefront & Menu)</option>
+                        <option value="draft" {{ old('status', $category->status) === 'draft' ? 'selected' : '' }}>Draft (Hidden from Storefront)</option>
                     </select>
                 </div>
 
@@ -99,9 +95,8 @@
 
             <!-- Row 2: Description -->
             <div>
-                <label for="description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#b45309]"></span>
-                    <span>Description & Tagline</span>
+                <label for="description" class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                    Description & Tagline
                 </label>
                 <textarea 
                     name="description" 
@@ -113,9 +108,8 @@
 
             <!-- Row 3: Banner Image Upload -->
             <div>
-                <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5 flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"></span>
-                    <span>Banner Image</span>
+                <label class="block font-bold text-[0.68rem] uppercase tracking-wider text-[#483732] mb-1.5">
+                    Banner Image
                 </label>
                 
                 <div class="rounded-xl border border-[#ebdccb] p-4 shadow-2xs" style="background: linear-gradient(135deg, #fdfbf7 0%, #f6ede0 100%);">
