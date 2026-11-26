@@ -507,127 +507,150 @@
 
 </div>
 
-<!-- Compact Luxury Bundle Quick View Modal (Less Height, Clean, No Scrollbar) -->
+<!-- Luxury Wide Executive Bundle Quick View Modal (Wide Landscape, Low Height, Beautiful Split Layout) -->
 <div 
     id="view-deal-modal" 
-    class="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 hidden transition-all duration-300" 
-    style="z-index: 99999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.72) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important;" 
+    class="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-5 hidden transition-all duration-300" 
+    style="z-index: 99999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.75) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important;" 
     onclick="closeViewDealModal()"
 >
     <div 
-        class="relative w-full max-w-lg bg-white rounded-2xl border border-[#ebdccb] shadow-2xl overflow-hidden my-auto transform transition-all" 
+        class="relative w-full max-w-4xl bg-white rounded-3xl border border-[#ebdccb] shadow-2xl overflow-hidden my-auto transform transition-all" 
         onclick="event.stopPropagation()"
     >
         <!-- Luxury Gold & Wine Top Accent Strip -->
         <div class="h-1.5 w-full bg-gradient-to-r from-[#78000b] via-[#d8b45a] to-[#78000b]"></div>
 
         <!-- Modal Header (Compact) -->
-        <div class="px-4 py-2.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-b border-[#ebdccb] flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 shadow-xs" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
-                    <svg class="w-3.5 h-3.5 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+        <div class="px-5 sm:px-6 py-2.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-b border-[#ebdccb] flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs" style="background: linear-gradient(135deg, #78000b 0%, #4a0207 100%) !important; color: #d8b45a !important; border: 1px solid rgba(216, 180, 90, 0.45) !important;">
+                    <svg class="w-4 h-4 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                 </div>
                 <div>
-                    <h3 class="font-serif text-sm font-bold text-[#1c1210] tracking-tight leading-tight">Bundle Details</h3>
+                    <h3 class="font-serif text-base font-bold text-[#1c1210] tracking-tight leading-tight">Bundle & Deal Overview</h3>
                     <p class="text-[0.62rem] text-stone-500 font-mono leading-none" id="deal-view-slug">/deals#slug</p>
                 </div>
             </div>
-            <button type="button" onclick="closeViewDealModal()" class="w-6 h-6 rounded-lg bg-white hover:bg-stone-100 text-stone-500 hover:text-stone-900 border border-[#ebdccb] transition flex items-center justify-center cursor-pointer text-xs font-bold shadow-2xs active:scale-95" title="Close">
-                ✕
+            <button type="button" onclick="closeViewDealModal()" class="w-7 h-7 rounded-xl bg-white hover:bg-stone-100 text-stone-600 hover:text-[#78000b] border border-[#ebdccb] transition flex items-center justify-center cursor-pointer shadow-2xs active:scale-95" title="Close">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
 
-        <!-- Modal Body Content (Compact, Less Height, Hide Scrollbar) -->
-        <div class="p-3.5 space-y-2.5 text-xs max-h-[76vh] overflow-y-auto modal-scroll-clean">
+        <!-- Modal Body Content: Wide 2-Column Split for Zero Scroll & Low Height -->
+        <div class="p-4 sm:p-5 text-xs max-h-[80vh] overflow-y-auto modal-scroll-clean">
             
-            <!-- Hero Info & Badge (Compact Strip) -->
-            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb]">
-                <div class="w-10 h-10 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] shadow-xs shrink-0 flex items-center justify-center text-lg">
-                    🎁
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+                
+                <!-- Left Side: Bundle Info, Financial 2x2 Grid & Timer (6 Cols) -->
+                <div class="md:col-span-6 space-y-3 flex flex-col justify-between">
+                    
+                    <!-- Hero Info Card -->
+                    <div class="p-3 rounded-2xl bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border border-[#ebdccb] space-y-2">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#78000b] to-[#4a0207] border border-[#d8b45a]/40 flex items-center justify-center shrink-0 shadow-xs text-[#d8b45a]">
+                                <svg class="w-5 h-5 text-[#d8b45a]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V3m0 5l4.5-4.5M12 8L7.5 3.5M3 12h18M5 12a2 2 0 012-2h10a2 2 0 012 2v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7z"/>
+                                </svg>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h4 id="deal-view-title" class="font-serif font-bold text-base text-[#1c1210] tracking-tight leading-snug truncate"></h4>
+                                <div class="flex items-center gap-1.5 flex-wrap mt-0.5">
+                                    <span id="deal-view-status-badge"></span>
+                                    <span id="deal-view-badge-text" class="hidden inline-flex items-center px-1.5 py-0.2 rounded text-[0.58rem] font-black uppercase tracking-wider bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20"></span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="space-y-0.5 flex-1 min-w-0">
-                    <div class="flex items-center gap-1.5 flex-wrap">
-                        <h4 id="deal-view-title" class="font-serif font-bold text-sm text-[#1c1210] tracking-tight truncate"></h4>
-                        <span id="deal-view-status-badge"></span>
-                        <span id="deal-view-badge-text" class="hidden inline-flex items-center px-1.5 py-0.2 rounded text-[0.58rem] font-black uppercase tracking-wider bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20"></span>
+                        <div class="flex items-center gap-2 pt-1 border-t border-[#f1e6da] text-[0.62rem] text-stone-600 font-medium">
+                            <span class="inline-flex items-center gap-1 font-mono font-bold text-stone-800 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                                ID: <strong id="deal-view-id" class="text-stone-900">#0</strong>
+                            </span>
+                            <span class="inline-flex items-center gap-1 font-mono font-bold text-stone-800 bg-[#FAF7F2] px-2 py-0.5 rounded-lg border border-[#ebdccb]">
+                                Included: <strong id="deal-view-items-count" class="text-[#78000b]">0</strong>
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="flex items-center gap-2 text-[0.62rem] text-stone-500 font-medium">
-                        <span class="inline-flex items-center gap-1 font-mono text-[0.62rem] font-bold text-stone-700 bg-[#FAF7F2] px-1.5 py-0.2 rounded border border-[#ebdccb]">
-                            ID: <strong id="deal-view-id" class="text-stone-900">#0</strong>
-                        </span>
-                        <span class="inline-flex items-center gap-1 font-mono text-[0.62rem] font-bold text-stone-700 bg-[#FAF7F2] px-1.5 py-0.2 rounded border border-[#ebdccb]">
-                            Items: <strong id="deal-view-items-count" class="text-[#78000b]">0</strong>
-                        </span>
+                    <!-- Pricing & Financial Metrics (2x2 Grid, Clean & Spaced) -->
+                    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem;">
+                        <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#FAF8F5] to-[#F5ECE1] border border-[#ebdccb]">
+                            <span class="text-[0.6rem] font-bold text-[#8a7267] uppercase tracking-wider block">Regular Total</span>
+                            <span id="deal-view-regular-total" class="font-extrabold text-sm text-[#1c1210] block mt-0.5">€0.00</span>
+                        </div>
+
+                        <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#fff5f5] to-[#fde8e8] border border-rose-200/90">
+                            <span class="text-[0.6rem] font-bold text-rose-800 uppercase tracking-wider block">Bundle Price</span>
+                            <span id="deal-view-bundle-price" class="font-extrabold text-sm text-[#78000b] block mt-0.5">€0.00</span>
+                        </div>
+
+                        <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90">
+                            <span class="text-[0.6rem] font-bold text-emerald-800 uppercase tracking-wider block">Customer Savings</span>
+                            <span id="deal-view-savings-amount" class="font-extrabold text-sm text-emerald-900 block mt-0.5">€0.00</span>
+                        </div>
+
+                        <div class="p-2.5 rounded-xl bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90">
+                            <span class="text-[0.6rem] font-bold text-emerald-800 uppercase tracking-wider block">Discount Rate</span>
+                            <span id="deal-view-savings-pct" class="font-extrabold text-sm text-emerald-900 block mt-0.5">0%</span>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Pricing & Financial Metrics Grid (4-Tile Compact Strip) -->
-            <div class="grid grid-cols-4 gap-1.5">
-                <div class="p-2 rounded-lg bg-gradient-to-br from-[#FAF8F5] to-[#F5ECE1] border border-[#ebdccb] text-center">
-                    <span class="text-[0.58rem] font-bold text-[#8a7267] uppercase tracking-wider block">Regular</span>
-                    <span id="deal-view-regular-total" class="font-extrabold text-xs text-[#1c1210] block mt-0.5">€0.00</span>
+                    <!-- Flash Sale Countdown Bar (if set) -->
+                    <div id="deal-view-timer-section" class="hidden p-2.5 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 flex items-center justify-between text-xs">
+                        <div class="flex items-center gap-1.5 min-w-0">
+                            <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <div class="min-w-0">
+                                <span class="font-bold text-[0.68rem] text-amber-900 block leading-tight truncate" id="deal-view-timer-status">Flash Sale</span>
+                                <span class="text-[0.58rem] text-amber-700 font-mono leading-none truncate block" id="deal-view-timer-range"></span>
+                            </div>
+                        </div>
+                        <span id="deal-view-timer-countdown" class="px-2 py-0.5 rounded-md text-[0.62rem] font-extrabold bg-amber-500 text-white shadow-2xs shrink-0"></span>
+                    </div>
+
+                    <!-- Description (Only visible if provided) -->
+                    <div id="deal-view-desc-wrapper" class="hidden p-2.5 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] text-stone-800 text-xs">
+                        <span class="block font-bold uppercase tracking-wider text-[0.58rem] text-[#8a7267] mb-0.5">Atelier Notes</span>
+                        <div id="deal-view-desc" class="leading-relaxed text-[0.68rem] line-clamp-2"></div>
+                    </div>
+
                 </div>
 
-                <div class="p-2 rounded-lg bg-gradient-to-br from-[#fff5f5] to-[#fde8e8] border border-rose-200/90 text-center">
-                    <span class="text-[0.58rem] font-bold text-rose-800 uppercase tracking-wider block">Bundle Price</span>
-                    <span id="deal-view-bundle-price" class="font-extrabold text-xs text-[#78000b] block mt-0.5">€0.00</span>
-                </div>
-
-                <div class="p-2 rounded-lg bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90 text-center">
-                    <span class="text-[0.58rem] font-bold text-emerald-800 uppercase tracking-wider block">Savings</span>
-                    <span id="deal-view-savings-amount" class="font-extrabold text-xs text-emerald-900 block mt-0.5">€0.00</span>
-                </div>
-
-                <div class="p-2 rounded-lg bg-gradient-to-br from-[#f2faf5] to-[#e4f7ec] border border-emerald-200/90 text-center">
-                    <span class="text-[0.58rem] font-bold text-emerald-800 uppercase tracking-wider block">Discount</span>
-                    <span id="deal-view-savings-pct" class="font-extrabold text-xs text-emerald-900 block mt-0.5">0%</span>
-                </div>
-            </div>
-
-            <!-- Flash Sale Countdown Bar (if set) -->
-            <div id="deal-view-timer-section" class="hidden p-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 flex items-center justify-between text-xs">
-                <div class="flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <!-- Right Side: Items in this Bundle (6 Cols) -->
+                <div class="md:col-span-6 flex flex-col justify-between space-y-2">
                     <div>
-                        <span class="font-bold text-[0.68rem] text-amber-900 block leading-tight" id="deal-view-timer-status">Active Flash Sale</span>
-                        <span class="text-[0.58rem] text-amber-700 font-mono leading-none" id="deal-view-timer-range"></span>
+                        <div class="flex items-center justify-between pb-1.5 border-b border-[#f1e6da] mb-2">
+                            <span class="font-bold uppercase tracking-wider text-[0.65rem] text-[#8a7267]">Items in this Bundle</span>
+                            <span class="text-[0.6rem] font-bold text-[#78000b] bg-[#FAF7F2] px-2 py-0.5 rounded-full border border-[#ebdccb]">Curated Set</span>
+                        </div>
+                        
+                        <div id="deal-view-products-list" class="divide-y divide-[#f1e6da] rounded-2xl bg-[#FAF8F5] border border-[#ebdccb] overflow-hidden max-h-[220px] overflow-y-auto modal-scroll-clean">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <div class="p-2 rounded-xl bg-gradient-to-r from-[#FAF8F5] to-white border border-[#ebdccb] flex items-center justify-between text-[0.65rem] text-stone-600 font-medium">
+                        <span>All items are bundled automatically in patron cart</span>
+                        <span class="font-bold text-emerald-800">✓ Instant Discount</span>
                     </div>
                 </div>
-                <span id="deal-view-timer-countdown" class="px-2 py-0.5 rounded text-[0.62rem] font-extrabold bg-amber-500 text-white shadow-2xs shrink-0"></span>
-            </div>
 
-            <!-- Bundled Items List (Compact Rows) -->
-            <div class="space-y-1">
-                <span class="block font-bold uppercase tracking-wider text-[0.6rem] text-[#8a7267]">Items in this Bundle</span>
-                <div id="deal-view-products-list" class="divide-y divide-stone-100 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] overflow-hidden max-h-44 overflow-y-auto modal-scroll-clean">
-                    <!-- Populated dynamically via JS -->
-                </div>
-            </div>
-
-            <!-- Description (Only visible if non-empty!) -->
-            <div id="deal-view-desc-wrapper" class="hidden space-y-1">
-                <span class="block font-bold uppercase tracking-wider text-[0.6rem] text-[#8a7267]">Description</span>
-                <div id="deal-view-desc" class="p-2 rounded-xl bg-[#FAF8F5] border border-[#ebdccb] text-stone-700 leading-relaxed text-[0.7rem] max-h-20 overflow-y-auto modal-scroll-clean"></div>
             </div>
 
         </div>
 
         <!-- Modal Footer Actions (Compact) -->
-        <div class="px-4 py-2 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-t border-[#ebdccb] flex items-center justify-between gap-3">
-            <a id="deal-view-store-btn" href="#" target="_blank" class="text-xs font-bold text-[#78000b] hover:underline inline-flex items-center gap-1 transition cursor-pointer">
+        <div class="px-5 sm:px-6 py-2.5 bg-gradient-to-r from-[#fdfbf8] via-[#f7eee4] to-[#fbf5ef] border-t border-[#ebdccb] flex items-center justify-between gap-3">
+            <a id="deal-view-store-btn" href="#" target="_blank" class="text-xs font-bold text-[#78000b] hover:underline inline-flex items-center gap-1.5 transition cursor-pointer">
                 <span>View on Storefront</span>
-                <span>↗</span>
+                <svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
 
             <div class="flex items-center gap-2">
-                <button type="button" onclick="closeViewDealModal()" class="btn-exec-secondary rounded-lg px-3 py-1.5 text-xs font-bold transition cursor-pointer shadow-2xs active:scale-95">
+                <button type="button" onclick="closeViewDealModal()" class="btn-exec-secondary rounded-xl px-4 py-2 text-xs font-bold transition cursor-pointer shadow-2xs active:scale-95">
                     Close
                 </button>
-                <a id="deal-view-edit-btn" href="#" class="btn-exec-primary rounded-lg px-3 py-1.5 text-xs font-bold transition flex items-center gap-1 cursor-pointer shadow-md active:scale-95">
-                    <svg class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <a id="deal-view-edit-btn" href="#" class="btn-exec-primary rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95">
+                    <svg class="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     <span>Edit Bundle</span>
                 </a>
             </div>
@@ -723,7 +746,7 @@
             matches.forEach((d, idx) => {
                 const imgHtml = d.first_image 
                     ? `<img src="${d.first_image}" class="h-full w-full object-cover">`
-                    : `<span class="font-serif font-bold text-xs text-[#78000b]">🎁</span>`;
+                    : `<svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>`;
                 
                 const statusBadge = d.is_active
                     ? `<span class="text-[0.6rem] font-bold text-emerald-800 bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 rounded-full">ACTIVE</span>`
