@@ -48,13 +48,31 @@
         </div>
 
         <!-- Center: Essential Luxury Navigation Links (Strictly Single Line) -->
-        <div class="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-7 whitespace-nowrap shrink-0 flex-nowrap">
-            <!-- Kollektion / Collection with Mega Menu Toggle -->
+        <div class="hidden lg:flex items-center gap-4 xl:gap-7 2xl:gap-8 whitespace-nowrap shrink-0 flex-nowrap">
+            <!-- Home -->
+            <a 
+                href="{{ route('home') }}" 
+                class="group relative inline-flex items-center py-2 text-[0.70rem] xl:text-[0.76rem] 2xl:text-[0.80rem] font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] {{ request()->routeIs('home') ? 'text-[#ffd45a]' : 'text-white/95 hover:text-[#ffd45a]' }} transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
+            >
+                <span data-i18n-en="Home" data-i18n-de="Startseite">Startseite</span>
+                <span class="absolute bottom-0 left-0 h-[2px] w-full {{ request()->routeIs('home') ? 'scale-x-100' : 'scale-x-0' }} rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
+            </a>
+
+            <!-- About -->
+            <a 
+                href="{{ route('about') }}" 
+                class="group relative inline-flex items-center py-2 text-[0.70rem] xl:text-[0.76rem] 2xl:text-[0.80rem] font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] {{ request()->routeIs('about*') ? 'text-[#ffd45a]' : 'text-white/95 hover:text-[#ffd45a]' }} transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
+            >
+                <span data-i18n-en="About" data-i18n-de="Über Uns">Über Uns</span>
+                <span class="absolute bottom-0 left-0 h-[2px] w-full {{ request()->routeIs('about*') ? 'scale-x-100' : 'scale-x-0' }} rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
+            </a>
+
+            <!-- Collection (Mega Menu Dropdown Trigger) -->
             <button 
                 type="button" 
                 id="collection-nav-trigger"
                 onclick="toggleCollectionMegaMenu(event)" 
-                class="group relative inline-flex items-center gap-1.5 py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
+                class="group relative inline-flex items-center gap-1.5 py-2 text-[0.70rem] xl:text-[0.76rem] 2xl:text-[0.80rem] font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
                 aria-expanded="false"
                 aria-haspopup="true"
                 aria-controls="collection-mega-menu"
@@ -66,51 +84,32 @@
                 <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </button>
 
-            <!-- Handtaschen / Handbags -->
+            <!-- Shop All -->
             <a 
-                href="{{ route('shop', ['category' => 'luxury-handbags']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
+                href="{{ route('shop') }}" 
+                class="group relative inline-flex items-center py-2 text-[0.70rem] xl:text-[0.76rem] 2xl:text-[0.80rem] font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] {{ (request()->routeIs('shop*') && !request()->routeIs('deals*')) ? 'text-[#ffd45a]' : 'text-white/95 hover:text-[#ffd45a]' }} transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
-                <span data-i18n-en="Handbags" data-i18n-de="Handtaschen">Handtaschen</span>
-                <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
+                <span data-i18n-en="Shop All" data-i18n-de="Alle Produkte">Alle Produkte</span>
+                <span class="absolute bottom-0 left-0 h-[2px] w-full {{ (request()->routeIs('shop*') && !request()->routeIs('deals*')) ? 'scale-x-100' : 'scale-x-0' }} rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </a>
 
-            <!-- Weekender & Travel -->
+            <!-- Deals -->
             <a 
-                href="{{ route('shop', ['category' => 'travel-luggage']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
+                href="{{ route('deals') }}" 
+                class="group relative inline-flex items-center py-2 text-[0.70rem] xl:text-[0.76rem] 2xl:text-[0.80rem] font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] {{ request()->routeIs('deals*') ? 'text-[#ffd45a]' : 'text-white/95 hover:text-[#ffd45a]' }} transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
-                <span data-i18n-en="Weekender" data-i18n-de="Reisetaschen">Reisetaschen</span>
-                <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
+                <span data-i18n-en="Deals" data-i18n-de="Angebote">Angebote</span>
+                <span class="absolute bottom-0 left-0 h-[2px] w-full {{ request()->routeIs('deals*') ? 'scale-x-100' : 'scale-x-0' }} rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </a>
 
-            <!-- Aktentaschen / Briefcases -->
+            <!-- Contact -->
             <a 
-                href="{{ route('shop', ['category' => 'executive-briefcases']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
+                href="{{ route('contact') }}" 
+                class="group relative inline-flex items-center py-2 text-[0.70rem] xl:text-[0.76rem] 2xl:text-[0.80rem] font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] {{ request()->routeIs('contact*') ? 'text-[#ffd45a]' : 'text-white/95 hover:text-[#ffd45a]' }} transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
             >
-                <span data-i18n-en="Briefcases" data-i18n-de="Aktentaschen">Aktentaschen</span>
-                <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
+                <span data-i18n-en="Contact" data-i18n-de="Kontakt">Kontakt</span>
+                <span class="absolute bottom-0 left-0 h-[2px] w-full {{ request()->routeIs('contact*') ? 'scale-x-100' : 'scale-x-0' }} rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
             </a>
-
-            <!-- Uhren & Schmuck / Watches & Jewelry -->
-            <a 
-                href="{{ route('shop', ['category' => 'luxury-jewelry-watches']) }}" 
-                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span class="whitespace-nowrap" data-i18n-en="Watches & Jewelry" data-i18n-de="Uhren & Schmuck">Uhren & Schmuck</span>
-                <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
-            </a>
-
-            <!-- Heritage & Leather History / About Us -->
-            <a 
-                href="{{ route('about') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.67rem] xl:text-[0.73rem] 2xl:text-[0.76rem] font-semibold uppercase tracking-[0.12em] xl:tracking-[0.15em] text-white/95 hover:text-[#ffd45a] transition-colors duration-200 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span class="whitespace-nowrap" data-i18n-en="Heritage & Lore" data-i18n-de="Über Uns">Über Uns</span>
-                <span class="absolute bottom-0 left-0 h-[2px] w-full scale-x-0 rounded-full bg-[#ffd45a] transition-transform duration-300 ease-out group-hover:scale-x-100 origin-center shadow-[0_0_8px_rgba(255,212,90,0.8)]"></span>
-            </a>
-
         </div>
 
         <!-- Right Side: Live Search, Atelier Concierge, Language & Cart -->
@@ -547,28 +546,34 @@
 
         <!-- Navigation Links -->
         <div class="flex flex-col divide-y divide-white/10 text-sm font-semibold tracking-wider">
-            <a href="{{ route('shop') }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
-                <span data-i18n-en="Full Collection" data-i18n-de="Gesamte Kollektion">Gesamte Kollektion</span>
+            <!-- Home -->
+            <a href="{{ route('home') }}" class="flex items-center justify-between py-3.5 text-white hover:text-[#ffd45a] transition">
+                <span data-i18n-en="Home" data-i18n-de="Startseite">Startseite</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('shop', ['category' => 'luxury-handbags']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
-                <span data-i18n-en="Handbags & Totes" data-i18n-de="Handtaschen & Totes">Handtaschen & Totes</span>
+            <!-- About -->
+            <a href="{{ route('about') }}" class="flex items-center justify-between py-3.5 text-white hover:text-[#ffd45a] transition">
+                <span data-i18n-en="About" data-i18n-de="Über Uns">Über Uns</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('shop', ['category' => 'travel-luggage']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
-                <span data-i18n-en="Weekender & Travel Bags" data-i18n-de="Reisetaschen & Weekender">Reisetaschen & Weekender</span>
+            <!-- Collection -->
+            <a href="{{ route('shop') }}" class="flex items-center justify-between py-3.5 text-white hover:text-[#ffd45a] transition">
+                <span data-i18n-en="Collection" data-i18n-de="Kollektion">Kollektion</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('shop', ['category' => 'executive-briefcases']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
-                <span data-i18n-en="Executive Briefcases" data-i18n-de="Aktentaschen">Aktentaschen</span>
+            <!-- Shop All -->
+            <a href="{{ route('shop') }}" class="flex items-center justify-between py-3.5 text-white hover:text-[#ffd45a] transition">
+                <span data-i18n-en="Shop All" data-i18n-de="Alle Produkte">Alle Produkte</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('shop', ['category' => 'luxury-jewelry-watches']) }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
-                <span data-i18n-en="Watches & Haute Horlogerie" data-i18n-de="Uhren & Haute Horlogerie">Uhren & Haute Horlogerie</span>
+            <!-- Deals -->
+            <a href="{{ route('deals') }}" class="flex items-center justify-between py-3.5 text-white hover:text-[#ffd45a] transition">
+                <span data-i18n-en="Deals" data-i18n-de="Angebote">Angebote</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
-            <a href="{{ route('about') }}" class="flex items-center justify-between py-3 text-white hover:text-[#ffd45a] transition">
-                <span data-i18n-en="Heritage & Leather Lore" data-i18n-de="Leder-Erbe & Über Uns">Leder-Erbe & Über Uns</span>
+            <!-- Contact -->
+            <a href="{{ route('contact') }}" class="flex items-center justify-between py-3.5 text-white hover:text-[#ffd45a] transition">
+                <span data-i18n-en="Contact" data-i18n-de="Kontakt">Kontakt</span>
                 <span class="text-[#ffd45a] text-xs">→</span>
             </a>
         </div>
