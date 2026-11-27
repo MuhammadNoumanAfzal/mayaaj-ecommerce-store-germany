@@ -1118,8 +1118,8 @@
 
             <!-- Language Toggle Pill (Default: EN) -->
             <div class="flex items-center rounded-full bg-stone-100 p-1 border border-stone-200" aria-label="Language selector">
-                <button class="cursor-pointer rounded-full px-2.5 py-1 text-[0.62rem] font-bold uppercase transition" type="button" data-language-option="en">EN</button>
-                <button class="cursor-pointer rounded-full px-2.5 py-1 text-[0.62rem] font-bold uppercase transition" type="button" data-language-option="de">DE</button>
+                <button class="cursor-pointer rounded-full px-2.5 py-1 text-[0.62rem] font-bold uppercase transition" type="button" data-language-option="en" onclick="applyLanguage('en')">EN</button>
+                <button class="cursor-pointer rounded-full px-2.5 py-1 text-[0.62rem] font-bold uppercase transition" type="button" data-language-option="de" onclick="applyLanguage('de')">DE</button>
             </div>
 
             <!-- Admin Avatar Circle -->
@@ -1670,6 +1670,7 @@
                 }).catch(() => {});
             } catch(e) {}
         }
+        window.applyLanguage = applyLanguage;
 
         // ==========================================
         // Luxury Obsidian Dark Theme Engine

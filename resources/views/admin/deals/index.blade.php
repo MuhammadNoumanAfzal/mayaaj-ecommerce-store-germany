@@ -478,11 +478,11 @@
                     <svg style="width: 16px; height: 16px; color: #d8b45a;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                 </div>
                 <div>
-                    <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: #1c1210; line-height: 1.2; margin: 0;">Bundle & Deal Details</h3>
+                    <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: #1c1210; line-height: 1.2; margin: 0;" data-i18n-de="Bundle & Deal Details" data-i18n-en="Bundle & Deal Details">Bundle & Deal Details</h3>
                     <p style="font-size: 0.62rem; color: #8a7267; font-family: monospace; margin: 0; line-height: 1;" id="deal-view-slug">/deals#slug</p>
                 </div>
             </div>
-            <button type="button" onclick="closeViewDealModal()" style="width: 28px; height: 28px; border-radius: 0.65rem; background: #ffffff; color: #6b7280; border: 1px solid #ebdccb; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" title="Close">
+            <button type="button" onclick="closeViewDealModal()" style="width: 28px; height: 28px; border-radius: 0.65rem; background: #ffffff; color: #6b7280; border: 1px solid #ebdccb; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" title="Close" data-i18n-title-de="Schließen" data-i18n-title-en="Close">
                 <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
@@ -517,7 +517,7 @@
                                 ID: <strong id="deal-view-id" style="color: #111827;">#0</strong>
                             </span>
                             <span style="font-family: monospace; font-weight: 700; color: #1f2937; background: #FAF7F2; padding: 0.15rem 0.45rem; border-radius: 0.4rem; border: 1px solid #ebdccb;">
-                                Included: <strong id="deal-view-items-count" style="color: #78000b;">0</strong>
+                                <span data-i18n-de="Enthalten:" data-i18n-en="Included:">Included:</span> <strong id="deal-view-items-count" style="color: #78000b;">0</strong>
                             </span>
                         </div>
                     </div>
@@ -525,22 +525,22 @@
                     <!-- Pricing & Financial Metrics (2x2 Grid) -->
                     <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; width: 100%;">
                         <div style="padding: 0.65rem; border-radius: 0.75rem; background: linear-gradient(135deg, #FAF8F5, #F5ECE1); border: 1px solid #ebdccb;">
-                            <span style="font-size: 0.58rem; font-weight: 700; color: #8a7267; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Regular Total</span>
+                            <span style="font-size: 0.58rem; font-weight: 700; color: #8a7267; text-transform: uppercase; letter-spacing: 0.05em; display: block;" data-i18n-de="Regulärer Gesamtpreis" data-i18n-en="Regular Total">Regular Total</span>
                             <span id="deal-view-regular-total" style="font-weight: 800; font-size: 0.95rem; color: #1c1210; display: block; margin-top: 0.15rem;">€0.00</span>
                         </div>
 
                         <div style="padding: 0.65rem; border-radius: 0.75rem; background: linear-gradient(135deg, #fff5f5, #fde8e8); border: 1px solid rgba(254, 205, 211, 0.9);">
-                            <span style="font-size: 0.58rem; font-weight: 700; color: #9f1239; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Bundle Price</span>
+                            <span style="font-size: 0.58rem; font-weight: 700; color: #9f1239; text-transform: uppercase; letter-spacing: 0.05em; display: block;" data-i18n-de="Bundle-Preis" data-i18n-en="Bundle Price">Bundle Price</span>
                             <span id="deal-view-bundle-price" style="font-weight: 800; font-size: 0.95rem; color: #78000b; display: block; margin-top: 0.15rem;">€0.00</span>
                         </div>
 
                         <div style="padding: 0.65rem; border-radius: 0.75rem; background: linear-gradient(135deg, #f2faf5, #e4f7ec); border: 1px solid rgba(187, 247, 208, 0.9);">
-                            <span style="font-size: 0.58rem; font-weight: 700; color: #065f46; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Customer Savings</span>
+                            <span style="font-size: 0.58rem; font-weight: 700; color: #065f46; text-transform: uppercase; letter-spacing: 0.05em; display: block;" data-i18n-de="Kundenersparnis" data-i18n-en="Customer Savings">Customer Savings</span>
                             <span id="deal-view-savings-amount" style="font-weight: 800; font-size: 0.95rem; color: #064e3b; display: block; margin-top: 0.15rem;">€0.00</span>
                         </div>
 
                         <div style="padding: 0.65rem; border-radius: 0.75rem; background: linear-gradient(135deg, #f2faf5, #e4f7ec); border: 1px solid rgba(187, 247, 208, 0.9);">
-                            <span style="font-size: 0.58rem; font-weight: 700; color: #065f46; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Discount Rate</span>
+                            <span style="font-size: 0.58rem; font-weight: 700; color: #065f46; text-transform: uppercase; letter-spacing: 0.05em; display: block;" data-i18n-de="Rabatt-Satz" data-i18n-en="Discount Rate">Discount Rate</span>
                             <span id="deal-view-savings-pct" style="font-weight: 800; font-size: 0.95rem; color: #064e3b; display: block; margin-top: 0.15rem;">0%</span>
                         </div>
                     </div>
@@ -550,7 +550,7 @@
                         <div style="display: flex; align-items: center; gap: 0.4rem; min-width: 0;">
                             <svg style="width: 14px; height: 14px; color: #d97706; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             <div style="min-width: 0;">
-                                <span style="font-weight: 700; font-size: 0.68rem; color: #78350f; display: block; line-height: 1.1;" id="deal-view-timer-status">Flash Sale</span>
+                                <span style="font-weight: 700; font-size: 0.68rem; color: #78350f; display: block; line-height: 1.1;" id="deal-view-timer-status" data-i18n-de="Flash Sale" data-i18n-en="Flash Sale">Flash Sale</span>
                                 <span style="font-size: 0.58rem; color: #b45309; font-family: monospace; display: block;" id="deal-view-timer-range"></span>
                             </div>
                         </div>
@@ -559,7 +559,7 @@
 
                     <!-- Description -->
                     <div id="deal-view-desc-wrapper" class="hidden" style="padding: 0.65rem; border-radius: 0.75rem; background: #FAF8F5; border: 1px solid #ebdccb; font-size: 0.68rem;">
-                        <span style="display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.58rem; color: #8a7267; margin-bottom: 0.2rem;">Atelier Notes</span>
+                        <span style="display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.58rem; color: #8a7267; margin-bottom: 0.2rem;" data-i18n-de="Atelier Notizen" data-i18n-en="Atelier Notes">Atelier Notes</span>
                         <div id="deal-view-desc" style="color: #292524; line-height: 1.4;"></div>
                     </div>
 
@@ -569,8 +569,8 @@
                 <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.75rem; min-width: 0; width: 100%;">
                     <div>
                         <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.4rem; border-bottom: 1px solid #f1e6da; margin-bottom: 0.5rem;">
-                            <span style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.65rem; color: #8a7267;">Items in this Bundle</span>
-                            <span style="font-size: 0.6rem; font-weight: 700; color: #78000b; background: #FAF7F2; padding: 0.15rem 0.45rem; border-radius: 9999px; border: 1px solid #ebdccb;">Curated Set</span>
+                            <span style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.65rem; color: #8a7267;" data-i18n-de="Artikel in diesem Bundle" data-i18n-en="Items in this Bundle">Items in this Bundle</span>
+                            <span style="font-size: 0.6rem; font-weight: 700; color: #78000b; background: #FAF7F2; padding: 0.15rem 0.45rem; border-radius: 9999px; border: 1px solid #ebdccb;" data-i18n-de="Kuratiertes Set" data-i18n-en="Curated Set">Curated Set</span>
                         </div>
                         
                         <div id="deal-view-products-list" style="border-radius: 0.85rem; background: #ffffff; border: 1px solid #ebdccb; overflow: hidden; max-height: 240px; overflow-y: auto;">
@@ -579,8 +579,8 @@
                     </div>
 
                     <div style="padding: 0.55rem 0.75rem; border-radius: 0.75rem; background: linear-gradient(to right, #FAF8F5, #ffffff); border: 1px solid #ebdccb; display: flex; align-items: center; justify-content: space-between; font-size: 0.65rem; color: #57534e;">
-                        <span>All items are bundled automatically in patron cart</span>
-                        <span style="font-weight: 700; color: #065f46;">✓ Instant Discount</span>
+                        <span data-i18n-de="Alle Artikel werden automatisch im Warenkorb gebündelt" data-i18n-en="All items are bundled automatically in patron cart">All items are bundled automatically in patron cart</span>
+                        <span style="font-weight: 700; color: #065f46;" data-i18n-de="✓ Sofort-Rabatt" data-i18n-en="✓ Instant Discount">✓ Instant Discount</span>
                     </div>
                 </div>
 
@@ -591,17 +591,17 @@
         <!-- Modal Footer Actions -->
         <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; background: linear-gradient(to right, #fdfbf8, #f7eee4, #fbf5ef); border-top: 1px solid #ebdccb; gap: 0.75rem;">
             <a id="deal-view-store-btn" href="#" target="_blank" style="font-size: 0.75rem; font-weight: 700; color: #78000b; text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer;">
-                <span>View on Storefront</span>
+                <span data-i18n-de="Im Store ansehen" data-i18n-en="View on Storefront">View on Storefront</span>
                 <svg style="width: 14px; height: 14px; color: #78000b;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
 
             <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <button type="button" onclick="closeViewDealModal()" class="btn-exec-secondary" style="border-radius: 0.75rem; padding: 0.45rem 1rem; font-size: 0.75rem; font-weight: 700; cursor: pointer;">
-                    Close
+                    <span data-i18n-de="Schließen" data-i18n-en="Close">Close</span>
                 </button>
                 <a id="deal-view-edit-btn" href="#" class="btn-exec-primary" style="border-radius: 0.75rem; padding: 0.45rem 1rem; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; text-decoration: none;">
                     <svg style="width: 14px; height: 14px; color: #ffffff;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                    <span>Edit Bundle</span>
+                    <span data-i18n-de="Bundle Bearbeiten" data-i18n-en="Edit Bundle">Edit Bundle</span>
                 </a>
             </div>
         </div>
