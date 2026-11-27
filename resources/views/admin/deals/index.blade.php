@@ -672,183 +672,186 @@
         ensureModalTeleported('view-deal-modal');
     });
 
-    // Dataset for instant autocomplete search suggestions
-    const ALL_DEALS = @json($allDealsForSuggestions ?? []);
+    // Dataset for instant autocomplete search suggestions (Scoped to prevent global lexical conflicts)
+    (function() {
+        const ALL_DEALS = @json($allDealsForSuggestions ?? []);
 
-    const searchInput = document.getElementById('dealSearchInput');
-    const suggestionsPanel = document.getElementById('dealSuggestionsPanel');
-    const suggestionsList = document.getElementById('dealSuggestionsList');
-    const suggestionsCountBadge = document.getElementById('deal-suggestions-count-badge');
-    const clearBtn = document.getElementById('dealSearchClearBtn');
-    const filterForm = document.getElementById('dealsFilterForm');
-    let selectedSuggestionIndex = -1;
+        const searchInput = document.getElementById('dealSearchInput');
+        const suggestionsPanel = document.getElementById('dealSuggestionsPanel');
+        const suggestionsList = document.getElementById('dealSuggestionsList');
+        const suggestionsCountBadge = document.getElementById('deal-suggestions-count-badge');
+        const clearBtn = document.getElementById('dealSearchClearBtn');
+        const filterForm = document.getElementById('dealsFilterForm');
+        let selectedSuggestionIndex = -1;
 
-    function clearDealSearch() {
-        if (searchInput) {
-            searchInput.value = '';
-            if (clearBtn) clearBtn.classList.add('hidden');
-            if (suggestionsPanel) suggestionsPanel.classList.add('hidden');
-            if (filterForm) filterForm.submit();
+        function clearDealSearch() {
+            if (searchInput) {
+                searchInput.value = '';
+                if (clearBtn) clearBtn.classList.add('hidden');
+                if (suggestionsPanel) suggestionsPanel.classList.add('hidden');
+                if (filterForm) filterForm.submit();
+            }
         }
-    }
+        window.clearDealSearch = clearDealSearch;
 
-    if (searchInput && suggestionsPanel && suggestionsList) {
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        function highlightMatch(text, query) {
-            if (!query) return escapeHtml(text);
-            const escapedText = escapeHtml(text);
-            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-            return escapedText.replace(regex, '<span class="bg-[#ebdccb] text-[#78000b] font-black px-0.5 rounded">$1</span>');
-        }
-
-        function renderSuggestions(query) {
-            const trimmed = query.trim().toLowerCase();
-            selectedSuggestionIndex = -1;
-
-            if (clearBtn) {
-                if (trimmed) clearBtn.classList.remove('hidden');
-                else clearBtn.classList.add('hidden');
+        if (searchInput && suggestionsPanel && suggestionsList) {
+            function escapeHtml(str) {
+                if (!str) return '';
+                return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
             }
 
-            if (!trimmed) {
-                suggestionsPanel.classList.add('hidden');
-                suggestionsList.innerHTML = '';
-                return;
+            function highlightMatch(text, query) {
+                if (!query) return escapeHtml(text);
+                const escapedText = escapeHtml(text);
+                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                return escapedText.replace(regex, '<span class="bg-[#ebdccb] text-[#78000b] font-black px-0.5 rounded">$1</span>');
             }
 
-            const matches = ALL_DEALS.filter(d => {
-                return (d.title && d.title.toLowerCase().includes(trimmed)) ||
-                       (d.title_en && d.title_en.toLowerCase().includes(trimmed)) ||
-                       (d.title_de && d.title_de.toLowerCase().includes(trimmed)) ||
-                       (d.badge_text && d.badge_text.toLowerCase().includes(trimmed)) ||
-                       (d.slug && d.slug.toLowerCase().includes(trimmed));
-            }).slice(0, 6);
+            function renderSuggestions(query) {
+                const trimmed = query.trim().toLowerCase();
+                selectedSuggestionIndex = -1;
 
-            if (matches.length === 0) {
-                if (suggestionsCountBadge) suggestionsCountBadge.textContent = '0';
-                suggestionsList.innerHTML = `
-                    <div class="px-4 py-4 text-xs text-stone-400 text-center flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4 text-stone-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        <span>No bundle matches found for "<strong>${escapeHtml(query)}</strong>"</span>
-                    </div>
-                `;
-                suggestionsPanel.classList.remove('hidden');
-                return;
-            }
+                if (clearBtn) {
+                    if (trimmed) clearBtn.classList.remove('hidden');
+                    else clearBtn.classList.add('hidden');
+                }
 
-            if (suggestionsCountBadge) suggestionsCountBadge.textContent = matches.length;
-
-            let html = '';
-            matches.forEach((d, idx) => {
-                const imgHtml = d.first_image 
-                    ? `<img src="${d.first_image}" class="h-full w-full object-cover">`
-                    : `<svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>`;
-                
-                const statusBadge = d.is_active
-                    ? `<span class="text-[0.6rem] font-bold text-emerald-800 bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 rounded-full">ACTIVE</span>`
-                    : `<span class="text-[0.6rem] font-bold text-amber-800 bg-amber-50 border border-amber-300 px-1.5 py-0.5 rounded-full">DRAFT</span>`;
-
-                html += `
-                    <div 
-                        class="suggestion-item px-3.5 py-2 hover:bg-[#FAF7F2] cursor-pointer flex items-center justify-between gap-3 transition" 
-                        data-index="${idx}"
-                        data-name="${escapeHtml(d.title)}"
-                        data-id="${d.id}"
-                    >
-                        <div class="flex items-center gap-2 min-w-0">
-                            <div class="h-7 w-7 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] flex items-center justify-center shrink-0">
-                                ${imgHtml}
-                            </div>
-                            <div class="min-w-0">
-                                <div class="text-xs font-bold text-[#1c1210] truncate">
-                                    ${highlightMatch(d.title, trimmed)}
-                                </div>
-                                <div class="text-[0.62rem] text-stone-500 font-medium truncate flex items-center gap-1.5">
-                                    <span class="text-[#78000b] font-semibold">${escapeHtml(d.badge_text)}</span>
-                                    <span>•</span>
-                                    <span>${d.products_count} items</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <span class="text-xs font-extrabold text-[#78000b]">
-                                €${d.bundle_price.toFixed(2)}
-                            </span>
-                            ${statusBadge}
-                        </div>
-                    </div>
-                `;
-            });
-
-            suggestionsList.innerHTML = html;
-            suggestionsPanel.classList.remove('hidden');
-
-            suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const name = this.getAttribute('data-name');
-                    searchInput.value = name;
+                if (!trimmed) {
                     suggestionsPanel.classList.add('hidden');
-                    filterForm.submit();
+                    suggestionsList.innerHTML = '';
+                    return;
+                }
+
+                const matches = ALL_DEALS.filter(d => {
+                    return (d.title && d.title.toLowerCase().includes(trimmed)) ||
+                           (d.title_en && d.title_en.toLowerCase().includes(trimmed)) ||
+                           (d.title_de && d.title_de.toLowerCase().includes(trimmed)) ||
+                           (d.badge_text && d.badge_text.toLowerCase().includes(trimmed)) ||
+                           (d.slug && d.slug.toLowerCase().includes(trimmed));
+                }).slice(0, 6);
+
+                if (matches.length === 0) {
+                    if (suggestionsCountBadge) suggestionsCountBadge.textContent = '0';
+                    suggestionsList.innerHTML = `
+                        <div class="px-4 py-4 text-xs text-stone-400 text-center flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4 text-stone-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <span>No bundle matches found for "<strong>${escapeHtml(query)}</strong>"</span>
+                        </div>
+                    `;
+                    suggestionsPanel.classList.remove('hidden');
+                    return;
+                }
+
+                if (suggestionsCountBadge) suggestionsCountBadge.textContent = matches.length;
+
+                let html = '';
+                matches.forEach((d, idx) => {
+                    const imgHtml = d.first_image 
+                        ? `<img src="${d.first_image}" class="h-full w-full object-cover">`
+                        : `<svg class="w-3.5 h-3.5 text-[#78000b]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>`;
+                    
+                    const statusBadge = d.is_active
+                        ? `<span class="text-[0.6rem] font-bold text-emerald-800 bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 rounded-full">ACTIVE</span>`
+                        : `<span class="text-[0.6rem] font-bold text-amber-800 bg-amber-50 border border-amber-300 px-1.5 py-0.5 rounded-full">DRAFT</span>`;
+
+                    html += `
+                        <div 
+                            class="suggestion-item px-3.5 py-2 hover:bg-[#FAF7F2] cursor-pointer flex items-center justify-between gap-3 transition" 
+                            data-index="${idx}"
+                            data-name="${escapeHtml(d.title)}"
+                            data-id="${d.id}"
+                        >
+                            <div class="flex items-center gap-2 min-w-0">
+                                <div class="h-7 w-7 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#ebdccb] flex items-center justify-center shrink-0">
+                                    ${imgHtml}
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-xs font-bold text-[#1c1210] truncate">
+                                        ${highlightMatch(d.title, trimmed)}
+                                    </div>
+                                    <div class="text-[0.62rem] text-stone-500 font-medium truncate flex items-center gap-1.5">
+                                        <span class="text-[#78000b] font-semibold">${escapeHtml(d.badge_text)}</span>
+                                        <span>•</span>
+                                        <span>${d.products_count} items</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <span class="text-xs font-extrabold text-[#78000b]">
+                                    €${d.bundle_price.toFixed(2)}
+                                </span>
+                                ${statusBadge}
+                            </div>
+                        </div>
+                    `;
                 });
-            });
-        }
 
-        let debounceTimer;
-        searchInput.addEventListener('input', function(e) {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                renderSuggestions(e.target.value);
-            }, 120);
-        });
+                suggestionsList.innerHTML = html;
+                suggestionsPanel.classList.remove('hidden');
 
-        searchInput.addEventListener('keydown', function(e) {
-            const items = suggestionsList.querySelectorAll('.suggestion-item');
-            if (items.length === 0 || suggestionsPanel.classList.contains('hidden')) {
-                return;
+                suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const name = this.getAttribute('data-name');
+                        searchInput.value = name;
+                        suggestionsPanel.classList.add('hidden');
+                        filterForm.submit();
+                    });
+                });
             }
 
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                selectedSuggestionIndex = (selectedSuggestionIndex + 1) % items.length;
-                updateSuggestionHighlight(items);
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                selectedSuggestionIndex = (selectedSuggestionIndex - 1 + items.length) % items.length;
-                updateSuggestionHighlight(items);
-            } else if (e.key === 'Enter') {
-                if (selectedSuggestionIndex >= 0 && items[selectedSuggestionIndex]) {
+            let debounceTimer;
+            searchInput.addEventListener('input', function(e) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    renderSuggestions(e.target.value);
+                }, 120);
+            });
+
+            searchInput.addEventListener('keydown', function(e) {
+                const items = suggestionsList.querySelectorAll('.suggestion-item');
+                if (items.length === 0 || suggestionsPanel.classList.contains('hidden')) {
+                    return;
+                }
+
+                if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    const name = items[selectedSuggestionIndex].getAttribute('data-name');
-                    searchInput.value = name;
+                    selectedSuggestionIndex = (selectedSuggestionIndex + 1) % items.length;
+                    updateSuggestionHighlight(items);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedSuggestionIndex = (selectedSuggestionIndex - 1 + items.length) % items.length;
+                    updateSuggestionHighlight(items);
+                } else if (e.key === 'Enter') {
+                    if (selectedSuggestionIndex >= 0 && items[selectedSuggestionIndex]) {
+                        e.preventDefault();
+                        const name = items[selectedSuggestionIndex].getAttribute('data-name');
+                        searchInput.value = name;
+                        suggestionsPanel.classList.add('hidden');
+                        filterForm.submit();
+                    }
+                } else if (e.key === 'Escape') {
                     suggestionsPanel.classList.add('hidden');
-                    filterForm.submit();
                 }
-            } else if (e.key === 'Escape') {
-                suggestionsPanel.classList.add('hidden');
-            }
-        });
+            });
 
-        function updateSuggestionHighlight(items) {
-            items.forEach((item, idx) => {
-                if (idx === selectedSuggestionIndex) {
-                    item.classList.add('bg-[#FAF7F2]', 'ring-1', 'ring-[#78000b]/30');
-                    item.scrollIntoView({ block: 'nearest' });
-                } else {
-                    item.classList.remove('bg-[#FAF7F2]', 'ring-1', 'ring-[#78000b]/30');
+            function updateSuggestionHighlight(items) {
+                items.forEach((item, idx) => {
+                    if (idx === selectedSuggestionIndex) {
+                        item.classList.add('bg-[#FAF7F2]', 'ring-1', 'ring-[#78000b]/30');
+                        item.scrollIntoView({ block: 'nearest' });
+                    } else {
+                        item.classList.remove('bg-[#FAF7F2]', 'ring-1', 'ring-[#78000b]/30');
+                    }
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !suggestionsPanel.contains(e.target)) {
+                    suggestionsPanel.classList.add('hidden');
                 }
             });
         }
-
-        document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !suggestionsPanel.contains(e.target)) {
-                suggestionsPanel.classList.add('hidden');
-            }
-        });
-    }
+    })();
 
     // Modal Handling with ensureModalTeleported & Body Scroll Lock
     function openViewDealModal(data) {

@@ -684,7 +684,7 @@
     // Dataset for instant autocomplete search suggestions
     const ALL_PRODUCTS = @json($allProductsForSuggestions ?? []);
 
-    const searchInput = document.getElementById('productSearchInput');
+    const prodSearchInput = document.getElementById('productSearchInput');
     const suggestionsPanel = document.getElementById('productSuggestionsPanel');
     const suggestionsList = document.getElementById('productSuggestionsList');
     const suggestionsCountBadge = document.getElementById('prod-suggestions-count-badge');
@@ -693,15 +693,15 @@
     let selectedSuggestionIndex = -1;
 
     function clearProductSearch() {
-        if (searchInput) {
-            searchInput.value = '';
+        if (prodSearchInput) {
+            prodSearchInput.value = '';
             if (clearBtn) clearBtn.classList.add('hidden');
             if (suggestionsPanel) suggestionsPanel.classList.add('hidden');
             if (filterForm) filterForm.submit();
         }
     }
 
-    if (searchInput && suggestionsPanel && suggestionsList) {
+    if (prodSearchInput && suggestionsPanel && suggestionsList) {
         function escapeHtml(str) {
             if (!str) return '';
             return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
@@ -802,7 +802,7 @@
             suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
                 item.addEventListener('click', function() {
                     const name = this.getAttribute('data-name');
-                    searchInput.value = name;
+                    prodSearchInput.value = name;
                     suggestionsPanel.classList.add('hidden');
                     filterForm.submit();
                 });
@@ -810,14 +810,14 @@
         }
 
         let debounceTimer;
-        searchInput.addEventListener('input', function(e) {
+        prodSearchInput.addEventListener('input', function(e) {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
                 renderSuggestions(e.target.value);
             }, 120);
         });
 
-        searchInput.addEventListener('keydown', function(e) {
+        prodSearchInput.addEventListener('keydown', function(e) {
             const items = suggestionsList.querySelectorAll('.suggestion-item');
             if (items.length === 0 || suggestionsPanel.classList.contains('hidden')) {
                 return;
@@ -835,7 +835,7 @@
                 if (selectedSuggestionIndex >= 0 && items[selectedSuggestionIndex]) {
                     e.preventDefault();
                     const name = items[selectedSuggestionIndex].getAttribute('data-name');
-                    searchInput.value = name;
+                    prodSearchInput.value = name;
                     suggestionsPanel.classList.add('hidden');
                     filterForm.submit();
                 }
@@ -856,7 +856,7 @@
         }
 
         document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !suggestionsPanel.contains(e.target)) {
+            if (!prodSearchInput.contains(e.target) && !suggestionsPanel.contains(e.target)) {
                 suggestionsPanel.classList.add('hidden');
             }
         });

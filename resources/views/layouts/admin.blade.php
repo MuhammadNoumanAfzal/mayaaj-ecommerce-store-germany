@@ -71,8 +71,32 @@
     </style>
     @yield('admin-styles')
 
-    <!-- Early Language & Dark Theme Hydration Script (Zero-Flash) -->
+    <!-- Early Language, Sidebar & Theme Hydration Script (Zero-Flash) -->
     <script>
+        function toggleSidebarMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            const arrow = document.getElementById(menuId + '-arrow');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (arrow) {
+                    arrow.classList.toggle('rotate-180');
+                }
+            }
+        }
+        window.toggleSidebarMenu = toggleSidebarMenu;
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('admin-sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            if (sidebar) {
+                sidebar.classList.toggle('-translate-x-full');
+            }
+            if (backdrop) {
+                backdrop.classList.toggle('hidden');
+            }
+        }
+        window.toggleMobileSidebar = toggleMobileSidebar;
+
         (function() {
             function getCookie(name) {
                 const value = `; ${document.cookie}`;
@@ -1752,153 +1776,155 @@
         });
 
         // ==========================================
-        // Global Admin Search Engine (Ctrl + K)
+        // Global Admin Search Engine (Ctrl + K) - Scoped IIFE
         // ==========================================
-        let searchDebounceTimer = null;
-        const searchInput = document.getElementById('admin-search-input');
-        const searchDropdown = document.getElementById('admin-search-dropdown');
-        const searchContent = document.getElementById('admin-search-content');
-        const searchLoading = document.getElementById('admin-search-loading');
+        (function() {
+            let searchDebounceTimer = null;
+            const searchInput = document.getElementById('admin-search-input');
+            const searchDropdown = document.getElementById('admin-search-dropdown');
+            const searchContent = document.getElementById('admin-search-content');
+            const searchLoading = document.getElementById('admin-search-loading');
 
-        function closeSearchDropdown() {
-            if (searchDropdown) {
-                searchDropdown.classList.add('hidden');
-            }
-        }
-
-        function openSearchDropdown() {
-            if (searchDropdown && searchInput && searchInput.value.trim().length >= 2) {
-                searchDropdown.classList.remove('hidden');
-            }
-        }
-
-        // Global Keyboard Shortcut: Ctrl + K or Cmd + K
-        window.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
-                e.preventDefault();
-                if (searchInput) {
-                    searchInput.focus();
-                    searchInput.select();
-                    if (searchInput.value.trim().length >= 2) {
-                        openSearchDropdown();
-                    }
+            function closeSearchDropdown() {
+                if (searchDropdown) {
+                    searchDropdown.classList.add('hidden');
                 }
-            } else if (e.key === 'Escape') {
-                closeSearchDropdown();
-                if (searchInput) searchInput.blur();
             }
-        });
 
-        // Click outside closes dropdown
-        document.addEventListener('click', function(e) {
-            const container = document.getElementById('admin-search-container');
-            if (container && !container.contains(e.target)) {
-                closeSearchDropdown();
+            function openSearchDropdown() {
+                if (searchDropdown && searchInput && searchInput.value.trim().length >= 2) {
+                    searchDropdown.classList.remove('hidden');
+                }
             }
-        });
 
-        if (searchInput) {
-            searchInput.addEventListener('focus', function() {
-                if (this.value.trim().length >= 2) {
-                    openSearchDropdown();
+            // Global Keyboard Shortcut: Ctrl + K or Cmd + K
+            window.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+                    e.preventDefault();
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                        if (searchInput.value.trim().length >= 2) {
+                            openSearchDropdown();
+                        }
+                    }
+                } else if (e.key === 'Escape') {
+                    closeSearchDropdown();
+                    if (searchInput) searchInput.blur();
                 }
             });
 
-            searchInput.addEventListener('input', function() {
-                const query = this.value.trim();
-                clearTimeout(searchDebounceTimer);
-
-                if (query.length < 2) {
+            // Click outside closes dropdown
+            document.addEventListener('click', function(e) {
+                const container = document.getElementById('admin-search-container');
+                if (container && !container.contains(e.target)) {
                     closeSearchDropdown();
+                }
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('focus', function() {
+                    if (this.value.trim().length >= 2) {
+                        openSearchDropdown();
+                    }
+                });
+
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    clearTimeout(searchDebounceTimer);
+
+                    if (query.length < 2) {
+                        closeSearchDropdown();
+                        return;
+                    }
+
+                    if (searchLoading) searchLoading.classList.remove('hidden');
+                    if (searchDropdown) searchDropdown.classList.remove('hidden');
+
+                    searchDebounceTimer = setTimeout(() => {
+                        fetch(`/admin/search?q=${encodeURIComponent(query)}`, {
+                            headers: { 'Accept': 'application/json' }
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (searchLoading) searchLoading.classList.add('hidden');
+                            renderSearchResults(data);
+                        })
+                        .catch(err => {
+                            if (searchLoading) searchLoading.classList.add('hidden');
+                            console.error('Search error:', err);
+                        });
+                    }, 250);
+                });
+            }
+
+            function renderSearchResults(data) {
+                if (!searchContent) return;
+                searchContent.innerHTML = '';
+
+                if (!data.results || data.total_results === 0) {
+                    searchContent.innerHTML = `
+                        <div class="p-6 text-center text-xs text-stone-400">
+                            <div class="text-base mb-1">🔍</div>
+                            <p class="font-bold text-stone-700">Keine Treffer gefunden</p>
+                            <p class="text-[0.68rem] text-stone-400">Keine passenden Produkte, Bestellungen, Kunden oder Gutscheine für "${data.query || ''}".</p>
+                        </div>
+                    `;
                     return;
                 }
 
-                if (searchLoading) searchLoading.classList.remove('hidden');
-                if (searchDropdown) searchDropdown.classList.remove('hidden');
+                const sections = [
+                    { key: 'products', title: 'Produkte & Artikel', icon: '🛍️' },
+                    { key: 'orders', title: 'Bestellungen & Rechnungen', icon: '📦' },
+                    { key: 'customers', title: 'Kunden & VIP-Klienten', icon: '👤' },
+                    { key: 'coupons', title: 'Gutscheincodes', icon: '🏷️' },
+                    { key: 'deals', title: 'Deals & Bundles', icon: '⚡' },
+                    { key: 'abandoned_carts', title: 'Verlassene Warenkörbe', icon: '🛒' }
+                ];
 
-                searchDebounceTimer = setTimeout(() => {
-                    fetch(`/admin/search?q=${encodeURIComponent(query)}`, {
-                        headers: { 'Accept': 'application/json' }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (searchLoading) searchLoading.classList.add('hidden');
-                        renderSearchResults(data);
-                    })
-                    .catch(err => {
-                        if (searchLoading) searchLoading.classList.add('hidden');
-                        console.error('Search error:', err);
-                    });
-                }, 250);
-            });
-        }
+                let html = '';
 
-        function renderSearchResults(data) {
-            if (!searchContent) return;
-            searchContent.innerHTML = '';
-
-            if (!data.results || data.total_results === 0) {
-                searchContent.innerHTML = `
-                    <div class="p-6 text-center text-xs text-stone-400">
-                        <div class="text-base mb-1">🔍</div>
-                        <p class="font-bold text-stone-700">Keine Treffer gefunden</p>
-                        <p class="text-[0.68rem] text-stone-400">Keine passenden Produkte, Bestellungen, Kunden oder Gutscheine für "${data.query || ''}".</p>
-                    </div>
-                `;
-                return;
-            }
-
-            const sections = [
-                { key: 'products', title: 'Produkte & Artikel', icon: '🛍️' },
-                { key: 'orders', title: 'Bestellungen & Rechnungen', icon: '📦' },
-                { key: 'customers', title: 'Kunden & VIP-Klienten', icon: '👤' },
-                { key: 'coupons', title: 'Gutscheincodes', icon: '🏷️' },
-                { key: 'deals', title: 'Deals & Bundles', icon: '⚡' },
-                { key: 'abandoned_carts', title: 'Verlassene Warenkörbe', icon: '🛒' }
-            ];
-
-            let html = '';
-
-            sections.forEach(sec => {
-                const items = data.results[sec.key];
-                if (items && items.length > 0) {
-                    html += `
-                        <div class="py-1">
-                            <div class="px-2.5 py-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-stone-400 flex items-center gap-1.5">
-                                <span>${sec.icon}</span>
-                                <span>${sec.title} (${items.length})</span>
-                            </div>
-                            <div class="space-y-0.5 mt-0.5">
-                    `;
-
-                    items.forEach(item => {
+                sections.forEach(sec => {
+                    const items = data.results[sec.key];
+                    if (items && items.length > 0) {
                         html += `
-                            <a href="${item.url}" class="flex items-center justify-between p-2 rounded-xl hover:bg-stone-50 transition group">
-                                <div class="flex items-center gap-2.5 min-w-0">
-                                    ${item.image ? `<img src="${item.image}" class="w-8 h-8 rounded-lg object-cover border border-stone-200 shrink-0 bg-stone-100">` : ''}
-                                    <div class="min-w-0">
-                                        <div class="font-bold text-xs text-stone-900 group-hover:text-saltora-terracotta truncate transition">${item.title}</div>
-                                        <div class="text-[0.65rem] text-stone-500 truncate">${item.subtitle || ''}</div>
-                                    </div>
+                            <div class="py-1">
+                                <div class="px-2.5 py-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-stone-400 flex items-center gap-1.5">
+                                    <span>${sec.icon}</span>
+                                    <span>${sec.title} (${items.length})</span>
                                 </div>
-                                <div class="shrink-0 ml-3 text-right">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-stone-100 text-stone-700 border border-stone-200 group-hover:bg-saltora-blush group-hover:text-saltora-terracotta transition">
-                                        ${item.badge || ''}
-                                    </span>
-                                </div>
-                            </a>
+                                <div class="space-y-0.5 mt-0.5">
                         `;
-                    });
 
-                    html += `
+                        items.forEach(item => {
+                            html += `
+                                <a href="${item.url}" class="flex items-center justify-between p-2 rounded-xl hover:bg-stone-50 transition group">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        ${item.image ? `<img src="${item.image}" class="w-8 h-8 rounded-lg object-cover border border-stone-200 shrink-0 bg-stone-100">` : ''}
+                                        <div class="min-w-0">
+                                            <div class="font-bold text-xs text-stone-900 group-hover:text-saltora-terracotta truncate transition">${item.title}</div>
+                                            <div class="text-[0.65rem] text-stone-500 truncate">${item.subtitle || ''}</div>
+                                        </div>
+                                    </div>
+                                    <div class="shrink-0 ml-3 text-right">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-stone-100 text-stone-700 border border-stone-200 group-hover:bg-saltora-blush group-hover:text-saltora-terracotta transition">
+                                            ${item.badge || ''}
+                                        </span>
+                                    </div>
+                                </a>
+                            `;
+                        });
+
+                        html += `
+                                </div>
                             </div>
-                        </div>
-                    `;
-                }
-            });
+                        `;
+                    }
+                });
 
-            searchContent.innerHTML = html;
-        }
+                searchContent.innerHTML = html;
+            }
+        })();
 
         // Pink-Salt SweetAlert Logout Modal (Adapts to Dark / Light)
         function confirmSignOut() {

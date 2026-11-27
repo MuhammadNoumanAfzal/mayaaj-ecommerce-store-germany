@@ -874,7 +874,7 @@
     // Live Search Auto-Suggestions System
     // ==========================================
     const allCategoriesSuggestions = @json($allCategoriesForSuggestions ?? []);
-    const searchInput = document.getElementById('categorySearchInput');
+    const catSearchInput = document.getElementById('categorySearchInput');
     const searchClearBtn = document.getElementById('categorySearchClearBtn');
     const suggestionsPanel = document.getElementById('categorySuggestionsPanel');
     const suggestionsList = document.getElementById('categorySuggestionsList');
@@ -976,8 +976,8 @@
     }
 
     function selectSuggestion(name) {
-        if (searchInput) {
-            searchInput.value = name;
+        if (catSearchInput) {
+            catSearchInput.value = name;
         }
         if (suggestionsPanel) {
             suggestionsPanel.classList.add('hidden');
@@ -988,9 +988,9 @@
     }
 
     function clearCategorySearch() {
-        if (searchInput) {
-            searchInput.value = '';
-            searchInput.focus();
+        if (catSearchInput) {
+            catSearchInput.value = '';
+            catSearchInput.focus();
         }
         if (searchClearBtn) {
             searchClearBtn.classList.add('hidden');
@@ -1003,18 +1003,18 @@
         }
     }
 
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
+    if (catSearchInput) {
+        catSearchInput.addEventListener('input', (e) => {
             renderSuggestions(e.target.value);
         });
 
-        searchInput.addEventListener('focus', () => {
-            if (searchInput.value.trim().length > 0) {
-                renderSuggestions(searchInput.value);
+        catSearchInput.addEventListener('focus', () => {
+            if (catSearchInput.value.trim().length > 0) {
+                renderSuggestions(catSearchInput.value);
             }
         });
 
-        searchInput.addEventListener('keydown', (e) => {
+        catSearchInput.addEventListener('keydown', (e) => {
             if (!suggestionsPanel || suggestionsPanel.classList.contains('hidden')) {
                 return;
             }
@@ -1054,7 +1054,7 @@
 
     // Close suggestions dropdown when clicking outside
     document.addEventListener('click', (e) => {
-        if (suggestionsPanel && !suggestionsPanel.contains(e.target) && e.target !== searchInput) {
+        if (suggestionsPanel && !suggestionsPanel.contains(e.target) && e.target !== catSearchInput) {
             suggestionsPanel.classList.add('hidden');
         }
     });
