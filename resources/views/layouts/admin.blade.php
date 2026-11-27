@@ -1312,16 +1312,6 @@
                                 <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
                                 <span data-i18n-de="Vorkasse & Rechnungen" data-i18n-en="Prepayments & Invoices">Prepayments & Invoices</span>
                             </a>
-                            <a href="{{ route('admin.returns') }}" class="flex items-center gap-2.5 px-3 py-2 text-xs transition-all rounded-lg {{ request()->routeIs('admin.returns*') ? 'admin-nav-subitem-active' : 'admin-nav-subitem hover:bg-stone-50' }}">
-                                <svg class="h-3.5 w-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                                <span data-i18n-de="Retouren & RMA" data-i18n-en="Returns & RMA">Returns & RMA</span>
-                                @php
-                                    $openReturnsCount = \App\Models\ReturnRequest::where('status', 'pending')->count();
-                                @endphp
-                                @if($openReturnsCount > 0)
-                                    <span class="ml-auto rounded-full bg-amber-100 text-amber-800 px-1.5 py-0.2 text-[0.6rem] font-bold">{{ $openReturnsCount }}</span>
-                                @endif
-                            </a>
                         </div>
                     </div>
 
