@@ -122,8 +122,6 @@
                         <th class="py-3 px-3 font-black w-12 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
                         <th class="py-3 px-4 font-black" data-i18n-de="Kunde" data-i18n-en="Customer">Customer</th>
                         <th class="py-3 px-4 font-black" data-i18n-de="Produkt" data-i18n-en="Product">Product</th>
-                        <th class="py-3 px-3 font-black text-center" data-i18n-de="Ausführung" data-i18n-en="Design">Design</th>
-                        <th class="py-3 px-3 font-black text-center w-28" data-i18n-de="Preis" data-i18n-en="Price">Price</th>
                         <th class="py-3 px-4 font-black text-center w-28" data-i18n-de="Datum" data-i18n-en="Date">Date</th>
                         <th class="py-3 px-3 font-black text-center w-28" data-i18n-de="Status" data-i18n-en="Status">Status</th>
                         <th class="py-3 px-4 font-black text-center w-36" data-i18n-de="Aktionen" data-i18n-en="Actions">Actions</th>
@@ -177,28 +175,12 @@
                                 @endif
                             </td>
 
-                            <!-- 3. Variation (Clean Single Line Pill) -->
-                            <td class="py-3 px-3 text-center whitespace-nowrap">
-                                <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-[#FAF7F2] text-stone-700 border border-[#ebdccb]">
-                                    {{ $notif->variation_name ?: 'Standard' }}
-                                </span>
-                            </td>
-
-                            <!-- 4. Price (Single Line) -->
-                            <td class="py-3 px-3 text-center font-mono font-bold text-[#78000b] text-xs whitespace-nowrap">
-                                @if($notif->product)
-                                    €{{ number_format($notif->product->sale_price ?? $notif->product->price, 2, '.', ',') }}
-                                @else
-                                    —
-                                @endif
-                            </td>
-
-                            <!-- 5. Date (Single Line) -->
+                            <!-- 3. Date (Single Line) -->
                             <td class="py-3 px-4 text-center font-mono text-stone-600 text-xs whitespace-nowrap">
                                 {{ $notif->created_at->format('d.m.Y') }}
                             </td>
 
-                            <!-- 6. Status (Clean Single Line Badge) -->
+                            <!-- 4. Status (Clean Single Line Badge) -->
                             <td class="py-3 px-3 text-center whitespace-nowrap">
                                 @if($notif->status === 'notified')
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.65rem] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
@@ -213,7 +195,7 @@
                                 @endif
                             </td>
 
-                            <!-- 7. Actions (View Modal + Delete) -->
+                            <!-- 5. Actions (View Modal + Delete) -->
                             <td class="py-3 px-4 text-center whitespace-nowrap">
                                 <div class="flex items-center justify-center gap-1.5">
                                     <!-- View Details Button -->
@@ -250,7 +232,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="py-12 text-center text-stone-500 text-xs">
+                            <td colspan="6" class="py-12 text-center text-stone-500 text-xs">
                                 <div class="flex flex-col items-center justify-center gap-2">
                                     <div class="w-12 h-12 rounded-2xl bg-[#faf7f2] border border-[#ebdccb] flex items-center justify-center text-[#78000b] shadow-2xs">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
