@@ -1967,5 +1967,8 @@
             });
         }
     </script>
+
+    <!-- Global Portals / Modals Container (Direct Child of Body to cover entire viewport) -->
+    @yield('admin-modals')
 </body>
 </html>

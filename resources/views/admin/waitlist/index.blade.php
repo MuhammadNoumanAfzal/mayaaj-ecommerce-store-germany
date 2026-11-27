@@ -281,8 +281,8 @@
 <!-- Luxury Waitlist Entry Details Modal -->
 <div 
     id="waitlist-detail-modal" 
-    class="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-5 hidden transition-all duration-300" 
-    style="z-index: 99999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.75) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important;" 
+    class="fixed inset-0 flex items-center justify-center p-3 sm:p-5 hidden transition-all duration-300" 
+    style="z-index: 99999999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.78) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important; margin: 0 !important;" 
     onclick="closeWaitlistDetailModal()"
 >
     <div 
@@ -399,6 +399,11 @@
         activeModalData = data;
         const isEn = (window.__mehaaj_lang || 'en') === 'en';
 
+        const modal = document.getElementById('waitlist-detail-modal');
+        if (modal && modal.parentElement !== document.body) {
+            document.body.appendChild(modal);
+        }
+
         document.getElementById('modal-waitlist-id').textContent = 'Entry #' + data.id;
         document.getElementById('modal-customer-name').textContent = data.customer_name;
         
@@ -496,8 +501,16 @@
         });
     }
 
-    // Re-apply language on load
+    function ensureModalTeleported(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal && modal.parentElement !== document.body) {
+            document.body.appendChild(modal);
+        }
+    }
+
+    // Re-apply language on load and ensure modal is teleported to body root
     document.addEventListener('DOMContentLoaded', function() {
+        ensureModalTeleported('waitlist-detail-modal');
         const currentLang = localStorage.getItem('mehaaj_admin_lang') || 'en';
         if (typeof applyLanguage === 'function') {
             applyLanguage(currentLang);

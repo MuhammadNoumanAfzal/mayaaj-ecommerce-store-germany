@@ -459,8 +459,8 @@
 <!-- Luxury Wide Executive Bundle Quick View Modal (Wide Landscape, Modern Split 50/50 Layout) -->
 <div 
     id="view-deal-modal" 
-    class="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-5 hidden transition-all duration-300" 
-    style="z-index: 99999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.75) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important;" 
+    class="fixed inset-0 flex items-center justify-center p-3 sm:p-5 hidden transition-all duration-300" 
+    style="z-index: 99999999 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 12, 11, 0.78) !important; backdrop-filter: blur(14px) saturate(180%) !important; -webkit-backdrop-filter: blur(14px) saturate(180%) !important; margin: 0 !important;" 
     onclick="closeViewDealModal()"
 >
     <div 
