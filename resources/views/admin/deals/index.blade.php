@@ -258,13 +258,12 @@
             <table class="w-full text-left text-xs table-auto">
                 <thead>
                     <tr class="bg-gradient-to-r from-[#fbf8f4] via-[#f7eee3] to-[#fbf8f4] text-[#483732] font-black uppercase tracking-wider text-[0.68rem] border-y border-[#ebdccb]">
-                        <th class="py-2.5 px-2 font-black w-10 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
-                        <th class="py-2.5 px-2.5 font-black min-w-[170px]" data-i18n-de="Bundle Name & Badge" data-i18n-en="Bundle Name & Badge">Bundle Name & Badge</th>
-                        <th class="py-2.5 px-1.5 font-black text-center w-24" data-i18n-de="Artikel" data-i18n-en="Items">Items</th>
-                        <th class="py-2.5 px-1.5 font-black text-center w-28" data-i18n-de="Preise & Ersparnis" data-i18n-en="Pricing & Savings">Pricing & Savings</th>
-                        <th class="py-2.5 px-1.5 font-black text-center w-28" data-i18n-de="Flash Countdown" data-i18n-en="Timeline / Flash">Timeline / Flash</th>
-                        <th class="py-2.5 px-1 font-black text-center w-20" data-i18n-de="Status" data-i18n-en="Status">Status</th>
-                        <th class="py-2.5 px-2 font-black text-center w-28" data-i18n-de="Aktionen" data-i18n-en="Actions">Actions</th>
+                        <th class="py-3 px-3 font-black w-12 text-center" data-i18n-de="#" data-i18n-en="#">#</th>
+                        <th class="py-3 px-4 font-black" data-i18n-de="Bundle Name" data-i18n-en="Bundle Name">Bundle Name</th>
+                        <th class="py-3 px-3 font-black text-center w-28" data-i18n-de="Artikel" data-i18n-en="Items">Items</th>
+                        <th class="py-3 px-3 font-black text-center w-36" data-i18n-de="Preise & Ersparnis" data-i18n-en="Pricing & Savings">Pricing & Savings</th>
+                        <th class="py-3 px-3 font-black text-center w-24" data-i18n-de="Status" data-i18n-en="Status">Status</th>
+                        <th class="py-3 px-4 font-black text-center w-36" data-i18n-de="Aktionen" data-i18n-en="Actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#f1e6da] font-medium bg-white">
@@ -312,103 +311,53 @@
                         <tr class="hover:bg-[#faf7f2] transition-colors duration-150" id="deal-row-{{ $deal->id }}">
                             
                             <!-- 1. Row Index -->
-                            <td class="py-2.5 px-2 text-center">
+                            <td class="py-3 px-3 text-center">
                                 <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg bg-[#FAF7F2] font-mono font-bold text-[#78000b] text-xs border border-[#ebdccb] shadow-2xs">
                                     {{ $loop->iteration + ($deals->firstItem() - 1) }}
                                 </span>
                             </td>
 
-                            <!-- 2. Bundle Title, Badge & Slug (Clickable to View Modal) -->
-                            <td class="py-2.5 px-2.5">
-                                <div class="cursor-pointer group space-y-0.5" onclick='openViewDealModal(@json($dealModalData))' title="Click to view bundle details">
-                                    <div class="flex items-center gap-1.5 flex-wrap">
-                                        <span class="font-bold text-[#1c1210] text-xs sm:text-sm tracking-tight group-hover:text-[#78000b] transition-colors">
-                                            {{ $deal->title }}
-                                        </span>
-                                        @if($deal->badge_text)
-                                            <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[0.58rem] font-black uppercase tracking-wider bg-[#78000b]/10 text-[#78000b] border border-[#78000b]/20">
-                                                {{ $deal->badge_text }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="text-[0.62rem] text-stone-500 font-mono truncate max-w-[240px]">
-                                        <span>/deals#{{ $deal->slug }}</span>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <!-- 3. Bundled Products Preview (Avatars & Count) -->
-                            <td class="py-2.5 px-1.5 text-center">
-                                <div class="inline-flex items-center gap-1 justify-center cursor-pointer group/prods" onclick='openViewDealModal(@json($dealModalData))'>
-                                    <div class="flex items-center -space-x-2 shrink-0">
-                                        @foreach($deal->products->take(2) as $product)
-                                            <div class="w-7 h-7 rounded-lg border-2 border-white shadow-2xs overflow-hidden bg-[#FAF7F2] relative shrink-0 transition-transform duration-200 group-hover/prods:scale-105" title="{{ $product->name }}">
-                                                @if($product->image)
-                                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                                                @else
-                                                    <div class="w-full h-full flex items-center justify-center font-serif font-bold text-[0.65rem] text-[#78000b] bg-[#FAF7F2]">
-                                                        {{ mb_substr($product->name, 0, 1) }}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[0.65rem] font-bold bg-[#FAF7F2] text-[#78000b] border border-[#ebdccb] shadow-2xs">
-                                        {{ $deal->products_count }} items
+                            <!-- 2. Bundle Title (Clean, Clickable to View Modal) -->
+                            <td class="py-3 px-4">
+                                <div class="cursor-pointer group inline-block" onclick='openViewDealModal(@json($dealModalData))' title="Click to view bundle details">
+                                    <span class="font-bold text-[#1c1210] text-sm tracking-tight group-hover:text-[#78000b] transition-colors">
+                                        {{ $deal->title }}
                                     </span>
                                 </div>
                             </td>
 
+                            <!-- 3. Bundled Items Count (Clean Badge Pill, No Avatars) -->
+                            <td class="py-3 px-3 text-center">
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-[#FAF7F2] text-[#78000b] border border-[#ebdccb] shadow-2xs cursor-pointer hover:bg-[#ebdccb]/40 transition" onclick='openViewDealModal(@json($dealModalData))' title="View bundled items">
+                                    {{ $deal->products_count }} {{ Str::plural('Item', $deal->products_count) }}
+                                </span>
+                            </td>
+
                             <!-- 4. Pricing & Savings -->
-                            <td class="py-2.5 px-1.5 text-center whitespace-nowrap">
+                            <td class="py-3 px-3 text-center whitespace-nowrap">
                                 <div class="inline-flex flex-col items-center leading-tight">
-                                    <div class="flex items-center gap-1">
-                                        <span class="font-extrabold text-xs sm:text-sm text-[#78000b]">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-extrabold text-sm text-[#78000b]">
                                             €{{ number_format($deal->bundle_price, 2) }}
                                         </span>
-                                        <span class="text-[0.62rem] text-stone-400 line-through">
+                                        <span class="text-xs text-stone-400 line-through">
                                             €{{ number_format($deal->regular_total, 2) }}
                                         </span>
                                     </div>
                                     @if($deal->savings_amount > 0)
-                                        <span class="inline-flex items-center px-1 py-0.2 rounded text-[0.58rem] font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-300 mt-0.5">
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[0.62rem] font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-300 mt-1">
                                             Save €{{ number_format($deal->savings_amount, 2) }} ({{ $deal->savings_percentage }}%)
                                         </span>
                                     @endif
                                 </div>
                             </td>
 
-                            <!-- 5. Timeline / Flash Countdown -->
-                            <td class="py-2.5 px-1.5 text-center whitespace-nowrap">
-                                @if($deal->ends_at)
-                                    @if($deal->is_expired)
-                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-rose-50 text-rose-800 border border-rose-300 shadow-2xs">
-                                            <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-                                            <span>Expired</span>
-                                        </span>
-                                    @else
-                                        <div class="inline-flex flex-col items-center leading-tight">
-                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs">
-                                                <svg class="w-3 h-3 text-amber-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                                <span>Ends in {{ $deal->ends_at->diffForHumans(['parts' => 1]) }}</span>
-                                            </span>
-                                            <span class="text-[0.58rem] text-stone-400 font-mono mt-0.5">{{ $deal->ends_at->format('d.m.Y H:i') }}</span>
-                                        </div>
-                                    @endif
-                                @else
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-semibold bg-stone-50 text-stone-600 border border-stone-200">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                                        <span>Always Active</span>
-                                    </span>
-                                @endif
-                            </td>
-
-                            <!-- 6. Status Toggle Badge (Interactive AJAX Toggle) -->
-                            <td class="py-2.5 px-1 text-center">
+                            <!-- 5. Status Toggle Badge (Interactive AJAX Toggle) -->
+                            <td class="py-3 px-3 text-center">
                                 <button 
                                     type="button" 
                                     onclick="toggleDealStatus({{ $deal->id }}, this)" 
-                                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.62rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 {{ $deal->is_active ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100' : 'bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100' }}"
+                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider transition-all shadow-2xs cursor-pointer active:scale-95 {{ $deal->is_active ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100' : 'bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100' }}"
                                     title="Click to toggle status (Active / Inactive)"
                                 >
                                     <span class="h-1.5 w-1.5 rounded-full {{ $deal->is_active ? 'bg-emerald-600 animate-pulse' : 'bg-amber-500' }}"></span>
@@ -416,27 +365,27 @@
                                 </button>
                             </td>
 
-                            <!-- 7. Actions (View, Edit, Delete with Cursors) - Compact, Never Overflowing -->
-                            <td class="py-2.5 px-2 text-center whitespace-nowrap">
-                                <div class="flex items-center justify-center gap-1">
+                            <!-- 6. Actions (View, Edit, Delete with Cursors) - Clean & Spaced -->
+                            <td class="py-3 px-4 text-center whitespace-nowrap">
+                                <div class="flex items-center justify-center gap-1.5">
                                     <!-- Quick View Button -->
                                     <button
                                         type="button"
                                         onclick='openViewDealModal(@json($dealModalData))'
-                                        class="h-6 px-1.5 rounded-lg border border-stone-200 bg-white text-stone-700 hover:text-[#78000b] hover:border-[#78000b] hover:bg-[#FAF7F2] text-[0.68rem] font-bold transition shadow-2xs inline-flex items-center gap-0.5 cursor-pointer active:scale-95"
+                                        class="h-7 px-2 rounded-lg border border-stone-200 bg-white text-stone-700 hover:text-[#78000b] hover:border-[#78000b] hover:bg-[#FAF7F2] text-xs font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer active:scale-95"
                                         title="View Details"
                                     >
-                                        <svg class="h-3 w-3 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <svg class="h-3.5 w-3.5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                         <span>View</span>
                                     </button>
 
                                     <!-- Edit Button -->
                                     <a
                                         href="{{ route('admin.deals.edit', $deal->id) }}"
-                                        class="h-6 px-1.5 rounded-lg border border-blue-200 bg-blue-50/70 text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 text-[0.68rem] font-bold transition shadow-2xs inline-flex items-center gap-0.5 cursor-pointer"
+                                        class="h-7 px-2 rounded-lg border border-blue-200 bg-blue-50/70 text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 text-xs font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
                                         title="Edit Bundle"
                                     >
-                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                         <span>Edit</span>
                                     </a>
 
@@ -444,10 +393,10 @@
                                     <button
                                         type="button"
                                         onclick="confirmDeleteDeal({{ $deal->id }}, '{{ addslashes($deal->title) }}')"
-                                        class="h-6 px-1.5 rounded-lg border border-rose-200 bg-rose-50/70 text-rose-700 hover:bg-rose-600 hover:text-white hover:border-rose-600 text-[0.68rem] font-bold transition shadow-2xs inline-flex items-center gap-0.5 cursor-pointer"
+                                        class="h-7 px-2 rounded-lg border border-rose-200 bg-rose-50/70 text-rose-700 hover:bg-rose-600 hover:text-white hover:border-rose-600 text-xs font-bold transition shadow-2xs inline-flex items-center gap-1 cursor-pointer"
                                         title="Delete Bundle"
                                     >
-                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                         <span>Delete</span>
                                     </button>
 
@@ -460,7 +409,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-16 px-6 text-center text-stone-500 text-xs">
+                            <td colspan="6" class="py-16 px-6 text-center text-stone-500 text-xs">
                                 <div class="max-w-sm mx-auto space-y-3">
                                     <div class="h-12 w-12 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center mx-auto">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
