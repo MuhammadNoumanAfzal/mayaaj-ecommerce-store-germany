@@ -13,169 +13,190 @@
     <!-- Soft top scrim layer for flawless text contrast when transparent over hero images -->
     <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-black/55 via-black/20 to-transparent opacity-100 transition-opacity duration-500" id="header-scrim-layer"></div>
 
-    <nav class="relative z-10 mx-auto flex h-16 w-full max-w-[1600px] items-center justify-between px-3 sm:px-5 lg:h-[4.75rem] lg:px-6 xl:px-8 2xl:px-10 text-white" aria-label="Main Maison navigation">
+    <nav class="relative z-10 mx-auto flex h-16 w-full max-w-[1680px] items-center justify-between px-3 sm:px-5 lg:h-[4.5rem] lg:px-6 xl:px-8 text-white" aria-label="Main Maison navigation">
         
-        <!-- Left: Brand Logo & Mobile Toggle -->
-        <div class="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
-            <!-- Mobile Menu Toggle Button (Visible on mobile & tablet) -->
+        <!-- Left: Hamburger Menu, Brand Logo & Navigation Links (s.Oliver layout) -->
+        <div class="flex items-center gap-3 sm:gap-4 lg:gap-5 shrink-0">
+            <!-- Hamburger Menu Toggle Button (Visible on desktop & mobile, like s.Oliver) -->
             <button 
                 type="button" 
                 id="mobile-nav-toggle-btn"
                 onclick="toggleMobileNavDrawer()" 
-                class="lg:hidden flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all duration-200 cursor-pointer shadow-2xs backdrop-blur-xs" 
-                aria-label="Toggle navigation menu"
+                class="flex h-9 w-9 items-center justify-center text-white/90 hover:text-white transition-colors cursor-pointer shrink-0" 
+                aria-label="Toggle navigation drawer"
                 aria-expanded="false"
             >
-                <svg id="mobile-toggle-icon-bars" class="h-4.5 w-4.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg id="mobile-toggle-icon-bars" class="h-6 w-6 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
                     <line x1="3" y1="6" x2="21" y2="6"/>
                     <line x1="3" y1="12" x2="21" y2="12"/>
                     <line x1="3" y1="18" x2="21" y2="18"/>
                 </svg>
-                <svg id="mobile-toggle-icon-close" class="hidden h-4.5 w-4.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg id="mobile-toggle-icon-close" class="hidden h-6 w-6 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
                     <line x1="18" y1="6" x2="6" y2="18"/>
                     <line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
             </button>
 
             <!-- Brand Maison Logo -->
-            <a href="{{ route('home') }}" class="group flex shrink-0 items-center transition-transform hover:scale-105 duration-300" aria-label="MEHAAJ Official Home">
+            <a href="{{ route('home') }}" class="group flex shrink-0 items-center transition-transform hover:opacity-95" aria-label="MEHAAJ Official Home">
                 <img 
                     src="{{ asset('logo.png') }}?v={{ file_exists(public_path('logo.png')) ? filemtime(public_path('logo.png')) : 1 }}" 
                     alt="MEHAAJ" 
-                    class="h-8.5 w-auto max-w-[125px] object-contain sm:h-9.5 sm:max-w-[145px] lg:h-10 lg:max-w-[155px] xl:h-11 xl:max-w-[165px] brightness-110 drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] transition-all duration-300 group-hover:brightness-125"
+                    class="h-7.5 sm:h-8.5 lg:h-9 w-auto max-w-[125px] sm:max-w-[140px] lg:max-w-[155px] object-contain brightness-110 drop-shadow-md"
                 >
             </a>
+
+            <!-- Navigation Links (Directly next to logo, s.Oliver layout) -->
+            <div class="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-7 whitespace-nowrap ml-1 xl:ml-3 text-[0.76rem] xl:text-[0.80rem] 2xl:text-[0.84rem] font-bold uppercase tracking-[0.08em] xl:tracking-[0.10em] flex-nowrap">
+                <!-- Home -->
+                <a 
+                    href="{{ route('home') }}" 
+                    class="relative py-1.5 transition-colors duration-200 {{ request()->routeIs('home') ? 'text-white border-b-2 border-white' : 'text-white/80 hover:text-white' }}"
+                >
+                    <span data-i18n-en="Home" data-i18n-de="Startseite">Startseite</span>
+                </a>
+
+                <!-- About -->
+                <a 
+                    href="{{ route('about') }}" 
+                    class="relative py-1.5 transition-colors duration-200 {{ request()->routeIs('about*') ? 'text-white border-b-2 border-white' : 'text-white/80 hover:text-white' }}"
+                >
+                    <span data-i18n-en="About" data-i18n-de="Über Uns">Über Uns</span>
+                </a>
+
+                <!-- Collection (Mega Menu Dropdown Trigger) -->
+                <button 
+                    type="button" 
+                    id="collection-nav-trigger"
+                    onclick="toggleCollectionMegaMenu(event)" 
+                    class="group relative inline-flex items-center gap-1 py-1.5 text-white/80 hover:text-white transition-colors duration-200 cursor-pointer"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-controls="collection-mega-menu"
+                >
+                    <span data-i18n-en="Collection" data-i18n-de="Kollektion">Kollektion</span>
+                    <svg id="collection-chevron-icon" class="h-3 w-3 text-white/60 transition-transform duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </button>
+
+                <!-- Shop All -->
+                <a 
+                    href="{{ route('shop') }}" 
+                    class="relative py-1.5 transition-colors duration-200 {{ (request()->routeIs('shop*') && !request()->routeIs('deals*')) ? 'text-white border-b-2 border-white' : 'text-white/80 hover:text-white' }}"
+                >
+                    <span data-i18n-en="Shop All" data-i18n-de="Alle Produkte">Alle Produkte</span>
+                </a>
+
+                <!-- Deals -->
+                <a 
+                    href="{{ route('deals') }}" 
+                    class="relative py-1.5 transition-colors duration-200 {{ request()->routeIs('deals*') ? 'text-white border-b-2 border-white' : 'text-white/80 hover:text-white' }}"
+                >
+                    <span data-i18n-en="Deals" data-i18n-de="Angebote">Angebote</span>
+                </a>
+
+                <!-- Contact -->
+                <a 
+                    href="{{ route('contact') }}" 
+                    class="relative py-1.5 transition-colors duration-200 {{ request()->routeIs('contact*') ? 'text-white border-b-2 border-white' : 'text-white/80 hover:text-white' }}"
+                >
+                    <span data-i18n-en="Contact" data-i18n-de="Kontakt">Kontakt</span>
+                </a>
+            </div>
         </div>
 
-        <!-- Center: Essential Luxury Navigation Links (Strictly Single Line) -->
-        <div class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10 whitespace-nowrap shrink-0 flex-nowrap">
-            <!-- Home -->
-            <a 
-                href="{{ route('home') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.74rem] xl:text-[0.78rem] 2xl:text-[0.82rem] font-medium uppercase tracking-[0.16em] xl:tracking-[0.20em] {{ request()->routeIs('home') ? 'text-[#ffd45a]' : 'text-white/80 hover:text-white' }} transition-colors duration-300 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span data-i18n-en="Home" data-i18n-de="Startseite">Startseite</span>
-                <span class="absolute -bottom-1 left-0 right-0 mx-auto h-[1.5px] rounded-full bg-[#ffd45a] transition-all duration-300 {{ request()->routeIs('home') ? 'w-5 opacity-100' : 'w-0 opacity-0 group-hover:w-5 group-hover:opacity-100' }}"></span>
-            </a>
-
-            <!-- About -->
-            <a 
-                href="{{ route('about') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.74rem] xl:text-[0.78rem] 2xl:text-[0.82rem] font-medium uppercase tracking-[0.16em] xl:tracking-[0.20em] {{ request()->routeIs('about*') ? 'text-[#ffd45a]' : 'text-white/80 hover:text-white' }} transition-colors duration-300 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span data-i18n-en="About" data-i18n-de="Über Uns">Über Uns</span>
-                <span class="absolute -bottom-1 left-0 right-0 mx-auto h-[1.5px] rounded-full bg-[#ffd45a] transition-all duration-300 {{ request()->routeIs('about*') ? 'w-5 opacity-100' : 'w-0 opacity-0 group-hover:w-5 group-hover:opacity-100' }}"></span>
-            </a>
-
-            <!-- Collection (Mega Menu Dropdown Trigger) -->
+        <!-- Center: Search Input Bar (s.Oliver rectangular box) -->
+        <div class="hidden md:flex items-center flex-1 max-w-[190px] lg:max-w-[230px] xl:max-w-[280px] mx-2 xl:mx-4 shrink-0">
             <button 
-                type="button" 
-                id="collection-nav-trigger"
-                onclick="toggleCollectionMegaMenu(event)" 
-                class="group relative inline-flex items-center gap-1.5 py-2 text-[0.74rem] xl:text-[0.78rem] 2xl:text-[0.82rem] font-medium uppercase tracking-[0.16em] xl:tracking-[0.20em] text-white/80 hover:text-white transition-colors duration-300 drop-shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
-                aria-expanded="false"
-                aria-haspopup="true"
-                aria-controls="collection-mega-menu"
-            >
-                <span data-i18n-en="Collection" data-i18n-de="Kollektion">Kollektion</span>
-                <svg id="collection-chevron-icon" class="h-2.5 w-2.5 text-white/50 transition-transform duration-300 group-hover:text-[#ffd45a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                    <polyline points="6 9 12 15 18 9"/>
-                </svg>
-                <span class="absolute -bottom-1 left-0 right-0 mx-auto h-[1.5px] rounded-full bg-[#ffd45a] transition-all duration-300 w-0 opacity-0 group-hover:w-5 group-hover:opacity-100"></span>
-            </button>
-
-            <!-- Shop All -->
-            <a 
-                href="{{ route('shop') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.74rem] xl:text-[0.78rem] 2xl:text-[0.82rem] font-medium uppercase tracking-[0.16em] xl:tracking-[0.20em] {{ (request()->routeIs('shop*') && !request()->routeIs('deals*')) ? 'text-[#ffd45a]' : 'text-white/80 hover:text-white' }} transition-colors duration-300 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span data-i18n-en="Shop All" data-i18n-de="Alle Produkte">Alle Produkte</span>
-                <span class="absolute -bottom-1 left-0 right-0 mx-auto h-[1.5px] rounded-full bg-[#ffd45a] transition-all duration-300 {{ (request()->routeIs('shop*') && !request()->routeIs('deals*')) ? 'w-5 opacity-100' : 'w-0 opacity-0 group-hover:w-5 group-hover:opacity-100' }}"></span>
-            </a>
-
-            <!-- Deals -->
-            <a 
-                href="{{ route('deals') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.74rem] xl:text-[0.78rem] 2xl:text-[0.82rem] font-medium uppercase tracking-[0.16em] xl:tracking-[0.20em] {{ request()->routeIs('deals*') ? 'text-[#ffd45a]' : 'text-white/80 hover:text-white' }} transition-colors duration-300 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span data-i18n-en="Deals" data-i18n-de="Angebote">Angebote</span>
-                <span class="absolute -bottom-1 left-0 right-0 mx-auto h-[1.5px] rounded-full bg-[#ffd45a] transition-all duration-300 {{ request()->routeIs('deals*') ? 'w-5 opacity-100' : 'w-0 opacity-0 group-hover:w-5 group-hover:opacity-100' }}"></span>
-            </a>
-
-            <!-- Contact -->
-            <a 
-                href="{{ route('contact') }}" 
-                class="group relative inline-flex items-center py-2 text-[0.74rem] xl:text-[0.78rem] 2xl:text-[0.82rem] font-medium uppercase tracking-[0.16em] xl:tracking-[0.20em] {{ request()->routeIs('contact*') ? 'text-[#ffd45a]' : 'text-white/80 hover:text-white' }} transition-colors duration-300 drop-shadow-sm whitespace-nowrap shrink-0"
-            >
-                <span data-i18n-en="Contact" data-i18n-de="Kontakt">Kontakt</span>
-                <span class="absolute -bottom-1 left-0 right-0 mx-auto h-[1.5px] rounded-full bg-[#ffd45a] transition-all duration-300 {{ request()->routeIs('contact*') ? 'w-5 opacity-100' : 'w-0 opacity-0 group-hover:w-5 group-hover:opacity-100' }}"></span>
-            </a>
-        </div>
-
-        <!-- Right Side: Live Search, Language, Wishlist & Cart -->
-        <div class="flex items-center gap-2 sm:gap-3 shrink-0 whitespace-nowrap">
-            
-            <!-- Live Search Circular Trigger Button -->
-            <button 
-                type="button" 
+                type="button"
                 onclick="openLiveSearchModal()" 
-                class="group relative flex h-9 w-9 sm:h-9.5 sm:w-9.5 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/85 hover:bg-white/15 hover:text-[#ffd45a] hover:border-[#ffd45a]/50 transition-all duration-300 cursor-pointer shadow-2xs backdrop-blur-md shrink-0" 
+                class="group w-full flex items-center justify-between h-9 px-3.5 rounded-xs border border-white/25 bg-black/25 hover:border-white/50 text-white/70 hover:text-white transition-all cursor-pointer backdrop-blur-xs shadow-2xs"
                 aria-label="Open Search Catalog"
                 title="Search (Ctrl + K)"
             >
-                <svg class="h-4 w-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <span class="text-[0.72rem] uppercase font-bold tracking-wider text-white/75 group-hover:text-white" data-i18n-en="SEARCH" data-i18n-de="SUCHEN">SUCHEN</span>
+                <svg class="h-3.5 w-3.5 text-white/75 group-hover:text-white transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Right Side: User Actions (s.Oliver style: MEIN KONTO, WUNSCHLISTE, WARENKORB + Language) -->
+        <div class="flex items-center gap-3 sm:gap-4 xl:gap-5.5 shrink-0 whitespace-nowrap text-[0.72rem] xl:text-[0.76rem] font-bold uppercase tracking-wider text-white">
+            
+            <!-- Mobile Search Icon (only visible on small mobile screens) -->
+            <button 
+                type="button" 
+                onclick="openLiveSearchModal()" 
+                class="md:hidden flex h-8 w-8 items-center justify-center text-white/90 hover:text-white transition" 
+                aria-label="Open Search Catalog"
+            >
+                <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="11" cy="11" r="8"/>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
             </button>
 
+            <!-- Mein Konto / My Account -->
+            <a 
+                href="{{ auth('admin')->check() ? route('admin.dashboard') : route('admin.login') }}" 
+                class="inline-flex items-center gap-1.5 text-white/90 hover:text-white transition-colors duration-200 py-1"
+                title="Mein Konto / Account"
+            >
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span class="hidden sm:inline" data-i18n-en="MY ACCOUNT" data-i18n-de="MEIN KONTO">MEIN KONTO</span>
+            </a>
+
+            <!-- Wunschliste / Wishlist -->
+            <a 
+                href="{{ route('wishlist.index') }}" 
+                class="inline-flex items-center gap-1.5 text-white/90 hover:text-white transition-colors duration-200 py-1"
+                title="Wunschliste / Wishlist"
+            >
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span class="hidden sm:inline" data-i18n-en="WISHLIST" data-i18n-de="WUNSCHLISTE">WUNSCHLISTE</span>
+                <span class="text-white/90">(<span class="wishlist-badge-count">{{ $wishlistCount ?? 0 }}</span>)</span>
+            </a>
+
+            <!-- Warenkorb / Cart -->
+            <button 
+                type="button" 
+                onclick="openCartDrawer()" 
+                class="inline-flex items-center gap-1.5 text-white/90 hover:text-white transition-colors duration-200 py-1 cursor-pointer"
+                title="Warenkorb / Cart"
+            >
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                    <path d="M3 6h18"/>
+                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                <span class="hidden sm:inline" data-i18n-en="CART" data-i18n-de="WARENKORB">WARENKORB</span>
+                <span class="text-white/90">(<span class="cart-badge-count">{{ $cartCount }}</span>)</span>
+            </button>
+
             <!-- Language Switcher Pill (EN | DE) -->
-            <div class="inline-flex items-center rounded-full border border-white/20 bg-black/40 p-0.5 text-[0.62rem] font-medium shadow-2xs backdrop-blur-md">
+            <div class="inline-flex items-center rounded-xs border border-white/20 bg-black/40 p-0.5 text-[0.62rem] font-bold shadow-2xs backdrop-blur-md">
                 <button 
                     type="button" 
                     onclick="setSiteLanguage('en')" 
                     id="lang-btn-en" 
-                    class="px-2.5 py-1 rounded-full transition cursor-pointer text-[#120807] bg-[#ffd45a] font-bold shadow-2xs"
+                    class="px-2 py-0.5 rounded-xs transition cursor-pointer text-[#120807] bg-[#ffd45a] font-bold shadow-2xs"
                 >EN</button>
                 <button 
                     type="button" 
                     onclick="setSiteLanguage('de')" 
                     id="lang-btn-de" 
-                    class="px-2.5 py-1 rounded-full transition cursor-pointer text-white/70 hover:text-white font-medium"
+                    class="px-2 py-0.5 rounded-xs transition cursor-pointer text-white/70 hover:text-white font-medium"
                 >DE</button>
             </div>
 
-            <!-- Wishlist Heart Button & Badge -->
-            <a 
-                href="{{ route('wishlist.index') }}" 
-                class="group relative flex h-9 w-9 sm:h-9.5 sm:w-9.5 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/85 hover:bg-white/15 hover:text-[#ffd45a] hover:border-[#ffd45a]/50 transition-all duration-300 cursor-pointer shadow-2xs backdrop-blur-md" 
-                aria-label="Maison Merkzettel / Wishlist"
-                title="Wunschliste & Gespeicherte Favoriten"
-            >
-                <svg class="h-4 w-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                <span class="wishlist-badge-count absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#78000b] px-1 text-[0.56rem] font-bold text-[#ffd45a] border border-[#ffd45a]/50 shadow-xs">
-                    {{ $wishlistCount ?? 0 }}
-                </span>
-            </a>
-
-            <!-- Shopping Bag Drawer Trigger Button -->
-            <button 
-                type="button" 
-                onclick="openCartDrawer()" 
-                class="group relative flex h-9 w-9 sm:h-9.5 sm:w-9.5 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/85 hover:bg-white/15 hover:text-[#ffd45a] hover:border-[#ffd45a]/50 transition-all duration-300 cursor-pointer shadow-2xs backdrop-blur-md" 
-                aria-label="Open Shopping Bag"
-            >
-                <svg class="h-4 w-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" stroke-linejoin="round"/>
-                    <path d="M3 6h18"/>
-                    <path d="M16 10a4 4 0 0 1-8 0"/>
-                </svg>
-                <span class="cart-badge-count absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#78000b] px-1 text-[0.56rem] font-bold text-[#ffd45a] border border-[#ffd45a]/50 shadow-xs">
-                    {{ $cartCount }}
-                </span>
-            </button>
         </div>
     </nav>
 
